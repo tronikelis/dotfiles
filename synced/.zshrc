@@ -110,8 +110,8 @@ export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || pr
 
 export PATH=${PATH}:`go env GOPATH`/bin
 
-alias gcheckout='git branch | grep -v "^*" | cut -c 3- | fzf --layout reverse --height 20% --info inline | xargs git checkout'
+alias gcheckout='git branch | grep -v "^*" | cut -c 3- | fzf --layout reverse --info inline | xargs git checkout'
 
-alias gdelete='git branch | grep -v "^*" | cut -c 3- | fzf --layout reverse --height 20% --info inline --multi --print0 | xargs -0 git branch --delete'
+alias gdelete='git branch | grep -v "^*" | cut -c 3- | fzf --layout reverse --info inline --multi --print0 | xargs -0 git branch --delete'
 
 alias hs='history | sort -r | sed -E "s/\s+[0-9]+\s+//" | awk "!x[\$0]++" | fzf | sh'
