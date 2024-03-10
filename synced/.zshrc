@@ -115,3 +115,5 @@ alias gcheckout='git branch | grep -v "^*" | cut -c 3- | fzf --layout reverse --
 alias gdelete='git branch | grep -v "^*" | cut -c 3- | fzf --layout reverse --info inline --multi --print0 | xargs -0 git branch --delete'
 
 alias hs='history | sort -r | sed -E "s/\s+[0-9]+\s+//" | awk "!x[\$0]++" | fzf | sh'
+
+alias ssh="kitten ssh"
