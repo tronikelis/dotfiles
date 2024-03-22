@@ -25,37 +25,22 @@ require("lazy").setup({
     { 
         "nvim-treesitter/nvim-treesitter",
         build = ":TSUpdate",
-        opts = {
-            highlight = { enable = true },
-            indent = { enable = true },
-            auto_install = true,
-            ensure_installed = {
-                "bash",
-                "c",
-                "diff",
-                "html",
-                "javascript",
-                "jsdoc",
-                "json",
-                "jsonc",
-                "lua",
-                "luadoc",
-                "luap",
-                "markdown",
-                "markdown_inline",
-                "python",
-                "query",
-                "regex",
-                "toml",
-                "tsx",
-                "typescript",
-                "vim",
-                "vimdoc",
-                "xml",
-                "yaml",
-            },
-        },
-    }
+        config = function () 
+            local configs = require("nvim-treesitter.configs")
+
+            configs.setup({
+                ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "elixir", "heex", "javascript", "html", "typescript", "tsx" },
+                sync_install = false,
+                highlight = { enable = true },
+                indent = { enable = true },  
+            })
+        end
+    },
+    {
+	    'nvim-telescope/telescope.nvim', 
+        tag = '0.1.6',
+	    dependencies = { 'nvim-lua/plenary.nvim' }
+    },
 })
 
 vim.o.tabstop = 4 -- A TAB character looks like 4 spaces
