@@ -28,10 +28,21 @@ vim.o.shiftwidth = 4 -- Number of spaces inserted when indenting
 vim.wo.relativenumber = true
 
 vim.g.mapleader = " "
-
+vim.g.maplocalleader = " "
+vim.opt.clipboard = 'unnamedplus'
+vim.opt.breakindent = true
+vim.opt.undofile = true
+vim.opt.updatetime = 250
+vim.opt.list = true
+vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
+vim.opt.inccommand = 'split'
+vim.opt.cursorline = true
 
 require("lazy").setup({
     "ThePrimeagen/vim-be-good",
+    -- Detect spaces automatically
+    "tpope/vim-sleuth",
+    { 'numToStr/Comment.nvim', opts = {}, lazy = false, },
     { 
         "rose-pine/neovim",
         priority = 1000,
@@ -64,6 +75,14 @@ require("lazy").setup({
             'williamboman/mason.nvim',
             'williamboman/mason-lspconfig.nvim',
             'WhoIsSethDaniel/mason-tool-installer.nvim',
+
+            -- Useful status updates for LSP.
+            -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
+            { 'j-hui/fidget.nvim', opts = {} },
+
+            -- `neodev` configures Lua LSP for your Neovim config, runtime and plugins
+            -- used for completion, annotations and signatures of Neovim apis
+            { 'folke/neodev.nvim', opts = {} },
         },
         config = function()
            vim.api.nvim_create_autocmd('LspAttach', {
@@ -265,16 +284,23 @@ require("lazy").setup({
     },
     {
         "m4xshen/autoclose.nvim",
-        init = function() 
-            require("autoclose").setup()
-        end,
+        opts = {}, 
     },
+    {
+        'lewis6991/gitsigns.nvim',
+        opts = {},
+    }
 })
 
 local builtin = require('telescope.builtin')
-vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
-vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
-vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
+
+vim.keymap.set('n', '<leader>ff', builtin.find_files, {
+    desc = "[F]ind [F]iles",
+})
+
+vim.keymap.set('n', '<leader>sk', builtin.keymaps, { 
+    desc = '[S]earch [K]eymaps' 
+})
 
 vim.keymap.set('n', '<leader>/', function()
     -- You can pass additional configuration to Telescope to change the theme, layout, etc.
