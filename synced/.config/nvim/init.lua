@@ -1,14 +1,14 @@
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 
 if not vim.loop.fs_stat(lazypath) then
-  vim.fn.system({
-    "git",
-    "clone",
-    "--filter=blob:none",
-    "https://github.com/folke/lazy.nvim.git",
-    "--branch=stable", -- latest stable release
-    lazypath,
-  })
+    vim.fn.system({
+        "git",
+        "clone",
+        "--filter=blob:none",
+        "https://github.com/folke/lazy.nvim.git",
+        "--branch=stable", -- latest stable release
+        lazypath,
+    })
 end
 
 vim.diagnostic.config { update_in_insert = true }
@@ -38,31 +38,31 @@ require("lazy").setup({
     -- Detect spaces automatically
     "tpope/vim-sleuth",
     { 'numToStr/Comment.nvim', opts = {}, lazy = false, },
-    { 
+    {
         "rose-pine/neovim",
         priority = 1000,
         init = function()
             vim.cmd.colorscheme 'rose-pine'
         end
     },
-    { 
+    {
         "nvim-treesitter/nvim-treesitter",
         build = ":TSUpdate",
-        config = function () 
+        config = function()
             local configs = require("nvim-treesitter.configs")
 
             configs.setup({
                 ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "elixir", "heex", "javascript", "html", "typescript", "tsx" },
                 sync_install = false,
                 highlight = { enable = true },
-                indent = { enable = true },  
+                indent = { enable = true },
             })
         end
     },
     {
-	    'nvim-telescope/telescope.nvim', 
+        'nvim-telescope/telescope.nvim',
         tag = '0.1.6',
-	    dependencies = { 'nvim-lua/plenary.nvim' }
+        dependencies = { 'nvim-lua/plenary.nvim' }
     },
     {
         "neovim/nvim-lspconfig",
@@ -80,7 +80,7 @@ require("lazy").setup({
             { 'folke/neodev.nvim', opts = {} },
         },
         config = function()
-           vim.api.nvim_create_autocmd('LspAttach', {
+            vim.api.nvim_create_autocmd('LspAttach', {
                 group = vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true }),
                 callback = function(event)
                     local map = function(keys, func, desc)
@@ -169,7 +169,8 @@ require("lazy").setup({
                 rust_analyzer = {},
                 tsserver = {},
                 lua_ls = {},
-           }
+                eslint = {},
+            }
 
             -- Ensure the servers and tools above are installed
             --  To check the current status of installed tools and/or manually install
@@ -182,7 +183,9 @@ require("lazy").setup({
             -- You can add other tools here that you want Mason to install
             -- for you, so that they are available from within Neovim.
             local ensure_installed = vim.tbl_keys(servers or {})
-            vim.list_extend(ensure_installed, {})
+            vim.list_extend(ensure_installed, {
+                prettierd = {}
+            })
             require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
             require('mason-lspconfig').setup {
@@ -219,7 +222,7 @@ require("lazy").setup({
                         luasnip.lsp_expand(args.body)
                     end,
                 },
-        		completion = { 
+                completion = {
                     completeopt = 'menu,menuone,noinsert',
                     max_item_count = 10,
                 },
@@ -275,16 +278,43 @@ require("lazy").setup({
                     { name = "path" },
                 },
             }
-    	end
+        end
     },
     {
         "m4xshen/autoclose.nvim",
-        opts = {}, 
+        opts = {},
     },
     {
         'lewis6991/gitsigns.nvim',
         opts = {},
-    }
+    },
+    { -- Autoformat
+        'stevearc/conform.nvim',
+        opts = {
+            notify_on_error = false,
+            format_on_save = function(bufnr)
+                -- Disable "format_on_save lsp_fallback" for languages that don't
+                -- have a well standardized coding style. You can add additional
+                -- languages here or re-enable it for the disabled ones.
+                local disable_filetypes = { c = true, cpp = true }
+                return {
+                    timeout_ms = 500,
+                    lsp_fallback = not disable_filetypes[vim.bo[bufnr].filetype],
+                }
+            end,
+            formatters_by_ft = {
+                lua = { 'stylua' },
+                -- Conform can also run multiple formatters sequentially
+                -- python = { "isort", "black" },
+                --
+                -- You can use a sub-list to tell conform to run *until* a formatter
+                -- is found.
+                javascript = { { "prettierd", "prettier" } },
+                typescript = { { "prettierd", "prettier" } },
+                tsx = { { "prettierd", "prettier" } },
+            },
+        },
+    },
 })
 
 local builtin = require('telescope.builtin')
@@ -293,8 +323,8 @@ vim.keymap.set('n', '<leader>ff', builtin.find_files, {
     desc = "[F]ind [F]iles",
 })
 
-vim.keymap.set('n', '<leader>sk', builtin.keymaps, { 
-    desc = '[S]earch [K]eymaps' 
+vim.keymap.set('n', '<leader>sk', builtin.keymaps, {
+    desc = '[S]earch [K]eymaps'
 })
 
 vim.keymap.set('n', '<leader>/', function()
@@ -305,3 +335,6 @@ vim.keymap.set('n', '<leader>/', function()
     })
 end, { desc = '[/] Fuzzily search in current buffer' })
 
+vim.keymap.set("n", "<C-p>", builtin.git_files, {
+    desc = "Finds files that are in git repo"
+})
