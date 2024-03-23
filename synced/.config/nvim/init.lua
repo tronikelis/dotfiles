@@ -44,10 +44,10 @@ require("lazy").setup({
     "tpope/vim-sleuth",
     { 'numToStr/Comment.nvim', opts = {}, lazy = false, },
     {
-        "rose-pine/neovim",
+        "navarasu/onedark.nvim",
         priority = 1000,
         init = function()
-            vim.cmd.colorscheme 'rose-pine'
+            vim.cmd.colorscheme 'onedark'
         end
     },
     {
@@ -91,6 +91,10 @@ require("lazy").setup({
                     local map = function(keys, func, desc)
                         vim.keymap.set('n', keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
                     end
+
+                    -- disable semantic tokens
+                    local client = vim.lsp.get_client_by_id(event.data.client_id)
+                    client.server_capabilities.semanticTokensProvider = nil
 
                     -- Jump to the definition of the word under your cursor.
                     --  This is where a variable was first declared, or where a function is defined, etc.
@@ -292,7 +296,9 @@ require("lazy").setup({
     },
     {
         'lewis6991/gitsigns.nvim',
-        opts = {},
+        opts = {
+            current_line_blame = true
+        },
     },
     { -- Autoformat
         'stevearc/conform.nvim',
@@ -320,6 +326,12 @@ require("lazy").setup({
                 tsx = { { "prettierd", "prettier" } },
             },
         },
+    },
+    "nvim-tree/nvim-web-devicons",
+    {
+        'nvim-lualine/lualine.nvim',
+        dependencies = { 'nvim-tree/nvim-web-devicons' },
+        opts = {},
     },
 })
 
