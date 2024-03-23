@@ -15,6 +15,11 @@ vim.diagnostic.config { update_in_insert = true }
 
 vim.opt.rtp:prepend(lazypath)
 
+vim.o.tabstop = 4      -- A TAB character looks like 4 spaces
+vim.o.expandtab = true -- Pressing the TAB key will insert spaces instead of a TAB character
+vim.o.softtabstop = 4  -- Number of spaces inserted instead of a TAB character
+vim.o.shiftwidth = 4   -- Number of spaces inserted when indenting
+
 -- To disable jumping
 vim.opt.signcolumn = "yes"
 vim.opt.pumheight = 10 -- pop up menu height
@@ -52,7 +57,7 @@ require("lazy").setup({
             local configs = require("nvim-treesitter.configs")
 
             configs.setup({
-                ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "elixir", "heex", "javascript", "html", "typescript", "tsx" },
+                ensure_installed = { "c", "java", "lua", "vim", "vimdoc", "query", "elixir", "heex", "javascript", "html", "typescript", "tsx" },
                 sync_install = false,
                 highlight = { enable = true },
                 indent = { enable = true },
@@ -170,6 +175,7 @@ require("lazy").setup({
                 tsserver = {},
                 lua_ls = {},
                 eslint = {},
+                jdtls = {},
             }
 
             -- Ensure the servers and tools above are installed
