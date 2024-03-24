@@ -44,10 +44,10 @@ require("lazy").setup({
     "tpope/vim-sleuth",
     { 'numToStr/Comment.nvim', opts = {}, lazy = false, },
     {
-        "navarasu/onedark.nvim",
+        "rose-pine/neovim",
         priority = 1000,
         init = function()
-            vim.cmd.colorscheme 'onedark'
+            vim.cmd.colorscheme 'rose-pine-moon'
         end
     },
     {
