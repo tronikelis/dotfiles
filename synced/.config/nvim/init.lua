@@ -66,8 +66,46 @@ require("lazy").setup({
     },
     {
         'nvim-telescope/telescope.nvim',
-        tag = '0.1.6',
-        dependencies = { 'nvim-lua/plenary.nvim' }
+        event = "VimEnter",
+        branch = '0.1.x',
+        dependencies = {
+            'nvim-lua/plenary.nvim',
+            {
+                'nvim-telescope/telescope-fzf-native.nvim',
+                build =
+                'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build'
+            }
+        },
+        opts = {
+            defaults = {
+                path_display = { "smart" }
+            }
+        },
+        config = function()
+            local builtin = require('telescope.builtin')
+
+            vim.keymap.set('n', '<leader>ff', builtin.find_files, {
+                desc = "[F]ind [F]iles",
+            })
+
+            vim.keymap.set('n', '<leader>sk', builtin.keymaps, {
+                desc = '[S]earch [K]eymaps'
+            })
+
+            vim.keymap.set('n', '<leader>/', function()
+                -- You can pass additional configuration to Telescope to change the theme, layout, etc.
+                builtin.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
+                    winblend = 10,
+                    previewer = false,
+                })
+            end, { desc = '[/] Fuzzily search in current buffer' })
+
+            vim.keymap.set("n", "<C-p>", builtin.git_files, {
+                desc = "Finds files that are in git repo"
+            })
+
+            require('telescope').load_extension('fzf')
+        end
     },
     {
         "neovim/nvim-lspconfig",
@@ -180,6 +218,8 @@ require("lazy").setup({
                 lua_ls = {},
                 eslint = {},
                 jdtls = {},
+                prettierd = {},
+                ["eslint-lsp"] = {},
             }
 
             -- Ensure the servers and tools above are installed
@@ -193,9 +233,6 @@ require("lazy").setup({
             -- You can add other tools here that you want Mason to install
             -- for you, so that they are available from within Neovim.
             local ensure_installed = vim.tbl_keys(servers or {})
-            vim.list_extend(ensure_installed, {
-                prettierd = {}
-            })
             require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
             require('mason-lspconfig').setup {
@@ -240,18 +277,17 @@ require("lazy").setup({
 
                 mapping = cmp.mapping.preset.insert {
                     -- Select the [n]ext item
-                    ['<C-n>'] = cmp.mapping.select_next_item(),
+                    ['<Down>'] = cmp.mapping.select_next_item(),
                     -- Select the [p]revious item
-                    ['<C-p>'] = cmp.mapping.select_prev_item(),
+                    ['<Up>'] = cmp.mapping.select_prev_item(),
 
                     -- Scroll the documentation window [b]ack / [f]orward
                     ['<C-b>'] = cmp.mapping.scroll_docs(-4),
                     ['<C-f>'] = cmp.mapping.scroll_docs(4),
 
-                    -- Accept ([y]es) the completion.
                     --  This will auto-import if your LSP supports it.
                     --  This will expand snippets if the LSP sent a snippet.
-                    ['<C-y>'] = cmp.mapping.confirm { select = true },
+                    ['<Enter>'] = cmp.mapping.confirm { select = true },
 
                     -- Manually trigger a completion from nvim-cmp.
                     --  Generally you don't need this, because nvim-cmp will display
@@ -333,26 +369,4 @@ require("lazy").setup({
         dependencies = { 'nvim-tree/nvim-web-devicons' },
         opts = {},
     },
-})
-
-local builtin = require('telescope.builtin')
-
-vim.keymap.set('n', '<leader>ff', builtin.find_files, {
-    desc = "[F]ind [F]iles",
-})
-
-vim.keymap.set('n', '<leader>sk', builtin.keymaps, {
-    desc = '[S]earch [K]eymaps'
-})
-
-vim.keymap.set('n', '<leader>/', function()
-    -- You can pass additional configuration to Telescope to change the theme, layout, etc.
-    builtin.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
-        winblend = 10,
-        previewer = false,
-    })
-end, { desc = '[/] Fuzzily search in current buffer' })
-
-vim.keymap.set("n", "<C-p>", builtin.git_files, {
-    desc = "Finds files that are in git repo"
 })
