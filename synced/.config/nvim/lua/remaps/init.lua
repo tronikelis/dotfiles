@@ -18,6 +18,8 @@ vim.opt.cursorline = true
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 vim.opt.scrolloff = 10
+vim.opt.spelllang = "en_us"
+vim.opt.spell = true
 
 vim.opt.hlsearch = false
 vim.opt.incsearch = true
