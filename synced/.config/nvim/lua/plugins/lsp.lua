@@ -35,6 +35,23 @@ return {
 			vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
 			vim.keymap.set("n", "<leader>/", builtin.current_buffer_fuzzy_find, opts)
 
+			-- show diagnostics on hover
+			vim.api.nvim_create_autocmd("CursorHold", {
+				buffer = bufnr,
+				callback = function()
+					vim.defer_fn(function()
+						vim.diagnostic.open_float(nil, {
+							focusable = false,
+							close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
+							border = "rounded",
+							source = "always",
+							prefix = " ",
+							scope = "cursor",
+						})
+					end, 2000)
+				end,
+			})
+
 			local cmp = require("cmp")
 
 			cmp.setup({
