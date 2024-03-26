@@ -7,7 +7,7 @@ return {
 		"nvim-tree/nvim-web-devicons",
 	},
 	config = function()
-		local picker_config = function(args)
+		local picker_config = function()
 			return {
 				show_line = false,
 			}

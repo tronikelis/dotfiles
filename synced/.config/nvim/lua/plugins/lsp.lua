@@ -33,6 +33,7 @@ return {
 			vim.keymap.set("n", "<leader>D", builtin.lsp_type_definitions, opts)
 			vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
 			vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
+			vim.keymap.set("n", "<leader>/", builtin.current_buffer_fuzzy_find, opts)
 
 			local cmp = require("cmp")
 
@@ -49,7 +50,7 @@ return {
 					["<C-b>"] = cmp.mapping.scroll_docs(-4),
 					["<C-f>"] = cmp.mapping.scroll_docs(4),
 
-					["<C-y>"] = cmp.mapping.confirm({ select = true }),
+					["<Tab>"] = cmp.mapping.confirm({ select = true }),
 					["<C-Space>"] = cmp.mapping.complete({}),
 				}),
 			})
