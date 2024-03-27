@@ -60,6 +60,7 @@ return {
 		require("mason-tool-installer").setup({
 			ensure_installed = {
 				"stylua",
+				"tailwindcss-language-server",
 				"gopls",
 				"rust_analyzer",
 				"tsserver",
