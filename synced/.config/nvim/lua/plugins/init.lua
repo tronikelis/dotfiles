@@ -30,9 +30,12 @@ require("lazy").setup({
 		end,
 	},
 	{
-		"m4xshen/autoclose.nvim",
+		"windwp/nvim-autopairs",
+		event = "InsertEnter",
 		config = function()
-			require("autoclose").setup()
+			require("nvim-autopairs").setup({
+				check_ts = true,
+			})
 		end,
 	},
 	{
