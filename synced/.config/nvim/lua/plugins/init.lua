@@ -61,4 +61,7 @@ require("lazy").setup({
 		lazy = true,
 		event = "VeryLazy",
 	},
+	{
+		"sindrets/diffview.nvim",
+	},
 })
