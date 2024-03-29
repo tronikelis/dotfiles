@@ -38,6 +38,7 @@ return {
 			local cmp = require("cmp")
 
 			cmp.setup({
+				completion = { completeopt = "menu,menuone,noinsert" },
 				sources = {
 					{ name = "nvim_lsp" },
 					{ name = "luasnip" },
