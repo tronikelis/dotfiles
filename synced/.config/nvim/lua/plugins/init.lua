@@ -64,4 +64,10 @@ require("lazy").setup({
 	{
 		"sindrets/diffview.nvim",
 	},
+	{
+		"stevearc/dressing.nvim",
+		config = function()
+			require("dressing").setup({})
+		end,
+	},
 })

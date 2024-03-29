@@ -2,6 +2,8 @@ return {
 	"VonHeikemen/lsp-zero.nvim",
 	branch = "v3.x",
 	dependencies = {
+		"onsails/lspkind.nvim",
+		"hrsh7th/cmp-nvim-lsp-signature-help",
 		"williamboman/mason.nvim",
 		"williamboman/mason-lspconfig.nvim",
 		"neovim/nvim-lspconfig",
@@ -36,6 +38,7 @@ return {
 			vim.keymap.set("n", "<leader>/", builtin.current_buffer_fuzzy_find, opts)
 
 			local cmp = require("cmp")
+			local lspkind = require("lspkind")
 
 			cmp.setup({
 				completion = { completeopt = "menu,menuone,noinsert" },
@@ -43,6 +46,7 @@ return {
 					{ name = "nvim_lsp" },
 					{ name = "luasnip" },
 					{ name = "path" },
+					{ name = "nvim_lsp_signature_help" },
 				},
 				mapping = cmp.mapping.preset.insert({
 					["<C-n>"] = cmp.mapping.select_next_item(),
@@ -54,6 +58,15 @@ return {
 					["<Tab>"] = cmp.mapping.confirm({ select = true }),
 					["<C-Space>"] = cmp.mapping.complete({}),
 				}),
+				formatting = {
+					format = lspkind.cmp_format({
+						menu = {
+							nvim_lsp = "[LSP]",
+							path = "[Path]",
+							luasnip = "[LuaSnip]",
+						},
+					}),
+				},
 			})
 		end)
 
