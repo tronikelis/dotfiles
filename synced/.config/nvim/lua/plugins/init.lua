@@ -21,6 +21,7 @@ require("lazy").setup({
 	require("plugins.formatter"),
 	require("plugins.gitsigns"),
 	require("plugins.terminal"),
+	require("plugins.lualine"),
 
 	-- small plugins that don't need config
 	"tpope/vim-sleuth",
@@ -38,13 +39,6 @@ require("lazy").setup({
 			require("nvim-autopairs").setup({
 				check_ts = true,
 			})
-		end,
-	},
-	{
-		"nvim-lualine/lualine.nvim",
-		dependencies = { "nvim-tree/nvim-web-devicons" },
-		config = function()
-			require("lualine").setup()
 		end,
 	},
 	{
