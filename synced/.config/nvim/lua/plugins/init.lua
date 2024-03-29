@@ -20,6 +20,7 @@ require("lazy").setup({
 	require("plugins.lsp"),
 	require("plugins.formatter"),
 	require("plugins.gitsigns"),
+	require("plugins.terminal"),
 
 	-- small plugins that don't need config
 	"tpope/vim-sleuth",
