@@ -60,8 +60,12 @@ sudo systemctl enable ufw.service
 sudo ufw enable
 
 # docker
+sudo groupadd docker
 sudo systemctl enable docker.service
-
+sudo systemctl start docker.service
+sudo usermod -aG docker $USER
+sudo chmod +x $(where docker-compose)
+sudo chgrp docker $(where docker-compose)
 
 # oh my zsh
 
