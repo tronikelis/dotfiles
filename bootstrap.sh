@@ -6,6 +6,8 @@ sudo pacman -S --needed git base-devel && git clone https://aur.archlinux.org/ya
 sudo sed -i -e "s/#Color/Color/" /etc/pacman.conf
 cd ~
 
+yay -Y --gendb
+
 
 # install my used pacakges
 
@@ -37,6 +39,10 @@ packages=(
     "ntfs-3g"
 )
 
+yay -S "${packages[@]}" --noconfirm
+
+yay -Y --devel --save
+
 # firewall
 sudo systemctl start ufw.service
 sudo systemctl enable ufw.service
@@ -45,7 +51,6 @@ sudo ufw enable
 # docker
 sudo systemctl enable docker.service
 
-yay -S "${packages[@]}" --noconfirm
 
 # oh my zsh
 
@@ -84,6 +89,8 @@ mkdir -p "./.local/share/fonts/"
 wget "https://raw.githubusercontent.com/ryanoasis/nerd-fonts/master/patched-fonts/FiraCode/Regular/FiraCodeNerdFont-Regular.ttf" -P "./.local/share/fonts/"
 fc-cache
 
+# optional pacakges
+# mailspring vesktop
 
 # cleanup
 rm -rf yay
