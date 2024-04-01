@@ -12,6 +12,8 @@ yay -Y --gendb
 # install my used pacakges
 
 packages=(
+    "p7zip" 
+    "unrar"
     "spectacle"
     "ripgrep"
     "fd"
