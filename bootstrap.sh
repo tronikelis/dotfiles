@@ -12,6 +12,8 @@ yay -Y --gendb
 # install my used pacakges
 
 packages=(
+    "zenity"
+    "trash-cli"
     "neofetch"
     "gnome-keyring"
     "signal-desktop"
