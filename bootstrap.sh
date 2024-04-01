@@ -12,6 +12,8 @@ yay -Y --gendb
 # install my used pacakges
 
 packages=(
+    "ripgrep"
+    "fd"
     "fzf"
     "zenity"
     "trash-cli"
