@@ -12,6 +12,7 @@ yay -Y --gendb
 # install my used pacakges
 
 packages=(
+    "spectacle"
     "ripgrep"
     "fd"
     "fzf"
