@@ -12,6 +12,7 @@ yay -Y --gendb
 # install my used pacakges
 
 packages=(
+    "fzf"
     "zenity"
     "trash-cli"
     "neofetch"
