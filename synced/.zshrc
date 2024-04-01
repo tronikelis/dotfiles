@@ -117,3 +117,5 @@ alias gdelete='git branch | grep -v "^*" | cut -c 3- | fzf --layout reverse --in
 alias hs='history | sort -r | sed -E "s/\s+[0-9]+\s+//" | awk "!x[\$0]++" | fzf | sh'
 
 alias ssh="kitten ssh"
+
+alias vim="nvim"
