@@ -37,6 +37,7 @@ packages=(
     "noto-fonts"
     "noto-fonts-extra"
     "noto-fonts-emoji"
+    "noto-fonts-cjk"
     "kitty"
     "vlc"
     "go"
