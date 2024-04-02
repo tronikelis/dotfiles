@@ -35,6 +35,7 @@ return {
 			vim.keymap.set("n", "<leader>D", builtin.lsp_type_definitions, opts)
 			vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
 			vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
+			vim.keymap.set("n", "<leader>A", vim.lsp.buf.code_action, opts)
 
 			local cmp = require("cmp")
 			local lspkind = require("lspkind")
