@@ -6,7 +6,10 @@ return {
 
 			on_attach = function(bufnr)
 				local gitsigns = require("gitsigns")
-				vim.keymap.set("n", "<leader>hp", gitsigns.preview_hunk, { buffer = bufnr })
+				local opts = { buffer = bufnr }
+
+				vim.keymap.set("n", "<leader>hp", gitsigns.preview_hunk, opts)
+				vim.keymap.set("n", "<leader>hb", gitsigns.blame_line, opts)
 			end,
 		})
 	end,
