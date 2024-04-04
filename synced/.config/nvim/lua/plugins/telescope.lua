@@ -5,6 +5,7 @@ return {
 		"nvim-lua/plenary.nvim",
 		{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
 		"nvim-tree/nvim-web-devicons",
+		"debugloop/telescope-undo.nvim",
 	},
 	config = function()
 		local picker_config = function()
@@ -34,6 +35,8 @@ return {
 		})
 
 		require("telescope").load_extension("fzf")
+		require("telescope").load_extension("undo")
+		vim.keymap.set("n", "<leader>u", "<cmd>Telescope undo<cr>")
 
 		local builtin = require("telescope.builtin")
 
