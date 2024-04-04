@@ -88,6 +88,20 @@ return {
 		require("mason-lspconfig").setup({
 			handlers = {
 				lsp_zero.default_setup,
+
+				eslint = function()
+					require("lspconfig").eslint.setup({
+						root_dir = require("lspconfig").util.root_pattern(
+							".eslintrc.js",
+							".eslintrc.cjs",
+							".eslintrc.mjs",
+							".eslintrc.yaml",
+							".eslintrc.yml",
+							".eslintrc.json",
+							".eslintrc"
+						),
+					})
+				end,
 			},
 		})
 	end,
