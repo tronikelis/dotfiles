@@ -14,6 +14,7 @@ yay -Y --gendb
 # install my used pacakges
 
 packages=(
+    "starship"
     "zoxide"
     "unp"
     "p7zip" 
