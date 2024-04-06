@@ -120,4 +120,4 @@ alias ssh="kitten ssh"
 
 alias vim="nvim"
 
-eval "$(zoxide init zsh)"
+eval "$(zoxide init --cmd cd zsh)"
