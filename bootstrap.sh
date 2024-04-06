@@ -14,6 +14,7 @@ yay -Y --gendb
 # install my used pacakges
 
 packages=(
+    "kdialog"
     "starship"
     "zoxide"
     "unp"
