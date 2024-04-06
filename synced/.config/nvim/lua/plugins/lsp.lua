@@ -83,6 +83,7 @@ return {
 				"jdtls",
 				"prettierd",
 				"eslint-lsp",
+				"typos-lsp",
 			},
 		})
 		require("mason-lspconfig").setup({

@@ -14,6 +14,7 @@ yay -Y --gendb
 # install my used pacakges
 
 packages=(
+    "jdk-openjdk"
     "kdialog"
     "starship"
     "zoxide"

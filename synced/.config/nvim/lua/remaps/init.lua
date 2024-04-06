@@ -20,8 +20,11 @@ vim.opt.cursorline = true
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 vim.opt.scrolloff = 10
+
+-- spelling
 vim.opt.spelllang = "en_us"
-vim.opt.spell = true
+vim.opt.spelloptions = "camel"
+vim.opt.spell = false -- im using typos-lsp
 
 vim.opt.hlsearch = false
 vim.opt.incsearch = true
