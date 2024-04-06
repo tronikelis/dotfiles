@@ -11,7 +11,7 @@ cd ~
 yay -Y --gendb
 
 
-# install my used pacakges
+# install my used packages
 
 packages=(
     "jdk-openjdk"
@@ -109,7 +109,7 @@ mkdir -p "./.local/share/fonts/"
 wget "https://raw.githubusercontent.com/ryanoasis/nerd-fonts/master/patched-fonts/FiraCode/Regular/FiraCodeNerdFont-Regular.ttf" -P "./.local/share/fonts/"
 fc-cache
 
-# optional pacakges
+# optional packages
 # mailspring vesktop
 
 # cleanup
