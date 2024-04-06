@@ -70,4 +70,5 @@ require("lazy").setup({
 			require("dressing").setup({})
 		end,
 	},
+	"tpope/vim-surround",
 })
