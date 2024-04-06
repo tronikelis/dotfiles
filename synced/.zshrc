@@ -119,3 +119,5 @@ alias hs='history | sort -r | sed -E "s/\s+[0-9]+\s+//" | awk "!x[\$0]++" | fzf 
 alias ssh="kitten ssh"
 
 alias vim="nvim"
+
+eval "$(zoxide init zsh)"

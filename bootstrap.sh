@@ -14,6 +14,7 @@ yay -Y --gendb
 # install my used pacakges
 
 packages=(
+    "zoxide"
     "unp"
     "p7zip" 
     "unrar"
