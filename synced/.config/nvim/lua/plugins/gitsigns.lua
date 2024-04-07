@@ -10,6 +10,7 @@ return {
 
 				vim.keymap.set("n", "<leader>hp", gitsigns.preview_hunk, opts)
 				vim.keymap.set("n", "<leader>hb", gitsigns.blame_line, opts)
+				vim.keymap.set("n", "<leader>hr", gitsigns.reset_hunk, opts)
 			end,
 		})
 	end,
