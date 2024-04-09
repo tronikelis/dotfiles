@@ -1,3 +1,5 @@
+vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float)
+
 return {
 	"VonHeikemen/lsp-zero.nvim",
 	branch = "v3.x",
@@ -30,12 +32,22 @@ return {
 
 			vim.keymap.set("n", "gd", builtin.lsp_definitions, opts)
 			vim.keymap.set("n", "gr", builtin.lsp_references, opts)
-			vim.keymap.set("n", "gI", builtin.lsp_implementations, opts)
+			vim.keymap.set("n", "gt", builtin.lsp_type_definitions, opts)
+
+			vim.keymap.set("n", "<leader>dc", function()
+				builtin.diagnostics({ bufnr = 0 })
+			end, opts)
+			vim.keymap.set("n", "<leader>dC", function()
+				builtin.diagnostics({ bufnr = bufnr })
+			end, opts)
+
 			vim.keymap.set("n", "<leader>ds", builtin.lsp_document_symbols, opts)
-			vim.keymap.set("n", "<leader>D", builtin.lsp_type_definitions, opts)
-			vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+			vim.keymap.set("n", "<leader>dS", builtin.lsp_workspace_symbols, opts)
+
+			vim.keymap.set("n", "<leader>a", vim.lsp.buf.code_action, opts)
+			vim.keymap.set("n", "<leader>t", vim.lsp.buf.hover, opts)
+
 			vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
-			vim.keymap.set("n", "<leader>A", vim.lsp.buf.code_action, opts)
 
 			local cmp = require("cmp")
 			local lspkind = require("lspkind")
