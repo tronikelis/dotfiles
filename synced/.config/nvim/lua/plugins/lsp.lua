@@ -37,9 +37,7 @@ return {
 			vim.keymap.set("n", "<leader>dc", function()
 				builtin.diagnostics({ bufnr = 0 })
 			end, opts)
-			vim.keymap.set("n", "<leader>dC", function()
-				builtin.diagnostics({ bufnr = bufnr })
-			end, opts)
+			vim.keymap.set("n", "<leader>dC", builtin.diagnostics, opts)
 
 			vim.keymap.set("n", "<leader>ds", builtin.lsp_document_symbols, opts)
 			vim.keymap.set("n", "<leader>dS", builtin.lsp_workspace_symbols, opts)
