@@ -8,6 +8,7 @@ return {
 					enable = true,
 					max_lines = 3,
 					multiline_threshold = 1,
+					min_window_height = 25,
 				})
 			end,
 		},
