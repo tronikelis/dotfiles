@@ -12,6 +12,9 @@ return {
 				})
 			end,
 		},
+		{
+			"JoosepAlviste/nvim-ts-context-commentstring",
+		},
 	},
 	build = ":TSUpdate",
 	config = function()
