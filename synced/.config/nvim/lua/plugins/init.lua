@@ -22,16 +22,10 @@ require("lazy").setup({
 	require("plugins.gitsigns"),
 	require("plugins.terminal"),
 	require("plugins.lualine"),
+	require("plugins.comments"),
 
 	-- small plugins that don't need config
 	"tpope/vim-sleuth",
-	{
-		"numToStr/Comment.nvim",
-		lazy = false,
-		config = function()
-			require("Comment").setup()
-		end,
-	},
 	{
 		"windwp/nvim-autopairs",
 		event = "InsertEnter",
