@@ -120,6 +120,8 @@ alias ssh="kitten ssh"
 
 alias vim="nvim"
 
+alias tdm_sync_git_pull="cd ~/.tdm && git pull && tdm sync"
+
 eval "$(zoxide init --cmd cd zsh)"
 
 eval "$(starship init zsh)"
