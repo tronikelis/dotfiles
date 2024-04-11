@@ -20,7 +20,6 @@ require("lazy").setup({
 	require("plugins.lsp"),
 	require("plugins.formatter"),
 	require("plugins.gitsigns"),
-	require("plugins.terminal"),
 	require("plugins.lualine"),
 	require("plugins.comments"),
 
@@ -55,9 +54,6 @@ require("lazy").setup({
 		end,
 		lazy = true,
 		event = "VeryLazy",
-	},
-	{
-		"sindrets/diffview.nvim",
 	},
 	{
 		"stevearc/dressing.nvim",
