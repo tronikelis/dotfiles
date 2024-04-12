@@ -14,6 +14,7 @@ yay -Y --gendb
 # install my used packages
 
 packages=(
+    "git-delta"
     "jdk-openjdk"
     "kdialog"
     "starship"
