@@ -109,8 +109,11 @@ mkdir -p "./.local/share/fonts/"
 wget "https://raw.githubusercontent.com/ryanoasis/nerd-fonts/master/patched-fonts/FiraCode/Regular/FiraCodeNerdFont-Regular.ttf" -P "./.local/share/fonts/"
 fc-cache
 
-# run git conflicts to see all conflicts
+# git config
 git config --global alias.conflicts "diff --name-only --diff-filter=U"
+git config --global push.autosetupremote true
+git config --global branch.autosetupmerge simple
+git config --global init.defaultBranch master
 
 # optional packages
 # mailspring vesktop
