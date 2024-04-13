@@ -94,6 +94,7 @@ return {
 				"prettierd",
 				"eslint-lsp",
 				"typos-lsp",
+				"html-lsp",
 			},
 		})
 		require("mason-lspconfig").setup({
