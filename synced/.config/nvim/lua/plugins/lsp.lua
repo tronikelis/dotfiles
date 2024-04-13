@@ -13,6 +13,7 @@ return {
 		"hrsh7th/nvim-cmp",
 		"L3MON4D3/LuaSnip",
 		"WhoIsSethDaniel/mason-tool-installer.nvim",
+		"hrsh7th/cmp-path",
 		{
 			"j-hui/fidget.nvim",
 			config = function()
