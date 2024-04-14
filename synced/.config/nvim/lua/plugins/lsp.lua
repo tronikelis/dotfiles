@@ -25,9 +25,6 @@ return {
 		local lsp_zero = require("lsp-zero")
 
 		lsp_zero.on_attach(function(client, bufnr)
-			-- tree sitter ftw
-			client.server_capabilities.semanticTokensProvider = nil
-
 			local opts = { buffer = bufnr }
 			local builtin = require("telescope.builtin")
 
@@ -49,6 +46,12 @@ return {
 
 			vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
 		end)
+
+		lsp_zero.set_server_config({
+			on_init = function(client)
+				client.server_capabilities.semanticTokensProvider = nil
+			end,
+		})
 
 		local cmp = require("cmp")
 		local lspkind = require("lspkind")
