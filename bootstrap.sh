@@ -14,6 +14,8 @@ yay -Y --gendb
 # install my used packages
 
 packages=(
+    "eza"
+    "bat"
     "jdk-openjdk"
     "kdialog"
     "starship"
