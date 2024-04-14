@@ -8,7 +8,8 @@ vim.opt.shiftwidth = 4
 -- To disable jumping
 vim.opt.signcolumn = "yes"
 vim.opt.pumheight = 10 -- pop up menu height
-vim.wo.relativenumber = true
+vim.opt.relativenumber = true
+vim.opt.number = true
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 vim.opt.clipboard = "unnamedplus"
