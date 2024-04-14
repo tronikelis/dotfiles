@@ -14,6 +14,7 @@ yay -Y --gendb
 # install my used packages
 
 packages=(
+    "rust"
     "eza"
     "bat"
     "jdk-openjdk"
