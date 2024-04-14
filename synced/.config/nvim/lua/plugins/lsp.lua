@@ -48,40 +48,40 @@ return {
 			vim.keymap.set("n", "<leader>t", vim.lsp.buf.hover, opts)
 
 			vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
-
-			local cmp = require("cmp")
-			local lspkind = require("lspkind")
-
-			cmp.setup({
-				completion = { completeopt = "menu,menuone,noinsert" },
-				sources = {
-					{ name = "nvim_lsp" },
-					{ name = "luasnip" },
-					{ name = "path" },
-					{ name = "nvim_lsp_signature_help" },
-				},
-				mapping = cmp.mapping.preset.insert({
-					["<C-n>"] = cmp.mapping.select_next_item(),
-					["<C-p>"] = cmp.mapping.select_prev_item(),
-
-					["<C-b>"] = cmp.mapping.scroll_docs(-4),
-					["<C-f>"] = cmp.mapping.scroll_docs(4),
-
-					["<Tab>"] = cmp.mapping.confirm({ select = true }),
-					["<C-Space>"] = cmp.mapping.complete({}),
-				}),
-				formatting = {
-					format = lspkind.cmp_format({
-						mode = "symbol",
-						menu = {
-							nvim_lsp = "[LSP]",
-							path = "[Path]",
-							luasnip = "[LuaSnip]",
-						},
-					}),
-				},
-			})
 		end)
+
+		local cmp = require("cmp")
+		local lspkind = require("lspkind")
+
+		cmp.setup({
+			completion = { completeopt = "menu,menuone,noinsert" },
+			sources = {
+				{ name = "nvim_lsp" },
+				{ name = "nvim_lsp_signature_help" },
+				{ name = "path" },
+				{ name = "luasnip" },
+			},
+			mapping = cmp.mapping.preset.insert({
+				["<C-n>"] = cmp.mapping.select_next_item(),
+				["<C-p>"] = cmp.mapping.select_prev_item(),
+
+				["<C-b>"] = cmp.mapping.scroll_docs(-4),
+				["<C-f>"] = cmp.mapping.scroll_docs(4),
+
+				["<Tab>"] = cmp.mapping.confirm({ select = true }),
+				["<C-Space>"] = cmp.mapping.complete({}),
+			}),
+			formatting = {
+				format = lspkind.cmp_format({
+					mode = "symbol",
+					menu = {
+						nvim_lsp = "[LSP]",
+						path = "[Path]",
+						luasnip = "[LuaSnip]",
+					},
+				}),
+			},
+		})
 
 		require("mason").setup({})
 		require("mason-tool-installer").setup({
