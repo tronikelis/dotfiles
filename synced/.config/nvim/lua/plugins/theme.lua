@@ -7,6 +7,7 @@ return {
 				treesitter = true,
 				cmp = true,
 				gitsigns = true,
+				treesitter_context = true,
 			},
 		})
 
