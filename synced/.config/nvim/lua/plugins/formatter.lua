@@ -8,6 +8,8 @@ return {
 				typescript = { { "prettierd", "prettier" } },
 				typescriptreact = { { "prettierd", "prettier" } },
 				tsx = { { "prettierd", "prettier" } },
+				html = { { "prettierd", "prettier" } },
+				json = { { "prettierd", "prettier" } },
 			},
 			format_on_save = {
 				lsp_fallback = true,
