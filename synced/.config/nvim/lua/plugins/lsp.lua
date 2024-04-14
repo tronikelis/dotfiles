@@ -71,6 +71,7 @@ return {
 				}),
 				formatting = {
 					format = lspkind.cmp_format({
+						mode = "symbol",
 						menu = {
 							nvim_lsp = "[LSP]",
 							path = "[Path]",
