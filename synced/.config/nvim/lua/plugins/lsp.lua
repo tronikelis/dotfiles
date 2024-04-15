@@ -14,6 +14,7 @@ return {
 		"L3MON4D3/LuaSnip",
 		"WhoIsSethDaniel/mason-tool-installer.nvim",
 		"hrsh7th/cmp-path",
+		"lukas-reineke/cmp-under-comparator",
 		{
 			"j-hui/fidget.nvim",
 			config = function()
@@ -63,6 +64,16 @@ return {
 				{ name = "nvim_lsp_signature_help" },
 				{ name = "path" },
 				{ name = "luasnip" },
+			},
+			sorting = {
+				comparators = {
+					cmp.config.compare.offset,
+					cmp.config.compare.exact,
+					cmp.config.compare.score,
+					cmp.config.compare.recently_used,
+					require("cmp-under-comparator").under,
+					cmp.config.compare.kind,
+				},
 			},
 			mapping = cmp.mapping.preset.insert({
 				["<C-n>"] = cmp.mapping.select_next_item(),
