@@ -1,4 +1,10 @@
 vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float)
+vim.keymap.set("n", "<leader>a", vim.lsp.buf.code_action)
+vim.keymap.set("n", "<leader>t", vim.lsp.buf.hover)
+vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename)
+
+vim.keymap.set("n", "[e", vim.diagnostic.goto_prev)
+vim.keymap.set("n", "]e", vim.diagnostic.goto_next)
 
 return {
 	"VonHeikemen/lsp-zero.nvim",
@@ -41,11 +47,6 @@ return {
 
 			vim.keymap.set("n", "<leader>ds", builtin.lsp_document_symbols, opts)
 			vim.keymap.set("n", "<leader>dS", builtin.lsp_workspace_symbols, opts)
-
-			vim.keymap.set("n", "<leader>a", vim.lsp.buf.code_action, opts)
-			vim.keymap.set("n", "<leader>t", vim.lsp.buf.hover, opts)
-
-			vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
 		end)
 
 		lsp_zero.set_server_config({
