@@ -10,6 +10,7 @@ return {
 				tsx = { { "prettierd", "prettier" } },
 				html = { { "prettierd", "prettier" } },
 				json = { { "prettierd", "prettier" } },
+				markdown = { { "prettierd", "prettier" } },
 			},
 			format_on_save = {
 				lsp_fallback = true,
