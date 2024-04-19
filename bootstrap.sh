@@ -109,7 +109,19 @@ tdm sync
 # fira code nerd font
 
 mkdir -p "./.local/share/fonts/"
-wget "https://raw.githubusercontent.com/ryanoasis/nerd-fonts/master/patched-fonts/FiraCode/Regular/FiraCodeNerdFont-Regular.ttf" -P "./.local/share/fonts/"
+
+
+$(
+    cd "$(mktemp)"
+    wget "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/FiraCode.zip"
+    unp "FiraCode.zip"
+    cp "FiraCodeNerdFont-Bold.ttf" ~/.local/share/fonts/
+    cp "FiraCodeNerdFont-Light.ttf" ~/.local/share/fonts/
+    cp "FiraCodeNerdFont-Medium.ttf" ~/.local/share/fonts/
+    cp "FiraCodeNerdFont-Regular.ttf" ~/.local/share/fonts/
+    cp "FiraCodeNerdFont-SemiBold.ttf" ~/.local/share/fonts/
+)
+
 fc-cache
 
 # git config
