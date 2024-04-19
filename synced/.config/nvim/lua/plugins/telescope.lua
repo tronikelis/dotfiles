@@ -6,6 +6,7 @@ return {
 		{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
 		"nvim-tree/nvim-web-devicons",
 		"debugloop/telescope-undo.nvim",
+		"nvim-telescope/telescope-frecency.nvim",
 	},
 	config = function()
 		local picker_config = function()
@@ -38,8 +39,16 @@ return {
 		})
 
 		require("telescope").load_extension("fzf")
+
+		require("telescope").load_extension("frecency")
+		vim.keymap.set("n", "<leader><leader>", function()
+			require("telescope").extensions.frecency.frecency({
+				workspace = "CWD",
+			})
+		end)
+
 		require("telescope").load_extension("undo")
-		vim.keymap.set("n", "<leader>u", "<cmd>Telescope undo<cr>")
+		vim.keymap.set("n", "<leader>u", require("telescope").extensions.undo.undo)
 
 		local builtin = require("telescope.builtin")
 
