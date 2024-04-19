@@ -14,7 +14,6 @@ yay -Y --gendb
 # install my used packages
 
 packages=(
-    "rust"
     "eza"
     "bat"
     "jdk-openjdk"
@@ -61,6 +60,10 @@ packages=(
 yay -S "${packages[@]}" --noconfirm
 
 yay -Y --devel --save
+
+# rust install, I tried from extra repo it does not work
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+
 
 # firewall
 sudo systemctl start ufw.service
