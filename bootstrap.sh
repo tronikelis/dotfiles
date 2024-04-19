@@ -110,11 +110,10 @@ tdm sync
 
 mkdir -p "./.local/share/fonts/"
 
-
-$(
-    cd "$(mktemp)"
+(
+    cd $(mktemp -d)
     wget "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/FiraCode.zip"
-    unp "FiraCode.zip"
+    unp FiraCode.zip
     cp "FiraCodeNerdFont-Bold.ttf" ~/.local/share/fonts/
     cp "FiraCodeNerdFont-Light.ttf" ~/.local/share/fonts/
     cp "FiraCodeNerdFont-Medium.ttf" ~/.local/share/fonts/
@@ -122,7 +121,7 @@ $(
     cp "FiraCodeNerdFont-SemiBold.ttf" ~/.local/share/fonts/
 )
 
-fc-cache
+fc-cache -r
 
 # git config
 git config --global alias.conflicts "diff --name-only --diff-filter=U"
