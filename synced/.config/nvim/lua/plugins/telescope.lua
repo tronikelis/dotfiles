@@ -17,8 +17,15 @@ return {
 
 		local actions = require("telescope.actions")
 
+		local vimgrep_arguments = {
+			table.unpack(require("telescope.config").values.vimgrep_arguments),
+		}
+
+		table.insert(vimgrep_arguments, "--hidden")
+
 		require("telescope").setup({
 			defaults = {
+				vimgrep_arguments = vimgrep_arguments,
 				file_ignore_patterns = {
 					".git/",
 				},
