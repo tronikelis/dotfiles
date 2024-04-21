@@ -36,6 +36,18 @@ return {
 					hidden = true,
 				},
 			},
+			extensions = {
+				frecency = {
+					recency_values = {
+						{ age = 240, value = 500 }, -- past 4 hours
+						{ age = 1440, value = 100 }, -- past day
+						{ age = 4320, value = 60 }, -- past 3 days
+						{ age = 10080, value = 40 }, -- past week
+						{ age = 43200, value = 20 }, -- past month
+						{ age = 129600, value = 10 }, -- past 90 days
+					},
+				},
+			},
 		})
 
 		require("telescope").load_extension("fzf")
