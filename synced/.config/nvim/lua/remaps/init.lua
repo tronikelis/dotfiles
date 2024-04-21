@@ -46,6 +46,10 @@ vim.keymap.set("n", "n", "nzzzv")
 vim.keymap.set("n", "N", "Nzzzv")
 vim.keymap.set("x", "<leader>p", [["_dP]])
 
+-- quickfix list nav
+vim.keymap.set("n", "]q", "<cmd>cnext<cr>zz")
+vim.keymap.set("n", "[q", "<cmd>cprev<cr>zz")
+
 vim.diagnostic.config({
 	update_in_insert = true,
 })
