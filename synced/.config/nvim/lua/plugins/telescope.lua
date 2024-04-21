@@ -22,6 +22,7 @@ return {
 		}
 
 		table.insert(vimgrep_arguments, "--hidden")
+		table.insert(vimgrep_arguments, "--trim")
 
 		require("telescope").setup({
 			defaults = {
