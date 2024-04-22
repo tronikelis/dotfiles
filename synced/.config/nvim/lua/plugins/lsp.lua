@@ -20,6 +20,7 @@ return {
 		"L3MON4D3/LuaSnip",
 		"WhoIsSethDaniel/mason-tool-installer.nvim",
 		"hrsh7th/cmp-path",
+		"hrsh7th/cmp-emoji",
 		"lukas-reineke/cmp-under-comparator",
 		{
 			"j-hui/fidget.nvim",
@@ -59,14 +60,20 @@ return {
 		local lspkind = require("lspkind")
 
 		cmp.setup({
-			completion = { completeopt = "menu,menuone,noinsert" },
+			preselect = cmp.PreselectMode.Item,
+			completion = {
+				completeopt = "menu,menuone,noinsert",
+				keyword_length = 2,
+			},
 			sources = {
 				{ name = "nvim_lsp" },
 				{ name = "nvim_lsp_signature_help" },
 				{ name = "path" },
 				{ name = "luasnip" },
+				{ name = "emoji" },
 			},
 			sorting = {
+				priority_weight = 2,
 				comparators = {
 					cmp.config.compare.offset,
 					cmp.config.compare.exact,
@@ -92,9 +99,20 @@ return {
 					menu = {
 						nvim_lsp = "[LSP]",
 						path = "[Path]",
-						luasnip = "[LuaSnip]",
+						luasnip = "[Snip]",
+						emoji = "[Emoji]",
 					},
 				}),
+			},
+			window = {
+				completion = cmp.config.window.bordered(),
+				documentation = cmp.config.window.bordered(),
+			},
+			view = {
+				entries = {
+					selection_order = "near_cursor",
+					follow_cursor = true,
+				},
 			},
 		})
 
