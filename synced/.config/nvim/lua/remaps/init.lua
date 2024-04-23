@@ -41,7 +41,7 @@ vim.keymap.set("n", "<C-d>", "<C-d>zz")
 vim.keymap.set("n", "<C-u>", "<C-u>zz")
 vim.keymap.set("n", "n", "nzzzv")
 vim.keymap.set("n", "N", "Nzzzv")
-vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
+vim.keymap.set("n", "<leader>s", [[:%s/<C-r><C-w>/<C-r><C-w>/gc<Left><Left><Left>]])
 vim.keymap.set("n", "n", "nzzzv")
 vim.keymap.set("n", "N", "Nzzzv")
 vim.keymap.set("x", "<leader>p", [["_dP]])
@@ -49,6 +49,10 @@ vim.keymap.set("x", "<leader>p", [["_dP]])
 -- quickfix list nav
 vim.keymap.set("n", "]q", "<cmd>cnext<cr>zz")
 vim.keymap.set("n", "[q", "<cmd>cprev<cr>zz")
+
+-- jump to git conflict markers
+vim.keymap.set("n", "[m", "<cmd>?^<<<<<<<<cr>zz")
+vim.keymap.set("n", "]m", "<cmd>/^<<<<<<<<cr>zz")
 
 vim.diagnostic.config({
 	update_in_insert = true,
