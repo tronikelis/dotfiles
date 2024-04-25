@@ -118,9 +118,6 @@ return {
 					follow_cursor = true,
 				},
 			},
-			experimental = {
-				ghost_text = true,
-			},
 		})
 
 		require("mason").setup({})
