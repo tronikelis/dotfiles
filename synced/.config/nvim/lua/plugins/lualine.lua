@@ -24,7 +24,7 @@ end
 local weather = ""
 local update_weather
 update_weather = function()
-	vim.fn.jobstart('curl -s "wttr.in/Vilnius?format=%c%t" | tr -d "[:blank:]"', {
+	vim.fn.jobstart('curl -s -m 30 "wttr.in/Vilnius?format=%c%t" | tr -d "[:blank:]"', {
 		detach = false,
 		stdout_buffered = true,
 		on_stdout = function(chan_id, stdout)
