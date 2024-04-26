@@ -6,6 +6,26 @@ vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename)
 vim.keymap.set("n", "[e", vim.diagnostic.goto_prev)
 vim.keymap.set("n", "]e", vim.diagnostic.goto_next)
 
+local git_branch = ""
+vim.api.nvim_create_autocmd({ "FocusGained" }, {
+	callback = function()
+		vim.fn.jobstart("git branch --show-current 2> /dev/null | tr -d '\n'", {
+			stdout_buffered = true,
+			detach = false,
+			on_stdout = function(chan_id, stdout)
+				local latest = stdout[1]
+
+				if latest == git_branch then
+					return
+				end
+
+				git_branch = latest
+				vim.cmd("LspRestart")
+			end,
+		})
+	end,
+})
+
 return {
 	"VonHeikemen/lsp-zero.nvim",
 	branch = "v3.x",
