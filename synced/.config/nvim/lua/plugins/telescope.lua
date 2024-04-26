@@ -46,9 +46,11 @@ return {
 			},
 			extensions = {
 				frecency = {
+					max_timestamps = 50,
+					show_unindexed = false,
 					recency_values = {
-						{ age = 240, value = 500 }, -- past 4 hours
-						{ age = 1440, value = 100 }, -- past day
+						{ age = 240, value = 5000 }, -- past 4 hours
+						{ age = 1440, value = 1000 }, -- past day
 						{ age = 4320, value = 60 }, -- past 3 days
 						{ age = 10080, value = 40 }, -- past week
 						{ age = 43200, value = 20 }, -- past month
