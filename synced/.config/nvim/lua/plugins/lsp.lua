@@ -7,22 +7,32 @@ vim.keymap.set("n", "[e", vim.diagnostic.goto_prev)
 vim.keymap.set("n", "]e", vim.diagnostic.goto_next)
 
 local git_branch = ""
+
+local jobstart_branch = function(callback)
+	vim.fn.jobstart("git branch --show-current 2> /dev/null | tr -d '\n'", {
+		stdout_buffered = true,
+		detach = false,
+		on_stdout = function(chan_id, stdout)
+			local latest = stdout[1]
+			callback(latest)
+		end,
+	})
+end
+
+jobstart_branch(function(branch)
+	git_branch = branch
+end)
+
 vim.api.nvim_create_autocmd({ "FocusGained" }, {
 	callback = function()
-		vim.fn.jobstart("git branch --show-current 2> /dev/null | tr -d '\n'", {
-			stdout_buffered = true,
-			detach = false,
-			on_stdout = function(chan_id, stdout)
-				local latest = stdout[1]
+		jobstart_branch(function(branch)
+			if branch == git_branch then
+				return
+			end
 
-				if latest == git_branch then
-					return
-				end
-
-				git_branch = latest
-				vim.cmd("LspRestart")
-			end,
-		})
+			git_branch = branch
+			vim.cmd("LspRestart")
+		end)
 	end,
 })
 
