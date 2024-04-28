@@ -109,19 +109,21 @@ go install github.com/Tronikelis/tdm@v0.1.0
 export PATH=${PATH}:`go env GOPATH`/bin
 tdm sync
 
-# fira code nerd font
+# fonts
 
 mkdir -p "./.local/share/fonts/"
 
 (
     cd $(mktemp -d)
-    wget "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/FiraCode.zip"
-    unp FiraCode.zip
-    cp "FiraCodeNerdFont-Bold.ttf" ~/.local/share/fonts/
-    cp "FiraCodeNerdFont-Light.ttf" ~/.local/share/fonts/
-    cp "FiraCodeNerdFont-Medium.ttf" ~/.local/share/fonts/
-    cp "FiraCodeNerdFont-Regular.ttf" ~/.local/share/fonts/
-    cp "FiraCodeNerdFont-SemiBold.ttf" ~/.local/share/fonts/
+    wget "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/NerdFontsSymbolsOnly.zip"
+    unp NerdFontsSymbolsOnly.zip
+    cp SymbolsNerdFont-Regular.ttf "~/.local/share/fonts/"
+    cp SymbolsNerdFontMono-Regular.ttf "~/.local/share/fonts/"
+
+    cd $(mktemp -d)
+    wget "https://github.com/tonsky/FiraCode/releases/download/6.2/Fira_Code_v6.2.zip"
+    unp Fira_Code_v6.2.zip
+    cp -r "./ttf/*" "~/.local/share/fonts/"
 )
 
 fc-cache -r
