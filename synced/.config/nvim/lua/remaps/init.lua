@@ -53,8 +53,8 @@ vim.keymap.set("n", "]q", "<cmd>cnext<cr>zz")
 vim.keymap.set("n", "[q", "<cmd>cprev<cr>zz")
 
 -- jump to git conflict markers
-vim.keymap.set("n", "[m", "<cmd>?^<<<<<<<<cr>zz")
-vim.keymap.set("n", "]m", "<cmd>/^<<<<<<<<cr>zz")
+vim.keymap.set("n", "[m", "<cmd>/^<<<<<<<<cr>zz")
+vim.keymap.set("n", "]m", "<cmd>/^>>>>>>><cr>zz")
 
 vim.diagnostic.config({
 	update_in_insert = true,
