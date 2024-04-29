@@ -19,6 +19,26 @@ local get_weather = function()
 	return weather
 end
 
+local get_buff_linecount = function()
+	local count = vim.api.nvim_buf_line_count(0)
+
+	if count >= 1000 then
+		count = count / 1000
+
+		local dotIndex = string.find(count, ".", 1, true)
+
+		if dotIndex ~= nil then
+			count = string.sub(count, 1, dotIndex + 1)
+		else
+			count = count .. ".0"
+		end
+
+		count = count .. "K"
+	end
+
+	return count
+end
+
 return {
 	"nvim-lualine/lualine.nvim",
 	dependencies = { "nvim-tree/nvim-web-devicons" },
@@ -30,6 +50,9 @@ return {
 					right = "\\",
 				},
 				section_separators = { left = "", right = "" },
+			},
+			sections = {
+				lualine_y = { get_buff_linecount },
 			},
 			tabline = {
 				lualine_b = {
