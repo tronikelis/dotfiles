@@ -130,6 +130,9 @@ eval "$(zoxide init --cmd cd zsh)"
 
 eval "$(starship init zsh)"
 
-
-
+function gpush() {
+    git add .
+    git commit -m "$@"
+    git push
+}
 
