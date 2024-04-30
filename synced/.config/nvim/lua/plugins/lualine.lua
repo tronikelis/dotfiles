@@ -53,6 +53,12 @@ return {
 			},
 			sections = {
 				lualine_y = { get_buff_linecount },
+				lualine_a = {
+					function()
+						local mode = require("lualine.utils.mode").get_mode()
+						return string.sub(mode, 1, 1)
+					end,
+				},
 			},
 			tabline = {
 				lualine_b = {
