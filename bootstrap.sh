@@ -10,51 +10,50 @@ cd ~
 
 yay -Y --gendb
 
-
 # install my used packages
 
 packages=(
-    "eza"
-    "bat"
-    "jdk-openjdk"
-    "kdialog"
-    "starship"
-    "zoxide"
-    "unp"
-    "p7zip" 
-    "unrar"
-    "spectacle"
-    "ripgrep"
-    "fd"
-    "fzf"
-    "zenity"
-    "trash-cli"
-    "neofetch"
-    "gnome-keyring"
-    "signal-desktop"
-    "firefox"
-    "gwenview"
-    "kimageformats"
-    "qt6-imageformats"
-    "zsh"
-    "neovim"
-    "unzip"
-    "wl-clipboard"
-    "noto-fonts"
-    "noto-fonts-extra"
-    "noto-fonts-emoji"
-    "noto-fonts-cjk"
-    "kitty"
-    "vlc"
-    "go"
-    "man-db"
-    "man-pages"
-    "ufw"
-    "docker"
-    "docker-compose"
-    "partitionmanager"
-    "dosfstools"
-    "ntfs-3g"
+	"eza"
+	"bat"
+	"jdk-openjdk"
+	"kdialog"
+	"starship"
+	"zoxide"
+	"unp"
+	"p7zip"
+	"unrar"
+	"spectacle"
+	"ripgrep"
+	"fd"
+	"fzf"
+	"zenity"
+	"trash-cli"
+	"neofetch"
+	"gnome-keyring"
+	"signal-desktop"
+	"firefox"
+	"gwenview"
+	"kimageformats"
+	"qt6-imageformats"
+	"zsh"
+	"neovim"
+	"unzip"
+	"wl-clipboard"
+	"noto-fonts"
+	"noto-fonts-extra"
+	"noto-fonts-emoji"
+	"noto-fonts-cjk"
+	"kitty"
+	"vlc"
+	"go"
+	"man-db"
+	"man-pages"
+	"ufw"
+	"docker"
+	"docker-compose"
+	"partitionmanager"
+	"dosfstools"
+	"ntfs-3g"
 )
 
 yay -S "${packages[@]}" --noconfirm
@@ -63,7 +62,6 @@ yay -Y --devel --save
 
 # rust install, I tried from extra repo it does not work
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-
 
 # firewall
 sudo systemctl start ufw.service
@@ -86,11 +84,11 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/too
 
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"                   # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
 
-nvm install --lts 
-nvm alias default node 
+nvm install --lts
+nvm alias default node
 corepack enable
 
 # chaotic aur
@@ -98,7 +96,7 @@ sudo pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com
 sudo pacman-key --lsign-key 3056513887B78AEB
 sudo pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst' --noconfirm
 sudo pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst' --noconfirm
- 
+
 printf "[chaotic-aur]\nInclude = /etc/pacman.d/chaotic-mirrorlist" | sudo tee -a /etc/pacman.conf
 
 # dotfiles
@@ -106,7 +104,7 @@ printf "[chaotic-aur]\nInclude = /etc/pacman.d/chaotic-mirrorlist" | sudo tee -a
 git clone https://github.com/Tronikelis/dotfiles.git ./.tdm
 go install github.com/Tronikelis/tdm@v0.1.0
 
-export PATH=${PATH}:`go env GOPATH`/bin
+export PATH=${PATH}:$(go env GOPATH)/bin
 tdm sync
 
 # fonts
@@ -114,16 +112,16 @@ tdm sync
 mkdir -p "./.local/share/fonts/"
 
 (
-    cd $(mktemp -d)
-    wget "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/NerdFontsSymbolsOnly.zip"
-    unp NerdFontsSymbolsOnly.zip
-    cp SymbolsNerdFont-Regular.ttf "~/.local/share/fonts/"
-    cp SymbolsNerdFontMono-Regular.ttf "~/.local/share/fonts/"
+	cd $(mktemp -d)
+	wget "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/NerdFontsSymbolsOnly.zip"
+	unp NerdFontsSymbolsOnly.zip
+	cp SymbolsNerdFont-Regular.ttf "~/.local/share/fonts/"
+	cp SymbolsNerdFontMono-Regular.ttf "~/.local/share/fonts/"
 
-    cd $(mktemp -d)
-    wget "https://github.com/tonsky/FiraCode/releases/download/6.2/Fira_Code_v6.2.zip"
-    unp Fira_Code_v6.2.zip
-    cp -r "./ttf/*" "~/.local/share/fonts/"
+	cd $(mktemp -d)
+	wget "https://github.com/tonsky/FiraCode/releases/download/6.2/Fira_Code_v6.2.zip"
+	unp Fira_Code_v6.2.zip
+	cp -r "./ttf/*" "~/.local/share/fonts/"
 )
 
 fc-cache -r

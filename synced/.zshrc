@@ -71,10 +71,10 @@ ZSH_THEME="robbyrussell"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-    git
-    zsh-syntax-highlighting
-    zsh-autosuggestions
-    autoupdate
+	git
+	zsh-syntax-highlighting
+	zsh-autosuggestions
+	autoupdate
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -108,7 +108,7 @@ source $ZSH/oh-my-zsh.sh
 export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
 
-export PATH=${PATH}:`go env GOPATH`/bin
+export PATH=${PATH}:$(go env GOPATH)/bin
 
 alias gcheckout='git branch | grep -v "^*" | cut -c 3- | fzf --layout reverse --info inline | xargs git checkout'
 
@@ -131,8 +131,11 @@ eval "$(zoxide init --cmd cd zsh)"
 eval "$(starship init zsh)"
 
 function gpush() {
-    git add .
-    git commit -m "$@"
-    git push
+	git add .
+	git commit -m "$@"
+	git push
 }
 
+function cdmktemp() {
+	cd "$(mktemp -d)"
+}

@@ -11,6 +11,8 @@ return {
 				html = { { "prettierd", "prettier" } },
 				json = { { "prettierd", "prettier" } },
 				markdown = { { "prettierd", "prettier" } },
+				sh = { "shfmt" },
+				zsh = { "shfmt" },
 			},
 			format_on_save = {
 				lsp_fallback = true,
