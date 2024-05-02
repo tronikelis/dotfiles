@@ -162,7 +162,7 @@ return {
 				"lua_ls",
 				"eslint",
 				"jdtls",
-				"prettierd",
+				"prettier",
 				"eslint-lsp",
 				"typos-lsp",
 				"html-lsp",
