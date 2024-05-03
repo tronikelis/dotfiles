@@ -67,6 +67,8 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 sudo systemctl start ufw.service
 sudo systemctl enable ufw.service
 sudo ufw enable
+sudo ufw default deny incoming
+sudo ufw default allow outgoing
 
 # docker
 sudo groupadd docker
