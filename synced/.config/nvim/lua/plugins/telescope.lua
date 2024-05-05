@@ -43,6 +43,9 @@ return {
 				find_files = {
 					hidden = true,
 				},
+				buffers = {
+					sort_mru = true,
+				},
 			},
 			extensions = {
 				frecency = {
@@ -78,5 +81,6 @@ return {
 		vim.keymap.set("n", "<leader>gs", builtin.git_status, {})
 		vim.keymap.set("n", "<C-p>", builtin.find_files, {})
 		vim.keymap.set("n", "<leader>/", builtin.current_buffer_fuzzy_find, {})
+		vim.keymap.set("n", "<leader>b", builtin.buffers, {})
 	end,
 }
