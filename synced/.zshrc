@@ -114,8 +114,6 @@ alias gcheckout='git branch | grep -v "^*" | cut -c 3- | fzf --layout reverse --
 
 alias gdelete='git branch | grep -v "^*" | cut -c 3- | fzf --layout reverse --info inline --multi --print0 | xargs -0 git branch --delete'
 
-alias hs='history | sort -r | sed -E "s/\s+[0-9]+\s+//" | awk "!x[\$0]++" | fzf | sh'
-
 alias ssh="kitten ssh"
 
 alias vim="nvim"
@@ -129,6 +127,8 @@ alias tdm_sync_git_pull="cd ~/.tdm && git pull && tdm sync && cd -"
 eval "$(zoxide init --cmd cd zsh)"
 
 eval "$(starship init zsh)"
+
+eval "$(fzf --zsh)"
 
 function gpush() {
 	git add .
