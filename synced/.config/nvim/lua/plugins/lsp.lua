@@ -153,6 +153,8 @@ return {
 		require("mason").setup({})
 		require("mason-tool-installer").setup({
 			ensure_installed = {
+				"eslint-lsp",
+				"prettier",
 				"shfmt",
 				"stylua",
 				"tailwindcss-language-server",
@@ -160,10 +162,7 @@ return {
 				"rust_analyzer",
 				"tsserver",
 				"lua_ls",
-				"eslint",
 				"jdtls",
-				"prettier",
-				"eslint-lsp",
 				"typos-lsp",
 				"html-lsp",
 			},
@@ -181,7 +180,13 @@ return {
 							".eslintrc.yaml",
 							".eslintrc.yml",
 							".eslintrc.json",
-							".eslintrc"
+							".eslintrc",
+							"eslint.config.js",
+							"eslint.config.mjs",
+							"eslint.config.cjs",
+							"eslint.config.ts",
+							"eslint.config.mts",
+							"eslint.config.cts"
 						),
 					})
 				end,
