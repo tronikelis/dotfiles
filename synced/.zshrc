@@ -139,11 +139,15 @@ function cdmktemp() {
 
 diff_preview='git log --date=short --pretty=format:"%Cred%h%Creset %Cblue%ad%Creset %s" --color master..{}'
 
+function get_fzf_header() {
+	echo "current: $(git branch --show-current)"
+}
+
 function gci() {
 	git branch |
 		grep -v "^*" |
 		cut -c 3- |
-		fzf --layout reverse --info inline --preview="$diff_preview" |
+		fzf --header-first --header "$(get_fzf_header)" --layout reverse --info inline --preview="$diff_preview" |
 		xargs git checkout
 }
 
@@ -151,6 +155,6 @@ function gdi() {
 	git branch |
 		grep -v "^*" |
 		cut -c 3- |
-		fzf --layout reverse --info inline --multi --print0 --preview="$diff_preview" |
+		fzf --header-first --header "$(get_fzf_header)" --layout reverse --info inline --multi --print0 --preview="$diff_preview" |
 		xargs -0 git branch --delete
 }
