@@ -106,13 +106,10 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"                   # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
 
 export PATH=${PATH}:$(go env GOPATH)/bin
-
-alias gcheckout='git branch | grep -v "^*" | cut -c 3- | fzf --layout reverse --info inline | xargs git checkout'
-
-alias gdelete='git branch | grep -v "^*" | cut -c 3- | fzf --layout reverse --info inline --multi --print0 | xargs -0 git branch --delete'
 
 alias ssh="kitten ssh"
 
@@ -138,4 +135,22 @@ function gpush() {
 
 function cdmktemp() {
 	cd "$(mktemp -d)"
+}
+
+diff_preview="git diff --name-only master...{}"
+
+function gci() {
+	git branch |
+		grep -v "^*" |
+		cut -c 3- |
+		fzf --layout reverse --info inline --preview="$diff_preview" |
+		xargs git checkout
+}
+
+function gdi() {
+	git branch |
+		grep -v "^*" |
+		cut -c 3- |
+		fzf --layout reverse --info inline --multi --print0 --preview="$diff_preview" |
+		xargs -0 git branch --delete
 }
