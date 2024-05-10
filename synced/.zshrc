@@ -137,7 +137,7 @@ function cdmktemp() {
 	cd "$(mktemp -d)"
 }
 
-diff_preview='git log --date=short --pretty=format:"%h  %ad  %s" master..{}'
+diff_preview='git log --date=short --pretty=format:"%Cred%h%Creset %Cblue%ad%Creset %s" --color master..{}'
 
 function gci() {
 	git branch |
