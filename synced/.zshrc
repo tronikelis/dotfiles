@@ -137,7 +137,7 @@ function cdmktemp() {
 	cd "$(mktemp -d)"
 }
 
-diff_preview="git diff --name-only master...{}"
+diff_preview="echo '[master] files changed:\n'; git diff --name-only master...{}"
 
 function gci() {
 	git branch |
