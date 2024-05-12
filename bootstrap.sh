@@ -117,13 +117,13 @@ mkdir -p "./.local/share/fonts/"
 	cd $(mktemp -d)
 	wget "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/NerdFontsSymbolsOnly.zip"
 	unp NerdFontsSymbolsOnly.zip
-	cp SymbolsNerdFont-Regular.ttf "~/.local/share/fonts/"
-	cp SymbolsNerdFontMono-Regular.ttf "~/.local/share/fonts/"
+	cp SymbolsNerdFont-Regular.ttf ~/.local/share/fonts/
+	cp SymbolsNerdFontMono-Regular.ttf ~/.local/share/fonts/
 
 	cd $(mktemp -d)
-	wget "https://github.com/tonsky/FiraCode/releases/download/6.2/Fira_Code_v6.2.zip"
-	unp Fira_Code_v6.2.zip
-	cp -r "./ttf/*" "~/.local/share/fonts/"
+	wget "https://github.com/JetBrains/JetBrainsMono/releases/download/v2.304/JetBrainsMono-2.304.zip"
+	unp JetBrainsMono-2.304.zip
+	cp -r ./fonts/ttf/. ~/.local/share/fonts
 )
 
 fc-cache -r
