@@ -13,6 +13,7 @@ yay -Y --gendb
 # install my used packages
 
 packages=(
+	"tokei"
 	"eza"
 	"bat"
 	"jdk-openjdk"
