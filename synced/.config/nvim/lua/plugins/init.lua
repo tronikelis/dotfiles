@@ -22,6 +22,7 @@ require("lazy").setup({
 	require("plugins.gitsigns"),
 	require("plugins.lualine"),
 	require("plugins.comments"),
+	require("plugins.oil"),
 
 	-- small plugins that don't need config
 	"tpope/vim-sleuth",
@@ -62,5 +63,4 @@ require("lazy").setup({
 		end,
 	},
 	"tpope/vim-surround",
-	"tpope/vim-vinegar",
 })
