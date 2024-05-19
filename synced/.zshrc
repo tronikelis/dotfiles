@@ -71,8 +71,6 @@ ZSH_THEME="robbyrussell"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 
-setopt globdots
-
 plugins=(
 	git
 	fzf-tab
@@ -82,6 +80,9 @@ plugins=(
 )
 
 source $ZSH/oh-my-zsh.sh
+
+_comp_options+=(globdots)
+zstyle ':completion:*' special-dirs false
 
 # User configuration
 
