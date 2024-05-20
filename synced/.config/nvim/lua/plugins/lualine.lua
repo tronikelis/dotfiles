@@ -9,6 +9,7 @@ return {
 		local filename_oil = require("lualine-components.filename-oil")
 		local linecount = require("lualine-components.linecount")
 		local smol_mode = require("lualine-components.smol-mode")
+		local branch_oil = require("lualine-components.branch-oil")
 
 		require("lualine").setup({
 			options = {
@@ -21,6 +22,7 @@ return {
 			sections = {
 				lualine_y = { linecount },
 				lualine_a = { smol_mode },
+				lualine_b = { branch_oil },
 			},
 			tabline = {
 				lualine_b = {
