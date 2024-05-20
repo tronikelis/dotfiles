@@ -62,6 +62,6 @@ require("lazy").setup({
 			require("dressing").setup({})
 		end,
 	},
+	{ "Tronikelis/auto-restore.nvim", event = "VeryLazy" },
 	"tpope/vim-surround",
-	"Tronikelis/auto-restore.nvim",
 })
