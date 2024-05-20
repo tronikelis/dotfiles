@@ -21,8 +21,8 @@ require("lazy").setup({
 	require("plugins.formatter"),
 	require("plugins.gitsigns"),
 	require("plugins.lualine"),
-	require("plugins.comments"),
 	require("plugins.oil"),
+	require("plugins.comments"),
 
 	-- small plugins that don't need config
 	"tpope/vim-sleuth",

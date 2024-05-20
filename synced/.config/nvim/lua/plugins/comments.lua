@@ -1,23 +1,12 @@
 return {
-	-- main comment plugin
-	"numToStr/Comment.nvim",
-	lazy = false,
-
-	dependencies = {
-		{
-			-- dynamic comment changing based on scope (jsx, ts) in same file
-			"JoosepAlviste/nvim-ts-context-commentstring",
-			dependencies = "nvim-treesitter/nvim-treesitter",
-			config = function()
-				require("ts_context_commentstring").setup({
-					enable_autocmd = false,
-				})
-			end,
-		},
-	},
+	"JoosepAlviste/nvim-ts-context-commentstring",
+	event = "VeryLazy",
 	config = function()
-		require("Comment").setup({
-			pre_hook = require("ts_context_commentstring.integrations.comment_nvim").create_pre_hook(),
-		})
+		local get_option = vim.filetype.get_option
+
+		vim.filetype.get_option = function(filetype, option)
+			return option == "commentstring" and require("ts_context_commentstring.internal").calculate_commentstring()
+				or get_option(filetype, option)
+		end
 	end,
 }
