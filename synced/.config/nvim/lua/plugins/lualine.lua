@@ -22,7 +22,7 @@ return {
 			sections = {
 				lualine_y = { linecount },
 				lualine_a = { smol_mode },
-				lualine_b = { branch_oil },
+				lualine_b = { branch_oil, "diff", "diagnostics" },
 			},
 			tabline = {
 				lualine_b = {

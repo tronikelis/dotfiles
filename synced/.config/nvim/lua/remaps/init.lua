@@ -81,3 +81,14 @@ vim.opt.foldlevelstart = 99
 
 -- put selected text into search and replace
 vim.keymap.set("v", "<C-f>", '"hy:%s/<C-r>h/<C-r>h/gc<left><left><left>')
+
+-- https://www.reddit.com/r/neovim/comments/1cwd181/comment/l4wqmza/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
+-- sets cwd to git dir
+vim.api.nvim_create_autocmd("BufEnter", {
+	callback = function(ctx)
+		local root = vim.fs.root(ctx.buf, { ".git" })
+		if root then
+			vim.uv.chdir(root)
+		end
+	end,
+})
