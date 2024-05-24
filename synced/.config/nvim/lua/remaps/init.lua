@@ -81,3 +81,11 @@ vim.opt.foldlevelstart = 99
 
 -- put selected text into search and replace
 vim.keymap.set("v", "<C-f>", '"hy:%s/<C-r>h/<C-r>h/gc<left><left><left>')
+
+-- custom filetypes
+
+vim.filetype.add({
+	pattern = {
+		["docker%-compose.-%.ya?ml"] = "yaml.docker-compose",
+	},
+})

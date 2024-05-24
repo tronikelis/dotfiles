@@ -165,6 +165,8 @@ return {
 				"jdtls",
 				"typos-lsp",
 				"html-lsp",
+				"docker_compose_language_service",
+				"dockerls",
 			},
 		})
 		require("mason-lspconfig").setup({
