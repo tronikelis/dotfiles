@@ -31,7 +31,7 @@ vim.api.nvim_create_autocmd({ "FocusGained" }, {
 			end
 
 			git_branch = branch
-			vim.cmd("bufdo LspRestart")
+			vim.cmd("LspRestart")
 		end)
 	end,
 })
