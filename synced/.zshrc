@@ -122,7 +122,7 @@ alias vim="nvim"
 
 alias cat="bat"
 
-alias ls="eza"
+alias ls="eza --icons -a"
 
 alias tdm_sync_git_pull="cd ~/.tdm && git pull && tdm sync && cd -"
 
