@@ -153,6 +153,7 @@ return {
 		require("mason").setup({})
 		require("mason-tool-installer").setup({
 			ensure_installed = {
+				"css-lsp",
 				"json-lsp",
 				"eslint-lsp",
 				"prettier",
