@@ -217,5 +217,8 @@ return {
 				end,
 			},
 		})
+
+		-- lsp config without mason
+		require("lspconfig").dartls.setup({})
 	end,
 }
