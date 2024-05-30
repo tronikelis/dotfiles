@@ -63,5 +63,15 @@ require("lazy").setup({
 		end,
 	},
 	{ "Tronikelis/auto-restore.nvim", event = "VeryLazy" },
+	{
+		"RRethy/vim-illuminate",
+		event = "VeryLazy",
+		config = function()
+			require("illuminate").configure({
+				delay = 1000,
+				modes_denylist = { "i" },
+			})
+		end,
+	},
 	"tpope/vim-surround",
 })
