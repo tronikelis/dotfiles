@@ -6,7 +6,12 @@ return {
 		{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
 		"nvim-tree/nvim-web-devicons",
 		"debugloop/telescope-undo.nvim",
-		"nvim-telescope/telescope-frecency.nvim",
+
+		{
+			"danielfalk/smart-open.nvim",
+			branch = "0.2.x",
+			dependencies = { "kkharji/sqlite.lua" },
+		},
 	},
 	config = function()
 		local picker_config = function()
@@ -47,33 +52,21 @@ return {
 					sort_mru = true,
 				},
 			},
-			extensions = {
-				frecency = {
-					max_timestamps = 50,
-					show_unindexed = false,
-					recency_values = {
-						{ age = 240, value = 5000 }, -- past 4 hours
-						{ age = 1440, value = 1000 }, -- past day
-						{ age = 4320, value = 60 }, -- past 3 days
-						{ age = 10080, value = 40 }, -- past week
-						{ age = 43200, value = 20 }, -- past month
-						{ age = 129600, value = 10 }, -- past 90 days
-					},
-				},
-			},
+			extensions = {},
 		})
 
 		require("telescope").load_extension("fzf")
 
-		require("telescope").load_extension("frecency")
-		vim.keymap.set("n", "<leader><leader>", function()
-			require("telescope").extensions.frecency.frecency({
-				workspace = "CWD",
-			})
-		end)
-
 		require("telescope").load_extension("undo")
 		vim.keymap.set("n", "<leader>u", require("telescope").extensions.undo.undo)
+
+		require("telescope").load_extension("smart_open")
+		vim.keymap.set("n", "<leader><leader>", function()
+			require("telescope").extensions.smart_open.smart_open({
+				cwd_only = true,
+				filename_first = false,
+			})
+		end)
 
 		local builtin = require("telescope.builtin")
 
