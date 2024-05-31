@@ -70,6 +70,12 @@ require("lazy").setup({
 			require("illuminate").configure({
 				delay = 1000,
 				modes_denylist = { "i" },
+				filetypes_denylist = {
+					"dirbuf",
+					"dirvish",
+					"fugitive",
+					"oil",
+				},
 			})
 		end,
 	},
