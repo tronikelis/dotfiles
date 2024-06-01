@@ -157,6 +157,7 @@ return {
 				"json-lsp",
 				"eslint-lsp",
 				"prettier",
+				"prettierd",
 				"shfmt",
 				"stylua",
 				"tailwindcss-language-server",
