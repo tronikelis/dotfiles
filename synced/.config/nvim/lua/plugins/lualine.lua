@@ -12,11 +12,23 @@ return {
 		local smol_mode = require("lualine-components.smol-mode")
 
 		local formatter_status = function()
-			if vim.g.disable_autoformat or vim.b.disable_autoformat then
-				return "󰏯"
+			local available = "󰏫"
+			local not_available = "󰏯"
+
+			local ok, conform = pcall(require, "conform")
+			if not ok then
+				return not_available
 			end
 
-			return "󰏫"
+			if #conform.list_formatters() == 0 then
+				return not_available
+			end
+
+			if vim.g.disable_autoformat or vim.b.disable_autoformat then
+				return not_available
+			end
+
+			return available
 		end
 
 		require("lualine").setup({
