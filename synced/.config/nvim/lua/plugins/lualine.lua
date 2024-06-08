@@ -11,6 +11,14 @@ return {
 		local linecount = require("lualine-components.linecount")
 		local smol_mode = require("lualine-components.smol-mode")
 
+		local formatter_status = function()
+			if vim.g.disable_autoformat or vim.b.disable_autoformat then
+				return "󰏯"
+			end
+
+			return "󰏫"
+		end
+
 		require("lualine").setup({
 			options = {
 				component_separators = {
@@ -20,7 +28,7 @@ return {
 				section_separators = { left = "", right = "" },
 			},
 			sections = {
-				lualine_y = { linecount },
+				lualine_y = { formatter_status, linecount },
 				lualine_a = { smol_mode },
 				lualine_b = { branch_oil, "diff", "diagnostics" },
 			},
