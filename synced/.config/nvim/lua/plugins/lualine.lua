@@ -20,7 +20,7 @@ return {
 				return not_available
 			end
 
-			if #conform.list_formatters() == 0 then
+			if #conform.list_formatters() == 0 and not conform.will_fallback_lsp() then
 				return not_available
 			end
 
