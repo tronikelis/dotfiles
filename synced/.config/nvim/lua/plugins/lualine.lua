@@ -42,7 +42,14 @@ return {
 			sections = {
 				lualine_y = { formatter_status, linecount },
 				lualine_a = { smol_mode },
-				lualine_b = { branch_oil, "diff", "diagnostics" },
+				lualine_b = {
+					branch_oil,
+					"diff",
+					{
+						"diagnostics",
+						symbols = { error = "E", warn = "W", info = "I", hint = "H" },
+					},
+				},
 			},
 			tabline = {
 				lualine_b = {
