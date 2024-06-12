@@ -192,5 +192,6 @@ return {
 
 		-- lsp config without mason
 		require("lspconfig").dartls.setup({})
+		require("lspconfig").gdscript.setup({})
 	end,
 }
