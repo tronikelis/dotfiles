@@ -23,6 +23,9 @@ return {
 			},
 			view_options = {
 				show_hidden = true,
+				is_always_hidden = function(name)
+					return name == ".git" or name == ".."
+				end,
 			},
 		})
 
