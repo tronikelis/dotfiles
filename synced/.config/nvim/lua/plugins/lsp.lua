@@ -123,6 +123,7 @@ return {
 		require("mason").setup({})
 		require("mason-tool-installer").setup({
 			ensure_installed = {
+				"yamlls",
 				"taplo",
 				"css-lsp",
 				"json-lsp",
