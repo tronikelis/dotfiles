@@ -6,7 +6,7 @@ function add_to_path {
 	fi
 }
 
-add_to_path "$HOME/.local/bin/"
+add_to_path "$HOME/.local/bin"
 add_to_path "/opt/homebrew/bin"
 
 if [[ -x "$(command -v go)" ]]; then
