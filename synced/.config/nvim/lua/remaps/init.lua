@@ -31,15 +31,11 @@ vim.opt.spelllang = "en_us"
 vim.opt.spelloptions = "camel"
 vim.opt.spell = false -- im using typos-lsp
 
-vim.opt.hlsearch = false
+vim.opt.hlsearch = true
 vim.opt.incsearch = true
 vim.opt.termguicolors = true
 
 vim.keymap.set("i", "<C-c>", "<Esc>")
-
-vim.keymap.set("n", "<leader>pv", function()
-	print("use -")
-end)
 
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
