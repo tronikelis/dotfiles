@@ -5,7 +5,6 @@ return {
 		"Tronikelis/lualine-components.nvim",
 	},
 	config = function()
-		local weather = require("lualine-components.weather")
 		local filename_oil = require("lualine-components.filename-oil")
 		local branch_oil = require("lualine-components.branch-oil")
 		local linecount = require("lualine-components.linecount")
@@ -61,12 +60,7 @@ return {
 				lualine_a = {},
 				lualine_c = {},
 				lualine_x = {},
-				lualine_y = {
-					{
-						weather,
-						city = "Vilnius",
-					},
-				},
+				lualine_y = {},
 				lualine_z = {
 					{
 						"datetime",
