@@ -71,7 +71,6 @@ return {
 				{ name = "luasnip" },
 			},
 			sorting = {
-				priority_weight = 2,
 				comparators = {
 					cmp.config.compare.offset,
 					cmp.config.compare.exact,
