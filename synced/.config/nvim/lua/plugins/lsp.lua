@@ -110,7 +110,6 @@ return {
 		require("mason-tool-installer").setup({
 			ensure_installed = {
 				"sqls",
-				"sql-formatter",
 				"yamlls",
 				"taplo",
 				"css-lsp",
