@@ -20,7 +20,6 @@ return {
 		"L3MON4D3/LuaSnip",
 		"WhoIsSethDaniel/mason-tool-installer.nvim",
 		"hrsh7th/cmp-path",
-		"hrsh7th/cmp-emoji",
 		"lukas-reineke/cmp-under-comparator",
 		{
 			"j-hui/fidget.nvim",
@@ -70,7 +69,6 @@ return {
 				{ name = "nvim_lsp_signature_help" },
 				{ name = "path" },
 				{ name = "luasnip" },
-				{ name = "emoji" },
 			},
 			sorting = {
 				priority_weight = 2,
