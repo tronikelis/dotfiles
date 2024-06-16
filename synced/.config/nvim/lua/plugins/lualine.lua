@@ -33,10 +33,10 @@ return {
 		require("lualine").setup({
 			options = {
 				component_separators = {
-					left = "/",
-					right = "\\",
+					left = "|",
+					right = "|",
 				},
-				section_separators = { left = "", right = "" },
+				section_separators = { left = "", right = "" },
 			},
 			sections = {
 				lualine_y = { formatter_status, linecount },
@@ -60,11 +60,16 @@ return {
 				lualine_a = {},
 				lualine_c = {},
 				lualine_x = {},
-				lualine_y = {},
+				lualine_y = {
+					{
+						"datetime",
+						style = "%H:%M",
+					},
+				},
 				lualine_z = {
 					{
 						"datetime",
-						style = "%H:%M | %d/%m/%Y",
+						style = "%d/%m/%Y",
 					},
 				},
 			},
