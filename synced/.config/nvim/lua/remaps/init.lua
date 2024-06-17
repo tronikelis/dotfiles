@@ -90,3 +90,7 @@ vim.filetype.add({
 		["docker%-compose.-%.ya?ml"] = "yaml.docker-compose",
 	},
 })
+
+-- tree sitter
+
+vim.treesitter.language.register("bash", "zsh")
