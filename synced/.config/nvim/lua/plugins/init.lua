@@ -62,7 +62,6 @@ require("lazy").setup({
 			require("dressing").setup({})
 		end,
 	},
-	{ "Tronikelis/auto-restore.nvim", event = "VeryLazy" },
 	{
 		"RRethy/vim-illuminate",
 		event = "VeryLazy",
