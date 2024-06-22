@@ -61,7 +61,7 @@ return {
 			preselect = cmp.PreselectMode.Item,
 			completion = {
 				completeopt = "menu,menuone,noinsert",
-				keyword_length = 2,
+				keyword_length = 1,
 			},
 			sources = {
 				{ name = "nvim_lsp" },
