@@ -48,12 +48,6 @@ return {
 			vim.keymap.set("n", "<leader>dS", builtin.lsp_workspace_symbols, opts)
 		end)
 
-		lsp_zero.set_server_config({
-			on_init = function(client)
-				client.server_capabilities.semanticTokensProvider = nil
-			end,
-		})
-
 		local cmp = require("cmp")
 		local lspkind = require("lspkind")
 

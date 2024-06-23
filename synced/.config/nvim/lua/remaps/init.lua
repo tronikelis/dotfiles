@@ -94,3 +94,6 @@ vim.filetype.add({
 -- tree sitter
 
 vim.treesitter.language.register("bash", "zsh")
+
+-- tree sitter highlighting has priority over semantic tokens
+vim.highlight.priorities.semantic_tokens = 95
