@@ -1,4 +1,6 @@
-. "$HOME/.cargo/env"
+if [[ -d "$HOME/.cargo/env" ]]; then
+	source "$HOME/.cargo/env"
+fi
 
 function add_to_path {
 	if [[ -d "$1" ]]; then
