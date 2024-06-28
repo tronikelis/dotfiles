@@ -57,10 +57,6 @@ vim.keymap.set("n", "[q", "<cmd>cprev<cr>zz")
 vim.keymap.set("n", "[m", "<cmd>/^<<<<<<<<cr>zz")
 vim.keymap.set("n", "]m", "<cmd>/^>>>>>>><cr>zz")
 
-vim.diagnostic.config({
-	update_in_insert = true,
-})
-
 local yank_group = vim.api.nvim_create_augroup("HighlightYank", {})
 
 vim.api.nvim_create_autocmd("TextYankPost", {

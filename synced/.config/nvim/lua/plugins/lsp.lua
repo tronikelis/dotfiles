@@ -1,3 +1,19 @@
+vim.diagnostic.config({
+	update_in_insert = true,
+	severity_sort = true,
+	virtual_text = {
+		source = true,
+	},
+	float = {
+		border = "rounded",
+		source = true,
+	},
+})
+
+vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
+	border = "rounded",
+})
+
 vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float)
 vim.keymap.set("n", "<leader>a", vim.lsp.buf.code_action)
 vim.keymap.set("n", "<leader>t", vim.lsp.buf.hover)
@@ -6,15 +22,35 @@ vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename)
 vim.keymap.set("n", "[e", vim.diagnostic.goto_prev)
 vim.keymap.set("n", "]e", vim.diagnostic.goto_next)
 
+local ensure_installed = {
+	"yamlls",
+	"taplo",
+	"css-lsp",
+	"json-lsp",
+	"eslint-lsp",
+	"prettier",
+	"prettierd",
+	"shfmt",
+	"stylua",
+	"tailwindcss-language-server",
+	"gopls",
+	"rust_analyzer",
+	"tsserver",
+	"lua_ls",
+	"jdtls",
+	"typos-lsp",
+	"html-lsp",
+	"docker_compose_language_service",
+	"dockerls",
+}
+
 return {
-	"VonHeikemen/lsp-zero.nvim",
-	branch = "v3.x",
+	"neovim/nvim-lspconfig",
 	dependencies = {
 		"onsails/lspkind.nvim",
 		"hrsh7th/cmp-nvim-lsp-signature-help",
 		"williamboman/mason.nvim",
 		"williamboman/mason-lspconfig.nvim",
-		"neovim/nvim-lspconfig",
 		"hrsh7th/cmp-nvim-lsp",
 		"hrsh7th/nvim-cmp",
 		"L3MON4D3/LuaSnip",
@@ -28,28 +64,33 @@ return {
 		},
 	},
 	config = function()
-		local lsp_zero = require("lsp-zero")
+		vim.api.nvim_create_autocmd("LspAttach", {
+			callback = function(event)
+				local opts = { buffer = event.buf }
+				local builtin = require("telescope.builtin")
 
-		lsp_zero.on_attach(function(client, bufnr)
-			local opts = { buffer = bufnr }
-			local builtin = require("telescope.builtin")
+				vim.keymap.set("n", "gd", builtin.lsp_definitions, opts)
+				vim.keymap.set("n", "gr", builtin.lsp_references, opts)
+				vim.keymap.set("n", "gt", builtin.lsp_type_definitions, opts)
+				vim.keymap.set("n", "gi", builtin.lsp_implementations, opts)
 
-			vim.keymap.set("n", "gd", builtin.lsp_definitions, opts)
-			vim.keymap.set("n", "gr", builtin.lsp_references, opts)
-			vim.keymap.set("n", "gt", builtin.lsp_type_definitions, opts)
-			vim.keymap.set("n", "gi", builtin.lsp_implementations, opts)
+				vim.keymap.set("n", "<leader>dc", function()
+					builtin.diagnostics({ bufnr = 0 })
+				end, opts)
+				vim.keymap.set("n", "<leader>dC", builtin.diagnostics, opts)
 
-			vim.keymap.set("n", "<leader>dc", function()
-				builtin.diagnostics({ bufnr = 0 })
-			end, opts)
-			vim.keymap.set("n", "<leader>dC", builtin.diagnostics, opts)
+				vim.keymap.set("n", "<leader>ds", builtin.lsp_document_symbols, opts)
+				vim.keymap.set("n", "<leader>dS", builtin.lsp_workspace_symbols, opts)
+			end,
+		})
 
-			vim.keymap.set("n", "<leader>ds", builtin.lsp_document_symbols, opts)
-			vim.keymap.set("n", "<leader>dS", builtin.lsp_workspace_symbols, opts)
-		end)
+		local default_setup = function(server, options)
+			require("lspconfig")[server].setup(vim.tbl_extend("keep", {
+				capabilities = require("cmp_nvim_lsp").default_capabilities(),
+			}, options or {}))
+		end
 
 		local cmp = require("cmp")
-		local lspkind = require("lspkind")
 
 		cmp.setup({
 			preselect = cmp.PreselectMode.Item,
@@ -78,13 +119,12 @@ return {
 				["<C-Space>"] = cmp.mapping.complete({}),
 			}),
 			formatting = {
-				format = lspkind.cmp_format({
+				format = require("lspkind").cmp_format({
 					mode = "symbol",
 					menu = {
 						nvim_lsp = "[LSP]",
 						path = "[Path]",
 						luasnip = "[Snip]",
-						emoji = "[Emoji]",
 					},
 				}),
 			},
@@ -98,38 +138,23 @@ return {
 					follow_cursor = true,
 				},
 			},
+			snippet = {
+				expand = function(args)
+					require("luasnip").lsp_expand(args.body)
+				end,
+			},
 		})
 
 		require("mason").setup({})
 		require("mason-tool-installer").setup({
-			ensure_installed = {
-				"yamlls",
-				"taplo",
-				"css-lsp",
-				"json-lsp",
-				"eslint-lsp",
-				"prettier",
-				"prettierd",
-				"shfmt",
-				"stylua",
-				"tailwindcss-language-server",
-				"gopls",
-				"rust_analyzer",
-				"tsserver",
-				"lua_ls",
-				"jdtls",
-				"typos-lsp",
-				"html-lsp",
-				"docker_compose_language_service",
-				"dockerls",
-			},
+			ensure_installed = ensure_installed,
 		})
 		require("mason-lspconfig").setup({
 			handlers = {
-				lsp_zero.default_setup,
+				default_setup,
 
 				eslint = function()
-					require("lspconfig").eslint.setup({
+					default_setup("eslint", {
 						root_dir = require("lspconfig").util.root_pattern(
 							".eslintrc.js",
 							".eslintrc.cjs",
@@ -149,7 +174,7 @@ return {
 				end,
 
 				tailwindcss = function()
-					require("lspconfig").tailwindcss.setup({
+					default_setup("tailwindcss", {
 						settings = {
 							tailwindCSS = {
 								experimental = {
@@ -172,7 +197,7 @@ return {
 		})
 
 		-- lsp config without mason
-		require("lspconfig").dartls.setup({})
-		require("lspconfig").gdscript.setup({})
+		default_setup("dartls")
+		default_setup("gdscript")
 	end,
 }
