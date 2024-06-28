@@ -44,6 +44,47 @@ local ensure_installed = {
 	"dockerls",
 }
 
+local get_eslint_options = function()
+	return {
+		root_dir = require("lspconfig").util.root_pattern(
+			".eslintrc.js",
+			".eslintrc.cjs",
+			".eslintrc.mjs",
+			".eslintrc.yaml",
+			".eslintrc.yml",
+			".eslintrc.json",
+			".eslintrc",
+			"eslint.config.js",
+			"eslint.config.mjs",
+			"eslint.config.cjs",
+			"eslint.config.ts",
+			"eslint.config.mts",
+			"eslint.config.cts"
+		),
+	}
+end
+
+local get_tailwindcss_options = function()
+	return {
+		settings = {
+			tailwindCSS = {
+				experimental = {
+					classRegex = {
+						{ "classNames=\\{([^}]*)\\}", "[\"'`]([^\"'`]*).*?[\"'`]" },
+						{ "tv\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]" },
+						{ "cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]" },
+						{ "cx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)" },
+						{
+							"{[^{]*?class\\s*?:\\s*([\"'`]+?[\\s\\S]*?[\"'`]+?)",
+							"[\"'`]([^\"'`]*).*?[\"'`]",
+						},
+					},
+				},
+			},
+		},
+	}
+end
+
 return {
 	"neovim/nvim-lspconfig",
 	dependencies = {
@@ -154,44 +195,11 @@ return {
 				default_setup,
 
 				eslint = function()
-					default_setup("eslint", {
-						root_dir = require("lspconfig").util.root_pattern(
-							".eslintrc.js",
-							".eslintrc.cjs",
-							".eslintrc.mjs",
-							".eslintrc.yaml",
-							".eslintrc.yml",
-							".eslintrc.json",
-							".eslintrc",
-							"eslint.config.js",
-							"eslint.config.mjs",
-							"eslint.config.cjs",
-							"eslint.config.ts",
-							"eslint.config.mts",
-							"eslint.config.cts"
-						),
-					})
+					default_setup("eslint", get_eslint_options())
 				end,
 
 				tailwindcss = function()
-					default_setup("tailwindcss", {
-						settings = {
-							tailwindCSS = {
-								experimental = {
-									classRegex = {
-										{ "classNames=\\{([^}]*)\\}", "[\"'`]([^\"'`]*).*?[\"'`]" },
-										{ "tv\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]" },
-										{ "cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]" },
-										{ "cx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)" },
-										{
-											"{[^{]*?class\\s*?:\\s*([\"'`]+?[\\s\\S]*?[\"'`]+?)",
-											"[\"'`]([^\"'`]*).*?[\"'`]",
-										},
-									},
-								},
-							},
-						},
-					})
+					default_setup("tailwindcss", get_tailwindcss_options())
 				end,
 			},
 		})
