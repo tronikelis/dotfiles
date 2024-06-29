@@ -23,6 +23,8 @@ vim.keymap.set("n", "[e", vim.diagnostic.goto_prev)
 vim.keymap.set("n", "]e", vim.diagnostic.goto_next)
 
 local ensure_installed = {
+	"bashls",
+	"shellcheck",
 	"yamlls",
 	"taplo",
 	"css-lsp",
