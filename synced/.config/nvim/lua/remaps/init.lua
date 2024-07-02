@@ -26,9 +26,6 @@ vim.opt.smartcase = true
 vim.opt.scrolloff = 10
 vim.opt.guicursor = "n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20,a:blinkwait1000-blinkoff500-blinkon500"
 
-vim.opt.listchars = "trail:·,nbsp:␣"
-vim.opt.list = true
-
 -- spelling
 vim.opt.spelllang = "en_us"
 vim.opt.spelloptions = "camel"
