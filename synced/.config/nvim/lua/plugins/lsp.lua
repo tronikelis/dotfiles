@@ -24,26 +24,26 @@ vim.keymap.set("n", "]e", vim.diagnostic.goto_next)
 
 local ensure_installed = {
 	"bashls",
-	"shellcheck",
-	"yamlls",
-	"taplo",
 	"css-lsp",
-	"json-lsp",
+	"docker_compose_language_service",
+	"dockerls",
 	"eslint-lsp",
+	"gopls",
+	"html-lsp",
+	"jdtls",
+	"json-lsp",
+	"lua_ls",
 	"prettier",
 	"prettierd",
+	"rust_analyzer",
+	"shellcheck",
 	"shfmt",
 	"stylua",
 	"tailwindcss-language-server",
-	"gopls",
-	"rust_analyzer",
+	"taplo",
 	"tsserver",
-	"lua_ls",
-	"jdtls",
 	"typos-lsp",
-	"html-lsp",
-	"docker_compose_language_service",
-	"dockerls",
+	"yamlls",
 }
 
 local get_eslint_options = function()
@@ -80,6 +80,33 @@ local get_tailwindcss_options = function()
 							"{[^{]*?class\\s*?:\\s*([\"'`]+?[\\s\\S]*?[\"'`]+?)",
 							"[\"'`]([^\"'`]*).*?[\"'`]",
 						},
+					},
+				},
+			},
+		},
+	}
+end
+
+local get_jsonls_options = function()
+	return {
+		settings = {
+			json = {
+				schemas = {
+					{
+						fileMatch = { "package.json" },
+						url = "https://json.schemastore.org/package.json",
+					},
+					{
+						fileMatch = { "tsconfig*.json" },
+						url = "https://json.schemastore.org/tsconfig.json",
+					},
+					{
+						fileMatch = { ".prettierr*" },
+						url = "https://json.schemastore.org/prettierrc.json",
+					},
+					{
+						fileMatch = { ".eslintr*" },
+						url = "https://json.schemastore.org/eslintrc.json",
 					},
 				},
 			},
@@ -195,6 +222,10 @@ return {
 		require("mason-lspconfig").setup({
 			handlers = {
 				default_setup,
+
+				jsonls = function()
+					default_setup("jsonls", get_jsonls_options())
+				end,
 
 				eslint = function()
 					default_setup("eslint", get_eslint_options())
