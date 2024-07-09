@@ -117,15 +117,14 @@ end
 return {
 	"neovim/nvim-lspconfig",
 	dependencies = {
-		"onsails/lspkind.nvim",
-		"hrsh7th/cmp-nvim-lsp-signature-help",
-		"williamboman/mason.nvim",
-		"williamboman/mason-lspconfig.nvim",
-		"hrsh7th/cmp-nvim-lsp",
-		"hrsh7th/nvim-cmp",
-		"L3MON4D3/LuaSnip",
 		"WhoIsSethDaniel/mason-tool-installer.nvim",
+		"hrsh7th/cmp-nvim-lsp",
+		"hrsh7th/cmp-nvim-lsp-signature-help",
 		"hrsh7th/cmp-path",
+		"hrsh7th/nvim-cmp",
+		"onsails/lspkind.nvim",
+		"williamboman/mason-lspconfig.nvim",
+		"williamboman/mason.nvim",
 		{
 			"j-hui/fidget.nvim",
 			config = function()
@@ -172,7 +171,6 @@ return {
 				{ name = "nvim_lsp" },
 				{ name = "nvim_lsp_signature_help" },
 				{ name = "path" },
-				{ name = "luasnip" },
 			},
 			mapping = cmp.mapping.preset.insert({
 				["<C-n>"] = cmp.mapping.select_next_item({
@@ -194,7 +192,6 @@ return {
 					menu = {
 						nvim_lsp = "[LSP]",
 						path = "[Path]",
-						luasnip = "[Snip]",
 					},
 				}),
 			},
@@ -210,7 +207,7 @@ return {
 			},
 			snippet = {
 				expand = function(args)
-					require("luasnip").lsp_expand(args.body)
+					vim.snippet.expand(args.body)
 				end,
 			},
 		})
