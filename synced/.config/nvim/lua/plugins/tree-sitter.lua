@@ -10,10 +10,6 @@ return {
 					multiline_threshold = 1,
 					min_window_height = 25,
 				})
-
-				vim.keymap.set("n", "[c", function()
-					require("treesitter-context").go_to_context(vim.v.count1)
-				end)
 			end,
 		},
 	},

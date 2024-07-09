@@ -53,10 +53,6 @@ vim.keymap.set("n", "{", "{zz")
 vim.keymap.set("n", "]q", "<cmd>cnext<cr>zz")
 vim.keymap.set("n", "[q", "<cmd>cprev<cr>zz")
 
--- jump to git conflict markers
-vim.keymap.set("n", "[m", "<cmd>/^<<<<<<<<cr>zz")
-vim.keymap.set("n", "]m", "<cmd>/^>>>>>>><cr>zz")
-
 local yank_group = vim.api.nvim_create_augroup("HighlightYank", {})
 
 vim.api.nvim_create_autocmd("TextYankPost", {

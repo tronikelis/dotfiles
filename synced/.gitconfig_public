@@ -1,0 +1,15 @@
+[init]
+	defaultBranch = master
+[branch]
+	autosetupmerge = simple
+[push]
+	autosetupremote = true
+
+[alias]
+	conflicts = diff --name-only --diff-filter=U
+[merge]
+	tool = nvimdiff
+[mergetool "nvimdiff"]
+	cmd = "nvim -d \"$LOCAL\" \"$MERGED\" \"$REMOTE\" -c \"wincmd w\" -c \"wincmd J\""
+[mergetool]
+	keepBackup = false
