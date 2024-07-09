@@ -191,7 +191,7 @@ return {
 					mode = "symbol",
 					menu = {
 						nvim_lsp = "[LSP]",
-						path = "[Path]",
+						path = "[PTH]",
 					},
 				}),
 			},
