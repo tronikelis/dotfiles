@@ -62,21 +62,5 @@ require("lazy").setup({
 			require("dressing").setup({})
 		end,
 	},
-	{
-		"RRethy/vim-illuminate",
-		event = "VeryLazy",
-		config = function()
-			require("illuminate").configure({
-				delay = 1000,
-				modes_denylist = { "i" },
-				filetypes_denylist = {
-					"dirbuf",
-					"dirvish",
-					"fugitive",
-					"oil",
-				},
-			})
-		end,
-	},
 	"tpope/vim-surround",
 })
