@@ -53,10 +53,9 @@ vim.keymap.set("n", "{", "{zz")
 vim.keymap.set("n", "]q", "<cmd>cnext<cr>zz")
 vim.keymap.set("n", "[q", "<cmd>cprev<cr>zz")
 
-local yank_group = vim.api.nvim_create_augroup("HighlightYank", {})
+-- autocmds
 
 vim.api.nvim_create_autocmd("TextYankPost", {
-	group = yank_group,
 	pattern = "*",
 	callback = function()
 		vim.highlight.on_yank({
@@ -64,6 +63,11 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 			timeout = 40,
 		})
 	end,
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = "typescript,typescriptreact",
+	command = "compiler tsc | setlocal makeprg=npx\\ tsc",
 })
 
 -- folding
