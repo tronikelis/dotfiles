@@ -67,7 +67,7 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 
 vim.api.nvim_create_autocmd("FileType", {
 	pattern = "typescript,typescriptreact",
-	command = "compiler tsc | setlocal makeprg=npx\\ tsc",
+	command = "compiler tsc | setlocal makeprg=npx\\ tsc\\ --noEmit",
 })
 
 -- folding
