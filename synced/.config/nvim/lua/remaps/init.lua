@@ -28,7 +28,7 @@ vim.opt.guicursor = "n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20,a:blinkwait1000-b
 
 -- the default is rg -uu --vimgrep, but -uu ignores .gitignore and shows hidden files
 -- i want the default behavior
-vim.opt.grepprg = "rg --vimgrep"
+vim.opt.grepprg = "rg --vimgrep --hidden"
 
 -- spelling
 vim.opt.spelllang = "en_us"
