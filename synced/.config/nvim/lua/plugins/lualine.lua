@@ -18,7 +18,9 @@ return {
 				return not_available
 			end
 
-			if #conform.list_formatters() == 0 and not conform.will_fallback_lsp() then
+			local formatters, lsp = conform.list_formatters_to_run()
+
+			if not lsp and #formatters == 0 then
 				return not_available
 			end
 

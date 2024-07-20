@@ -63,4 +63,5 @@ require("lazy").setup({
 		end,
 	},
 	"tpope/vim-surround",
+	"mbbill/undotree",
 })

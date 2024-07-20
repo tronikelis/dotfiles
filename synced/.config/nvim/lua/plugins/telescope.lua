@@ -5,13 +5,6 @@ return {
 		"nvim-lua/plenary.nvim",
 		{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
 		"nvim-tree/nvim-web-devicons",
-		"debugloop/telescope-undo.nvim",
-
-		{
-			"danielfalk/smart-open.nvim",
-			branch = "0.2.x",
-			dependencies = { "kkharji/sqlite.lua" },
-		},
 	},
 	config = function()
 		local picker_config = function()
@@ -50,23 +43,14 @@ return {
 				},
 				buffers = {
 					sort_mru = true,
+					show_all_buffers = false,
+					only_cwd = true,
 				},
 			},
 			extensions = {},
 		})
 
 		require("telescope").load_extension("fzf")
-
-		require("telescope").load_extension("undo")
-		vim.keymap.set("n", "<leader>u", require("telescope").extensions.undo.undo)
-
-		require("telescope").load_extension("smart_open")
-		vim.keymap.set("n", "<leader><leader>", function()
-			require("telescope").extensions.smart_open.smart_open({
-				cwd_only = true,
-				filename_first = false,
-			})
-		end)
 
 		local builtin = require("telescope.builtin")
 
