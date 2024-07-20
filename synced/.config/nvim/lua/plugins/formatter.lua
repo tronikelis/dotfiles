@@ -9,7 +9,8 @@ return {
 	config = function()
 		require("conform").setup({
 			formatters_by_ft = {
-				html = { "prettierd" },
+				html = { lsp_format = "never" },
+
 				javascript = { "prettierd" },
 				json = { "prettierd" },
 				markdown = { "prettierd" },
