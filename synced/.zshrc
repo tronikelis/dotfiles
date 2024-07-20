@@ -130,6 +130,10 @@ eval "$(starship init zsh)"
 
 eval "$(fzf --zsh)"
 
+function cloned() {
+	git clone "$1" --depth 1
+}
+
 function gpush() {
 	git add .
 	git commit -m "$@"

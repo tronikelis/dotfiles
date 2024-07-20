@@ -33,7 +33,6 @@ local ensure_installed = {
 	"jdtls",
 	"json-lsp",
 	"lua_ls",
-	"prettier",
 	"prettierd",
 	"rust_analyzer",
 	"shellcheck",

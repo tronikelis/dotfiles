@@ -7,20 +7,18 @@ vim.api.nvim_create_autocmd("VimLeavePre", {
 return {
 	"stevearc/conform.nvim",
 	config = function()
-		local prettier = {
-			{ "prettierd", "prettier" },
-		}
-
 		require("conform").setup({
 			formatters_by_ft = {
+				javascript = { "prettierd" },
+				typescript = { "prettierd" },
+				typescriptreact = { "prettierd" },
+				tsx = { "prettierd" },
+				html = { "prettierd" },
+				json = { "prettierd" },
+				markdown = { "prettierd" },
+
 				lua = { "stylua" },
-				javascript = prettier,
-				typescript = prettier,
-				typescriptreact = prettier,
-				tsx = prettier,
-				html = prettier,
-				json = prettier,
-				markdown = prettier,
+
 				sh = { "shfmt" },
 				zsh = { "shfmt" },
 				gdscript = { "gdformat" },
