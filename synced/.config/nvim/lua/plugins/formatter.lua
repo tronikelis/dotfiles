@@ -9,26 +9,29 @@ return {
 	config = function()
 		require("conform").setup({
 			formatters_by_ft = {
-				javascript = { "prettierd" },
-				typescript = { "prettierd" },
-				typescriptreact = { "prettierd" },
-				tsx = { "prettierd" },
 				html = { "prettierd" },
+				javascript = { "prettierd" },
 				json = { "prettierd" },
 				markdown = { "prettierd" },
-
-				lua = { "stylua" },
+				tsx = { "prettierd" },
+				typescript = { "prettierd" },
+				typescriptreact = { "prettierd" },
 
 				sh = { "shfmt" },
 				zsh = { "shfmt" },
+
 				gdscript = { "gdformat" },
+				lua = { "stylua" },
+			},
+			default_format_opts = {
+				lsp_format = "fallback",
 			},
 			format_on_save = function(bufnr)
 				if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
 					return
 				end
 
-				return { lsp_format = "fallback" }
+				return {}
 			end,
 		})
 
