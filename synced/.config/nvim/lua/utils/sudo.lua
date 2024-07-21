@@ -32,7 +32,7 @@ M.sudo_write = function()
 		return
 	end
 
-	local stat = vim.system({ "stat", vim.fn.shellescape(filepath) }):wait()
+	local stat = vim.system({ "stat", filepath }):wait()
 	if stat.code ~= 0 then
 		log.err(string.format("filepath '%s' does not exist", filepath))
 		return
