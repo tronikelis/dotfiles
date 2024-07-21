@@ -3,4 +3,5 @@
 table.unpack = table.unpack or unpack
 
 require("remaps")
+require("utils")
 require("plugins")

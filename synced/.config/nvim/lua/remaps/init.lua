@@ -1,5 +1,3 @@
-require("remaps.dir_cycle")
-
 -- interferes with <C-c> to exit insert mode
 vim.g.omni_sql_no_default_maps = true
 
