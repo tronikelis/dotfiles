@@ -20,6 +20,9 @@ M.sudo_exec = function(cmd)
 		return false
 	end
 
+	-- clears the `Password: ****` in cmd
+	vim.cmd("stopinsert")
+
 	return true
 end
 
