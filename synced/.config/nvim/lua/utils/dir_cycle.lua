@@ -7,8 +7,10 @@ M.get_sorted_files = function()
 	local file_iter = vim.fs.dir(curr_dir)
 	local files = {}
 
-	for file, _ in file_iter do
-		table.insert(files, vim.fs.joinpath(curr_dir, file))
+	for file, t in file_iter do
+		if t == "file" then
+			table.insert(files, vim.fs.joinpath(curr_dir, file))
+		end
 	end
 
 	table.sort(files)
