@@ -5,6 +5,7 @@ return {
 		"nvim-lua/plenary.nvim",
 		{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
 		"nvim-tree/nvim-web-devicons",
+		"nvim-telescope/telescope-frecency.nvim",
 	},
 	config = function()
 		local picker_config = function()
@@ -47,10 +48,22 @@ return {
 					only_cwd = true,
 				},
 			},
-			extensions = {},
+			extensions = {
+				frecency = {
+					db_safe_mode = false,
+					auto_validate = true,
+				},
+			},
 		})
 
 		require("telescope").load_extension("fzf")
+
+		require("telescope").load_extension("frecency")
+		vim.keymap.set("n", "<leader><leader>", function()
+			require("telescope").extensions.frecency.frecency({
+				workspace = "CWD",
+			})
+		end)
 
 		local builtin = require("telescope.builtin")
 

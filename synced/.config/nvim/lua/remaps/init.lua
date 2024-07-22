@@ -53,6 +53,8 @@ vim.keymap.set("n", "N", "Nzzzv")
 vim.keymap.set("x", "<leader>p", [["_dP]])
 vim.keymap.set("n", "}", "}zz")
 vim.keymap.set("n", "{", "{zz")
+vim.keymap.set("n", "]c", "]czz")
+vim.keymap.set("n", "[c", "[czz")
 
 -- quickfix list nav
 vim.keymap.set("n", "]q", "<cmd>cnext<cr>zz")
