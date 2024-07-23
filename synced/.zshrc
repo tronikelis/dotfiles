@@ -137,7 +137,7 @@ function tmp_file() {
 	fi
 
 	cdmktemp
-	vim "test.$1"
+	vim "tmp_file.$1"
 }
 
 function cheatsh() {
