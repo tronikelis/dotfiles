@@ -130,6 +130,16 @@ eval "$(starship init zsh)"
 
 eval "$(fzf --zsh)"
 
+function tmp_file() {
+	if [[ -z "$1" ]]; then
+		echo "pass file extension"
+		return 1
+	fi
+
+	cdmktemp
+	vim "test.$1"
+}
+
 function cheatsh() {
 	curl -s "cheat.sh/$1" | less
 }
