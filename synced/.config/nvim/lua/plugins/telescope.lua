@@ -32,6 +32,9 @@ return {
 				mappings = {
 					i = {
 						["<esc>"] = actions.close,
+						-- this may seem weird, but going up is previous in telescope
+						["<C-n>"] = actions.move_selection_previous,
+						["<C-p>"] = actions.move_selection_next,
 					},
 				},
 				path_display = { "truncate" },
