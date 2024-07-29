@@ -155,7 +155,7 @@ return {
 		local lsp_defaults = require("lspconfig").util.default_config
 
 		lsp_defaults.capabilities =
-			vim.tbl_deep_extend("force", lsp_defaults.capabilities, require("nvim_cmp_lsp").default_capabilities())
+			vim.tbl_deep_extend("force", lsp_defaults.capabilities, require("cmp_nvim_lsp").default_capabilities())
 
 		local default_setup = function(server, options)
 			options = options or {}
