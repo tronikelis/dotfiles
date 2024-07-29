@@ -152,10 +152,14 @@ return {
 			end,
 		})
 
+		local lsp_defaults = require("lspconfig").util.default_config
+
+		lsp_defaults.capabilities =
+			vim.tbl_deep_extend("force", lsp_defaults.capabilities, require("nvim_cmp_lsp").default_capabilities())
+
 		local default_setup = function(server, options)
-			require("lspconfig")[server].setup(vim.tbl_extend("keep", {
-				capabilities = require("cmp_nvim_lsp").default_capabilities(),
-			}, options or {}))
+			options = options or {}
+			require("lspconfig")[server].setup(options)
 		end
 
 		local cmp = require("cmp")
