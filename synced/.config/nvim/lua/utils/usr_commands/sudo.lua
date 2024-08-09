@@ -1,8 +1,6 @@
 local log = require("utils.log")
 
-local M = {}
-
-M.sudo_exec = function(cmd)
+local sudo_exec = function(cmd)
 	vim.fn.inputsave()
 	local password = vim.fn.inputsecret("Password: ")
 	vim.fn.inputrestore()
@@ -26,7 +24,7 @@ M.sudo_exec = function(cmd)
 	return true
 end
 
-M.sudo_write = function()
+local sudo_write = function()
 	local tmpfile = vim.fn.tempname()
 	local filepath = vim.fn.expand("%:p")
 
@@ -43,7 +41,7 @@ M.sudo_write = function()
 
 	vim.cmd(string.format("silent w! %s", tmpfile))
 
-	if not M.sudo_exec(string.format("cp %s %s", vim.fn.shellescape(tmpfile), vim.fn.shellescape(filepath))) then
+	if not sudo_exec(string.format("cp %s %s", vim.fn.shellescape(tmpfile), vim.fn.shellescape(filepath))) then
 		return
 	end
 
@@ -51,4 +49,4 @@ M.sudo_write = function()
 	vim.fn.delete(tmpfile)
 end
 
-return M
+vim.api.nvim_create_user_command("SudoWrite", sudo_write, { desc = "Writes to current file with 'sudo'" })

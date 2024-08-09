@@ -1,17 +1,8 @@
-local M = {}
+local path = require("utils.path")
 
-M.get_sorted_files = function()
+local get_sorted_files = function()
 	local curr_file = vim.fn.expand("%:p")
-	local curr_dir = vim.fn.expand("%:p:h")
-
-	local file_iter = vim.fs.dir(curr_dir)
-	local files = {}
-
-	for file, t in file_iter do
-		if t == "file" then
-			table.insert(files, vim.fs.joinpath(curr_dir, file))
-		end
-	end
+	local files = path.files(vim.fn.expand("%:p:h"), { full = true })
 
 	table.sort(files)
 
@@ -26,8 +17,8 @@ M.get_sorted_files = function()
 	return files, curr_index
 end
 
-M.cycle_file = function(target)
-	local files, curr_index = M.get_sorted_files()
+local cycle_file = function(target)
+	local files, curr_index = get_sorted_files()
 	if files == nil or curr_index == nil then
 		return
 	end
@@ -42,4 +33,10 @@ M.cycle_file = function(target)
 	vim.cmd("e " .. next_file)
 end
 
-return M
+vim.keymap.set("n", "[f", function()
+	cycle_file(-1)
+end)
+
+vim.keymap.set("n", "]f", function()
+	cycle_file(1)
+end)
