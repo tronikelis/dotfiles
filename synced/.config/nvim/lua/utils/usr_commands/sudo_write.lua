@@ -1,4 +1,5 @@
 local log = require("utils.log")
+local path = require("utils.path")
 
 local sudo_exec = function(cmd)
 	vim.fn.inputsave()
@@ -10,11 +11,11 @@ local sudo_exec = function(cmd)
 		return false
 	end
 
-	local out = vim.fn.system(string.format("sudo -S %s", cmd), password)
+	local out = vim.system({ "sudo", "-S", table.unpack(cmd) }, { text = true, stdin = password }):wait()
 
-	if vim.v.shell_error ~= 0 then
+	if out.code ~= 0 then
 		print("\n")
-		log.err(out)
+		log.err(out.stderr)
 		return false
 	end
 
@@ -25,28 +26,28 @@ local sudo_exec = function(cmd)
 end
 
 local sudo_write = function()
-	local tmpfile = vim.fn.tempname()
-	local filepath = vim.fn.expand("%:p")
+	local tmp_file = vim.fn.tempname()
+	local curr_file = path.curr_full_file()
 
-	if not filepath or #filepath == 0 then
+	if not curr_file or #curr_file == 0 then
 		log.err("empty filepath")
 		return
 	end
 
-	local stat = vim.system({ "stat", filepath }):wait()
+	local stat = vim.system({ "stat", curr_file }):wait()
 	if stat.code ~= 0 then
-		log.err(string.format("filepath '%s' does not exist", filepath))
+		log.err(string.format("filepath '%s' does not exist", curr_file))
 		return
 	end
 
-	vim.cmd(string.format("silent w! %s", tmpfile))
+	vim.cmd(string.format("silent w! %s", tmp_file))
 
-	if not sudo_exec(string.format("cp %s %s", vim.fn.shellescape(tmpfile), vim.fn.shellescape(filepath))) then
+	if not sudo_exec({ "cp", tmp_file, curr_file }) then
 		return
 	end
 
 	vim.cmd("e!")
-	vim.fn.delete(tmpfile)
+	vim.fn.delete(tmp_file)
 end
 
 vim.api.nvim_create_user_command("SudoWrite", sudo_write, { desc = "Writes to current file with 'sudo'" })
