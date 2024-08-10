@@ -208,11 +208,6 @@ return {
 					follow_cursor = true,
 				},
 			},
-			snippet = {
-				expand = function(args)
-					vim.snippet.expand(args.body)
-				end,
-			},
 		})
 
 		require("mason").setup({})
