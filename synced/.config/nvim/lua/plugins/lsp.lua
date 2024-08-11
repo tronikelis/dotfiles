@@ -140,7 +140,8 @@ return {
 				vim.keymap.set("n", "gd", builtin.lsp_definitions, opts)
 				vim.keymap.set("n", "gr", builtin.lsp_references, opts)
 				vim.keymap.set("n", "gt", builtin.lsp_type_definitions, opts)
-				vim.keymap.set("n", "gi", builtin.lsp_implementations, opts)
+				-- uppercase cause I'll prob use the gi command
+				vim.keymap.set("n", "gI", builtin.lsp_implementations, opts)
 
 				vim.keymap.set("n", "<leader>dc", function()
 					builtin.diagnostics({ bufnr = 0 })
