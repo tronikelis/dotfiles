@@ -77,6 +77,7 @@ plugins=(
 	zsh-syntax-highlighting
 	zsh-autosuggestions
 	autoupdate
+	ssh-agent
 )
 
 source $ZSH/oh-my-zsh.sh
