@@ -1,0 +1,13 @@
+configuration {
+    modes: [ combi ];
+    combi-modes: [ window, drun, run ];
+}
+
+@theme "/usr/share/rofi/themes/DarkBlue.rasi"
+
+element {
+    orientation: horizontal;
+    children: [ element-icon, element-text ];
+    spacing: 5px;
+}
+
