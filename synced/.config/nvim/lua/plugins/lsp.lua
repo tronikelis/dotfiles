@@ -23,6 +23,7 @@ vim.keymap.set("n", "[e", vim.diagnostic.goto_prev)
 vim.keymap.set("n", "]e", vim.diagnostic.goto_next)
 
 local ensure_installed = {
+	"hyprls",
 	"bashls",
 	"css-lsp",
 	"docker_compose_language_service",
