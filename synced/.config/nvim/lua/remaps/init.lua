@@ -95,6 +95,7 @@ vim.keymap.set("v", "<C-f>", '"hy:%s/<C-r>h/<C-r>h/gc<left><left><left>')
 
 vim.filetype.add({
 	pattern = {
+		[".*/hypr/.*%.conf"] = "hyprlang",
 		["docker%-compose.-%.ya?ml"] = "yaml.docker-compose",
 	},
 })
