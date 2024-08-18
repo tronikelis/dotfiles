@@ -30,7 +30,7 @@
         "max-length": 20,
     },
     "disk": {
-        "format": "{percentage_used:2}% ",
+        "format": "{percentage_used:2}%  ",
         "tooltip-format": "Disk: {specific_used:0.2f}GB / {specific_free:0.2f}GB",
         "unit": "GB",
     },
