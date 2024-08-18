@@ -20,7 +20,7 @@
     ],
     "custom/lock": {
         "format": "  ",
-        "on-click": "hyprlock",
+        "on-click": "hyprctl dispatch exit",
     },
     "network": {
         "format": "{ifname}",
