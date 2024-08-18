@@ -18,6 +18,9 @@
         "clock",
         "custom/lock",
     ],
+    "hyprland/window": {
+        "icon": false,
+    },
     "custom/lock": {
         "format": "  ",
         "on-click": "hyprctl dispatch exit",
@@ -26,7 +29,7 @@
         "format": "{ifname}",
         "format-wifi": "{signalStrength}% 󰖩 ",
         "format-ethernet": "{ifname} 󰈀 ",
-        "format-disconnected": "", //An empty format will hide the module.
+        "format-disconnected": " ",
         "max-length": 50
     },
     "tray": {
