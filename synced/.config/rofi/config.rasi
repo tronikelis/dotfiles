@@ -1,9 +1,4 @@
-configuration {
-    modes: [ combi ];
-    combi-modes: [ window, drun, run ];
-}
-
-@theme "/usr/share/rofi/themes/DarkBlue.rasi"
+@theme "catppuccin"
 
 element {
     orientation: horizontal;
