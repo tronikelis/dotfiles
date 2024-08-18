@@ -1,57 +1,80 @@
 // -*- mode: jsonc -*-
 {
+    "reload_style_on_change": true,
     "layer": "top",
     "spacing": 16,
     "height": 32,
+    "margin": 4,
     "modules-left": [
-        "hyprland/workspaces",
         "hyprland/window"
+    ],
+    "modules-center": [
+        "hyprland/workspaces",
     ],
     "modules-right": [
         "tray",
+        "network",
         "pulseaudio",
         "cpu",
         "memory",
-        "network",
+        "disk",
         "battery",
         "hyprland/language",
         "clock",
         "custom/lock",
     ],
+    "network": {
+        "format": "{bandwidthTotalBytes}",
+        "tooltip-format": "{ifname} via {gwaddr}",
+        "interval": 5,
+        "max-length": 20,
+    },
+    "disk": {
+        "format": "{percentage_used:2}% ",
+        "tooltip-format": "Disk: {specific_used:0.2f}GB / {specific_free:0.2f}GB",
+        "unit": "GB",
+    },
     "hyprland/window": {
         "icon": false,
     },
-    "custom/lock": {
-        "format": "  ",
-        "on-click": "hyprctl dispatch exit",
+    "hyprland/language": {
+        "format": "{short}",
+        "tooltip-format": "Kbd: {long}",
+        "format-alt": "{long}",
     },
-    "network": {
-        "format": "{ifname}",
-        "format-wifi": "{signalStrength}% 󰖩 ",
-        "format-ethernet": "{ifname} 󰈀 ",
-        "format-disconnected": " ",
-        "max-length": 50
+    "custom/lock": {
+        "format": " ",
+        "on-click": "hyprctl dispatch exit",
+        "tooltip-format": "hyprctl dispatch exit"
     },
     "tray": {
-        // "icon-size": 21,
         "spacing": 10
     },
     "clock": {
-        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-        "format": "{:%H:%M / %d-%m-%Y}"
+        "format-alt": "{:%A, %B %d, (%d-%m-%Y)}",
+        "format": "{:%H:%M}",
+        "tooltip-format": "<tt><small>{calendar}</small></tt>",
+        "calendar": {
+            "mode": "year",
+            "mode-mon-col": 3,
+            "weeks-pos": "right",
+            "on-scroll": 1,
+            "format": {
+                "today": "<span color='#f5c2e7'><b><u>{}</u></b></span>",
+                "months": "<span color='#89b4fa'><b>{}</b></span>",
+            }
+        }
     },
     "cpu": {
-        "format": "{usage}%  ",
+        "interval": 5,
+        "format": "{usage:2}%  ",
     },
     "memory": {
-        "format": "{}%  "
+        "interval": 30,
+        "format": "{percentage:2}%  ",
+        "tooltip-format": "Memory: {used:0.2f}GB / {total:0.2f}GB",
     },
     "battery": {
-        "states": {
-            "good": 95,
-            "warning": 30,
-            "critical": 15
-        },
         "format": "{capacity}% {icon}",
         "format-full": "{capacity}% {icon}",
         "format-charging": "{capacity}% 󰂅 ",
@@ -73,12 +96,6 @@
         "format-source": "{volume}%  ",
         "format-source-muted": " ",
         "format-icons": {
-            "headphone": " ",
-            "hands-free": " ",
-            "headset": " ",
-            "phone": " ",
-            "portable": " ",
-            "car": " ",
             "default": [
                 " ",
                 " ",

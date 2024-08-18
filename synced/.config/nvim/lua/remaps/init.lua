@@ -62,9 +62,13 @@ vim.keymap.set("n", "[q", "<cmd>cprev<cr>zz")
 
 -- autocmds
 
-vim.api.nvim_create_autocmd("BufWritePre", {
+vim.api.nvim_create_autocmd({ "BufWritePre" }, {
 	pattern = "*",
-	command = [[%s/\s\+$//e]],
+	callback = function()
+		local save_cursor = vim.fn.getpos(".")
+		vim.cmd([[%s/\s\+$//e]])
+		vim.fn.setpos(".", save_cursor)
+	end,
 })
 
 vim.api.nvim_create_autocmd("TextYankPost", {

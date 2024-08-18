@@ -5,3 +5,12 @@
 window#waybar {
     background-color: transparent;
 }
+
+#workspaces {
+    background-color: rgba(17, 17, 27, 0.7);
+}
+
+#workspaces button.active {
+    color: #f5c2e7;
+    font-weight: 800;
+}
