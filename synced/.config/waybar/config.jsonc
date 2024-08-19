@@ -25,7 +25,7 @@
     ],
     "network": {
         "format": "{bandwidthTotalBytes}",
-        "tooltip-format": "{ifname} via {gwaddr}",
+        "tooltip-format": "{ifname} via {ipaddr} to {gwaddr}",
         "interval": 5,
         "max-length": 20,
     },
