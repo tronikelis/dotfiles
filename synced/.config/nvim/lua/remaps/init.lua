@@ -40,6 +40,7 @@ vim.opt.hlsearch = true
 vim.opt.incsearch = true
 vim.opt.termguicolors = true
 
+-- hmm, maybe just use C-[
 vim.keymap.set("i", "<C-c>", "<Esc>")
 
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
@@ -91,9 +92,6 @@ vim.opt.foldmethod = "expr"
 vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 vim.opt.foldcolumn = "0"
 vim.opt.foldlevelstart = 99
-
--- put selected text into search and replace
-vim.keymap.set("v", "<C-f>", '"hy:%s/<C-r>h/<C-r>h/gc<left><left><left>')
 
 -- custom filetypes
 

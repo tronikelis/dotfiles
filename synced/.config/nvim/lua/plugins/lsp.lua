@@ -211,7 +211,23 @@ return {
 					follow_cursor = true,
 				},
 			},
+			snippet = {
+				expand = function(arg)
+					vim.snippet.expand(arg.body)
+				end,
+			},
 		})
+
+		vim.keymap.set({ "i", "s" }, "<A-n>", function()
+			if vim.snippet.active({ direction = 1 }) then
+				vim.snippet.jump(1)
+			end
+		end)
+		vim.keymap.set({ "i", "s" }, "<A-p>", function()
+			if vim.snippet.active({ direction = -1 }) then
+				vim.snippet.jump(-1)
+			end
+		end)
 
 		require("mason").setup({})
 		require("mason-tool-installer").setup({
