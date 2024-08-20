@@ -60,7 +60,7 @@
             "weeks-pos": "right",
             "on-scroll": 1,
             "format": {
-                "today": "<span color='#f5c2e7'><b><u>{}</u></b></span>",
+                "today": "<span color='#cba6f7'><b><u>{}</u></b></span>",
                 "months": "<span color='#89b4fa'><b>{}</b></span>",
             }
         }
