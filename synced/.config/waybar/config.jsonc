@@ -22,6 +22,7 @@
         "format": "{bandwidthTotalBytes}",
         "format-wifi": "{bandwidthTotalBytes} | ",
         "format-ethernet": "{bandwidthTotalBytes} | 󰈀",
+        "format-disconnected": "", // an empty format will hide the module.
         "tooltip-format": "{ifname} via {ipaddr} to {gwaddr}",
         "interval": 5,
         "max-length": 20,
