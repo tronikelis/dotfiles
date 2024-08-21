@@ -1,14 +1,9 @@
 // -*- mode: jsonc -*-
 {
-    "reload_style_on_change": true,
     "layer": "top",
-    "spacing": 16,
-    "height": 32,
+    "spacing": 0,
     "margin": 4,
     "modules-left": [
-        "hyprland/window"
-    ],
-    "modules-center": [
         "hyprland/workspaces",
     ],
     "modules-right": [
@@ -25,17 +20,16 @@
     ],
     "network": {
         "format": "{bandwidthTotalBytes}",
+        "format-wifi": "{bandwidthTotalBytes} | ",
+        "format-ethernet": "{bandwidthTotalBytes} | 󰈀",
         "tooltip-format": "{ifname} via {ipaddr} to {gwaddr}",
         "interval": 5,
         "max-length": 20,
     },
     "disk": {
-        "format": "{percentage_used:2}%  ",
+        "format": "{percentage_used}%  ",
         "tooltip-format": "Disk: {specific_used:0.2f}GB / {specific_free:0.2f}GB",
         "unit": "GB",
-    },
-    "hyprland/window": {
-        "icon": false,
     },
     "hyprland/language": {
         "format": "{short}",
@@ -43,7 +37,7 @@
         "format-alt": "{long}",
     },
     "custom/lock": {
-        "format": " ",
+        "format": "",
         "on-click": "hyprctl dispatch exit",
         "tooltip-format": "hyprctl dispatch exit"
     },
@@ -67,11 +61,11 @@
     },
     "cpu": {
         "interval": 5,
-        "format": "{usage:2}%  ",
+        "format": "{usage}%  ",
     },
     "memory": {
         "interval": 30,
-        "format": "{percentage:2}%  ",
+        "format": "{percentage}%  ",
         "tooltip-format": "Memory: {used:0.2f}GB / {total:0.2f}GB",
     },
     "battery": {
@@ -91,10 +85,10 @@
     "pulseaudio": {
         "format": "{volume}% {icon} {format_source}",
         "format-bluetooth": "{volume}% {icon} {format_source}",
-        "format-bluetooth-muted": " {icon} {format_source}",
-        "format-muted": "0%   {format_source}",
+        "format-bluetooth-muted": "  {icon} {format_source}",
+        "format-muted": "0% {format_source}",
         "format-source": "{volume}%  ",
-        "format-source-muted": " ",
+        "format-source-muted": "0%  ",
         "format-icons": {
             "default": [
                 " ",

@@ -3,7 +3,12 @@
 prev=""
 
 while true; do
-    curr="$(cat ./config.jsonc)"
+    curr=""
+
+    for filename in *; do
+        curr+="$(cat "$filename")"
+    done
+
     if [[ "$prev" != "$curr" ]]; then
         prev="$curr"
 
