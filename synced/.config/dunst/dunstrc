@@ -1,7 +1,7 @@
 [global]
 frame_color = "#89b4fa"
 separator_color= frame
-font = "JetBrains Mono 8"
+font = "Roboto Mono 8"
 
 [urgency_low]
 background = "#1e1e2e"
