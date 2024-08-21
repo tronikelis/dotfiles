@@ -8,6 +8,7 @@
 @define-color blue #89b4fa;
 @define-color pink #f5c2e7;
 @define-color green #a6e3a1;
+@define-color flamingo #f2cdcd;
 
 * {
     border: none;
@@ -130,3 +131,11 @@ window#waybar {
 
 
 
+#battery {
+    background-color: @base;
+    color: @flamingo;
+    margin-left: 12px;
+    border-radius: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
