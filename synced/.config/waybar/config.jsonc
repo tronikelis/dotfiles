@@ -20,11 +20,10 @@
     ],
     "network": {
         "format": "{bandwidthTotalBytes}",
-        "format-wifi": "{bandwidthTotalBytes} | ",
+        "format-wifi": "{bandwidthTotalBytes} | 󰖩 ",
         "format-ethernet": "{bandwidthTotalBytes} | 󰈀",
         "tooltip-format": "{ifname} via {ipaddr} to {gwaddr}",
         "interval": 5,
-        "max-length": 20,
     },
     "disk": {
         "format": "{percentage_used}%  ",
@@ -85,8 +84,8 @@
     "pulseaudio": {
         "format": "{volume}% {icon} {format_source}",
         "format-bluetooth": "{volume}% {icon} {format_source}",
-        "format-bluetooth-muted": "  {icon} {format_source}",
-        "format-muted": "0% {format_source}",
+        "format-bluetooth-muted": "0%   {icon} {format_source}",
+        "format-muted": "0%   {format_source}",
         "format-source": "{volume}%  ",
         "format-source-muted": "0%  ",
         "format-icons": {
