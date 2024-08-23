@@ -7,6 +7,7 @@ vim.opt.relativenumber = true
 vim.opt.statuscolumn = ""
 vim.opt.signcolumn = "no"
 vim.opt.scrollback = 100000
+vim.opt.cursorline = true
 
 vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
 vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
