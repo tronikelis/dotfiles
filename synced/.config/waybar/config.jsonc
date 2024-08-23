@@ -17,6 +17,7 @@
         "hyprland/language",
         "clock",
         "custom/lock",
+        "custom/shutdown",
     ],
     "network": {
         "format": "{bandwidthTotalBytes}",
@@ -36,9 +37,14 @@
         "tooltip-format": "Kbd: {long}",
         "format-alt": "{long}",
     },
+    "custom/shutdown": {
+        "format": "",
+        "on-click": "~/.config/waybar/scripts/confirm.sh 'shutdown' 'shutdown now'",
+        "tooltip-format": "shutdown now",
+    },
     "custom/lock": {
         "format": "",
-        "on-click": "hyprctl dispatch exit",
+        "on-click": "~/.config/waybar/scripts/confirm.sh 'logout' 'hyprctl dispatch exit'",
         "tooltip-format": "hyprctl dispatch exit"
     },
     "tray": {

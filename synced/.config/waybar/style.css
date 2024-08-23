@@ -57,15 +57,24 @@ window#waybar {
     color: @text;
 }
 
-#custom-lock {
+#custom-lock,
+#custom-shutdown {
     color: @red;
     background-color: @base;
-    border-radius: 10px;
-    padding-right: 10px;
-    padding-left: 10px;
-
-    margin-left: 12px;
 }
+
+#custom-lock {
+    margin-left: 12px;
+    border-radius: 10px 0px 0px 10px;
+    padding-right: 8px;
+    padding-left: 10px;
+}
+
+#custom-shutdown {
+    border-radius: 0px 10px 10px 0px;
+    padding-right: 10px;
+}
+
 
 #language,
 #clock {
