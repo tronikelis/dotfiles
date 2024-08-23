@@ -1,5 +1,6 @@
 // -*- mode: jsonc -*-
 {
+    "fixed-center": false,
     "layer": "top",
     "spacing": 0,
     "margin": 4,
