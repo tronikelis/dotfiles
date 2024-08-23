@@ -8,6 +8,7 @@ vim.opt.statuscolumn = ""
 vim.opt.signcolumn = "no"
 vim.opt.scrollback = 100000
 vim.opt.cursorline = true
+vim.opt.wrap = false
 
 vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
 vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
@@ -24,8 +25,9 @@ local channel = vim.api.nvim_open_term(buf, {})
 vim.api.nvim_chan_send(channel, table.concat(lines, "\r\n"))
 
 vim.api.nvim_set_current_buf(buf)
+vim.api.nvim_buf_delete(orig_buf, { force = true })
 
-vim.keymap.set("n", "q", "<cmd>qa!<cr>", { silent = true, buffer = buf })
+vim.bo.modified = false
 
 vim.api.nvim_create_autocmd("TermEnter", { buffer = buf, command = "stopinsert" })
 
