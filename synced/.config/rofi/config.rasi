@@ -6,3 +6,7 @@ element {
     spacing: 5px;
 }
 
+configuration {
+    font: "Roboto Mono 12";
+}
+
