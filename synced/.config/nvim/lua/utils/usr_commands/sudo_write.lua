@@ -1,11 +1,15 @@
 local log = require("utils.log")
 local path = require("utils.path")
 
-local sudo_exec = function(cmd)
+local get_password = function()
 	vim.fn.inputsave()
 	local password = vim.fn.inputsecret("Password: ")
 	vim.fn.inputrestore()
 
+	return password
+end
+
+local sudo_exec = function(cmd, password)
 	if not password or #password == 0 then
 		log.info("invalid password, sudo aborted")
 		return false
@@ -34,15 +38,15 @@ local sudo_write = function()
 		return
 	end
 
-	local stat = vim.system({ "stat", curr_file }):wait()
-	if stat.code ~= 0 then
-		log.err(string.format("filepath '%s' does not exist", curr_file))
+	local password = get_password()
+
+	if not sudo_exec({ "touch", curr_file }, password) then
 		return
 	end
 
 	vim.cmd(string.format("silent w! %s", tmp_file))
 
-	if not sudo_exec({ "cp", tmp_file, curr_file }) then
+	if not sudo_exec({ "cp", tmp_file, curr_file }, password) then
 		return
 	end
 
