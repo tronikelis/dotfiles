@@ -174,12 +174,10 @@ return {
 				completeopt = "menu,menuone,noinsert",
 				keyword_length = 1,
 			},
-			sources = {
+			sources = cmp.config.sources({
 				{ name = "nvim_lsp" },
 				{ name = "nvim_lsp_signature_help" },
-				{ name = "path" },
-				{ name = "buffer" },
-			},
+			}, { { name = "path" } }, { { name = "buffer" } }),
 			mapping = cmp.mapping.preset.insert({
 				["<C-n>"] = cmp.mapping.select_next_item({
 					behavior = cmp.SelectBehavior.Select,
