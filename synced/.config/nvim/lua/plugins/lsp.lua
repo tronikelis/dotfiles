@@ -123,6 +123,7 @@ return {
 		"hrsh7th/cmp-nvim-lsp-signature-help",
 		"hrsh7th/cmp-path",
 		"hrsh7th/nvim-cmp",
+		"hrsh7th/cmp-buffer",
 		"onsails/lspkind.nvim",
 		"williamboman/mason-lspconfig.nvim",
 		"williamboman/mason.nvim",
@@ -177,6 +178,7 @@ return {
 				{ name = "nvim_lsp" },
 				{ name = "nvim_lsp_signature_help" },
 				{ name = "path" },
+				{ name = "buffer" },
 			},
 			mapping = cmp.mapping.preset.insert({
 				["<C-n>"] = cmp.mapping.select_next_item({
@@ -198,6 +200,7 @@ return {
 					menu = {
 						nvim_lsp = "[LSP]",
 						path = "[PTH]",
+						buffer = "[BUF]",
 					},
 				}),
 			},
