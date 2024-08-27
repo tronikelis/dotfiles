@@ -175,7 +175,7 @@ return {
 			sources = cmp.config.sources({
 				{ name = "nvim_lsp" },
 				{ name = "nvim_lsp_signature_help" },
-			}, { { name = "path" } }, { { name = "buffer" } }),
+			}, { { name = "path" } }, { { name = "buffer", keyword_length = 4 } }),
 			mapping = cmp.mapping.preset.insert({
 				["<C-n>"] = cmp.mapping.select_next_item({
 					behavior = cmp.SelectBehavior.Select,
