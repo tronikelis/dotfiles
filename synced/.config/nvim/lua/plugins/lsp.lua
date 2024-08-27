@@ -118,12 +118,16 @@ end
 return {
 	"neovim/nvim-lspconfig",
 	dependencies = {
-		"WhoIsSethDaniel/mason-tool-installer.nvim",
+		{
+			"yioneko/nvim-cmp",
+			branch = "perf",
+		},
 		"hrsh7th/cmp-nvim-lsp",
 		"hrsh7th/cmp-nvim-lsp-signature-help",
 		"hrsh7th/cmp-path",
-		"hrsh7th/nvim-cmp",
 		"hrsh7th/cmp-buffer",
+
+		"WhoIsSethDaniel/mason-tool-installer.nvim",
 		"onsails/lspkind.nvim",
 		"williamboman/mason-lspconfig.nvim",
 		"williamboman/mason.nvim",
