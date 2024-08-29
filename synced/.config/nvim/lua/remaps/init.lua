@@ -41,7 +41,7 @@ vim.opt.incsearch = true
 vim.opt.termguicolors = true
 
 -- hmm, maybe just use C-[
-vim.keymap.set({ "v", "i", "n", "s" }, "<C-c>", "<Esc>")
+vim.keymap.set("", "<C-c>", "<Esc>")
 
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")

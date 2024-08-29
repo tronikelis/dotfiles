@@ -18,6 +18,12 @@ return {
 			show_icons = true,
 			hide_handbook = true,
 			leader_key = "<leader><leader>",
+			mappings = {
+				quit = "<C-c>",
+				toggle = "a",
+				open_vertical = "v",
+				open_horizontal = "s",
+			},
 		})
 	end,
 }
