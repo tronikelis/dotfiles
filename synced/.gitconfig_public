@@ -5,8 +5,11 @@
 [push]
 	autosetupremote = true
 
+[branch]
+	sort = -committerdate
 [alias]
 	conflicts = diff --name-only --diff-filter=U
+    blamefull = blame -w -C -C -C
 [merge]
 	tool = nvimdiff
 [mergetool "nvimdiff"]
