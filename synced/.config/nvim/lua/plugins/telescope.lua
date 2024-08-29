@@ -5,7 +5,6 @@ return {
 		"nvim-lua/plenary.nvim",
 		{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
 		"nvim-tree/nvim-web-devicons",
-		"nvim-telescope/telescope-frecency.nvim",
 		"nvim-telescope/telescope-symbols.nvim",
 	},
 	config = function()
@@ -49,30 +48,9 @@ return {
 					only_cwd = true,
 				},
 			},
-			extensions = {
-				frecency = {
-					db_safe_mode = false,
-					auto_validate = true,
-					recency_values = {
-						{ age = 240, value = 100 * 1000 }, -- past 4 hours
-						{ age = 1440, value = 80 * 100 }, -- past day
-						{ age = 4320, value = 60 * 10 }, -- past 3 days
-						{ age = 10080, value = 40 }, -- past week
-						{ age = 43200, value = 20 }, -- past month
-						{ age = 129600, value = 10 }, -- past 90 days
-					},
-				},
-			},
 		})
 
 		require("telescope").load_extension("fzf")
-
-		require("telescope").load_extension("frecency")
-		vim.keymap.set("n", "<leader><leader>", function()
-			require("telescope").extensions.frecency.frecency({
-				workspace = "CWD",
-			})
-		end)
 
 		local builtin = require("telescope.builtin")
 
