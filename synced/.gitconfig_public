@@ -14,6 +14,6 @@
 [merge]
 	tool = nvimdiff
 [mergetool "nvimdiff"]
-	cmd = "nvim -d \"$LOCAL\" \"$MERGED\" \"$REMOTE\" -c \"wincmd w\" -c \"wincmd J\""
+	cmd = "nvim -d \"$LOCAL\" \"$MERGED\" \"$REMOTE\" -c \"wincmd w\" -c \"wincmd J\" -c \"/=======\""
 [mergetool]
 	keepBackup = false
