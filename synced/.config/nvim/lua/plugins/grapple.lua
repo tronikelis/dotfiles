@@ -13,10 +13,10 @@ return {
 		vim.keymap.set("n", "<leader>m", grapple.toggle)
 
 		vim.keymap.set("n", "[m", function()
-			grapple.cycle_tags("next")
+			grapple.cycle_tags("prev")
 		end)
 		vim.keymap.set("n", "]m", function()
-			grapple.cycle_tags("prev")
+			grapple.cycle_tags("next")
 		end)
 
 		for i = 1, 9 do
