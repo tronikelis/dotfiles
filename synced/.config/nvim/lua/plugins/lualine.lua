@@ -9,23 +9,23 @@ return {
 		local linecount = require("lualine-components.linecount")
 		local smol_mode = require("lualine-components.smol-mode")
 
-		local arrow = function()
-			local ok, statusline = pcall(require, "arrow.statusline")
-			if not ok then
+		local grapple = function()
+			if not package.loaded.grapple then
 				return
 			end
 
-			return statusline.text_for_statusline_with_icons()
+			return require("grapple").statusline()
 		end
 
 		local formatter_status = function()
+			if not package.loaded.conform then
+				return
+			end
+
+			local conform = require("conform")
+
 			local available = "󰏫"
 			local not_available = "󰏯"
-
-			local ok, conform = pcall(require, "conform")
-			if not ok then
-				return not_available
-			end
 
 			local formatters, lsp = conform.list_formatters_to_run()
 
@@ -51,7 +51,7 @@ return {
 			sections = {
 				lualine_y = { formatter_status, linecount },
 				lualine_a = { smol_mode },
-				lualine_c = { "filename", arrow },
+				lualine_c = { "filename", grapple },
 				lualine_b = {
 					"branch",
 					"diff",

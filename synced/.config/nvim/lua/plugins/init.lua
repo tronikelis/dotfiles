@@ -14,7 +14,6 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
-	require("plugins.arrow"),
 	require("plugins.theme"),
 	require("plugins.telescope"),
 	require("plugins.tree-sitter"),
@@ -24,6 +23,7 @@ require("lazy").setup({
 	require("plugins.lualine"),
 	require("plugins.oil"),
 	require("plugins.comments"),
+	require("plugins.grapple"),
 
 	-- small plugins that don't need config
 	"tpope/vim-sleuth",
