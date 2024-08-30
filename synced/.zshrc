@@ -165,7 +165,7 @@ function gci() {
 		grep -v "^*" |
 		cut -c 3- |
 		fzf --preview-window "$fzf_preview_window" --header-first --header "$(get_fzf_header), checkout:" --layout reverse --info inline --preview="$diff_preview" |
-		xargs git checkout
+		xargs git switch
 }
 
 function gdi() {
