@@ -149,12 +149,6 @@ function cloned() {
 	git clone "$1" --depth 1
 }
 
-function gpush() {
-	git add .
-	git commit -m "$@"
-	git push
-}
-
 function cdmktemp() {
 	cd "$(mktemp -d)"
 }
