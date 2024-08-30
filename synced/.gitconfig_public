@@ -10,6 +10,7 @@
 [alias]
 	conflicts = diff --name-only --diff-filter=U
     blamefull = blame -w -C -C -C
+    diffw = diff --color-words
 [merge]
 	tool = nvimdiff
 [mergetool "nvimdiff"]
