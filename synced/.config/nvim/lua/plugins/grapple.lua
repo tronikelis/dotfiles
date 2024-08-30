@@ -7,6 +7,9 @@ return {
 		local grapple = require("grapple")
 		grapple.setup({
 			scope = "git",
+			win_opts = {
+				border = "rounded",
+			},
 		})
 
 		vim.keymap.set("n", "<leader><leader>", grapple.toggle_tags)
