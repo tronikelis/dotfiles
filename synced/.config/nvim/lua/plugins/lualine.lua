@@ -9,6 +9,15 @@ return {
 		local linecount = require("lualine-components.linecount")
 		local smol_mode = require("lualine-components.smol-mode")
 
+		local arrow = function()
+			local ok, statusline = pcall(require, "arrow.statusline")
+			if not ok then
+				return
+			end
+
+			return statusline.text_for_statusline_with_icons()
+		end
+
 		local formatter_status = function()
 			local available = "󰏫"
 			local not_available = "󰏯"
@@ -42,6 +51,7 @@ return {
 			sections = {
 				lualine_y = { formatter_status, linecount },
 				lualine_a = { smol_mode },
+				lualine_c = { "filename", arrow },
 				lualine_b = {
 					"branch",
 					"diff",
