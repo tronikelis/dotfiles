@@ -164,7 +164,7 @@ function gci() {
 	git branch |
 		grep -v "^*" |
 		cut -c 3- |
-		fzf --preview-window "$fzf_preview_window" --header-first --header "$(get_fzf_header), checkout:" --layout reverse --info inline --preview="$diff_preview" |
+		fzf --preview-window "$fzf_preview_window" --header-first --header "$(get_fzf_header), switch:" --layout reverse --info inline --preview="$diff_preview" |
 		xargs git switch
 }
 
