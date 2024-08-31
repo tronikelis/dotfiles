@@ -115,6 +115,8 @@ export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || pr
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"                   # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
 
+# my things start here
+
 alias ssh="kitten ssh"
 
 alias vim="nvim"
@@ -192,3 +194,14 @@ export FZF_CTRL_T_OPTS="
 export FZF_ALT_C_OPTS="
   --walker-skip .git,node_modules,target
   --preview 'eza --icons --tree --color=always {}'"
+
+cmd_copy="wl-copy"
+if [[ "$OSTYPE" == "darwin"* ]]; then
+	cmd_copy="pbcopy"
+fi
+
+# CTRL-Y to copy the command into clipboard using pbcopy
+export FZF_CTRL_R_OPTS="
+  --bind 'ctrl-y:execute-silent(echo -n {2..} | "$cmd_copy")+abort'
+  --color header:italic
+  --header 'Press CTRL-Y to copy command into clipboard'"
