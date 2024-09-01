@@ -99,6 +99,7 @@ vim.filetype.add({
 	pattern = {
 		[".*/hypr/.*%.conf"] = "hyprlang",
 		["docker%-compose.-%.ya?ml"] = "yaml.docker-compose",
+		[".gitconfig_public"] = "gitconfig",
 	},
 })
 
