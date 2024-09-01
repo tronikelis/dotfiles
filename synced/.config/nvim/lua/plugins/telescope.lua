@@ -54,6 +54,7 @@ return {
 
 		local builtin = require("telescope.builtin")
 
+		vim.keymap.set("n", "<leader>ht", builtin.help_tags)
 		vim.keymap.set("n", "<leader>sb", builtin.symbols)
 		vim.keymap.set("n", "<leader>fg", builtin.live_grep)
 		vim.keymap.set("n", "<leader>gs", builtin.git_status)
