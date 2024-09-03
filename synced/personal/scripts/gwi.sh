@@ -4,7 +4,13 @@ set -eou pipefail
 
 rm_worktree="s/worktree //"
 
-base="$(git worktree list --porcelain | head -n 1 | sed "$rm_worktree")"
+base="$(
+	git worktree list --porcelain |
+		head -n 1 |
+		sed "$rm_worktree" |
+		# if git repo is at /cwd/.bare
+		sed "s/.bare//"
+)"
 
 worktree="$(
 	git worktree list --porcelain |
@@ -18,6 +24,7 @@ worktree="$(
 tab_title="git: $worktree"
 
 worktree="$base$worktree"
+printf "will switch to $worktree\n"
 
 # "" -> \"\" lmao
 tab_title="$(printf "$tab_title" | sed "s/\"/\\\\\"/g")"
@@ -29,7 +36,7 @@ current_id="$(
 
 if [[ -z "$current_id" ]]; then
 	printf "got empty id, launching\n"
-	kitten @ launch --type=tab --tab-title "$tab_title" --cwd "$worktree" --hold nvim .
+	kitten @ launch --type=tab --tab-title "$tab_title" --cwd "$worktree"
 else
 	printf "focusing id $current_id\n"
 	kitten @ focus-tab --match "id:$current_id"
