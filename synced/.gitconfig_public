@@ -13,7 +13,9 @@
 	diffw = diff --color-words
 	cleanfd = clean -f -d
 	root = rev-parse --show-toplevel
+
 	wnew = "!git worktree add \"$1\" -b \"$1\" #"
+	wadd = "!git worktree add \"$1\" \"$1\" #"
 [merge]
 	tool = nvimdiff
 [mergetool "nvimdiff"]
