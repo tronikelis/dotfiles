@@ -1,29 +1,21 @@
 #!/bin/sh
 
+# [G]it
+# [W]orktree
+# [S]elect
+# [I]nteractive
+
 set -eou pipefail
 
-rm_worktree="s/worktree //"
-
-base="$(
-	git worktree list --porcelain |
-		head -n 1 |
-		sed "$rm_worktree" |
-		# if git repo is at /cwd/.bare
-		sed "s/.bare//"
+selected="$(
+	~/personal/scripts/git/select_worktree.sh --header 'Select Git Worktree'
 )"
 
-worktree="$(
-	git worktree list --porcelain |
-		tail -n +2 |
-		grep 'worktree ' |
-		sed "$rm_worktree" |
-		cut -c $((${#base} + 1))- |
-		fzf --reverse --header-first --header "Select Git Worktree"
-)"
+base="$(printf "$selected" | awk '{print $1}')"
+branch="$(printf "$selected" | awk '{print $2}')"
 
-tab_title="git: $worktree"
-
-worktree="$base$worktree"
+tab_title="git: $branch"
+worktree="$base$branch"
 printf "will switch to $worktree\n"
 
 # "" -> \"\" lmao
