@@ -10,6 +10,9 @@ rm_worktree="s/worktree //"
 
 git_worktree_list="$(git worktree list --porcelain)"
 
+fzf_preview='git log --date=short --pretty=format:"%Cred%h%Creset %Cblue%ad%Creset %s" --color master..{}'
+fzf_preview_window='right,50%,border-left,<80(down,40%,border-top)'
+
 base="$(
 	printf "$git_worktree_list" |
 		head -n 1 |
@@ -46,8 +49,8 @@ done
 
 branch="$(
 	printf "$worktrees" |
-		cut -c $((${#base} + 1))- |
-		fzf --reverse --header-first "$@"
+		cut -c $((${#base} + 2))- |
+		fzf --reverse --header-first --preview "$fzf_preview" --preview-window "$fzf_preview_window" "$@"
 )"
 
-echo "$base $branch"
+echo "$base/ $branch"
