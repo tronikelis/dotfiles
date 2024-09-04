@@ -65,5 +65,4 @@ require("lazy").setup({
 	},
 	"tpope/vim-surround",
 	"mbbill/undotree",
-	"ThePrimeagen/vim-be-good",
 })
