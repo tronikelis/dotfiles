@@ -29,7 +29,11 @@ worktrees_with_time=""
 
 IFS=$nl
 for item in $worktrees; do
-	worktrees_with_time+="$(stat -c %Y "$item") $item$nl"
+	if [[ "$OSTYPE" == "darwin"* ]]; then
+		worktrees_with_time+="$(stat -f %m "$item") $item$nl"
+	else
+		worktrees_with_time+="$(stat -c %Y "$item") $item$nl"
+	fi
 done
 
 worktrees_with_time="$(printf "$worktrees_with_time" | sort -r)"
