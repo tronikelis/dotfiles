@@ -178,8 +178,12 @@ function gdi() {
 		xargs -0 git branch --delete
 }
 
-function gwi() {
-	~/personal/scripts/gwi.sh
+function gwsi() {
+	~/personal/scripts/git/gwsi.sh
+}
+
+function gwdi() {
+	~/personal/scripts/git/gwdi.sh
 }
 
 function killp() {
