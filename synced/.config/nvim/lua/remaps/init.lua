@@ -40,8 +40,8 @@ vim.opt.hlsearch = true
 vim.opt.incsearch = true
 vim.opt.termguicolors = true
 
--- hmm, maybe just use C-[
-vim.keymap.set("", "<C-c>", "<Esc>")
+-- hmm, maybe just use <c-[>
+-- vim.keymap.set("", "<C-c>", "<nop>")
 
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
