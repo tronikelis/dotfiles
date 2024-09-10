@@ -42,7 +42,7 @@ local ensure_installed = {
 	"stylua",
 	"tailwindcss-language-server",
 	"taplo",
-	"tsserver",
+	"ts_ls",
 	"typos-lsp",
 	"yamlls",
 }
