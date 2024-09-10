@@ -1,109 +1,98 @@
 // -*- mode: jsonc -*-
 {
-    "fixed-center": false,
-    "layer": "top",
-    "spacing": 0,
-    "margin": 4,
-    "modules-left": [
-        "hyprland/workspaces",
-    ],
-    "modules-right": [
-        "tray",
-        "network",
-        "pulseaudio",
-        "cpu",
-        "memory",
-        "disk",
-        "battery",
-        "hyprland/language",
-        "clock",
-        "custom/lock",
-        "custom/shutdown",
-    ],
-    "network": {
-        "format": "{bandwidthTotalBytes}",
-        "format-wifi": "{bandwidthTotalBytes} | 󰖩 ",
-        "format-ethernet": "{bandwidthTotalBytes} | 󰈀",
-        "format-disconnected": "", // an empty format will hide the module.
-        "tooltip-format": "{ifname} via {ipaddr} to {gwaddr}",
-        "interval": 5,
+  "fixed-center": false,
+  "layer": "top",
+  "spacing": 0,
+  "margin": 4,
+  "modules-left": ["hyprland/workspaces"],
+  "modules-right": [
+    "tray",
+    "network",
+    "pulseaudio",
+    "cpu",
+    "memory",
+    "disk",
+    "battery",
+    "hyprland/language",
+    "clock",
+    "custom/lock",
+    "custom/shutdown",
+  ],
+  "network": {
+    "format": "{bandwidthTotalBytes}",
+    "format-wifi": "{bandwidthTotalBytes} | 󰖩 ",
+    "format-ethernet": "{bandwidthTotalBytes} | 󰈀",
+    "format-disconnected": "", // an empty format will hide the module.
+    "tooltip-format": "{ifname} via {ipaddr} to {gwaddr}",
+    "interval": 5,
+  },
+  "disk": {
+    "format": "{percentage_used}%  ",
+    "tooltip-format": "Disk: {specific_used:0.2f}GB / {specific_free:0.2f}GB",
+    "unit": "GB",
+  },
+  "hyprland/language": {
+    "format": "{short}",
+    "tooltip-format": "Kbd: {long}",
+    "format-alt": "{long}",
+  },
+  "custom/shutdown": {
+    "format": "",
+    "on-click": "~/.config/waybar/scripts/confirm.sh 'shutdown' 'shutdown now'",
+    "tooltip-format": "shutdown now",
+  },
+  "custom/lock": {
+    "format": "",
+    "on-click": "~/.config/waybar/scripts/confirm.sh 'logout' 'hyprctl dispatch exit'",
+    "tooltip-format": "hyprctl dispatch exit",
+  },
+  "tray": {
+    "spacing": 10,
+  },
+  "clock": {
+    "interval": 30,
+    "locale": "lt_LT.utf8",
+    "format-alt": "{:%A, %B %d, (%d-%m-%Y)}",
+    "format": "{:%H:%M}",
+    "tooltip-format": "<tt><small>{calendar}</small></tt>",
+    "calendar": {
+      "mode": "year",
+      "mode-mon-col": 3,
+      "weeks-pos": "right",
+      "on-scroll": 1,
+      "format": {
+        "today": "<span color='#cba6f7'><b><u>{}</u></b></span>",
+        "months": "<span color='#89b4fa'><b>{}</b></span>",
+      },
     },
-    "disk": {
-        "format": "{percentage_used}%  ",
-        "tooltip-format": "Disk: {specific_used:0.2f}GB / {specific_free:0.2f}GB",
-        "unit": "GB",
+  },
+  "cpu": {
+    "interval": 5,
+    "format": "{usage}%  ",
+  },
+  "memory": {
+    "interval": 30,
+    "format": "{percentage}%  ",
+    "tooltip-format": "Memory: {used:0.2f}GB / {total:0.2f}GB",
+  },
+  "battery": {
+    "format": "{capacity}% {icon}",
+    "format-full": "{capacity}% {icon}",
+    "format-charging": "{capacity}% 󰂅 ",
+    "format-plugged": "{capacity}% 󱇰 ",
+    "format-alt": "{time} {icon}",
+    "format-icons": [" ", " ", " ", " ", " "],
+  },
+  "pulseaudio": {
+    "format": "{volume}% {icon} {format_source}",
+    "format-bluetooth": "{volume}% {icon} {format_source}",
+    "format-bluetooth-muted": "0%   {icon} {format_source}",
+    "format-muted": "0%   {format_source}",
+    "format-source": "{volume}%  ",
+    "format-source-muted": "0%  ",
+    "format-icons": {
+      "default": [" ", " ", " "],
     },
-    "hyprland/language": {
-        "format": "{short}",
-        "tooltip-format": "Kbd: {long}",
-        "format-alt": "{long}",
-    },
-    "custom/shutdown": {
-        "format": "",
-        "on-click": "~/.config/waybar/scripts/confirm.sh 'shutdown' 'shutdown now'",
-        "tooltip-format": "shutdown now",
-    },
-    "custom/lock": {
-        "format": "",
-        "on-click": "~/.config/waybar/scripts/confirm.sh 'logout' 'hyprctl dispatch exit'",
-        "tooltip-format": "hyprctl dispatch exit"
-    },
-    "tray": {
-        "spacing": 10
-    },
-    "clock": {
-        "locale": "lt_LT.utf8",
-        "format-alt": "{:%A, %B %d, (%d-%m-%Y)}",
-        "format": "{:%H:%M}",
-        "tooltip-format": "<tt><small>{calendar}</small></tt>",
-        "calendar": {
-            "mode": "year",
-            "mode-mon-col": 3,
-            "weeks-pos": "right",
-            "on-scroll": 1,
-            "format": {
-                "today": "<span color='#cba6f7'><b><u>{}</u></b></span>",
-                "months": "<span color='#89b4fa'><b>{}</b></span>",
-            }
-        }
-    },
-    "cpu": {
-        "interval": 5,
-        "format": "{usage}%  ",
-    },
-    "memory": {
-        "interval": 30,
-        "format": "{percentage}%  ",
-        "tooltip-format": "Memory: {used:0.2f}GB / {total:0.2f}GB",
-    },
-    "battery": {
-        "format": "{capacity}% {icon}",
-        "format-full": "{capacity}% {icon}",
-        "format-charging": "{capacity}% 󰂅 ",
-        "format-plugged": "{capacity}% 󱇰 ",
-        "format-alt": "{time} {icon}",
-        "format-icons": [
-            " ",
-            " ",
-            " ",
-            " ",
-            " "
-        ]
-    },
-    "pulseaudio": {
-        "format": "{volume}% {icon} {format_source}",
-        "format-bluetooth": "{volume}% {icon} {format_source}",
-        "format-bluetooth-muted": "0%   {icon} {format_source}",
-        "format-muted": "0%   {format_source}",
-        "format-source": "{volume}%  ",
-        "format-source-muted": "0%  ",
-        "format-icons": {
-            "default": [
-                " ",
-                " ",
-                " "
-            ]
-        },
-        "on-click": "hyprctl dispatch exec [floating] pavucontrol-qt"
-    },
+    "on-click": "hyprctl dispatch exec [floating] pavucontrol-qt",
+  },
 }
