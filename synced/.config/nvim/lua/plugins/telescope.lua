@@ -5,7 +5,6 @@ return {
 		"nvim-lua/plenary.nvim",
 		{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
 		"nvim-tree/nvim-web-devicons",
-		"nvim-telescope/telescope-symbols.nvim",
 	},
 	config = function()
 		local picker_config = function()
@@ -47,6 +46,9 @@ return {
 					show_all_buffers = false,
 					only_cwd = true,
 				},
+				oldfiles = {
+					only_cwd = true,
+				},
 			},
 		})
 
@@ -54,8 +56,8 @@ return {
 
 		local builtin = require("telescope.builtin")
 
+		vim.keymap.set("n", "<leader>of", builtin.oldfiles)
 		vim.keymap.set("n", "<leader>ht", builtin.help_tags)
-		vim.keymap.set("n", "<leader>sb", builtin.symbols)
 		vim.keymap.set("n", "<leader>fg", builtin.live_grep)
 		vim.keymap.set("n", "<leader>gs", builtin.git_status)
 		vim.keymap.set("n", "<C-p>", builtin.find_files)
