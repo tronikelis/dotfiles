@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Selects a git worktree sorted by last modified
 

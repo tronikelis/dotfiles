@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # [G]it
 # [W]orktree
