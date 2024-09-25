@@ -5,6 +5,7 @@ return {
 		"nvim-lua/plenary.nvim",
 		{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
 		"nvim-tree/nvim-web-devicons",
+		"nvim-telescope/telescope-live-grep-args.nvim",
 	},
 	config = function()
 		local picker_config = function()
@@ -50,15 +51,26 @@ return {
 					only_cwd = true,
 				},
 			},
+			extensions = {
+				live_grep_args = {
+					mappings = {
+						i = {
+							["<c-space>"] = actions.to_fuzzy_refine,
+						},
+					},
+				},
+			},
 		})
 
 		require("telescope").load_extension("fzf")
+		require("telescope").load_extension("live_grep_args")
 
 		local builtin = require("telescope.builtin")
+		local extensions = require("telescope").extensions
 
+		vim.keymap.set("n", "<leader>fg", extensions.live_grep_args.live_grep_args)
 		vim.keymap.set("n", "<leader>of", builtin.oldfiles)
 		vim.keymap.set("n", "<leader>ht", builtin.help_tags)
-		vim.keymap.set("n", "<leader>fg", builtin.live_grep)
 		vim.keymap.set("n", "<leader>gs", builtin.git_status)
 		vim.keymap.set("n", "<C-p>", builtin.find_files)
 		vim.keymap.set("n", "<leader>/", builtin.current_buffer_fuzzy_find)
