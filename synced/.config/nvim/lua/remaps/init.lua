@@ -58,6 +58,9 @@ vim.keymap.set("n", "[c", "[czz")
 vim.keymap.set("n", "]q", "<cmd>cnext<cr>zz")
 vim.keymap.set("n", "[q", "<cmd>cprev<cr>zz")
 
+-- terminal mode
+vim.keymap.set("t", "<esc>", "<c-\\><c-n>")
+
 -- autocmds
 
 vim.api.nvim_create_autocmd({ "BufWritePre" }, {
