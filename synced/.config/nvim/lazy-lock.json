@@ -33,5 +33,5 @@
   "undotree": { "branch": "master", "commit": "56c684a805fe948936cda0d1b19505b84ad7e065" },
   "vim-sleuth": { "branch": "master", "commit": "cd9d382e33bb817abe7f10cdc3a606bf1d491d75" },
   "vim-surround": { "branch": "master", "commit": "3d188ed2113431cf8dac77be61b842acb64433d9" },
-  "xylene.nvim": { "branch": "master", "commit": "4c500b705da24d0b8b094d0057dbf599fc4493aa" }
+  "xylene.nvim": { "branch": "master", "commit": "969c5a8c7c494ba0cb495e5188f8a036a7047d42" }
 }
