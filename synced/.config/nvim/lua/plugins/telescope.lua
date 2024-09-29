@@ -32,6 +32,8 @@ return {
 				mappings = {
 					i = {
 						["<esc>"] = actions.close,
+						["<c-s>"] = actions.file_split,
+						["<c-v>"] = actions.file_vsplit,
 					},
 				},
 				path_display = { "truncate" },
