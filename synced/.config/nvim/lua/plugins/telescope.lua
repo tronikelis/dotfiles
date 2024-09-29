@@ -44,8 +44,6 @@ return {
 				},
 				buffers = {
 					sort_mru = true,
-					show_all_buffers = false,
-					only_cwd = true,
 				},
 				oldfiles = {
 					only_cwd = true,
