@@ -75,5 +75,15 @@ return {
 		vim.keymap.set("n", "<C-p>", builtin.find_files)
 		vim.keymap.set("n", "<leader>/", builtin.current_buffer_fuzzy_find)
 		vim.keymap.set("n", "<leader>b", builtin.buffers)
+
+		vim.keymap.set({ "n", "v" }, "<leader>gc", function()
+			local mode = vim.api.nvim_get_mode().mode
+			if mode == "n" then
+				builtin.git_bcommits()
+			else
+				-- when next version of telescope releases this will be available
+				-- builtin.git_bcommits_range()
+			end
+		end, {})
 	end,
 }
