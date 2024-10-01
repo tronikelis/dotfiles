@@ -1,7 +1,8 @@
 return {
 	"cbochs/grapple.nvim",
 	dependencies = {
-		{ "nvim-tree/nvim-web-devicons" },
+		"nvim-telescope/telescope.nvim",
+		"nvim-tree/nvim-web-devicons",
 	},
 	config = function()
 		local grapple = require("grapple")
@@ -27,5 +28,8 @@ return {
 				grapple.select({ index = i })
 			end)
 		end
+
+		require("telescope").load_extension("grapple")
+		vim.keymap.set("n", "<leader>gp", require("telescope").extensions.grapple.tags)
 	end,
 }
