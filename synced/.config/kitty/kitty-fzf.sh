@@ -3,7 +3,7 @@
 all_tabs="$(
     kitty @ ls | jq -r '
         .[].tabs.[] |
-        [.title, .id] |
+        [.title, .windows[0].cwd, .id] |
         @tsv
     ' | column -ts $'\t'
 )"
