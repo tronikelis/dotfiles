@@ -222,12 +222,18 @@ return {
 			},
 		})
 
-		vim.keymap.set({ "i", "s" }, "<A-n>", function()
+		vim.keymap.set("", "<a-l>", function()
+			if vim.snippet.active() then
+				vim.snippet.stop()
+			end
+		end)
+
+		vim.keymap.set({ "i", "s" }, "<a-n>", function()
 			if vim.snippet.active({ direction = 1 }) then
 				vim.snippet.jump(1)
 			end
 		end)
-		vim.keymap.set({ "i", "s" }, "<A-p>", function()
+		vim.keymap.set({ "i", "s" }, "<a-p>", function()
 			if vim.snippet.active({ direction = -1 }) then
 				vim.snippet.jump(-1)
 			end
