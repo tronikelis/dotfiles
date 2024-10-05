@@ -7,6 +7,13 @@ vim.api.nvim_create_autocmd("VimLeavePre", {
 return {
 	"stevearc/conform.nvim",
 	config = function()
+		-- specify conform.format opts based on the ft
+		local format_opts_by_ft = {
+			-- on templ files run only the templ lsp formatter
+			-- because html lsp also would run otherwise
+			templ = { name = "templ" },
+		}
+
 		require("conform").setup({
 			formatters_by_ft = {
 				html = { "prettierd" },
@@ -31,15 +38,7 @@ return {
 					return
 				end
 
-				local format_opts = {}
-
-				-- on templ files run only the templ lsp formatter
-				-- because html lsp also would run otherwise
-				if vim.bo[bufnr].filetype == "templ" then
-					format_opts.name = "templ"
-				end
-
-				return format_opts
+				return format_opts_by_ft[vim.bo[bufnr].filetype] or {}
 			end,
 		})
 
