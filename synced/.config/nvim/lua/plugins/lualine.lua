@@ -8,6 +8,7 @@ return {
 		local filename_oil = require("lualine-components.filename-oil")
 		local linecount = require("lualine-components.linecount")
 		local smol_mode = require("lualine-components.smol-mode")
+		local git_prompt = require("lualine-components.git-prompt")
 
 		local grapple = function()
 			if not package.loaded.grapple then
@@ -54,6 +55,7 @@ return {
 				lualine_c = { "filename", grapple },
 				lualine_b = {
 					"branch",
+					git_prompt,
 					"diff",
 					{
 						"diagnostics",
