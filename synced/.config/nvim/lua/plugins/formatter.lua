@@ -10,11 +10,9 @@ return {
 		require("conform").setup({
 			formatters_by_ft = {
 				html = { "prettierd" },
-
 				javascript = { "prettierd" },
 				json = { "prettierd" },
 				jsonc = { "prettierd" },
-				-- markdown = { "prettierd" },
 				tsx = { "prettierd" },
 				typescript = { "prettierd" },
 				typescriptreact = { "prettierd" },
@@ -33,7 +31,15 @@ return {
 					return
 				end
 
-				return {}
+				local format_opts = {}
+
+				-- on templ files run only the templ lsp formatter
+				-- because html lsp also would run otherwise
+				if vim.bo[bufnr].filetype == "templ" then
+					format_opts.name = "templ"
+				end
+
+				return format_opts
 			end,
 		})
 
