@@ -55,7 +55,6 @@ require("lazy").setup({
 		config = function()
 			require("nvim-ts-autotag").setup()
 		end,
-		lazy = true,
 		event = "VeryLazy",
 	},
 	{
