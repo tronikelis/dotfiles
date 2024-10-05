@@ -23,6 +23,7 @@ vim.keymap.set("n", "[e", vim.diagnostic.goto_prev)
 vim.keymap.set("n", "]e", vim.diagnostic.goto_next)
 
 local ensure_installed = {
+	"templ",
 	"marksman",
 	"clangd",
 	"hyprls",
