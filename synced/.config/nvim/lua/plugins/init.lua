@@ -25,6 +25,7 @@ require("lazy").setup({
 	require("plugins.comments"),
 	require("plugins.grapple"),
 	require("plugins.xylene"),
+	require("plugins.conflict-marker"),
 
 	-- small plugins that don't need config
 	"tpope/vim-sleuth",
