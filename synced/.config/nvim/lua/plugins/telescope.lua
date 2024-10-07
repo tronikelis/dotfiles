@@ -75,6 +75,9 @@ return {
 		vim.keymap.set("n", "<C-p>", builtin.find_files)
 		vim.keymap.set("n", "<leader>/", builtin.current_buffer_fuzzy_find)
 		vim.keymap.set("n", "<leader>b", builtin.buffers)
+		vim.keymap.set("n", "<leader>fr", function()
+			builtin.find_files({ cwd = vim.fn.expand("%:p:h") })
+		end)
 
 		vim.keymap.set({ "n", "v" }, "<leader>gc", function()
 			local mode = vim.api.nvim_get_mode().mode
