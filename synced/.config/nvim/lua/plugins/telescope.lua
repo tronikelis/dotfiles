@@ -76,7 +76,9 @@ return {
 		vim.keymap.set("n", "<leader>/", builtin.current_buffer_fuzzy_find)
 		vim.keymap.set("n", "<leader>b", builtin.buffers)
 		vim.keymap.set("n", "<leader>fr", function()
-			builtin.find_files({ cwd = vim.fn.expand("%:p:h") })
+			local cwd = require("oil").get_current_dir()
+			cwd = cwd or vim.fn.expand("%:p:h")
+			builtin.find_files({ cwd = cwd })
 		end)
 
 		vim.keymap.set({ "n", "v" }, "<leader>gc", function()
