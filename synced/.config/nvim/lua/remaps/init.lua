@@ -1,5 +1,7 @@
 -- interferes with <C-c> to exit insert mode
 vim.g.omni_sql_no_default_maps = true
+-- this opens a split by default, what
+vim.g.zig_fmt_parse_errors = 0
 
 vim.opt.wrap = false
 

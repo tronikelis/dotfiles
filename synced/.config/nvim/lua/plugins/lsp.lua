@@ -23,6 +23,7 @@ vim.keymap.set("n", "[e", vim.diagnostic.goto_prev)
 vim.keymap.set("n", "]e", vim.diagnostic.goto_next)
 
 local ensure_installed = {
+    "zls",
     "templ",
     "marksman",
     "clangd",
@@ -112,6 +113,17 @@ local get_jsonls_options = function()
                         url = "https://json.schemastore.org/eslintrc.json",
                     },
                 },
+            },
+        },
+    }
+end
+
+local get_zls_options = function()
+    return {
+        settings = {
+            zls = {
+                enable_build_on_save = true,
+                build_on_save_step = "check",
             },
         },
     }
@@ -262,6 +274,10 @@ return {
 
                 tailwindcss = function()
                     default_setup("tailwindcss", get_tailwindcss_options())
+                end,
+
+                zls = function()
+                    default_setup("zls", get_zls_options())
                 end,
             },
         })
