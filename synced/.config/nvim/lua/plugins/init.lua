@@ -65,10 +65,10 @@ require("lazy").setup({
         end,
     },
     {
-        "Tronikelis/cleardig.nvim",
+        "Tronikelis/debdiag.nvim",
         config = function()
-            require("cleardig").setup({
-                ms = 600,
+            require("debdiag").setup({
+                ms = 400,
             })
         end,
     },
