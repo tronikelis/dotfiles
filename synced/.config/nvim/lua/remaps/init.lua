@@ -88,11 +88,6 @@ vim.api.nvim_create_autocmd("TextYankPost", {
     end,
 })
 
-vim.api.nvim_create_autocmd("FileType", {
-    pattern = "typescript,typescriptreact",
-    command = "compiler tsc | setlocal makeprg=npx\\ tsc\\ --noEmit",
-})
-
 -- folding
 vim.opt.foldmethod = "expr"
 vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
