@@ -198,7 +198,7 @@ return {
             }),
             formatting = {
                 format = require("lspkind").cmp_format({
-                    maxwidth = 50,
+                    maxwidth = 30,
                     ellipsis_char = "...",
                     -- shows details like auto import sources
                     show_labelDetails = true,
