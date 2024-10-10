@@ -1,11 +1,11 @@
 return {
-	"catppuccin/nvim",
-	priority = 1000,
-	config = function()
-		require("catppuccin").setup({
-			no_italic = true,
-		})
+    "catppuccin/nvim",
+    priority = 1000,
+    config = function()
+        require("catppuccin").setup({
+            no_italic = true,
+        })
 
-		vim.cmd.colorscheme("catppuccin")
-	end,
+        vim.cmd.colorscheme("catppuccin")
+    end,
 }

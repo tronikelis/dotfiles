@@ -27,8 +27,8 @@ vim.opt.scrolloff = 10
 vim.opt.guicursor = "n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20,a:blinkwait1000-blinkoff500-blinkon500"
 
 if vim.fn.executable("rg") == 1 then
-	-- the default is rg -uu --vimgrep, but -uu ignores .gitignore and shows hidden files
-	vim.opt.grepprg = "rg --vimgrep -S"
+    -- the default is rg -uu --vimgrep, but -uu ignores .gitignore and shows hidden files
+    vim.opt.grepprg = "rg --vimgrep -S"
 end
 
 -- spelling
@@ -68,27 +68,27 @@ vim.keymap.set("t", "<esc>", "<c-\\><c-n>")
 -- autocmds
 
 vim.api.nvim_create_autocmd({ "BufWritePre" }, {
-	pattern = "*",
-	callback = function()
-		local save_cursor = vim.fn.getpos(".")
-		vim.cmd([[%s/\s\+$//e]])
-		vim.fn.setpos(".", save_cursor)
-	end,
+    pattern = "*",
+    callback = function()
+        local save_cursor = vim.fn.getpos(".")
+        vim.cmd([[%s/\s\+$//e]])
+        vim.fn.setpos(".", save_cursor)
+    end,
 })
 
 vim.api.nvim_create_autocmd("TextYankPost", {
-	pattern = "*",
-	callback = function()
-		vim.highlight.on_yank({
-			higroup = "IncSearch",
-			timeout = 40,
-		})
-	end,
+    pattern = "*",
+    callback = function()
+        vim.highlight.on_yank({
+            higroup = "IncSearch",
+            timeout = 40,
+        })
+    end,
 })
 
 vim.api.nvim_create_autocmd("FileType", {
-	pattern = "typescript,typescriptreact",
-	command = "compiler tsc | setlocal makeprg=npx\\ tsc\\ --noEmit",
+    pattern = "typescript,typescriptreact",
+    command = "compiler tsc | setlocal makeprg=npx\\ tsc\\ --noEmit",
 })
 
 -- folding
@@ -101,11 +101,11 @@ vim.opt.foldlevelstart = 99
 -- custom filetypes
 
 vim.filetype.add({
-	pattern = {
-		[".*/hypr/.*%.conf"] = "hyprlang",
-		["docker%-compose.-%.ya?ml"] = "yaml.docker-compose",
-		[".gitconfig_public"] = "gitconfig",
-	},
+    pattern = {
+        [".*/hypr/.*%.conf"] = "hyprlang",
+        ["docker%-compose.-%.ya?ml"] = "yaml.docker-compose",
+        [".gitconfig_public"] = "gitconfig",
+    },
 })
 
 -- tree sitter
