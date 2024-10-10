@@ -64,6 +64,14 @@ require("lazy").setup({
             require("dressing").setup({})
         end,
     },
+    {
+        "Tronikelis/cleardig.nvim",
+        config = function()
+            require("cleardig").setup({
+                ms = 600,
+            })
+        end,
+    },
     "tpope/vim-surround",
     "mbbill/undotree",
 })
