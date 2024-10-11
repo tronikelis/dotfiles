@@ -5,7 +5,7 @@
   "cmp-path": { "branch": "main", "commit": "91ff86cd9c29299a64f968ebb45846c485725f23" },
   "conflict-marker.nvim": { "branch": "master", "commit": "322b956f475b4cba68952df2b2e01778b7b17e36" },
   "conform.nvim": { "branch": "master", "commit": "40d4e98fcc3e6f485f0e8924c63734bc7e305967" },
-  "debdiag.nvim": { "branch": "master", "commit": "7320725342cba8dceee1c82703e8bae4e325b16e" },
+  "debdiag.nvim": { "branch": "master", "commit": "0558e7f230fc6ea4eebc7b5225d0d520a8bfa3da" },
   "dressing.nvim": { "branch": "master", "commit": "1b7921eecc65af1baf8ac1dc06f0794934cbcfb2" },
   "fidget.nvim": { "branch": "main", "commit": "d855eed8a06531a7e8fd0684889b2943f373c469" },
   "gitsigns.nvim": { "branch": "main", "commit": "863903631e676b33e8be2acb17512fdc1b80b4fb" },
