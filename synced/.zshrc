@@ -5,9 +5,6 @@ ZSH_THEME="robbyrussell"
 
 ## before plugins loaded
 
-# 10ms for key sequences
-KEYTIMEOUT=1
-
 plugins=(
 	git
 	fzf-tab
@@ -15,7 +12,6 @@ plugins=(
 	zsh-autosuggestions
 	autoupdate
 	ssh-agent
-	vi-mode
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -24,8 +20,6 @@ source $ZSH/oh-my-zsh.sh
 
 _comp_options+=(globdots)
 zstyle ':completion:*' special-dirs false
-
-bindkey -M vicmd v edit-command-line
 
 ## my things start here
 
