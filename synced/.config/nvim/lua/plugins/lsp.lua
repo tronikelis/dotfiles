@@ -27,10 +27,7 @@ return {
     dependencies = {
         {
             "williamboman/mason.nvim",
-            config = function()
-                -- adds tools in PATH
-                require("mason").setup()
-            end,
+            opts = {},
         },
 
         {
@@ -45,9 +42,7 @@ return {
         "onsails/lspkind.nvim",
         {
             "j-hui/fidget.nvim",
-            config = function()
-                require("fidget").setup()
-            end,
+            opts = {},
         },
     },
     config = function()

@@ -30,15 +30,13 @@ local ensure_installed = {
 return {
     "WhoIsSethDaniel/mason-tool-installer.nvim",
     event = "VeryLazy",
-    config = function()
-        require("mason-tool-installer").setup({
-            ensure_installed = ensure_installed,
+    opts = {
+        ensure_installed = ensure_installed,
 
-            integrations = {
-                ["mason-lspconfig"] = false,
-                ["mason-null-ls"] = false,
-                ["mason-nvim-dap"] = false,
-            },
-        })
-    end,
+        integrations = {
+            ["mason-lspconfig"] = false,
+            ["mason-null-ls"] = false,
+            ["mason-nvim-dap"] = false,
+        },
+    },
 }
