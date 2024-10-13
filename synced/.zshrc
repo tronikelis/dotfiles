@@ -6,12 +6,12 @@ ZSH_THEME="robbyrussell"
 ## before plugins loaded
 
 plugins=(
-	git
-	fzf-tab
-	zsh-syntax-highlighting
-	zsh-autosuggestions
-	autoupdate
-	ssh-agent
+    git
+    fzf-tab
+    zsh-syntax-highlighting
+    zsh-autosuggestions
+    autoupdate
+    ssh-agent
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -44,65 +44,65 @@ eval "$(starship init zsh)"
 eval "$(fzf --zsh)"
 
 function tmp_file() {
-	if [[ -z "$1" ]]; then
-		echo "pass file extension"
-		return 1
-	fi
+    if [[ -z "$1" ]]; then
+        echo "pass file extension"
+        return 1
+    fi
 
-	cdmktemp
-	vim "tmp_file.$1"
+    cdmktemp
+    vim "tmp_file.$1"
 }
 
 function cheatsh() {
-	curl -s "cheat.sh/$1" | less
+    curl -s "cheat.sh/$1" | less
 }
 
 function cloned() {
-	git clone "$1" --depth 1
+    git clone "$1" --depth 1
 }
 
 function cdmktemp() {
-	cd "$(mktemp -d)"
+    cd "$(mktemp -d)"
 }
 
 diff_preview='git log --date=short --pretty=format:"%Cred%h%Creset %Cblue%ad%Creset %s" --color master..{}'
 fzf_preview_window='right,50%,border-left,<80(down,40%,border-top)'
 
 function get_fzf_header() {
-	echo "current: $(git branch --show-current)"
+    echo "current: $(git branch --show-current)"
 }
 
 function gci() {
-	git branch |
-		grep -v "^*" |
-		cut -c 3- |
-		fzf --preview-window "$fzf_preview_window" --header-first --header "$(get_fzf_header), switch:" --layout reverse --info inline --preview="$diff_preview" |
-		xargs git switch
+    git branch |
+        grep -v "^*" |
+        cut -c 3- |
+        fzf --preview-window "$fzf_preview_window" --header-first --header "$(get_fzf_header), switch:" --layout reverse --info inline --preview="$diff_preview" |
+        xargs git switch
 }
 
 function gdi() {
-	git branch |
-		grep -v "^*" |
-		cut -c 3- |
-		fzf --preview-window "$fzf_preview_window" --header-first --header "$(get_fzf_header), delete:" --layout reverse --info inline --multi --print0 --preview="$diff_preview" |
-		xargs -0 git branch --delete
+    git branch |
+        grep -v "^*" |
+        cut -c 3- |
+        fzf --preview-window "$fzf_preview_window" --header-first --header "$(get_fzf_header), delete:" --layout reverse --info inline --multi --print0 --preview="$diff_preview" |
+        xargs -0 git branch --delete
 }
 
 function gwsi() {
-	~/personal/scripts/git/gwsi.sh
+    ~/personal/scripts/git/gwsi.sh
 }
 
 function gwdi() {
-	~/personal/scripts/git/gwdi.sh
+    ~/personal/scripts/git/gwdi.sh
 }
 
 function killp() {
-	lsof -i:$1 | grep LISTEN | awk '{print $2}' | xargs kill
+    lsof -i:$1 | grep LISTEN | awk '{print $2}' | xargs kill
 }
 
 function sp() {
-	# project dirs are taken from ~/project_dirs.txt
-	cd "$(~/personal/scripts/select_project.sh)"
+    # project dirs are taken from ~/project_dirs.txt
+    cd "$(~/personal/scripts/select_project.sh)"
 }
 
 export FZF_DEFAULT_OPTS=" \
@@ -124,7 +124,7 @@ export FZF_ALT_C_OPTS="
 
 cmd_copy="wl-copy"
 if [[ "$OSTYPE" == "darwin"* ]]; then
-	cmd_copy="pbcopy"
+    cmd_copy="pbcopy"
 fi
 
 # CTRL-Y to copy the command into clipboard using pbcopy
@@ -138,7 +138,7 @@ export FZF_CTRL_R_OPTS="
 # fnm
 FNM_PATH="$HOME/.local/share/fnm"
 if [ -d "$FNM_PATH" ]; then
-	export PATH="$HOME/.local/share/fnm:$PATH"
-	eval "$(fnm env --shell zsh)"
-	eval "$(fnm completions --shell zsh)"
+    export PATH="$HOME/.local/share/fnm:$PATH"
+    eval "$(fnm env --shell zsh)"
+    eval "$(fnm completions --shell zsh)"
 fi
