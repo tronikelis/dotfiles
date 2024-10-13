@@ -26,6 +26,7 @@ require("lazy").setup({
     { import = "plugins.grapple" },
     { import = "plugins.xylene" },
     { import = "plugins.conflict-marker" },
+    { import = "plugins.mason_tools" },
 
     -- small plugins that don't need config
     "tpope/vim-sleuth",
