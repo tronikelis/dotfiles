@@ -10,8 +10,8 @@ plugins=(
     fzf-tab
     zsh-syntax-highlighting
     zsh-autosuggestions
-    autoupdate
     ssh-agent
+    bd
 )
 
 source $ZSH/oh-my-zsh.sh
