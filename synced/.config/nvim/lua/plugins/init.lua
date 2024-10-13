@@ -63,4 +63,8 @@ require("lazy").setup({
     },
     "tpope/vim-surround",
     "mbbill/undotree",
+}, {
+    change_detection = {
+        enabled = false,
+    },
 })
