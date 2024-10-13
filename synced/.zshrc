@@ -23,6 +23,9 @@ zstyle ':completion:*' special-dirs false
 
 ## my things start here
 
+# bind ctrl+space to accept suggestion
+bindkey '^ ' autosuggest-accept
+
 # history
 HISTSIZE=100000
 SAVEHIST=100000
