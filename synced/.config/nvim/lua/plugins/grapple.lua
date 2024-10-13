@@ -1,5 +1,6 @@
 return {
     "cbochs/grapple.nvim",
+    event = "VeryLazy",
     dependencies = {
         "nvim-telescope/telescope.nvim",
         "nvim-tree/nvim-web-devicons",

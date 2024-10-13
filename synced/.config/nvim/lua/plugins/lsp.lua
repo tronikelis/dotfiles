@@ -22,116 +22,17 @@ vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename)
 vim.keymap.set("n", "[e", vim.diagnostic.goto_prev)
 vim.keymap.set("n", "]e", vim.diagnostic.goto_next)
 
-local ensure_installed = {
-    "zls",
-    "templ",
-    "marksman",
-    "clangd",
-    "hyprls",
-    "bashls",
-    "css-lsp",
-    "docker_compose_language_service",
-    "dockerls",
-    "eslint-lsp",
-    "gopls",
-    "html-lsp",
-    "jdtls",
-    "json-lsp",
-    "lua_ls",
-    "prettierd",
-    "rust_analyzer",
-    "shellcheck",
-    "shfmt",
-    "stylua",
-    "tailwindcss-language-server",
-    "taplo",
-    "ts_ls",
-    "typos-lsp",
-    "yamlls",
-}
-
-local get_eslint_options = function()
-    return {
-        root_dir = require("lspconfig").util.root_pattern(
-            ".eslintrc.js",
-            ".eslintrc.cjs",
-            ".eslintrc.mjs",
-            ".eslintrc.yaml",
-            ".eslintrc.yml",
-            ".eslintrc.json",
-            ".eslintrc",
-            "eslint.config.js",
-            "eslint.config.mjs",
-            "eslint.config.cjs",
-            "eslint.config.ts",
-            "eslint.config.mts",
-            "eslint.config.cts"
-        ),
-    }
-end
-
-local get_tailwindcss_options = function()
-    return {
-        settings = {
-            tailwindCSS = {
-                experimental = {
-                    classRegex = {
-                        { "classNames=\\{([^}]*)\\}", "[\"'`]([^\"'`]*).*?[\"'`]" },
-                        { "tv\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]" },
-                        { "cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]" },
-                        { "cx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)" },
-                        {
-                            "{[^{]*?class\\s*?:\\s*([\"'`]+?[\\s\\S]*?[\"'`]+?)",
-                            "[\"'`]([^\"'`]*).*?[\"'`]",
-                        },
-                    },
-                },
-            },
-        },
-    }
-end
-
-local get_jsonls_options = function()
-    return {
-        settings = {
-            json = {
-                schemas = {
-                    {
-                        fileMatch = { "package.json" },
-                        url = "https://json.schemastore.org/package.json",
-                    },
-                    {
-                        fileMatch = { "tsconfig*.json" },
-                        url = "https://json.schemastore.org/tsconfig.json",
-                    },
-                    {
-                        fileMatch = { ".prettierr*" },
-                        url = "https://json.schemastore.org/prettierrc.json",
-                    },
-                    {
-                        fileMatch = { ".eslintr*" },
-                        url = "https://json.schemastore.org/eslintrc.json",
-                    },
-                },
-            },
-        },
-    }
-end
-
-local get_zls_options = function()
-    return {
-        settings = {
-            zls = {
-                enable_build_on_save = true,
-                build_on_save_step = "check",
-            },
-        },
-    }
-end
-
 return {
     "neovim/nvim-lspconfig",
     dependencies = {
+        {
+            "williamboman/mason.nvim",
+            config = function()
+                -- adds tools in PATH
+                require("mason").setup()
+            end,
+        },
+
         {
             "yioneko/nvim-cmp",
             branch = "perf",
@@ -141,10 +42,7 @@ return {
         "hrsh7th/cmp-path",
         "hrsh7th/cmp-buffer",
 
-        "WhoIsSethDaniel/mason-tool-installer.nvim",
         "onsails/lspkind.nvim",
-        "williamboman/mason-lspconfig.nvim",
-        "williamboman/mason.nvim",
         {
             "j-hui/fidget.nvim",
             config = function()
@@ -153,6 +51,95 @@ return {
         },
     },
     config = function()
+        local lsps = {
+            jsonls = {
+                settings = {
+                    json = {
+                        schemas = {
+                            {
+                                fileMatch = { "package.json" },
+                                url = "https://json.schemastore.org/package.json",
+                            },
+                            {
+                                fileMatch = { "tsconfig*.json" },
+                                url = "https://json.schemastore.org/tsconfig.json",
+                            },
+                            {
+                                fileMatch = { ".prettierr*" },
+                                url = "https://json.schemastore.org/prettierrc.json",
+                            },
+                            {
+                                fileMatch = { ".eslintr*" },
+                                url = "https://json.schemastore.org/eslintrc.json",
+                            },
+                        },
+                    },
+                },
+            },
+            tailwindcss = {
+                settings = {
+                    tailwindCSS = {
+                        experimental = {
+                            classRegex = {
+                                { "classNames=\\{([^}]*)\\}", "[\"'`]([^\"'`]*).*?[\"'`]" },
+                                { "tv\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]" },
+                                { "cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]" },
+                                { "cx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)" },
+                                {
+                                    "{[^{]*?class\\s*?:\\s*([\"'`]+?[\\s\\S]*?[\"'`]+?)",
+                                    "[\"'`]([^\"'`]*).*?[\"'`]",
+                                },
+                            },
+                        },
+                    },
+                },
+            },
+            eslint = {
+                root_dir = require("lspconfig").util.root_pattern(
+                    ".eslintrc.js",
+                    ".eslintrc.cjs",
+                    ".eslintrc.mjs",
+                    ".eslintrc.yaml",
+                    ".eslintrc.yml",
+                    ".eslintrc.json",
+                    ".eslintrc",
+                    "eslint.config.js",
+                    "eslint.config.mjs",
+                    "eslint.config.cjs",
+                    "eslint.config.ts",
+                    "eslint.config.mts",
+                    "eslint.config.cts"
+                ),
+            },
+            zls = {
+                settings = {
+                    zls = {
+                        enable_build_on_save = true,
+                        build_on_save_step = "check",
+                    },
+                },
+            },
+            gopls = {},
+            jdtls = {},
+            lua_ls = {},
+            typos_lsp = {},
+            rust_analyzer = {},
+            taplo = {},
+            ts_ls = {},
+            cssls = {},
+            yamlls = {},
+            html = {},
+            dartls = {},
+            gdscript = {},
+            templ = {},
+            marksman = {},
+            clangd = {},
+            hyprls = {},
+            bashls = {},
+            docker_compose_language_service = {},
+            dockerls = {},
+        }
+
         vim.api.nvim_create_autocmd("LspAttach", {
             callback = function(event)
                 local opts = { buffer = event.buf }
@@ -182,8 +169,11 @@ return {
             require("lspconfig")[server].setup(options)
         end
 
-        local cmp = require("cmp")
+        for k, v in pairs(lsps) do
+            default_setup(k, v)
+        end
 
+        local cmp = require("cmp")
         cmp.setup({
             preselect = cmp.PreselectMode.Item,
             completion = {
@@ -193,7 +183,11 @@ return {
             sources = cmp.config.sources({
                 { name = "nvim_lsp" },
                 { name = "nvim_lsp_signature_help" },
-            }, { { name = "path" } }, { { name = "buffer", keyword_length = 4 } }),
+            }, {
+                { name = "path" },
+            }, {
+                { name = "buffer", keyword_length = 4 },
+            }),
             mapping = cmp.mapping.preset.insert({
                 ["<C-n>"] = cmp.mapping.select_next_item({
                     behavior = cmp.SelectBehavior.Select,
@@ -255,35 +249,5 @@ return {
                 vim.snippet.jump(-1)
             end
         end)
-
-        require("mason").setup({})
-        require("mason-tool-installer").setup({
-            ensure_installed = ensure_installed,
-        })
-        require("mason-lspconfig").setup({
-            handlers = {
-                default_setup,
-
-                jsonls = function()
-                    default_setup("jsonls", get_jsonls_options())
-                end,
-
-                eslint = function()
-                    default_setup("eslint", get_eslint_options())
-                end,
-
-                tailwindcss = function()
-                    default_setup("tailwindcss", get_tailwindcss_options())
-                end,
-
-                zls = function()
-                    default_setup("zls", get_zls_options())
-                end,
-            },
-        })
-
-        -- lsp config without mason
-        default_setup("dartls")
-        default_setup("gdscript")
     end,
 }

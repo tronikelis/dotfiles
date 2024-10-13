@@ -26,6 +26,7 @@ require("lazy").setup({
     require("plugins.grapple"),
     require("plugins.xylene"),
     require("plugins.conflict-marker"),
+    require("plugins.mason_tools"),
 
     -- small plugins that don't need config
     "tpope/vim-sleuth",
