@@ -9,6 +9,7 @@ return {
         local linecount = require("lualine-components.linecount")
         local smol_mode = require("lualine-components.smol-mode")
         local git_prompt = require("lualine-components.git-prompt")
+        local active_lsp = require("lualine-components.active-lsp")
 
         local grapple = function()
             if not package.loaded.grapple then
@@ -50,9 +51,7 @@ return {
                 section_separators = { left = "", right = "" },
             },
             sections = {
-                lualine_y = { formatter_status, linecount },
                 lualine_a = { smol_mode },
-                lualine_c = { "filename", grapple },
                 lualine_b = {
                     "branch",
                     git_prompt,
@@ -62,6 +61,22 @@ return {
                         symbols = { error = "E", warn = "W", info = "I", hint = "H" },
                     },
                 },
+                lualine_c = { "filename", grapple },
+
+                lualine_x = {
+                    "encoding",
+                    "fileformat",
+                    {
+                        active_lsp,
+                        exclude = { "typos_lsp" },
+                    },
+                    "filetype",
+                },
+                lualine_y = {
+                    formatter_status,
+                    linecount,
+                },
+                lualine_z = { "location" },
             },
             tabline = {
                 lualine_b = {
