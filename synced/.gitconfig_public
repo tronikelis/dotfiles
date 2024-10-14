@@ -20,7 +20,7 @@
 [merge]
 	tool = nvimdiff
 [mergetool "nvimdiff"]
-	layout = "LOCAL,BASE,REMOTE / MERGED"
+	cmd = "nvim -d \"$LOCAL\" \"$MERGED\" \"$BASE\" \"$REMOTE\" -c \"wincmd w\" -c \"wincmd J\""
 [mergetool]
 	keepBackup = false
 [worktree]
