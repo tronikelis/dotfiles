@@ -142,6 +142,8 @@ export FZF_CTRL_R_OPTS="
 FNM_PATH="$HOME/.local/share/fnm"
 if [ -d "$FNM_PATH" ]; then
     export PATH="$HOME/.local/share/fnm:$PATH"
+fi
+if [ -x "$(command -v fnm)" ]; then
     eval "$(fnm env --shell zsh)"
     eval "$(fnm completions --shell zsh)"
 fi
