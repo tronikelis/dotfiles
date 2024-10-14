@@ -46,6 +46,12 @@ vim.opt.termguicolors = true
 vim.opt.splitbelow = true
 vim.opt.splitright = true
 
+-- resize windows more
+for _, v in ipairs({ "+", "-", "<", ">" }) do
+    local m = "<c-w>" .. v
+    vim.keymap.set("n", m, "10" .. m)
+end
+
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
 vim.keymap.set("n", "<C-d>", "<C-d>zz")
