@@ -58,6 +58,7 @@ require("lazy").setup({
     },
     {
         "stevearc/dressing.nvim",
+        dependencies = "nvim-telescope/telescope.nvim",
         event = "VeryLazy",
         opts = {},
     },
