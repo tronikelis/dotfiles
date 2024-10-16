@@ -1,5 +1,6 @@
 return {
     "Tronikelis/conflict-marker.nvim",
+    event = "VeryLazy",
     opts = {
         on_attach = function(conflict)
             local map = function(key, fn)
