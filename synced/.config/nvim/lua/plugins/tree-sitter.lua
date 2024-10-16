@@ -20,6 +20,10 @@ return {
             enable = true,
             additional_vim_regex_highlighting = false,
         },
-        indent = { enable = true },
+        indent = {
+            enable = true,
+            -- f**ed up indent list :DD
+            disable = { "zig" },
+        },
     },
 }
