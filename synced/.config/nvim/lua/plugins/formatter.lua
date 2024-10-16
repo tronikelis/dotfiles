@@ -32,6 +32,7 @@ local format_opts_by_ft = {
 
 return {
     "stevearc/conform.nvim",
+    event = "VeryLazy",
     opts = {
         formatters_by_ft = {
             html = { "prettierd" },

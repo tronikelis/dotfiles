@@ -29,7 +29,10 @@ require("lazy").setup({
     { import = "plugins.mason_tools" },
 
     -- small plugins that don't need config
-    "tpope/vim-sleuth",
+    {
+        "tpope/vim-sleuth",
+        event = "VeryLazy",
+    },
     {
         "windwp/nvim-autopairs",
         dependencies = "nvim-treesitter/nvim-treesitter",
@@ -38,6 +41,7 @@ require("lazy").setup({
     },
     {
         "lukas-reineke/indent-blankline.nvim",
+        event = "VeryLazy",
         main = "ibl",
         opts = {
             scope = {
@@ -49,11 +53,12 @@ require("lazy").setup({
     {
         "windwp/nvim-ts-autotag",
         dependencies = "nvim-treesitter/nvim-treesitter",
-        opts = {},
         event = "VeryLazy",
+        opts = {},
     },
     {
         "stevearc/dressing.nvim",
+        event = "VeryLazy",
         opts = {},
     },
     {
@@ -61,8 +66,19 @@ require("lazy").setup({
         event = "VeryLazy",
         opts = { ms = 400 },
     },
-    "tpope/vim-surround",
-    "mbbill/undotree",
+    {
+        "tpope/vim-surround",
+        event = "VeryLazy",
+    },
+    {
+        "mbbill/undotree",
+        event = "VeryLazy",
+    },
+    {
+        "j-hui/fidget.nvim",
+        event = "VeryLazy",
+        opts = {},
+    },
 }, {
     change_detection = {
         enabled = false,

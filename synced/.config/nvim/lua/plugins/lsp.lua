@@ -40,10 +40,6 @@ return {
         "hrsh7th/cmp-buffer",
 
         "onsails/lspkind.nvim",
-        {
-            "j-hui/fidget.nvim",
-            opts = {},
-        },
     },
     config = function()
         local lsps = {
