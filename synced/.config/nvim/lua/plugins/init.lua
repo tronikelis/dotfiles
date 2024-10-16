@@ -30,8 +30,8 @@ require("lazy").setup({
 
     -- small plugins that don't need config
     {
+        -- don't lazy load this
         "tpope/vim-sleuth",
-        event = "VeryLazy",
     },
     {
         "windwp/nvim-autopairs",
