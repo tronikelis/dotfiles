@@ -80,6 +80,16 @@ require("lazy").setup({
         event = "VeryLazy",
         opts = {},
     },
+    {
+        "Tronikelis/sstash.nvim",
+        event = "VeryLazy",
+        opts = {
+            write_on_leave = function()
+                local disabled_ft = { gitcommit = true, oil = true }
+                return not disabled_ft[vim.bo.filetype]
+            end,
+        },
+    },
 }, {
     change_detection = {
         enabled = false,
