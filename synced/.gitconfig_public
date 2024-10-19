@@ -16,6 +16,7 @@
 	logo = log --oneline
 
 	wnew = "!git worktree add \"$1\" -b \"$1\" #"
+	wnewfrom = "!git worktree add \"$1\" -b \"$1\" \"$2\" #"
 	wadd = "!git worktree add \"$1\" \"$1\" #"
 [merge]
 	tool = nvimdiff
