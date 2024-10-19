@@ -69,13 +69,16 @@ return {
         local builtin = require("telescope.builtin")
         local extensions = require("telescope").extensions
 
+        vim.keymap.set("n", "<leader>fG", builtin.grep_string)
         vim.keymap.set("n", "<leader>fg", extensions.live_grep_args.live_grep_args)
+
         vim.keymap.set("n", "<leader>of", builtin.oldfiles)
         vim.keymap.set("n", "<leader>ht", builtin.help_tags)
         vim.keymap.set("n", "<leader>gs", builtin.git_status)
         vim.keymap.set("n", "<C-p>", builtin.find_files)
         vim.keymap.set("n", "<leader>/", builtin.current_buffer_fuzzy_find)
         vim.keymap.set("n", "<leader>b", builtin.buffers)
+
         vim.keymap.set("n", "<leader>fr", function()
             local cwd = require("oil").get_current_dir()
             cwd = cwd or vim.fn.expand("%:p:h")
