@@ -7,7 +7,6 @@ return {
     config = function()
         local filename_oil = require("lualine-components.filename-oil")
         local linecount = require("lualine-components.linecount")
-        local smol_mode = require("lualine-components.smol-mode")
         local git_prompt = require("lualine-components.git-prompt")
         local active_lsp = require("lualine-components.active-lsp")
 
@@ -51,7 +50,15 @@ return {
                 section_separators = { left = "", right = "" },
             },
             sections = {
-                lualine_a = { smol_mode },
+                lualine_a = {
+                    {
+                        "mode",
+                        ---@param str string
+                        fmt = function(str)
+                            return str:sub(1, 1)
+                        end,
+                    },
+                },
                 lualine_b = {
                     "branch",
                     git_prompt,
