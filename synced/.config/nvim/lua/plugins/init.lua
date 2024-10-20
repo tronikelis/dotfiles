@@ -27,6 +27,7 @@ require("lazy").setup({
     { import = "plugins.xylene" },
     { import = "plugins.conflict-marker" },
     { import = "plugins.mason_tools" },
+    { import = "plugins.sstash" },
 
     -- small plugins that don't need config
     {
@@ -79,16 +80,6 @@ require("lazy").setup({
         "j-hui/fidget.nvim",
         event = "VeryLazy",
         opts = {},
-    },
-    {
-        "Tronikelis/sstash.nvim",
-        event = "VeryLazy",
-        opts = {
-            write_on_leave = function()
-                local disabled_ft = { gitcommit = true, oil = true }
-                return not disabled_ft[vim.bo.filetype]
-            end,
-        },
     },
 }, {
     change_detection = {
