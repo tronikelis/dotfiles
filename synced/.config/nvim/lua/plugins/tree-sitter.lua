@@ -1,8 +1,10 @@
 return {
     "nvim-treesitter/nvim-treesitter",
+    lazy = false,
     dependencies = {
         {
             "nvim-treesitter/nvim-treesitter-context",
+            lazy = false,
             opts = {
                 -- try this out later
                 -- multiwindow = true,
