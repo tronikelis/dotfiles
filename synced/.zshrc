@@ -25,6 +25,9 @@ zstyle ':completion:*' special-dirs false
 
 # bind ctrl+space to accept suggestion
 bindkey '^ ' autosuggest-accept
+# history mappings
+bindkey '^k' up-history
+bindkey '^j' down-history
 
 # history
 HISTSIZE=100000
