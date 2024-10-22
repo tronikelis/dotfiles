@@ -4,31 +4,63 @@ vim.api.nvim_create_autocmd("VimLeavePre", {
     end,
 })
 
-vim.api.nvim_create_user_command("FormatDisable", function(args)
-    if args.bang then
-        -- FormatDisable! will disable formatting globally
-        vim.g.disable_autoformat = true
-    else
-        vim.b.disable_autoformat = true
-    end
-end, {
-    desc = "Disable autoformat-on-save",
-    bang = true,
-})
-
-vim.api.nvim_create_user_command("FormatEnable", function()
-    vim.b.disable_autoformat = false
-    vim.g.disable_autoformat = false
-end, {
-    desc = "Re-enable autoformat-on-save",
-})
-
 -- specify conform.format opts based on the ft
 local format_opts_by_ft = {
     -- on templ files run only the templ lsp formatter
     -- because html lsp also would run otherwise
     templ = { name = "templ" },
 }
+
+local function format_async(args)
+    local range = nil
+
+    if args.count ~= -1 then
+        local end_line = vim.api.nvim_buf_get_lines(0, args.line2 - 1, args.line2, true)[1]
+        range = {
+            start = { args.line1, 0 },
+            ["end"] = { args.line2, end_line:len() },
+        }
+    end
+
+    require("conform").format(
+        vim.tbl_deep_extend(
+            "keep",
+            { async = true, range = range, timeout_ms = 2000 },
+            format_opts_by_ft[vim.bo.filetype] or {}
+        )
+    )
+end
+
+local format_cmds = {
+    enable = function()
+        vim.b.disable_autoformat = false
+        vim.g.disable_autoformat = false
+    end,
+    disable = function(args)
+        if args.bang then
+            vim.g.disable_autoformat = true
+        else
+            vim.b.disable_autoformat = true
+        end
+    end,
+}
+
+vim.api.nvim_create_user_command("Format", function(args)
+    local cmd = format_cmds[args.fargs[1]]
+    if cmd then
+        cmd(args)
+        return
+    end
+
+    format_async(args)
+end, {
+    bang = true,
+    range = true,
+    nargs = "?",
+    complete = function()
+        return vim.tbl_keys(format_cmds)
+    end,
+})
 
 return {
     "stevearc/conform.nvim",
