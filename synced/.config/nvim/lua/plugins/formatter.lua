@@ -23,11 +23,7 @@ local function format_async(args)
     end
 
     require("conform").format(
-        vim.tbl_deep_extend(
-            "keep",
-            { async = true, range = range, timeout_ms = 2000 },
-            format_opts_by_ft[vim.bo.filetype] or {}
-        )
+        vim.tbl_deep_extend("keep", { async = true, range = range }, format_opts_by_ft[vim.bo.filetype] or {})
     )
 end
 
