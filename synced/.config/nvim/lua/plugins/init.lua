@@ -66,7 +66,7 @@ require("lazy").setup({
     {
         "Tronikelis/debdiag.nvim",
         event = "VeryLazy",
-        opts = { ms = 400 },
+        opts = {},
     },
     {
         "tpope/vim-surround",
