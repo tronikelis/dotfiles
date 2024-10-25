@@ -27,7 +27,7 @@ return {
             end,
         })
 
-        vim.keymap.set("n", "-", "<cmd>Oil<cr>")
+        vim.keymap.set("n", "-", oil.open)
         vim.keymap.set("n", "<leader>-", oil.toggle_float)
     end,
 }
