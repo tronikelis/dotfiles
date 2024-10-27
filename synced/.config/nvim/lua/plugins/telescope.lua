@@ -26,6 +26,7 @@ return {
 
         require("telescope").setup({
             defaults = {
+                layout_strategy = "flex",
                 vimgrep_arguments = vimgrep_arguments,
                 file_ignore_patterns = {
                     ".git/",
