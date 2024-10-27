@@ -4,7 +4,8 @@
 	autosetupmerge = simple
 [push]
 	autosetupremote = true
-
+[commit]
+	verbose = true
 [branch]
 	sort = -committerdate
 [alias]
