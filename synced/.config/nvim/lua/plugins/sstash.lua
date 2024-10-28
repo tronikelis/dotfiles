@@ -12,7 +12,8 @@ return {
         end,
 
         get_cwd = function()
-            return vim.fs.root(0, ".git") or vim.fn.getcwd()
+            local cwd = vim.fn.getcwd()
+            return vim.fs.root(cwd, ".git") or cwd
         end,
     },
 }
