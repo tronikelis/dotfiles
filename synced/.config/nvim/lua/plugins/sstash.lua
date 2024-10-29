@@ -7,7 +7,7 @@ return {
                 return false
             end
 
-            local disabled_ft = { gitcommit = true, oil = true }
+            local disabled_ft = { gitcommit = true, oil = true, gitrebase = true }
             return not disabled_ft[vim.bo.filetype]
         end,
 
