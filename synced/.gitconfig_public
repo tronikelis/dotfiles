@@ -21,6 +21,7 @@
 	wadd = "!git worktree add \"$1\" \"$1\" #"
 [merge]
 	tool = nvimdiff
+	conflictstyle = zdiff3
 [mergetool "nvimdiff"]
 	cmd = "nvim -d \"$LOCAL\" \"$MERGED\" \"$BASE\" \"$REMOTE\" -c \"wincmd w\" -c \"wincmd J\""
 [mergetool]
