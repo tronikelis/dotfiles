@@ -4,13 +4,6 @@ vim.api.nvim_create_autocmd("VimLeavePre", {
     end,
 })
 
--- specify conform.format opts based on the ft
-local format_opts_by_ft = {
-    -- on templ files run only the templ lsp formatter
-    -- because html lsp also would run otherwise
-    templ = { name = "templ" },
-}
-
 local function format_async(args)
     local range = nil
 
@@ -22,17 +15,14 @@ local function format_async(args)
         }
     end
 
-    require("conform").format(
-        vim.tbl_deep_extend("keep", { async = true, range = range }, format_opts_by_ft[vim.bo.filetype] or {}),
-        function(err)
-            if err then
-                print(" 󰅙 " .. err)
-                return
-            end
-
-            print(" 󰗠 Formatted")
+    require("conform").format({ async = true, range = range }, function(err)
+        if err then
+            print(" 󰅙 " .. err)
+            return
         end
-    )
+
+        print(" 󰗠 Formatted")
+    end)
 end
 
 local format_cmds = {
@@ -84,6 +74,7 @@ return {
 
             gdscript = { "gdformat" },
             lua = { "stylua" },
+            templ = { name = "templ" },
         },
         default_format_opts = {
             lsp_format = "fallback",
@@ -93,7 +84,7 @@ return {
                 return
             end
 
-            return format_opts_by_ft[vim.bo[bufnr].filetype] or {}
+            return {}
         end,
     },
 }
