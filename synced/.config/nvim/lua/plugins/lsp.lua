@@ -163,6 +163,12 @@ return {
 
         local cmp = require("cmp")
         cmp.setup({
+            -- disable autocompletion on whitespace lines
+            -- this does not disable manual triggering of completion tho
+            enabled = function()
+                local line = vim.api.nvim_get_current_line()
+                return #vim.trim(line) ~= 0
+            end,
             preselect = cmp.PreselectMode.Item,
             completion = {
                 completeopt = "menu,menuone,noinsert",
