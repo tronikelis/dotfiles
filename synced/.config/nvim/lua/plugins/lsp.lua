@@ -163,11 +163,17 @@ return {
 
         local cmp = require("cmp")
         cmp.setup({
-            -- disable autocompletion on whitespace lines
-            -- this does not disable manual triggering of completion tho
             enabled = function()
-                local line = vim.api.nvim_get_current_line()
-                return #vim.trim(line) ~= 0
+                local disabled = false
+
+                -- taken from default config
+                disabled = disabled or (vim.api.nvim_get_option_value("buftype", { buf = 0 }) == "prompt")
+                disabled = disabled or (vim.fn.reg_recording() ~= "")
+                disabled = disabled or (vim.fn.reg_executing() ~= "")
+                -- disable autocompletion on whitespace lines
+                disabled = disabled or (#vim.trim(vim.api.nvim_get_current_line()) == 0)
+
+                return not disabled
             end,
             preselect = cmp.PreselectMode.Item,
             completion = {
