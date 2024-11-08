@@ -161,6 +161,15 @@ return {
             default_setup(k, v)
         end
 
+        -- not inlining this because cmp enabled function is async/debounced
+        -- it wasn't working all the time when inlining
+        local is_line_white = false
+        vim.api.nvim_create_autocmd("TextChangedI", {
+            callback = function()
+                is_line_white = #vim.trim(vim.api.nvim_get_current_line()) == 0
+            end,
+        })
+
         local cmp = require("cmp")
         cmp.setup({
             enabled = function()
@@ -171,7 +180,7 @@ return {
                 disabled = disabled or (vim.fn.reg_recording() ~= "")
                 disabled = disabled or (vim.fn.reg_executing() ~= "")
                 -- disable autocompletion on whitespace lines
-                disabled = disabled or (#vim.trim(vim.api.nvim_get_current_line()) == 0)
+                disabled = disabled or is_line_white
 
                 return not disabled
             end,
