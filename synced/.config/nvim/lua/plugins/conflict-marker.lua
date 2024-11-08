@@ -1,5 +1,5 @@
 return {
-    "Tronikelis/conflict-marker.nvim",
+    "tronikelis/conflict-marker.nvim",
     event = "VeryLazy",
     opts = {
         on_attach = function(conflict)

@@ -1,5 +1,5 @@
 return {
-    "Tronikelis/sstash.nvim",
+    "tronikelis/sstash.nvim",
     event = "VeryLazy",
     opts = {
         write_on_leave = function()

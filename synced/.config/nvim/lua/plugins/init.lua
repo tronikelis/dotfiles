@@ -64,7 +64,7 @@ require("lazy").setup({
         opts = {},
     },
     {
-        "Tronikelis/debdiag.nvim",
+        "tronikelis/debdiag.nvim",
         event = "VeryLazy",
         opts = {},
     },

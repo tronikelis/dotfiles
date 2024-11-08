@@ -1,5 +1,5 @@
 return {
-    "Tronikelis/xylene.nvim",
+    "tronikelis/xylene.nvim",
     event = "VeryLazy",
     dependencies = {
         "nvim-tree/nvim-web-devicons",

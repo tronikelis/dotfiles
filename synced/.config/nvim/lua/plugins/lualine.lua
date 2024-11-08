@@ -2,7 +2,7 @@ return {
     "nvim-lualine/lualine.nvim",
     dependencies = {
         "nvim-tree/nvim-web-devicons",
-        "Tronikelis/lualine-components.nvim",
+        "tronikelis/lualine-components.nvim",
     },
     config = function()
         local filename_oil = require("lualine-components.filename-oil")
