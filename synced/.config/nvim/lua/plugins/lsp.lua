@@ -164,7 +164,7 @@ return {
         -- not inlining this because cmp enabled function is async/debounced
         -- it wasn't working all the time when inlining
         local is_line_white = false
-        vim.api.nvim_create_autocmd("TextChangedI", {
+        vim.api.nvim_create_autocmd({ "TextChangedI", "InsertEnter" }, {
             callback = function()
                 is_line_white = #vim.trim(vim.api.nvim_get_current_line()) == 0
             end,
