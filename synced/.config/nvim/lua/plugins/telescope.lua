@@ -9,12 +9,6 @@ return {
         "nvim-telescope/telescope-live-grep-args.nvim",
     },
     config = function()
-        local picker_config = function()
-            return {
-                show_line = false,
-            }
-        end
-
         local actions = require("telescope.actions")
 
         local vimgrep_arguments = {
@@ -23,6 +17,18 @@ return {
 
         table.insert(vimgrep_arguments, "--hidden")
         table.insert(vimgrep_arguments, "--trim")
+
+        local picker_defaults = {
+            debounce = 300,
+        }
+
+        local with_picker_defaults = function(pickers)
+            for k, v in pairs(pickers) do
+                pickers[k] = vim.tbl_deep_extend("force", picker_defaults, v)
+            end
+
+            return pickers
+        end
 
         require("telescope").setup({
             defaults = {
@@ -40,9 +46,13 @@ return {
                 },
                 path_display = { "truncate" },
             },
-            pickers = {
-                lsp_references = picker_config(),
-                lsp_definitions = picker_config(),
+            pickers = with_picker_defaults({
+                lsp_references = {
+                    show_line = false,
+                },
+                lsp_definitions = {
+                    show_line = false,
+                },
                 find_files = {
                     hidden = true,
                 },
@@ -52,8 +62,8 @@ return {
                 oldfiles = {
                     only_cwd = true,
                 },
-            },
-            extensions = {
+            }),
+            extensions = with_picker_defaults({
                 live_grep_args = {
                     mappings = {
                         i = {
@@ -61,7 +71,7 @@ return {
                         },
                     },
                 },
-            },
+            }),
         })
 
         require("telescope").load_extension("fzf")
