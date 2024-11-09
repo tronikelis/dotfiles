@@ -213,7 +213,6 @@ return {
             view = {
                 entries = {
                     selection_order = "near_cursor",
-                    follow_cursor = true,
                 },
             },
             snippet = {
