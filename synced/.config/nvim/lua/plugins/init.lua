@@ -28,6 +28,7 @@ require("lazy").setup({
     { import = "plugins.conflict-marker" },
     { import = "plugins.mason_tools" },
     { import = "plugins.sstash" },
+    { import = "plugins.none-ls" },
 
     -- small plugins that don't need config
     {

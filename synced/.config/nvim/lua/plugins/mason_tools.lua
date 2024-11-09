@@ -1,14 +1,15 @@
 local ensure_installed = {
-    "tailwindcss-language-server",
-    "typescript-language-server",
     "css-lsp",
     "eslint-lsp",
     "html-lsp",
     "json-lsp",
     "prettierd",
+    "tailwindcss-language-server",
+    "typescript-language-server",
 
     "bash-language-server",
     "clangd",
+    "cspell",
     "docker-compose-language-service",
     "dockerfile-language-server",
     "gopls",
@@ -22,7 +23,6 @@ local ensure_installed = {
     "stylua",
     "taplo",
     "templ",
-    "typos-lsp",
     "yaml-language-server",
     "zls",
 }

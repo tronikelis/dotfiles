@@ -110,7 +110,6 @@ return {
             gopls = {},
             jdtls = {},
             lua_ls = {},
-            typos_lsp = {},
             rust_analyzer = {},
             taplo = {},
             ts_ls = {},

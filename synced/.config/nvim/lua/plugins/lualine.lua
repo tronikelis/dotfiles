@@ -82,7 +82,7 @@ return {
                 lualine_x = {
                     {
                         active_lsp,
-                        exclude = { "typos_lsp" },
+                        exclude = { "typos_lsp", "null-ls" },
                     },
                     "filetype",
                 },
