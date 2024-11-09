@@ -10,7 +10,11 @@ return {
         local cspell = require("cspell")
 
         local config = {
-            cspell_config_dirs = { "~/.config/nvim/" },
+            cspell_config_dirs = { "~/.config/" },
+            on_add_to_json = function(payload)
+                local c = payload.cspell_config_path
+                os.execute(string.format("jq -S '.words |= sort' %s > %s.tmp && mv %s.tmp %s", c, c, c, c))
+            end,
         }
 
         none_ls.setup({
