@@ -22,15 +22,15 @@ return {
 
             local MID = "^=======$"
 
-            map("[x", function()
-                vim.cmd("?" .. MID)
-                vim.cmd("nohl")
-            end)
+            local next = function()
+                vim.cmd(string.format("silent! /%s", MID))
+            end
+            local prev = function()
+                vim.cmd(string.format("silent! ?%s", MID))
+            end
 
-            map("]x", function()
-                vim.cmd("/" .. MID)
-                vim.cmd("nohl")
-            end)
+            map("]x", next)
+            map("[x", prev)
         end,
     },
 }
