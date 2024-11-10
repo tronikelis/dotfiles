@@ -221,11 +221,16 @@ return {
             },
         })
 
-        vim.keymap.set("", "<a-l>", function()
+        local function stop_snippet()
             if vim.snippet.active() then
                 vim.snippet.stop()
             end
-        end)
+        end
+
+        vim.api.nvim_create_autocmd("InsertLeave", {
+            callback = stop_snippet,
+        })
+        vim.keymap.set("", "<a-l>", stop_snippet)
 
         vim.keymap.set({ "i", "s", "n" }, "<a-n>", function()
             if vim.snippet.active({ direction = 1 }) then
