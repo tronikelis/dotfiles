@@ -4,7 +4,6 @@
   "ignorePaths": [
     "**/node_modules/**",
     "**/.config/nvim/lua/remaps/**",
-    ".git",
     ".gitignore",
     "**/coverage/**",
     "**/dist/**",
