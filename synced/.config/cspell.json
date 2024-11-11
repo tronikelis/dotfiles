@@ -14,6 +14,7 @@
   "useGitignore": true,
   "version": "0.2",
   "words": [
+    "Greyscale",
     "adadadadadad",
     "autocmd",
     "autopairs",
@@ -31,6 +32,7 @@
     "debdiag",
     "devicons",
     "dockerls",
+    "dtos",
     "fargs",
     "folke",
     "gdformat",
@@ -58,6 +60,7 @@
     "lukas",
     "mbbill",
     "menuone",
+    "multichrome",
     "multiwindow",
     "nargs",
     "nicenicenice",
@@ -80,9 +83,11 @@
     "tronikelis",
     "undotree",
     "vimgrep",
+    "vinted",
     "vsplit",
     "williamboman",
     "windwp",
-    "yamlls"
+    "yamlls",
+    "zindex"
   ]
 }
