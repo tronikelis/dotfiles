@@ -55,8 +55,8 @@ return {
                 mappings = {
                     i = {
                         -- these will come in a future update
-                        ["<c-h>"] = action_or_noop("results_scrolling_left"),
-                        ["<c-l>"] = action_or_noop("results_scrolling_right"),
+                        ["<c-h>"] = action_or_noop("preview_scrolling_left"),
+                        ["<c-l>"] = action_or_noop("preview_scrolling_right"),
 
                         ["<c-y>"] = copy_current_entry,
                         ["<esc>"] = actions.close,
