@@ -10,6 +10,7 @@ return {
     },
     config = function()
         local actions = require("telescope.actions")
+        local actions_state = require("telescope.actions.state")
 
         local vimgrep_arguments = {
             table.unpack(require("telescope.config").values.vimgrep_arguments),
@@ -30,6 +31,20 @@ return {
             return pickers
         end
 
+        local action_or_noop = function(key)
+            local success, value = pcall(function()
+                return actions[key]
+            end)
+
+            return success and value or function() end
+        end
+
+        local copy_current_entry = function(prompt_bufnr)
+            local selected_entry = actions_state.get_selected_entry()
+            vim.fn.setreg("+", selected_entry.value)
+            actions.close(prompt_bufnr)
+        end
+
         require("telescope").setup({
             defaults = {
                 layout_strategy = "flex",
@@ -39,7 +54,16 @@ return {
                 },
                 mappings = {
                     i = {
+                        -- these will come in a future update
+                        ["<c-h>"] = action_or_noop("results_scrolling_left"),
+                        ["<c-l>"] = action_or_noop("results_scrolling_right"),
+
+                        ["<c-y>"] = copy_current_entry,
                         ["<esc>"] = actions.close,
+
+                        ["<c-f>"] = actions.cycle_previewers_next,
+                        ["<c-b>"] = actions.cycle_previewers_prev,
+
                         ["<c-s>"] = actions.file_split,
                         ["<c-v>"] = actions.file_vsplit,
                     },
