@@ -1,3 +1,46 @@
+local ensure_installed = {
+    "css-lsp",
+    "eslint-lsp",
+    "html-lsp",
+    "json-lsp",
+    "prettierd",
+    "tailwindcss-language-server",
+    "typescript-language-server",
+
+    "bash-language-server",
+    "clangd",
+    "cspell",
+    "docker-compose-language-service",
+    "dockerfile-language-server",
+    "gopls",
+    "hyprls",
+    "jdtls",
+    "lua-language-server",
+    "marksman",
+    "rust-analyzer",
+    "shellcheck",
+    "shfmt",
+    "stylua",
+    "taplo",
+    "templ",
+    "yaml-language-server",
+    "zls",
+}
+
+local function install_mason_tools()
+    local registry = require("mason-registry")
+
+    registry.refresh(function()
+        for _, v in ipairs(ensure_installed) do
+            local pkg = registry.get_package(v)
+
+            if not registry.is_installed(v) then
+                pkg:install()
+            end
+        end
+    end)
+end
+
 vim.diagnostic.config({
     update_in_insert = true,
     severity_sort = true,
@@ -39,6 +82,8 @@ return {
         "onsails/lspkind.nvim",
     },
     config = function()
+        vim.defer_fn(install_mason_tools, 3000)
+
         local lsps = {
             jsonls = {
                 settings = {

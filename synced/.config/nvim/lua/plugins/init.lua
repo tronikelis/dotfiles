@@ -26,7 +26,6 @@ require("lazy").setup({
     { import = "plugins.grapple" },
     { import = "plugins.xylene" },
     { import = "plugins.conflict-marker" },
-    { import = "plugins.mason_tools" },
     { import = "plugins.sstash" },
     { import = "plugins.none-ls" },
 
