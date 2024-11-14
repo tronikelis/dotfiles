@@ -1,7 +1,7 @@
 local action_map = {
     current = [[let @+ = expand("%:t")]],
     absolute = [[let @+ = expand("%:p")]],
-    relative = [[let @+ = expand("%")]],
+    relative = [[let @+ = expand("%:~:.")]],
 }
 
 vim.api.nvim_create_user_command("YankPath", function(cmd)
