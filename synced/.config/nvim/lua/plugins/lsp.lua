@@ -127,23 +127,7 @@ return {
                     },
                 },
             },
-            eslint = {
-                root_dir = require("lspconfig").util.root_pattern(
-                    ".eslintrc.js",
-                    ".eslintrc.cjs",
-                    ".eslintrc.mjs",
-                    ".eslintrc.yaml",
-                    ".eslintrc.yml",
-                    ".eslintrc.json",
-                    ".eslintrc",
-                    "eslint.config.js",
-                    "eslint.config.mjs",
-                    "eslint.config.cjs",
-                    "eslint.config.ts",
-                    "eslint.config.mts",
-                    "eslint.config.cts"
-                ),
-            },
+            eslint = {},
             zls = {
                 settings = {
                     zls = {
