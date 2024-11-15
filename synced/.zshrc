@@ -87,11 +87,13 @@ function gci() {
 }
 
 function gdi() {
+    local args="$@"
+
     git branch |
         grep -v "^*" |
         cut -c 3- |
         fzf --preview-window "$fzf_preview_window" --header-first --header "$(get_fzf_header), delete:" --layout reverse --info inline --multi --print0 --preview="$diff_preview" |
-        xargs -0 git branch --delete
+        xargs -0 git branch --delete $args
 }
 
 function gwsi() {
