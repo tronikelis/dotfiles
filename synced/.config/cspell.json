@@ -71,6 +71,7 @@
     "onsails",
     "pcall",
     "pgadmin",
+    "pgxpool",
     "reineke",
     "setreg",
     "shellcheck",
