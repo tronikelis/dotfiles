@@ -1,3 +1,34 @@
+local function jump_to_hunk(buf)
+    local JUMPED_TO_HUNK = "_jumped_to_hunk"
+
+    if vim.b[buf][JUMPED_TO_HUNK] then
+        return
+    end
+
+    vim.system(
+        { "git", "diff", "-U0", "HEAD", vim.fn.expand("%:p") },
+        {},
+        vim.schedule_wrap(function(out)
+            if out.code ~= 0 or not out.stdout then
+                return
+            end
+            if vim.api.nvim_get_current_buf() ~= buf then
+                return
+            end
+
+            local line = out.stdout:match("\n@@.++(%d+)")
+            if not line then
+                return
+            end
+
+            line = tonumber(line)
+
+            vim.api.nvim_win_set_cursor(0, { line, 0 })
+            vim.b[buf][JUMPED_TO_HUNK] = true
+        end)
+    )
+end
+
 return {
     "nvim-telescope/telescope.nvim",
     event = "VeryLazy",
@@ -85,6 +116,24 @@ return {
                 },
                 oldfiles = {
                     only_cwd = true,
+                },
+                git_status = {
+                    mappings = {
+                        i = {
+                            ["<cr>"] = function(...)
+                                actions.select_default(...)
+                                jump_to_hunk(vim.api.nvim_get_current_buf())
+                            end,
+                            ["<c-s>"] = function(...)
+                                actions.file_split(...)
+                                jump_to_hunk(vim.api.nvim_get_current_buf())
+                            end,
+                            ["<c-v>"] = function(...)
+                                actions.file_vsplit(...)
+                                jump_to_hunk(vim.api.nvim_get_current_buf())
+                            end,
+                        },
+                    },
                 },
             }),
             extensions = with_picker_defaults({

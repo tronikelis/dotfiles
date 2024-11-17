@@ -25,11 +25,11 @@ return {
             end, opts)
 
             vim.keymap.set("n", "[h", function()
-                gitsigns.nav_hunk("prev")
+                gitsigns.nav_hunk("prev", { target = "all" })
             end, opts)
 
             vim.keymap.set("n", "]h", function()
-                gitsigns.nav_hunk("next")
+                gitsigns.nav_hunk("next", { target = "all" })
             end, opts)
         end,
     },
