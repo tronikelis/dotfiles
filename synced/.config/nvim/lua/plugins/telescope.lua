@@ -25,6 +25,7 @@ local function jump_to_hunk(buf)
 
             line = tonumber(line)
 
+            vim.cmd([[normal! m']]) -- add current cursor position to the jump list
             vim.api.nvim_win_set_cursor(0, { line, 0 })
             vim.b[buf][JUMPED_TO_HUNK] = true
         end)
