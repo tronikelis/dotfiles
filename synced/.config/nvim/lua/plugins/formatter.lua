@@ -62,10 +62,10 @@ return {
     opts = {
         formatters_by_ft = {
             html = { "prettierd" },
-            javascript = { "prettierd" },
             json = { "prettierd" },
             jsonc = { "prettierd" },
-            tsx = { "prettierd" },
+            javascript = { "prettierd" },
+            javascriptreact = { "prettierd" },
             typescript = { "prettierd" },
             typescriptreact = { "prettierd" },
 
