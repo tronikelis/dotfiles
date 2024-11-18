@@ -61,11 +61,14 @@ return {
     event = "VeryLazy",
     opts = {
         formatters_by_ft = {
+            css = { "prettierd" },
             html = { "prettierd" },
-            json = { "prettierd" },
-            jsonc = { "prettierd" },
             javascript = { "prettierd" },
             javascriptreact = { "prettierd" },
+            json = { "prettierd" },
+            jsonc = { "prettierd" },
+            less = { "prettierd" },
+            scss = { "prettierd" },
             typescript = { "prettierd" },
             typescriptreact = { "prettierd" },
 
