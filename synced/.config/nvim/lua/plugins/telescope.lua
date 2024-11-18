@@ -8,7 +8,7 @@ local function jump_to_hunk(buf)
     local file = vim.fn.expand("%:p")
 
     vim.system(
-        { "bash", "-c", string.format("git diff -U0 HEAD %s | grep ^@@", vim.fn.shellescape(file)) },
+        { "bash", "-c", string.format("git diff -U0 HEAD %s | grep ^@@ | head -n 1", vim.fn.shellescape(file)) },
         {},
         vim.schedule_wrap(function(out)
             if out.code ~= 0 or not out.stdout then
@@ -18,7 +18,7 @@ local function jump_to_hunk(buf)
                 return
             end
 
-            local line = out.stdout:match("@@.++(%d+)")
+            local line = out.stdout:match("+(%d+)")
             if not line then
                 return
             end
