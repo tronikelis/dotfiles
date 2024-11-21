@@ -13,6 +13,7 @@
   "useGitignore": true,
   "version": "0.2",
   "words": [
+    "Favourite",
     "Greyscale",
     "Subcatalog",
     "Tronikel",
@@ -38,6 +39,7 @@
     "dtos",
     "farg",
     "fargs",
+    "favourites",
     "folke",
     "gauk",
     "gdformat",
@@ -75,6 +77,7 @@
     "maruchi",
     "mbbill",
     "menuone",
+    "minimised",
     "multichrome",
     "multiwindow",
     "nargs",
