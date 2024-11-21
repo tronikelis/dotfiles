@@ -194,6 +194,15 @@ return {
             preselect = cmp.PreselectMode.Item,
             completion = {
                 completeopt = "menu,menuone,noinsert",
+                -- disables triggering popup when line is empty
+                -- https://github.com/hrsh7th/nvim-cmp/pull/2087
+                get_trigger_characters = function(trigger_characters)
+                    if vim.trim(vim.api.nvim_get_current_line()) == "" then
+                        return {}
+                    end
+
+                    return trigger_characters
+                end,
                 keyword_length = 1,
             },
             sources = cmp.config.sources({
