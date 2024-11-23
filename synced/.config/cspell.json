@@ -92,6 +92,7 @@
     "pcall",
     "pgadmin",
     "pgxpool",
+    "pkgs",
     "reineke",
     "setreg",
     "shellcheck",
