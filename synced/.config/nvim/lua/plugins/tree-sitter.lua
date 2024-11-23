@@ -26,8 +26,6 @@ return {
         },
         indent = {
             enable = true,
-            -- f**ed up indent list :DD
-            disable = { "zig" },
         },
     },
 }
