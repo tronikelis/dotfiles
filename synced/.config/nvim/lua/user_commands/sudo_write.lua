@@ -31,14 +31,14 @@ local function sudo_write()
 
     local password = get_password()
 
-    vim.cmd.silent(string.format("w! %s", vim.fn.shellescape(tmp_file, true)))
+    vim.cmd({ cmd = "w", bang = true, args = { tmp_file } })
 
     if not sudo_exec({ "cp", tmp_file, curr_file }, password) then
         return
     end
 
-    vim.cmd("e!")
     vim.fn.delete(tmp_file)
+    vim.cmd("e!")
 end
 
 vim.api.nvim_create_user_command("SudoWrite", sudo_write, { desc = "Writes to current file with 'sudo'" })

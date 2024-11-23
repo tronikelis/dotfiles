@@ -13,6 +13,9 @@
   "useGitignore": true,
   "version": "0.2",
   "words": [
+    "mirrorlist",
+    "multilib",
+    "pacman",
     "Favourite",
     "Greyscale",
     "Subcatalog",
