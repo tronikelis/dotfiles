@@ -1,7 +1,4 @@
-local log = require("utils.log")
-local path = require("utils.path")
-
-local get_password = function()
+local function get_password()
     vim.fn.inputsave()
     local password = vim.fn.inputsecret("Password: ")
     vim.fn.inputrestore()
@@ -9,17 +6,16 @@ local get_password = function()
     return password
 end
 
-local sudo_exec = function(cmd, password)
+local function sudo_exec(cmd, password)
     if not password or #password == 0 then
-        log.info("invalid password, sudo aborted")
+        print("invalid password, sudo aborted")
         return false
     end
 
-    local out = vim.system({ "sudo", "-S", table.unpack(cmd) }, { text = true, stdin = password }):wait()
+    local out = vim.system({ "sudo", "-S", unpack(cmd) }, { text = true, stdin = password }):wait()
 
     if out.code ~= 0 then
-        print("\n")
-        log.err(out.stderr)
+        print(out.stderr)
         return false
     end
 
@@ -29,22 +25,13 @@ local sudo_exec = function(cmd, password)
     return true
 end
 
-local sudo_write = function()
+local function sudo_write()
     local tmp_file = vim.fn.tempname()
-    local curr_file = path.curr_full_file()
-
-    if not curr_file or #curr_file == 0 then
-        log.err("empty filepath")
-        return
-    end
+    local curr_file = vim.fn.expand("%:p")
 
     local password = get_password()
 
-    if not sudo_exec({ "touch", curr_file }, password) then
-        return
-    end
-
-    vim.cmd(string.format("silent w! %s", tmp_file))
+    vim.cmd.silent(string.format("w! %s", vim.fn.shellescape(tmp_file, true)))
 
     if not sudo_exec({ "cp", tmp_file, curr_file }, password) then
         return

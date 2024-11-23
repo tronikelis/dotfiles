@@ -4,10 +4,12 @@ local action_map = {
     relative = [[let @+ = expand("%:~:.")]],
 }
 
-vim.api.nvim_create_user_command("YankPath", function(cmd)
-    local action = cmd.fargs[1] or "relative"
+local function yank_path(ev)
+    local action = ev.fargs[1] or "relative"
     vim.cmd(action_map[action])
-end, {
+end
+
+vim.api.nvim_create_user_command("YankPath", yank_path, {
     desc = "Yanks file paths into system clipboard",
     nargs = "?",
     complete = function()

@@ -1,4 +1,4 @@
-vim.api.nvim_create_user_command("Messages", function()
+local function messages()
     local out = vim.api.nvim_exec2("messages", { output = true }).output
 
     out = vim.trim(out)
@@ -19,4 +19,6 @@ vim.api.nvim_create_user_command("Messages", function()
 
     vim.api.nvim_win_set_buf(win, buf)
     vim.api.nvim_win_set_height(win, 10)
-end, { desc = ":messages but in a buffer" })
+end
+
+vim.api.nvim_create_user_command("Messages", messages, { desc = ":messages but in a buffer" })
