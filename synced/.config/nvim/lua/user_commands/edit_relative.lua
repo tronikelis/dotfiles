@@ -6,7 +6,7 @@ local function accept(arg)
     local file = arg.fargs[1]
     local curr_dir = vim.fn.expand("%:p:h")
 
-    vim.cmd("e " .. vim.fs.joinpath(curr_dir, file))
+    vim.cmd.e(vim.fs.joinpath(curr_dir, file))
 end
 
 local function files_in(dir)
