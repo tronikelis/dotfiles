@@ -66,9 +66,17 @@ vim.keymap.set("n", "{", "{zz")
 vim.keymap.set("n", "]c", "]czz")
 vim.keymap.set("n", "[c", "[czz")
 
+local function with_count(cmd)
+    return function()
+        return "<cmd>" .. vim.v.count1 .. cmd
+    end
+end
+
 -- quickfix list nav
-vim.keymap.set("n", "]q", "<cmd>cnext<cr>zz")
-vim.keymap.set("n", "[q", "<cmd>cprev<cr>zz")
+vim.keymap.set("n", "]q", with_count("cnext<cr>zz"), { expr = true })
+vim.keymap.set("n", "[q", with_count("cprev<cr>zz"), { expr = true })
+vim.keymap.set("n", "]Q", "<cmd>clast<cr>zz")
+vim.keymap.set("n", "[Q", "<cmd>cfirst<cr>zz")
 
 -- terminal mode
 vim.keymap.set("t", "<esc>", "<c-\\><c-n>")

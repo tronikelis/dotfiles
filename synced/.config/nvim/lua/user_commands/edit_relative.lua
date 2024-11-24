@@ -18,6 +18,8 @@ local function files_in(dir)
         end
     end
 
+    table.sort(files)
+
     return files
 end
 
