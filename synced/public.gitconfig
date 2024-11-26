@@ -34,6 +34,8 @@
 	cleanfd = clean -f -d
 	root = rev-parse --show-toplevel
 	logo = log --oneline
+	# shows local branches which got their remote branch deleted
+	branchgone = "!git fetch && git branch -vv | grep gone] | awk '{print $1}'"
 
 	wnew = "!git worktree add \"$1\" -b \"$1\" #"
 	wnewfrom = "!git worktree add \"$1\" -b \"$1\" \"$2\" #"
