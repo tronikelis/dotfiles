@@ -143,12 +143,16 @@ export FZF_CTRL_R_OPTS="
 
 [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 
-# fnm
-FNM_PATH="$HOME/.local/share/fnm"
-if [ -d "$FNM_PATH" ]; then
-    export PATH="$HOME/.local/share/fnm:$PATH"
-fi
-if [ -x "$(command -v fnm)" ]; then
-    eval "$(fnm env --shell zsh)"
-    eval "$(fnm completions --shell zsh)"
+if cat "$HOME/system_name.txt" 2>/dev/null | grep vinted_work_1 &>/dev/null; then
+    eval "$(direnv hook zsh)"
+    eval "$(mise activate)"
+else
+    FNM_PATH="$HOME/.local/share/fnm"
+    if [ -d "$FNM_PATH" ]; then
+        export PATH="$HOME/.local/share/fnm:$PATH"
+    fi
+    if [ -x "$(command -v fnm)" ]; then
+        eval "$(fnm env --shell zsh)"
+        eval "$(fnm completions --shell zsh)"
+    fi
 fi
