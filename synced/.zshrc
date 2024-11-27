@@ -143,7 +143,9 @@ export FZF_CTRL_R_OPTS="
 
 [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 
-if cat "$HOME/system_name.txt" 2>/dev/null | grep vinted_work_1 &>/dev/null; then
+system_name="$(cat "$HOME/system_name.txt" 2>/dev/null)"
+
+if echo "$system_name" | grep vinted_work_1 &>/dev/null; then
     eval "$(direnv hook zsh)"
     eval "$(mise activate)"
 else
