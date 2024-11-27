@@ -9,4 +9,11 @@ function M.keymap_each_count(call)
     end
 end
 
+-- returns a function which prepends `<cmd>[vim.v.count1]` to `cmd`
+function M.with_count(cmd)
+    return function()
+        return "<cmd>" .. vim.v.count1 .. cmd
+    end
+end
+
 return M
