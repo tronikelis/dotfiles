@@ -1,3 +1,5 @@
+local utils = require("utils")
+
 local ensure_installed = {
     "css-lsp",
     "eslint-lsp",
@@ -62,8 +64,20 @@ vim.keymap.set("n", "<leader>a", vim.lsp.buf.code_action)
 vim.keymap.set("n", "<leader>t", vim.lsp.buf.hover)
 vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename)
 
-vim.keymap.set("n", "[e", vim.diagnostic.goto_prev)
-vim.keymap.set("n", "]e", vim.diagnostic.goto_next)
+vim.keymap.set(
+    "n",
+    "[e",
+    utils.keymap_each_count(function()
+        vim.diagnostic.goto_prev({ wrap = false })
+    end)
+)
+vim.keymap.set(
+    "n",
+    "]e",
+    utils.keymap_each_count(function()
+        vim.diagnostic.goto_next({ wrap = false })
+    end)
+)
 
 return {
     "neovim/nvim-lspconfig",
@@ -168,9 +182,13 @@ return {
                 vim.keymap.set("n", "gI", builtin.lsp_implementations, opts)
 
                 vim.keymap.set("n", "<leader>dc", function()
-                    builtin.diagnostics({ bufnr = 0 })
+                    local severity = (vim.v.count == 0 and { nil } or { vim.v.count })[1]
+                    builtin.diagnostics({ bufnr = 0, severity = severity })
                 end, opts)
-                vim.keymap.set("n", "<leader>dC", builtin.diagnostics, opts)
+                vim.keymap.set("n", "<leader>dC", function()
+                    local severity = (vim.v.count == 0 and { nil } or { vim.v.count })[1]
+                    builtin.diagnostics({ severity = severity })
+                end, opts)
 
                 vim.keymap.set("n", "<leader>ds", builtin.lsp_document_symbols, opts)
                 vim.keymap.set("n", "<leader>dS", builtin.lsp_workspace_symbols, opts)
