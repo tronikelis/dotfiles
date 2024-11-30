@@ -23,7 +23,6 @@ require("lazy").setup({
     { import = "plugins.lualine" },
     { import = "plugins.oil" },
     { import = "plugins.comments" },
-    { import = "plugins.grapple" },
     { import = "plugins.xylene" },
     { import = "plugins.conflict-marker" },
     { import = "plugins.sstash" },

@@ -11,22 +11,6 @@ return {
         local active_lsp = require("lualine-components.active-lsp")
         local git_lines = require("lualine-components.git-lines")
 
-        local grapple = {
-            function()
-                local str = string.format("󰛢 #%s", #require("grapple").tags())
-
-                local selected = require("grapple").name_or_index()
-                if selected then
-                    str = string.format("%s [%s]", str, selected)
-                end
-
-                return str
-            end,
-            cond = function()
-                return not not package.loaded.grapple
-            end,
-        }
-
         local formatter_status = {
             function()
                 local conform = require("conform")
@@ -77,7 +61,7 @@ return {
                         symbols = { error = "E", warn = "W", info = "I", hint = "H" },
                     },
                 },
-                lualine_c = { "filename", "diff", grapple },
+                lualine_c = { "filename", "diff" },
 
                 lualine_x = {
                     {
