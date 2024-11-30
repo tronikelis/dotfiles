@@ -28,6 +28,9 @@ return {
         })
 
         vim.keymap.set("n", "-", oil.open)
+        vim.keymap.set("n", "<c-->", function()
+            oil.open(vim.fn.getcwd())
+        end)
         vim.keymap.set("n", "<leader>-", oil.toggle_float)
     end,
 }
