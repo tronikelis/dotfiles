@@ -93,6 +93,12 @@ require("lazy").setup({
             end,
         },
     },
+    {
+        "tronikelis/lsp-gc.nvim",
+        event = "VeryLazy",
+        dependencies = { "neovim/nvim-lspconfig" },
+        opts = {},
+    },
 }, {
     change_detection = {
         enabled = false,
