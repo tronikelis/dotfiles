@@ -56,21 +56,29 @@ end, {
     end,
 })
 
+local function biome_or_prettier(buf)
+    if vim.fs.root(buf, { "biome.json", "biome.jsonc" }) then
+        return { "biome" }
+    end
+
+    return { "prettierd" }
+end
+
 return {
     "stevearc/conform.nvim",
     event = "VeryLazy",
     opts = {
         formatters_by_ft = {
             css = { "prettierd" },
-            html = { "prettierd" },
-            javascript = { "prettierd" },
-            javascriptreact = { "prettierd" },
-            json = { "prettierd" },
-            jsonc = { "prettierd" },
-            less = { "prettierd" },
             scss = { "prettierd" },
-            typescript = { "prettierd" },
-            typescriptreact = { "prettierd" },
+            html = { "prettierd" },
+
+            javascript = biome_or_prettier,
+            javascriptreact = biome_or_prettier,
+            json = biome_or_prettier,
+            jsonc = biome_or_prettier,
+            typescript = biome_or_prettier,
+            typescriptreact = biome_or_prettier,
 
             sh = { "shfmt" },
             zsh = { "shfmt" },

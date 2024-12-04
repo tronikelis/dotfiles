@@ -8,6 +8,7 @@ local ensure_installed = {
     "prettierd",
     "tailwindcss-language-server",
     "typescript-language-server",
+    "biome",
 
     "bash-language-server",
     "clangd",
@@ -168,6 +169,7 @@ return {
             bashls = {},
             docker_compose_language_service = {},
             dockerls = {},
+            biome = {},
         }
 
         vim.api.nvim_create_autocmd("LspAttach", {
