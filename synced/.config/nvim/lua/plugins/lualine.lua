@@ -34,6 +34,11 @@ return {
                 return not not package.loaded.conform
             end,
         }
+
+        local function bufnr()
+            return tostring(vim.api.nvim_get_current_buf())
+        end
+
         require("lualine").setup({
             options = {
                 component_separators = {
@@ -72,7 +77,18 @@ return {
                 },
                 lualine_y = {
                     formatter_status,
-                    linecount,
+                    {
+                        linecount,
+                        fmt = function(str)
+                            return ":" .. str
+                        end,
+                    },
+                    {
+                        bufnr,
+                        fmt = function(str)
+                            return "#" .. str
+                        end,
+                    },
                 },
                 lualine_z = { "location" },
             },
