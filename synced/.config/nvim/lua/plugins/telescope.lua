@@ -138,6 +138,9 @@ return {
                         },
                     },
                 },
+                quickfix = {
+                    trim_text = true,
+                },
             }),
             extensions = with_picker_defaults({
                 live_grep_args = {
@@ -165,6 +168,7 @@ return {
         vim.keymap.set("n", "<C-p>", builtin.find_files)
         vim.keymap.set("n", "<leader>/", builtin.current_buffer_fuzzy_find)
         vim.keymap.set("n", "<leader>b", builtin.buffers)
+        vim.keymap.set("n", "<leader>qf", builtin.quickfix)
 
         vim.keymap.set("n", "<leader>fr", function()
             local cwd = require("oil").get_current_dir()
