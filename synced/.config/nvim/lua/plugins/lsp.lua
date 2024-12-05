@@ -38,6 +38,7 @@ local function install_mason_tools()
             local pkg = registry.get_package(v)
 
             if not registry.is_installed(v) then
+                print(string.format("installing %s", v))
                 pkg:install()
             end
         end
