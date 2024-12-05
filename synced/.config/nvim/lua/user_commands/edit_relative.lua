@@ -1,37 +1,33 @@
-if vim.fn.executable("fzf") == 0 then
-    print(":E command requires fzf")
+if vim.fn.executable("fzf") == 0 or vim.fn.executable("fd") == 0 then
+    print(":E command requires fzf and fd")
+end
+
+local function get_cwd()
+    if vim.bo.filetype == "oil" then
+        return require("oil").get_current_dir()
+    end
+    return vim.fn.expand("%:p:h")
 end
 
 local function accept(arg)
     local file = arg.fargs[1]
-    local curr_dir = vim.fn.expand("%:p:h")
+    local curr_dir = get_cwd()
 
     vim.cmd.e(vim.fs.joinpath(curr_dir, file))
-end
-
-local function files_in(dir)
-    local files = {}
-
-    for name, type in vim.fs.dir(dir) do
-        if type == "file" then
-            table.insert(files, name)
-        end
-    end
-
-    table.sort(files)
-
-    return files
 end
 
 local function complete(query)
     query = query or ""
 
-    local files = files_in(vim.fn.expand("%:p:h"))
+    local files = vim.system({ "fd", "-t", "f", "--strip-cwd-prefix=always" }, { text = true, cwd = get_cwd() }):wait()
+    if files.code ~= 0 then
+        error(files.stdout .. files.stderr)
+        return
+    end
 
-    local out = vim.system({ "fzf", "-f", query }, { text = true, stdin = table.concat(files, "\n") }):wait()
-
+    local out = vim.system({ "fzf", "-f", query }, { text = true, stdin = files.stdout }):wait()
     if out.code ~= 0 then
-        print(out.stderr)
+        error(out.stdout .. out.stderr)
         return
     end
 
