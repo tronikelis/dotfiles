@@ -108,6 +108,10 @@ function killp() {
     lsof -i:$1 | grep LISTEN | awk '{print $2}' | xargs kill
 }
 
+function killj() {
+    kill %${(k)^jobstates}
+}
+
 function sp() {
     # project dirs are taken from ~/project_dirs.txt
     cd "$(~/personal/scripts/select_project.sh)"
