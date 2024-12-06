@@ -18,6 +18,8 @@ return {
     build = ":TSUpdate",
     main = "nvim-treesitter.configs",
     opts = {
+        -- these are usually embedded, so auto_install won't work
+        ensure_installed = { "markdown_inline", "markdown", "diff", "vim", "vimdoc" },
         sync_install = false,
         auto_install = true,
         highlight = {
