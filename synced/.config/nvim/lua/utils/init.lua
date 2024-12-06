@@ -31,4 +31,13 @@ function M.with_count(cmd)
     end
 end
 
+function M.extend_global_theme(name, val)
+    local hl = vim.api.nvim_get_hl(0, { name = name })
+    if not hl then
+        error(string.format("can't find %s", name))
+    end
+
+    vim.api.nvim_set_hl(0, name, vim.tbl_deep_extend("force", hl, val))
+end
+
 return M
