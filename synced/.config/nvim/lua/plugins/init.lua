@@ -27,6 +27,7 @@ require("lazy").setup({
     { import = "plugins.conflict-marker" },
     { import = "plugins.sstash" },
     { import = "plugins.none-ls" },
+    { import = "plugins.autopairs" },
 
     -- small plugins that don't need config
     {
@@ -37,12 +38,6 @@ require("lazy").setup({
     {
         "arthurxavierx/vim-caser",
         event = "VeryLazy",
-    },
-    {
-        "windwp/nvim-autopairs",
-        dependencies = "nvim-treesitter/nvim-treesitter",
-        event = "VeryLazy",
-        opts = { check_ts = true },
     },
     {
         "windwp/nvim-ts-autotag",
