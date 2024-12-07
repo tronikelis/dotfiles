@@ -31,4 +31,11 @@ function M.with_count(cmd)
     end
 end
 
+---@param str string
+---@param startsWith string
+---@return boolean
+function M.string_starts_with(str, startsWith)
+    return str:sub(1, #startsWith) == startsWith
+end
+
 return M

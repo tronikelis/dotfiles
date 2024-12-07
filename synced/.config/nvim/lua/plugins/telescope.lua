@@ -1,3 +1,5 @@
+local utils = require("utils")
+
 local function jump_to_hunk(buf)
     local JUMPED_TO_HUNK = "_jumped_to_hunk"
 
@@ -153,16 +155,34 @@ return {
             }),
         })
 
+        local function oldfiles_cwd()
+            local cwd = vim.fn.getcwd()
+            return vim.iter(vim.v.oldfiles)
+                :filter(function(file)
+                    return utils.string_starts_with(file, cwd)
+                end)
+                :totable()
+        end
+
         require("telescope").load_extension("fzf")
         require("telescope").load_extension("live_grep_args")
 
         local builtin = require("telescope.builtin")
         local extensions = require("telescope").extensions
 
-        vim.keymap.set("n", "<leader>fG", builtin.grep_string)
+        local live_grep_args_shortcuts = require("telescope-live-grep-args.shortcuts")
+
         vim.keymap.set("n", "<leader>fg", extensions.live_grep_args.live_grep_args)
+        vim.keymap.set("n", "<leader>fG", live_grep_args_shortcuts.grep_word_under_cursor)
 
         vim.keymap.set("n", "<leader>of", builtin.oldfiles)
+        vim.keymap.set("n", "<leader>oF", function()
+            extensions.live_grep_args.live_grep_args({
+                search_dirs = oldfiles_cwd(),
+                prompt_title = "Oldfiles (Live Grep)",
+            })
+        end)
+
         vim.keymap.set("n", "<leader>ht", builtin.help_tags)
         vim.keymap.set("n", "<leader>gs", builtin.git_status)
         vim.keymap.set("n", "<C-p>", builtin.find_files)
@@ -171,9 +191,9 @@ return {
         vim.keymap.set("n", "<leader>qf", builtin.quickfix)
 
         vim.keymap.set("n", "<leader>fr", function()
-            local cwd = require("oil").get_current_dir()
-            cwd = cwd or vim.fn.expand("%:p:h")
-            builtin.find_files({ cwd = cwd })
+            local wd = require("oil").get_current_dir()
+            wd = wd or vim.fn.expand("%:p:h")
+            builtin.find_files({ cwd = wd })
         end)
 
         vim.keymap.set({ "n", "v" }, "<leader>gc", function()
