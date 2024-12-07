@@ -41,7 +41,11 @@ require("lazy").setup({
     },
     {
         "windwp/nvim-ts-autotag",
-        dependencies = "nvim-treesitter/nvim-treesitter",
+        dependencies = {
+            "nvim-treesitter/nvim-treesitter",
+            -- this is required because of custom < mapping
+            "windwp/nvim-autopairs",
+        },
         event = "VeryLazy",
         opts = {},
     },

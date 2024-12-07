@@ -1,6 +1,6 @@
 return {
     "windwp/nvim-autopairs",
-    dependencies = "nvim-treesitter/nvim-treesitter",
+    dependencies = { "nvim-treesitter/nvim-treesitter" },
     event = "VeryLazy",
     config = function()
         local autopairs = require("nvim-autopairs")
