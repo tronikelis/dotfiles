@@ -30,8 +30,9 @@ require("lazy").setup({
 
     -- small plugins that don't need config
     {
-        -- don't lazy load this
-        "tpope/vim-sleuth",
+        "Darazaki/indent-o-matic",
+        event = "VeryLazy",
+        opts = {},
     },
     {
         "arthurxavierx/vim-caser",
@@ -72,8 +73,10 @@ require("lazy").setup({
         opts = {},
     },
     {
-        "tpope/vim-surround",
+        "kylechui/nvim-surround",
+        version = "*",
         event = "VeryLazy",
+        opts = {},
     },
     {
         "mbbill/undotree",
