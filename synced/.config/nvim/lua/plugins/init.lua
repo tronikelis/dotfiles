@@ -41,8 +41,14 @@ require("lazy").setup({
     {
         "windwp/nvim-autopairs",
         dependencies = "nvim-treesitter/nvim-treesitter",
-        event = "InsertEnter",
+        event = "VeryLazy",
         opts = { check_ts = true },
+    },
+    {
+        "windwp/nvim-ts-autotag",
+        dependencies = "nvim-treesitter/nvim-treesitter",
+        event = "VeryLazy",
+        opts = {},
     },
     {
         "lukas-reineke/indent-blankline.nvim",
@@ -54,12 +60,6 @@ require("lazy").setup({
                 show_end = false,
             },
         },
-    },
-    {
-        "windwp/nvim-ts-autotag",
-        dependencies = "nvim-treesitter/nvim-treesitter",
-        event = "VeryLazy",
-        opts = {},
     },
     {
         "stevearc/dressing.nvim",
