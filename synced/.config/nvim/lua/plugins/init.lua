@@ -103,9 +103,14 @@ require("lazy").setup({
                 { path = "${3rd}/luv/library", words = { "vim%.uv" } },
             },
         },
-        -- enabled = function() -- only load if luarc is not found
-        --     return not vim.fs.root(vim.fn.getcwd(), ".luarc.json")
-        -- end,
+        enabled = function()
+            if vim.fn.executable("rg") == 0 then
+                return false
+            end
+
+            local out = vim.system({ "rg", [[vim\.fn|vim\.api]], "-q", "-g", "*.lua" }):wait()
+            return out.code == 0
+        end,
     },
     {
         "tronikelis/ts-autotag.nvim",
