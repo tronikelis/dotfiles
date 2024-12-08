@@ -11,7 +11,7 @@ return {
 
         autopairs.setup({ check_ts = true })
 
-        autopairs.add_rule(Rule("<", ">")
+        autopairs.add_rule(Rule("<", ">", { "-html" })
             -- only pair if previous char is not whitespace
             :with_pair(conds.not_before_regex("%s$", 1))
             -- skip pairing in html elements

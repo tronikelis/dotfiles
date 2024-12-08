@@ -40,16 +40,6 @@ require("lazy").setup({
         event = "VeryLazy",
     },
     {
-        "windwp/nvim-ts-autotag",
-        dependencies = {
-            "nvim-treesitter/nvim-treesitter",
-            -- this is required because of custom < mapping
-            "windwp/nvim-autopairs",
-        },
-        event = "VeryLazy",
-        opts = {},
-    },
-    {
         "lukas-reineke/indent-blankline.nvim",
         event = "VeryLazy",
         main = "ibl",
@@ -116,6 +106,11 @@ require("lazy").setup({
         -- enabled = function() -- only load if luarc is not found
         --     return not vim.fs.root(vim.fn.getcwd(), ".luarc.json")
         -- end,
+    },
+    {
+        "tronikelis/ts-autotag.nvim",
+        event = "VeryLazy",
+        opts = {},
     },
 }, {
     change_detection = {
