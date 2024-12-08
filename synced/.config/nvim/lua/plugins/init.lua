@@ -105,6 +105,18 @@ require("lazy").setup({
         dependencies = { "neovim/nvim-lspconfig" },
         opts = {},
     },
+    {
+        "folke/lazydev.nvim",
+        ft = "lua",
+        opts = {
+            library = {
+                { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+            },
+        },
+        -- enabled = function() -- only load if luarc is not found
+        --     return not vim.fs.root(vim.fn.getcwd(), ".luarc.json")
+        -- end,
+    },
 }, {
     change_detection = {
         enabled = false,
