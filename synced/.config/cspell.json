@@ -151,6 +151,7 @@
     "resizewindow",
     "revalidator",
     "rofi",
+    "rubocop",
     "setpos",
     "setqflist",
     "setreg",
