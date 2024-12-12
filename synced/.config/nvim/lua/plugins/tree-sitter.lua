@@ -6,8 +6,6 @@ return {
             "nvim-treesitter/nvim-treesitter-context",
             lazy = false,
             opts = {
-                -- try this out later
-                -- multiwindow = true,
                 enable = true,
                 max_lines = 3,
                 multiline_threshold = 1,

@@ -106,7 +106,7 @@ return {
                 },
                 path_display = { "truncate" },
                 cache_picker = {
-                    num_pickers = 20,
+                    num_pickers = 50,
                     limit_entries = 500,
                 },
             },
