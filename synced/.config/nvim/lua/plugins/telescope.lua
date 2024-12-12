@@ -105,6 +105,10 @@ return {
                     },
                 },
                 path_display = { "truncate" },
+                cache_picker = {
+                    num_pickers = 20,
+                    limit_entries = 500,
+                },
             },
             pickers = with_picker_defaults({
                 lsp_references = {
@@ -189,6 +193,7 @@ return {
         vim.keymap.set("n", "<leader>/", builtin.current_buffer_fuzzy_find)
         vim.keymap.set("n", "<leader>b", builtin.buffers)
         vim.keymap.set("n", "<leader>qf", builtin.quickfix)
+        vim.keymap.set("n", "<leader>op", builtin.pickers)
 
         vim.keymap.set("n", "<leader>fr", function()
             local wd = require("oil").get_current_dir()
