@@ -47,6 +47,7 @@ return {
     config = function()
         local actions = require("telescope.actions")
         local actions_state = require("telescope.actions.state")
+        local lga_actions = require("telescope-live-grep-args.actions")
 
         local vimgrep_arguments = {
             table.unpack(require("telescope.config").values.vimgrep_arguments),
@@ -153,6 +154,7 @@ return {
                     mappings = {
                         i = {
                             ["<c-space>"] = actions.to_fuzzy_refine,
+                            ["<c-'>"] = lga_actions.quote_prompt(),
                         },
                     },
                 },
