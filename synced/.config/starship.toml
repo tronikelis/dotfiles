@@ -5,8 +5,8 @@ palette = "catppuccin_mocha"
 
 [character]
 # Note the use of Catppuccin color 'maroon'
-success_symbol = "[❯](teal)"
-error_symbol = "[❯](red)"
+success_symbol = "[>](bold teal)"
+error_symbol = "[<](bold red)"
 
 [directory]
 truncation_length = 4
