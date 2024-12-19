@@ -71,7 +71,12 @@ return {
                 lualine_x = {
                     {
                         active_lsp,
-                        exclude = { "typos_lsp", "null-ls" },
+                        exclude = {
+                            "typos_lsp",
+                            "null-ls",
+                            -- it will show gopls
+                            "golangci_lint_ls",
+                        },
                     },
                     "filetype",
                 },
