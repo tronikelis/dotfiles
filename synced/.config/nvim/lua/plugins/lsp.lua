@@ -106,7 +106,13 @@ return {
                     },
                 },
             },
-            gopls = {},
+            gopls = {
+                settings = {
+                    gopls = {
+                        gofumpt = true,
+                    },
+                },
+            },
             jdtls = {},
             lua_ls = {},
             rust_analyzer = {},
