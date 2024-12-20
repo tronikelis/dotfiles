@@ -7,6 +7,12 @@ return {
         "stevearc/oil.nvim",
     },
     opts = {
+        get_cwd = function()
+            if vim.bo.filetype == "oil" then
+                return require("oil").get_current_dir()
+            end
+            return vim.fn.getcwd()
+        end,
         on_attach = function(renderer)
             vim.keymap.set("n", "<c-cr>", function()
                 local row = vim.api.nvim_win_get_cursor(0)[1]

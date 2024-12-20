@@ -39,5 +39,5 @@
   "ts-comments.nvim": { "branch": "main", "commit": "872dcfa0418f4a33b7437fb4d9f4e89f2f000d74" },
   "undotree": { "branch": "master", "commit": "78b5241191852ffa9bb5da5ff2ee033160798c3b" },
   "vim-caser": { "branch": "master", "commit": "6bc9f41d170711c58e0157d882a5fe8c30f34bf6" },
-  "xylene.nvim": { "branch": "master", "commit": "6b856650bd68f174139198cad7136bf7d016bda0" }
+  "xylene.nvim": { "branch": "master", "commit": "c975f0a91d887a7c1ab2e554f63decc5efd2020f" }
 }
