@@ -197,10 +197,18 @@ return {
         vim.keymap.set("n", "<leader>qf", builtin.quickfix)
         vim.keymap.set("n", "<leader>op", builtin.pickers)
 
+        local function current_wd()
+            if vim.bo.filetype == "oil" then
+                return require("oil").get_current_dir()
+            end
+            return vim.fn.expand("%:p:h")
+        end
+
         vim.keymap.set("n", "<leader>fr", function()
-            local wd = require("oil").get_current_dir()
-            wd = wd or vim.fn.expand("%:p:h")
-            builtin.find_files({ cwd = wd })
+            builtin.find_files({ cwd = current_wd() })
+        end)
+        vim.keymap.set("n", "<leader>fR", function()
+            extensions.live_grep_args.live_grep_args({ search_dirs = { current_wd() } })
         end)
 
         vim.keymap.set({ "n", "v" }, "<leader>gc", function()
