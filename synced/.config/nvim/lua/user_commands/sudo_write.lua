@@ -1,44 +1,50 @@
-local function get_password()
-    vim.fn.inputsave()
-    local password = vim.fn.inputsecret("Password: ")
-    vim.fn.inputrestore()
+local M = {}
 
-    return password
-end
+function M.setup()
+    local function get_password()
+        vim.fn.inputsave()
+        local password = vim.fn.inputsecret("Password: ")
+        vim.fn.inputrestore()
 
-local function sudo_exec(cmd, password)
-    if not password or #password == 0 then
-        print("invalid password, sudo aborted")
-        return false
+        return password
     end
 
-    local out = vim.system({ "sudo", "-S", unpack(cmd) }, { text = true, stdin = password }):wait()
+    local function sudo_exec(cmd, password)
+        if not password or #password == 0 then
+            print("invalid password, sudo aborted")
+            return false
+        end
 
-    if out.code ~= 0 then
-        print(out.stderr)
-        return false
+        local out = vim.system({ "sudo", "-S", unpack(cmd) }, { text = true, stdin = password }):wait()
+
+        if out.code ~= 0 then
+            print(out.stderr)
+            return false
+        end
+
+        -- clears the `Password: ****` in cmd
+        vim.cmd("stopinsert")
+
+        return true
     end
 
-    -- clears the `Password: ****` in cmd
-    vim.cmd("stopinsert")
+    local function sudo_write()
+        local tmp_file = vim.fn.tempname()
+        local curr_file = vim.fn.expand("%:p")
 
-    return true
-end
+        local password = get_password()
 
-local function sudo_write()
-    local tmp_file = vim.fn.tempname()
-    local curr_file = vim.fn.expand("%:p")
+        vim.cmd({ cmd = "w", bang = true, args = { tmp_file } })
 
-    local password = get_password()
+        if not sudo_exec({ "cp", tmp_file, curr_file }, password) then
+            return
+        end
 
-    vim.cmd({ cmd = "w", bang = true, args = { tmp_file } })
-
-    if not sudo_exec({ "cp", tmp_file, curr_file }, password) then
-        return
+        vim.fn.delete(tmp_file)
+        vim.cmd("e!")
     end
 
-    vim.fn.delete(tmp_file)
-    vim.cmd("e!")
+    vim.api.nvim_create_user_command("SudoWrite", sudo_write, { desc = "Writes to current file with 'sudo'" })
 end
 
-vim.api.nvim_create_user_command("SudoWrite", sudo_write, { desc = "Writes to current file with 'sudo'" })
+return M

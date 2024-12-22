@@ -1,3 +1,5 @@
+local M = {}
+
 local cmds = {
     -- force restart lsp
     lsp = function()
@@ -16,21 +18,25 @@ local cmds = {
     end,
 }
 
-vim.api.nvim_create_user_command(
-    "Bl",
-    vim.schedule_wrap(function(ev)
-        local cmd = cmds[ev.fargs[1]]
-        if not cmd then
-            print("what you entering man??")
-            return
-        end
+function M.setup()
+    vim.api.nvim_create_user_command(
+        "Bl",
+        vim.schedule_wrap(function(ev)
+            local cmd = cmds[ev.fargs[1]]
+            if not cmd then
+                print("what you entering man??")
+                return
+            end
 
-        cmd()
-    end),
-    {
-        nargs = 1,
-        complete = function()
-            return vim.tbl_keys(cmds)
-        end,
-    }
-)
+            cmd()
+        end),
+        {
+            nargs = 1,
+            complete = function()
+                return vim.tbl_keys(cmds)
+            end,
+        }
+    )
+end
+
+return M
