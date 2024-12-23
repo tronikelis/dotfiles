@@ -111,7 +111,7 @@ function M.setup()
                     return false
                 end
 
-                local out = vim.system({ "rg", [[vim\.fn|vim\.api]], "-q", "-g", "*.lua" }):wait()
+                local out = vim.system({ "rg", [[\svim\.]], "-q", "-g", "*.lua" }):wait()
                 return out.code == 0
             end,
         },
