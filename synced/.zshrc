@@ -6,7 +6,6 @@ ZSH_THEME="robbyrussell"
 ## before plugins loaded
 
 plugins=(
-    git
     fzf-tab
     zsh-syntax-highlighting
     zsh-autosuggestions
