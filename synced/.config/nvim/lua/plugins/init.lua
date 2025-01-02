@@ -93,12 +93,6 @@ function M.setup()
             },
         },
         {
-            "tronikelis/lsp-gc.nvim",
-            event = "VeryLazy",
-            dependencies = { "neovim/nvim-lspconfig" },
-            opts = {},
-        },
-        {
             "folke/lazydev.nvim",
             ft = "lua",
             opts = {
