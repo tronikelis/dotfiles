@@ -32,6 +32,7 @@ bindkey '^j' down-history
 # history
 HISTSIZE=100000
 SAVEHIST=100000
+KEYTIMEOUT=100
 
 alias ssh="kitten ssh"
 
