@@ -107,18 +107,8 @@ return {
                 lualine_a = {},
                 lualine_c = {},
                 lualine_x = {},
-                lualine_y = {
-                    {
-                        "datetime",
-                        style = "%H:%M",
-                    },
-                },
-                lualine_z = {
-                    {
-                        "datetime",
-                        style = "%d/%m/%Y",
-                    },
-                },
+                lualine_y = {},
+                lualine_z = {},
             },
         })
     end,
