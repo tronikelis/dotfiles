@@ -7,6 +7,8 @@ if [[ -z "$name" ]]; then
     name="$(basename "$wd")"
 fi
 
+zoxide add "$wd"
+
 name="$(printf "$name" | tr . _)"
 
 if [[ -z $TMUX ]]; then
