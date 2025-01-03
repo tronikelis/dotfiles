@@ -121,3 +121,8 @@ else
         eval "$(fnm completions --shell zsh)"
     fi
 fi
+
+# tmux!
+if [[ -z "$TMUX" ]]; then
+    tmux new -A -s 0
+fi
