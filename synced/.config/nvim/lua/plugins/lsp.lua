@@ -17,11 +17,6 @@ vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
     border = "rounded",
 })
 
-vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float)
-vim.keymap.set("n", "<leader>a", vim.lsp.buf.code_action)
-vim.keymap.set("n", "<leader>t", vim.lsp.buf.hover)
-vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename)
-
 vim.keymap.set(
     "n",
     "[e",
