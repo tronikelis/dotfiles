@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 wd="$(_ZO_FZF_OPTS="--no-sort --layout=reverse --tmux 70%,50%" zoxide query -i)"
 

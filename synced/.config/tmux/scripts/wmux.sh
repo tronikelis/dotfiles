@@ -1,4 +1,4 @@
-#!/usr/bin/bash -i
+#!/bin/bash -i
 
 source ~/.oh-my-zsh/custom/plugins/fzf-git/fzf-git.sh/fzf-git.sh
 

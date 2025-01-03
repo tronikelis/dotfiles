@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 wd="$1"
 name="$2"
