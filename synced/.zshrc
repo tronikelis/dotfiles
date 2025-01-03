@@ -70,6 +70,24 @@ function killj() {
     kill %${(k)^jobstates}
 }
 
+function zmux() {
+    local selected="$1"
+    if [[ -z "$selected" ]]; then
+        selected="$(zoxide query -i)"
+    fi
+    if [[ -z "$selected" ]]; then
+        return
+    fi
+
+    zoxide add "$selected"
+
+    ~/.config/tmux/scripts/upsert_session.sh "$selected"
+}
+
+function wmux() {
+    ~/.config/tmux/scripts/upsert_session.sh "$(_fzf_git_worktrees --no-multi)"
+}
+
 export LS_COLORS="$(vivid generate catppuccin-mocha)"
 
 export FZF_DEFAULT_OPTS=" \

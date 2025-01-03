@@ -146,26 +146,34 @@ return {
 
         vim.api.nvim_create_autocmd("LspAttach", {
             callback = function(event)
-                local opts = { buffer = event.buf }
                 local builtin = require("telescope.builtin")
 
-                vim.keymap.set("n", "gd", builtin.lsp_definitions, opts)
-                vim.keymap.set("n", "gr", builtin.lsp_references, opts)
-                vim.keymap.set("n", "gt", builtin.lsp_type_definitions, opts)
-                -- uppercase cause I'll prob use the gi command
-                vim.keymap.set("n", "gI", builtin.lsp_implementations, opts)
+                local function map(mode, l, r)
+                    vim.keymap.set(mode, l, r, { buffer = event.buf })
+                end
 
-                vim.keymap.set("n", "<leader>dc", function()
+                map("n", "<leader>e", vim.diagnostic.open_float)
+                map("n", "<leader>a", vim.lsp.buf.code_action)
+                map("n", "<leader>t", vim.lsp.buf.hover)
+                map("n", "<leader>rn", vim.lsp.buf.rename)
+
+                map("n", "gd", builtin.lsp_definitions)
+                map("n", "gr", builtin.lsp_references)
+                map("n", "gt", builtin.lsp_type_definitions)
+                -- uppercase cause I'll prob use the gi command
+                map("n", "gI", builtin.lsp_implementations)
+
+                map("n", "<leader>dc", function()
                     local severity = (vim.v.count == 0 and { nil } or { vim.v.count })[1]
                     builtin.diagnostics({ bufnr = 0, severity = severity })
-                end, opts)
-                vim.keymap.set("n", "<leader>dC", function()
+                end)
+                map("n", "<leader>dC", function()
                     local severity = (vim.v.count == 0 and { nil } or { vim.v.count })[1]
                     builtin.diagnostics({ severity = severity })
-                end, opts)
+                end)
 
-                vim.keymap.set("n", "<leader>ds", builtin.lsp_document_symbols, opts)
-                vim.keymap.set("n", "<leader>dS", builtin.lsp_workspace_symbols, opts)
+                map("n", "<leader>ds", builtin.lsp_document_symbols)
+                map("n", "<leader>dS", builtin.lsp_workspace_symbols)
             end,
         })
 
