@@ -4,8 +4,10 @@ wd="$1"
 name="$2"
 
 if [[ -z "$name" ]]; then
-    name="$(basename "$wd" | tr . _)"
+    name="$(basename "$wd")"
 fi
+
+name="$(printf "$name" | tr . _)"
 
 if [[ -z $TMUX ]]; then
     tmux new-session -A -s "$name" -c "$wd"
