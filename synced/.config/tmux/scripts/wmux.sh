@@ -1,4 +1,6 @@
-#!/usr/bin/env bash
+#!/usr/bin/bash -i
+
+source ~/.oh-my-zsh/custom/plugins/fzf-git/fzf-git.sh/fzf-git.sh
 
 wd="$(_fzf_git_worktrees --no-multi)"
 
