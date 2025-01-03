@@ -71,7 +71,7 @@ function killj() {
 }
 
 function smux() {
-    ~/.config/tmux/scripts/upsert_session.sh $@
+    ~/.config/tmux/scripts/upsert_session.sh "$@"
 }
 
 export LS_COLORS="$(vivid generate catppuccin-mocha)"
