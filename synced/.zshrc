@@ -44,7 +44,7 @@ alias ls="eza --icons -a --group-directories-first"
 
 alias tdm_sync_git_pull="cd ~/.tdm && git pull && tdm sync && cd -"
 
-eval "$(zoxide init --cmd cd zsh)"
+eval "$(zoxide init zsh)"
 
 eval "$(starship init zsh)"
 
