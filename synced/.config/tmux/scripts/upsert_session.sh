@@ -1,6 +1,9 @@
 #!/bin/bash
 
-wd="$1"
+wd="$(
+    cd "$1" || exit
+    pwd
+)"
 name="$2"
 
 if [[ -z "$name" ]]; then
