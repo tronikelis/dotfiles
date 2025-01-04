@@ -32,6 +32,7 @@ function M.setup()
     vim.opt.smartcase = true
     vim.opt.scrolloff = 10
     vim.opt.guicursor = "n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20,a:blinkwait1000-blinkoff500-blinkon500"
+    vim.opt.ttimeoutlen = 10 -- faster insert mode exits
 
     if vim.fn.executable("rg") == 1 then
         -- the default is rg -uu --vimgrep, but -uu ignores .gitignore and shows hidden files
