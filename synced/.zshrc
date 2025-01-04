@@ -44,6 +44,8 @@ alias ls="eza --icons -a --group-directories-first"
 
 alias tdm_sync_git_pull="cd ~/.tdm && git pull && tdm sync && cd -"
 
+# as I'm using zoxide with tmux, increase zoxide size
+export _ZO_MAXAGE=50000
 eval "$(zoxide init zsh)"
 
 eval "$(starship init zsh)"
