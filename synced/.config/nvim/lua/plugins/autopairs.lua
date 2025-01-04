@@ -12,8 +12,13 @@ return {
         autopairs.setup({ check_ts = true })
 
         autopairs.add_rule(Rule("<", ">", { "-html" })
-            -- only pair if previous char is not whitespace
-            :with_pair(conds.not_before_regex("%s$", 1))
+            :with_pair(
+                -- regex will make it so that it will auto-pair on
+                -- `a<` but not `a <`
+                -- The `:?:?` part makes it also
+                -- work on Rust generics like `some_func::<T>()`
+                conds.before_regex("%a+:?:?$", 3)
+            )
             -- skip pairing in html elements
             :with_pair(
                 ts_conds.is_not_ts_node({ "jsx_element", "element" })
