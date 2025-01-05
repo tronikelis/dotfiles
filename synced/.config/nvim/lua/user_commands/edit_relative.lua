@@ -24,18 +24,10 @@ function M.setup()
 
         local files = vim.system({ "fd", "-t", "f", "--strip-cwd-prefix=always" }, { text = true, cwd = get_cwd() })
             :wait()
-        if files.code ~= 0 then
-            error(files.stdout .. files.stderr)
-            return
-        end
 
         local out = vim.system({ "fzf", "-f", query }, { text = true, stdin = files.stdout }):wait()
-        if out.code ~= 0 then
-            error(out.stdout .. out.stderr)
-            return
-        end
 
-        return vim.split(out.stdout, "\n", { trimempty = true })
+        return vim.split(out.stdout or "", "\n", { trimempty = true })
     end
 
     vim.api.nvim_create_user_command("E", accept, {
