@@ -7,7 +7,7 @@ wd="$(
 name="$2"
 
 if [[ -z "$name" ]]; then
-    name="$(basename "$wd")"
+    name="$(basename "$(dirname "$wd")")/$(basename "$wd")"
 fi
 
 zoxide add "$wd"
