@@ -86,6 +86,7 @@ return {
             gdscript = { "gdformat" },
             lua = { "stylua" },
             templ = { name = "templ" },
+            ruby = { name = "ruby_lsp" },
         },
         default_format_opts = {
             lsp_format = "fallback",

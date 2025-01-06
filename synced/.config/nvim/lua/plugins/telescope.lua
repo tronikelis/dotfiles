@@ -154,7 +154,7 @@ return {
                     mappings = {
                         i = {
                             ["<c-space>"] = actions.to_fuzzy_refine,
-                            ["<c-'>"] = lga_actions.quote_prompt(),
+                            ["<c-f>"] = lga_actions.quote_prompt({ postfix = " -F" }),
                         },
                     },
                 },
