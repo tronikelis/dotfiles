@@ -25,7 +25,7 @@ return {
             additional_vim_regex_highlighting = false,
         },
         indent = {
-            enable = true,
+            enable = false, -- it's really slow, try again after perf updates
         },
     },
 }

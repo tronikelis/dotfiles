@@ -23,16 +23,19 @@ function M.setup()
     vim.g.mapleader = " "
     vim.g.maplocalleader = " "
     vim.opt.clipboard = "unnamedplus"
-    vim.opt.breakindent = true
     vim.opt.undofile = true
-    vim.opt.updatetime = 100
+    vim.opt.updatetime = 1000
     vim.opt.inccommand = "split"
     vim.opt.cursorline = true
-    vim.opt.ignorecase = true
-    vim.opt.smartcase = true
     vim.opt.scrolloff = 10
     vim.opt.guicursor = "n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20,a:blinkwait1000-blinkoff500-blinkon500"
     vim.opt.ttimeoutlen = 10 -- faster insert mode exits
+
+    vim.opt.ignorecase = true
+    vim.opt.smartcase = true
+
+    vim.opt.smartindent = true
+    vim.opt.autoindent = true
 
     if vim.fn.executable("rg") == 1 then
         -- the default is rg -uu --vimgrep, but -uu ignores .gitignore and shows hidden files
