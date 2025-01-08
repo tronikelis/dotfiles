@@ -84,7 +84,18 @@ return {
 
         require("telescope").setup({
             defaults = {
+                sorting_strategy = "ascending",
                 layout_strategy = "flex",
+                layout_config = {
+                    height = 0.8,
+                    horizontal = {
+                        prompt_position = "top",
+                    },
+                    vertical = {
+                        prompt_position = "top",
+                        mirror = true,
+                    },
+                },
                 vimgrep_arguments = vimgrep_arguments,
                 file_ignore_patterns = {
                     ".git/",
