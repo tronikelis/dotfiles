@@ -17,21 +17,6 @@ vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
     border = "rounded",
 })
 
-vim.keymap.set(
-    "n",
-    "[e",
-    utils.keymap_each_count(function()
-        vim.diagnostic.goto_prev({ wrap = false })
-    end)
-)
-vim.keymap.set(
-    "n",
-    "]e",
-    utils.keymap_each_count(function()
-        vim.diagnostic.goto_next({ wrap = false })
-    end)
-)
-
 return {
     "neovim/nvim-lspconfig",
     dependencies = {
@@ -169,6 +154,21 @@ return {
 
                 map("n", "<leader>ds", builtin.lsp_document_symbols)
                 map("n", "<leader>dS", builtin.lsp_workspace_symbols)
+
+                map(
+                    "n",
+                    "[e",
+                    utils.keymap_each_count(function()
+                        vim.diagnostic.goto_prev({ wrap = false })
+                    end)
+                )
+                map(
+                    "n",
+                    "]e",
+                    utils.keymap_each_count(function()
+                        vim.diagnostic.goto_next({ wrap = false })
+                    end)
+                )
             end,
         })
 

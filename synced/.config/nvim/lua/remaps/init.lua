@@ -74,6 +74,7 @@ function M.setup()
     vim.keymap.set("n", "{", "{zz")
     vim.keymap.set("n", "]c", "]czz")
     vim.keymap.set("n", "[c", "[czz")
+    vim.keymap.set("n", "gp", "`[v`]")
 
     vim.keymap.set("n", "yc", "yy<cmd>normal gcc<cr>p")
     vim.keymap.set("n", "<leader><tab>", "<cmd>b#<cr>")
