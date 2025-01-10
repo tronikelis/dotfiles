@@ -108,17 +108,6 @@ function M.setup()
         end,
     })
 
-    -- set correct compiler based on file type
-    vim.api.nvim_create_autocmd("FileType", {
-        callback = function(ev)
-            pcall(function()
-                vim.api.nvim_buf_call(ev.buf, function()
-                    vim.cmd("compiler " .. vim.bo.filetype)
-                end)
-            end)
-        end,
-    })
-
     -- folding
     vim.opt.foldtext = ""
     vim.opt.foldcolumn = "0"
