@@ -77,7 +77,6 @@ function M.setup()
     vim.keymap.set("n", "gp", "`[v`]")
 
     vim.keymap.set("n", "yc", "yy<cmd>normal gcc<cr>p")
-    vim.keymap.set("n", "<leader><tab>", "<cmd>b#<cr>")
 
     -- quickfix list nav
     vim.keymap.set("n", "]q", utils.with_count("cnext<cr>zz"), { expr = true })
