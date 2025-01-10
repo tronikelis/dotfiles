@@ -90,8 +90,8 @@ function M.setup()
 
     -- autocmds
 
-    vim.api.nvim_create_autocmd({ "BufWritePre" }, {
-        pattern = "*",
+    -- removes trailing whitespace on save
+    vim.api.nvim_create_autocmd("BufWritePre", {
         callback = function()
             local save_cursor = vim.fn.getpos(".")
             vim.cmd([[%s/\s\+$//e]])
@@ -99,13 +99,24 @@ function M.setup()
         end,
     })
 
+    -- highlights yanked text
     vim.api.nvim_create_autocmd("TextYankPost", {
-        pattern = "*",
         callback = function()
             vim.highlight.on_yank({
                 higroup = "IncSearch",
                 timeout = 40,
             })
+        end,
+    })
+
+    -- set correct compiler based on file type
+    vim.api.nvim_create_autocmd("FileType", {
+        callback = function(ev)
+            pcall(function()
+                vim.api.nvim_buf_call(ev.buf, function()
+                    vim.cmd("compiler " .. vim.bo.filetype)
+                end)
+            end)
         end,
     })
 
