@@ -1,3 +1,5 @@
+local utils = require("utils")
+
 local M = {}
 
 local cmds = {
@@ -32,8 +34,8 @@ function M.setup()
         end),
         {
             nargs = 1,
-            complete = function()
-                return vim.tbl_keys(cmds)
+            complete = function(query)
+                return utils.prefix_filter(query, vim.tbl_keys(cmds))
             end,
         }
     )

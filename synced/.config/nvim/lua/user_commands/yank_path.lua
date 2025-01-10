@@ -1,3 +1,5 @@
+local utils = require("utils")
+
 local M = {}
 
 local action_map = {
@@ -15,8 +17,8 @@ function M.setup()
     vim.api.nvim_create_user_command("YankPath", yank_path, {
         desc = "Yanks file paths into system clipboard",
         nargs = "?",
-        complete = function()
-            return vim.tbl_keys(action_map)
+        complete = function(query)
+            return utils.prefix_filter(query, vim.tbl_keys(action_map))
         end,
     })
 end

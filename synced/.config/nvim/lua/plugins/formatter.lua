@@ -1,3 +1,5 @@
+local utils = require("utils")
+
 vim.api.nvim_create_autocmd("VimLeavePre", {
     callback = function()
         vim.fn.jobstart("killall prettierd eslint_d", { detach = true })
@@ -51,8 +53,8 @@ end, {
     bang = true,
     range = true,
     nargs = "?",
-    complete = function()
-        return vim.tbl_keys(format_cmds)
+    complete = function(query)
+        return utils.prefix_filter(query, vim.tbl_keys(format_cmds))
     end,
 })
 
