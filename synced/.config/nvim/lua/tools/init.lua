@@ -16,8 +16,6 @@ local tools = {
     { name = "biome", deps = { "npm" } },
     { name = "cspell", deps = { "npm" } },
     { name = "css-lsp", deps = { "npm" } },
-    { name = "docker-compose-language-service", deps = { "npm" } },
-    { name = "dockerfile-language-server", deps = { "npm" } },
     { name = "eslint-lsp", deps = { "npm" } },
     { name = "html-lsp", deps = { "npm" } },
     { name = "json-lsp", deps = { "npm" } },

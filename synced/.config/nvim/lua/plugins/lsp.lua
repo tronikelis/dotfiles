@@ -117,8 +117,6 @@ return {
             clangd = {},
             hyprls = {},
             bashls = {},
-            docker_compose_language_service = {},
-            dockerls = {},
             biome = {},
             rubocop = {},
             ruby_lsp = {},
