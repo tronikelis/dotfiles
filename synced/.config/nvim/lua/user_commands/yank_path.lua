@@ -2,16 +2,32 @@ local utils = require("utils")
 
 local M = {}
 
+local function expand(flags)
+    if vim.bo.filetype == "oil" then
+        return vim.fn.fnamemodify(require("oil").get_current_dir(), flags)
+    end
+
+    return vim.fn.expand("%" .. flags)
+end
+
+local function create_copy_expand(flags)
+    return function()
+        vim.fn.setreg("+", expand(flags))
+    end
+end
+
 local action_map = {
-    current = [[let @+ = expand("%:t")]],
-    absolute = [[let @+ = expand("%:p")]],
-    relative = [[let @+ = expand("%:~:.")]],
+    current = create_copy_expand(":t"),
+    absolute = create_copy_expand(":p"),
+    relative = create_copy_expand(":~:."),
 }
 
 function M.setup()
     local function yank_path(ev)
-        local action = ev.fargs[1] or "relative"
-        vim.cmd(action_map[action])
+        local action = action_map[ev.fargs[1] or "relative"]
+        if action then
+            action()
+        end
     end
 
     vim.api.nvim_create_user_command("YankPath", yank_path, {
