@@ -11,8 +11,13 @@ local function expand(flags)
 end
 
 local function create_copy_expand(flags)
-    return function()
-        vim.fn.setreg("+", expand(flags))
+    return function(ev)
+        local line = ""
+        if ev.count ~= -1 then
+            line = string.format("%d,%d:", ev.line1, ev.line2)
+        end
+
+        vim.fn.setreg("+", line .. expand(flags))
     end
 end
 
@@ -26,7 +31,7 @@ function M.setup()
     local function yank_path(ev)
         local action = action_map[ev.fargs[1] or "relative"]
         if action then
-            action()
+            action(ev)
         end
     end
 
@@ -36,6 +41,7 @@ function M.setup()
         complete = function(query)
             return utils.prefix_filter(query, vim.tbl_keys(action_map))
         end,
+        range = true,
     })
 end
 
