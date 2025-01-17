@@ -100,14 +100,6 @@ function M.setup()
                     { path = "${3rd}/luv/library", words = { "vim%.uv" } },
                 },
             },
-            enabled = function()
-                if vim.fn.executable("rg") == 0 then
-                    return false
-                end
-
-                local out = vim.system({ "rg", [[vim\.]], "-q", "-g", "*.lua" }):wait()
-                return out.code == 0
-            end,
         },
         {
             "tronikelis/ts-autotag.nvim",
