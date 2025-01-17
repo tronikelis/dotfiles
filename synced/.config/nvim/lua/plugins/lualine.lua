@@ -9,41 +9,49 @@ return {
         local linecount = require("lualine-components.linecount")
         local git_prompt = require("lualine-components.git-prompt")
         local active_lsp = require("lualine-components.active-lsp")
-        local git_lines = require("lualine-components.git-lines")
 
         local formatter_status = {
             function()
                 local conform = require("conform")
 
-                local available = "󰏫"
-                local not_available = "󰏯"
+                local ok = "󰏫"
+                local not_ok = "󰏯"
 
                 local formatters, lsp = conform.list_formatters_to_run()
 
                 if not lsp and #formatters == 0 then
-                    return not_available
+                    return not_ok
                 end
 
                 if vim.g.disable_autoformat or vim.b.disable_autoformat then
-                    return not_available
+                    return not_ok
                 end
 
-                return available
+                local fmts = vim.iter(formatters)
+                    :map(function(x)
+                        return x.name
+                    end)
+                    :totable()
+
+                ---@type string[]
+                local str = { ok, unpack(fmts) }
+
+                if lsp then
+                    table.insert(str, "[LSP]")
+                end
+
+                return table.concat(str, " ")
             end,
             cond = function()
                 return not not package.loaded.conform
             end,
         }
 
-        local function bufnr()
-            return tostring(vim.api.nvim_get_current_buf())
-        end
-
         require("lualine").setup({
             options = {
                 component_separators = {
-                    left = "|",
-                    right = "|",
+                    left = "",
+                    right = "",
                 },
                 section_separators = { left = "", right = "" },
             },
@@ -60,15 +68,15 @@ return {
                 lualine_b = {
                     "branch",
                     git_prompt,
-                    git_lines,
                     {
                         "diagnostics",
                         symbols = { error = "E", warn = "W", info = "I", hint = "H" },
                     },
                 },
-                lualine_c = { "filename", "diff" },
+                lualine_c = { "filename" },
 
                 lualine_x = {
+                    formatter_status,
                     {
                         active_lsp,
                         exclude = {
@@ -81,17 +89,10 @@ return {
                     "filetype",
                 },
                 lualine_y = {
-                    formatter_status,
                     {
                         linecount,
                         fmt = function(str)
                             return ":" .. str
-                        end,
-                    },
-                    {
-                        bufnr,
-                        fmt = function(str)
-                            return "#" .. str
                         end,
                     },
                 },
