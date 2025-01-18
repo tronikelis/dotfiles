@@ -21,7 +21,10 @@ function M.setup()
             return
         end
         if out.code ~= 1 then
-            error(out.stderr)
+            if out.stderr then
+                error(vim.split(out.stderr, "\n")[1])
+            end
+            return
         end
 
         vim.cmd(string.format("silent vertical diffpatch %s", patch))
