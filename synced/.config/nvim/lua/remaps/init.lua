@@ -124,13 +124,6 @@ function M.setup()
         command = "wincmd =",
     })
 
-    -- disable search hl when entering insert mode
-    vim.api.nvim_create_autocmd("InsertEnter", {
-        callback = vim.schedule_wrap(function()
-            vim.cmd("noh")
-        end),
-    })
-
     -- folding
     vim.opt.foldtext = ""
     vim.opt.foldcolumn = "0"
