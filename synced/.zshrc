@@ -76,14 +76,6 @@ function smux() {
     ~/.config/tmux/scripts/upsert_session.sh "$@"
 }
 
-# Redefine this function to change the options
-_fzf_git_fzf() {
-    fzf --height=50% --tmux 90%,70% --multi \
-        --border-label-pos=2 \
-        --preview-window='bottom,50%,border-top' \
-        "$@"
-}
-
 export LS_COLORS="$(vivid generate catppuccin-mocha)"
 
 export FZF_DEFAULT_OPTS=" \

@@ -3,6 +3,7 @@
 set -eo pipefail
 
 source ~/.oh-my-zsh/custom/plugins/fzf-git/fzf-git.sh/fzf-git.sh
+source ~/.oh-my-zsh/custom/plugins/fzf-git/_fzf_git_fzf.sh
 
 wd="$(_fzf_git_worktrees --no-multi --preview-window=bottom,50%,border-top)"
 branch="$(
