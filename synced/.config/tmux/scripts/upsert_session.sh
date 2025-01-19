@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -eo pipefail
+
 wd="$(
     cd "$1" || exit
     pwd
