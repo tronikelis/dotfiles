@@ -70,12 +70,15 @@ return {
                     "branch",
                     git_prompt,
                     git_lines,
+                },
+                lualine_c = {
+                    "filename",
                     {
                         "diagnostics",
                         symbols = { error = "E", warn = "W", info = "I", hint = "H" },
                     },
+                    "diff",
                 },
-                lualine_c = { "filename", "diff" },
 
                 lualine_x = {
                     formatter_status,
