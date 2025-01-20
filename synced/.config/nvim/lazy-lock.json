@@ -3,7 +3,7 @@
   "cmp-nvim-lsp": { "branch": "main", "commit": "99290b3ec1322070bcfb9e846450a46f6efa50f0" },
   "cmp-nvim-lsp-signature-help": { "branch": "main", "commit": "031e6ba70b0ad5eee49fd2120ff7a2e325b17fa7" },
   "cmp-path": { "branch": "main", "commit": "91ff86cd9c29299a64f968ebb45846c485725f23" },
-  "conflict-marker.nvim": { "branch": "master", "commit": "659598d0a19a3a661daa86c371861b004a5d59d6" },
+  "conflict-marker.nvim": { "branch": "master", "commit": "9395704fc98fd1b93996cbc8bd8f043bbe6328e9" },
   "conform.nvim": { "branch": "master", "commit": "6dc21d4ce050c2e592d9635b7983d67baf216e3d" },
   "cspell.nvim": { "branch": "main", "commit": "be04e47348c04f89614d99cf73a7ce1165a2e3ec" },
   "debdiag.nvim": { "branch": "master", "commit": "35a557d476f55b208e05339fc64313311138b128" },
