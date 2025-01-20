@@ -9,6 +9,7 @@ return {
         local linecount = require("lualine-components.linecount")
         local git_prompt = require("lualine-components.git-prompt")
         local active_lsp = require("lualine-components.active-lsp")
+        local git_lines = require("lualine-components.git-lines")
 
         local formatter_status = {
             function()
@@ -24,7 +25,7 @@ return {
                 end
 
                 if vim.g.disable_autoformat or vim.b.disable_autoformat then
-                    return not_ok
+                    ok = not_ok
                 end
 
                 local fmts = vim.iter(formatters)
@@ -68,12 +69,13 @@ return {
                 lualine_b = {
                     "branch",
                     git_prompt,
+                    git_lines,
                     {
                         "diagnostics",
                         symbols = { error = "E", warn = "W", info = "I", hint = "H" },
                     },
                 },
-                lualine_c = { "filename" },
+                lualine_c = { "filename", "diff" },
 
                 lualine_x = {
                     formatter_status,
