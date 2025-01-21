@@ -9,6 +9,7 @@ return {
         { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
         "nvim-tree/nvim-web-devicons",
         "nvim-telescope/telescope-live-grep-args.nvim",
+        "tronikelis/telescope-git-diff-stat.nvim",
     },
     config = function()
         local actions = require("telescope.actions")
@@ -118,6 +119,20 @@ return {
                         },
                     },
                 },
+                git_diff_stat = {
+                    preview_get_command = function(opts, entry)
+                        return {
+                            "git",
+                            "-c",
+                            "delta.line-numbers=false",
+                            "diff",
+                            "-p",
+                            unpack(opts.git_args),
+                            "--",
+                            entry.absolute,
+                        }
+                    end,
+                },
             }),
         })
 
@@ -132,6 +147,7 @@ return {
 
         require("telescope").load_extension("fzf")
         require("telescope").load_extension("live_grep_args")
+        require("telescope").load_extension("git_diff_stat")
 
         local builtin = require("telescope.builtin")
         local extensions = require("telescope").extensions
@@ -140,6 +156,7 @@ return {
 
         vim.keymap.set("n", "<leader>fg", extensions.live_grep_args.live_grep_args)
         vim.keymap.set("n", "<leader>fG", live_grep_args_shortcuts.grep_word_under_cursor)
+        vim.keymap.set("n", "<leader>gd", extensions.git_diff_stat.git_diff_stat)
 
         vim.keymap.set("n", "<leader>of", builtin.oldfiles)
         vim.keymap.set("n", "<leader>oF", function()
