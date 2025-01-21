@@ -1,39 +1,5 @@
 local utils = require("utils")
 
-local function jump_to_hunk(buf)
-    local JUMPED_TO_HUNK = "_jumped_to_hunk"
-
-    if vim.b[buf][JUMPED_TO_HUNK] then
-        return
-    end
-
-    local file = vim.fn.expand("%:p")
-
-    vim.system(
-        { "bash", "-c", string.format("git diff -U0 HEAD %s | grep ^@@ | head -n 1", vim.fn.shellescape(file)) },
-        {},
-        vim.schedule_wrap(function(out)
-            if out.code ~= 0 or not out.stdout then
-                return
-            end
-            if vim.api.nvim_get_current_buf() ~= buf then
-                return
-            end
-
-            local line = out.stdout:match("+(%d+)")
-            if not line then
-                return
-            end
-
-            line = tonumber(line)
-
-            vim.cmd([[normal! m']]) -- add current cursor position to the jump list
-            vim.api.nvim_win_set_cursor(0, { line, 0 })
-            vim.b[buf][JUMPED_TO_HUNK] = true
-        end)
-    )
-end
-
 return {
     "nvim-telescope/telescope.nvim",
     event = "VeryLazy",
@@ -138,24 +104,7 @@ return {
                 oldfiles = {
                     only_cwd = true,
                 },
-                git_status = {
-                    mappings = {
-                        i = {
-                            ["<cr>"] = function(...)
-                                actions.select_default(...)
-                                jump_to_hunk(vim.api.nvim_get_current_buf())
-                            end,
-                            ["<c-s>"] = function(...)
-                                actions.file_split(...)
-                                jump_to_hunk(vim.api.nvim_get_current_buf())
-                            end,
-                            ["<c-v>"] = function(...)
-                                actions.file_vsplit(...)
-                                jump_to_hunk(vim.api.nvim_get_current_buf())
-                            end,
-                        },
-                    },
-                },
+                git_status = {},
                 quickfix = {
                     trim_text = true,
                 },
