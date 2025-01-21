@@ -127,7 +127,7 @@ return {
                             "delta.line-numbers=false",
                             "diff",
                             "-p",
-                            unpack(opts.git_args),
+                            opts.git_args,
                             "--",
                             entry.absolute,
                         }
