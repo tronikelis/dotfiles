@@ -53,4 +53,8 @@ function M.prefix_filter(query, list)
         :totable()
 end
 
+function M.flatten(tbl)
+    return vim.iter(tbl):flatten():totable()
+end
+
 return M

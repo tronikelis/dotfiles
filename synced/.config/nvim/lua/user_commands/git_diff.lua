@@ -1,3 +1,5 @@
+local utils = require("utils")
+
 local M = {}
 
 function M.setup()
@@ -5,16 +7,16 @@ function M.setup()
         local patch = vim.fn.tempname()
         local current = vim.fn.expand("%:p")
 
-        local out = vim.system({
+        local out = vim.system(utils.flatten({
             "git",
             "diff",
             "-R",
-            unpack(ev.fargs),
+            ev.fargs,
             "--exit-code",
             string.format("--output=%s", patch),
             "--",
             current,
-        }):wait()
+        })):wait()
 
         if out.code == 0 then
             print("No diff")

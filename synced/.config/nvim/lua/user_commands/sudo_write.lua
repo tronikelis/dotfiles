@@ -1,3 +1,5 @@
+local utils = require("utils")
+
 local M = {}
 
 function M.setup()
@@ -15,7 +17,7 @@ function M.setup()
             return false
         end
 
-        local out = vim.system({ "sudo", "-S", unpack(cmd) }, { text = true, stdin = password }):wait()
+        local out = vim.system(utils.flatten({ "sudo", "-S", cmd }), { text = true, stdin = password }):wait()
 
         if out.code ~= 0 then
             print(out.stderr)

@@ -16,9 +16,9 @@ return {
         local actions_state = require("telescope.actions.state")
         local lga_actions = require("telescope-live-grep-args.actions")
 
-        local vimgrep_arguments = {
-            table.unpack(require("telescope.config").values.vimgrep_arguments),
-        }
+        local vimgrep_arguments = utils.flatten({ -- poor mans table copy, lmao
+            require("telescope.config").values.vimgrep_arguments,
+        })
 
         table.insert(vimgrep_arguments, "--hidden")
         table.insert(vimgrep_arguments, "--trim")

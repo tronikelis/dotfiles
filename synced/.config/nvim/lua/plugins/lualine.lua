@@ -1,3 +1,5 @@
+local utils = require("utils")
+
 return {
     "nvim-lualine/lualine.nvim",
     dependencies = {
@@ -35,7 +37,7 @@ return {
                     :totable()
 
                 ---@type string[]
-                local str = { ok, unpack(fmts) }
+                local str = utils.flatten({ ok, fmts })
 
                 if lsp then
                     table.insert(str, "[LSP]")
