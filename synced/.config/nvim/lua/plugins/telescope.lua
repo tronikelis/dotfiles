@@ -54,7 +54,8 @@ return {
                 sorting_strategy = "ascending",
                 layout_strategy = "flex",
                 layout_config = {
-                    height = 0.8,
+                    height = 0.85,
+                    width = 0.9,
                     horizontal = {
                         prompt_position = "top",
                     },
@@ -136,13 +137,11 @@ return {
             }),
         })
 
-        local function oldfiles_cwd()
-            local cwd = vim.fn.getcwd()
-            return vim.iter(vim.v.oldfiles)
-                :filter(function(file)
-                    return utils.string_starts_with(file, cwd)
-                end)
-                :totable()
+        local function current_wd()
+            if vim.bo.filetype == "oil" then
+                return require("oil").get_current_dir()
+            end
+            return vim.fn.expand("%:p:h")
         end
 
         require("telescope").load_extension("fzf")
@@ -156,30 +155,19 @@ return {
 
         vim.keymap.set("n", "<leader>fg", extensions.live_grep_args.live_grep_args)
         vim.keymap.set("n", "<leader>fG", live_grep_args_shortcuts.grep_word_under_cursor)
+
         vim.keymap.set("n", "<leader>gd", extensions.git_diff_stat.git_diff_stat)
+        vim.keymap.set("n", "<leader>gs", builtin.git_status)
 
         vim.keymap.set("n", "<leader>of", builtin.oldfiles)
-        vim.keymap.set("n", "<leader>oF", function()
-            extensions.live_grep_args.live_grep_args({
-                search_dirs = oldfiles_cwd(),
-                prompt_title = "Oldfiles (Live Grep)",
-            })
-        end)
-
-        vim.keymap.set("n", "<leader>ht", builtin.help_tags)
-        vim.keymap.set("n", "<leader>gs", builtin.git_status)
         vim.keymap.set("n", "<C-p>", builtin.find_files)
+
         vim.keymap.set("n", "<leader>/", builtin.current_buffer_fuzzy_find)
         vim.keymap.set("n", "<leader>b", builtin.buffers)
         vim.keymap.set("n", "<leader>qf", builtin.quickfix)
-        vim.keymap.set("n", "<leader>op", builtin.pickers)
 
-        local function current_wd()
-            if vim.bo.filetype == "oil" then
-                return require("oil").get_current_dir()
-            end
-            return vim.fn.expand("%:p:h")
-        end
+        vim.keymap.set("n", "<leader>ht", builtin.help_tags)
+        vim.keymap.set("n", "<leader>op", builtin.pickers)
 
         vim.keymap.set("n", "<leader>fr", function()
             builtin.find_files({ cwd = current_wd() })
