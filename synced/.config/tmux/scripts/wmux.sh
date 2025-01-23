@@ -30,4 +30,9 @@ root="$(
     done
 )"
 
+# probably not a worktree
+if [[ -z "$root" ]]; then
+    root="$(basename "$wd")"
+fi
+
 ~/.config/tmux/scripts/upsert_session.sh "$wd" "$root@$branch"
