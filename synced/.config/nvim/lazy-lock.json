@@ -32,7 +32,7 @@
   "plenary.nvim": { "branch": "master", "commit": "3707cdb1e43f5cea73afb6037e6494e7ce847a66" },
   "sstash.nvim": { "branch": "master", "commit": "02b8f648cd811ca855e241bf06f8537e0c8c4f71" },
   "telescope-fzf-native.nvim": { "branch": "main", "commit": "dae2eac9d91464448b584c7949a31df8faefec56" },
-  "telescope-git-diff-stat.nvim": { "branch": "master", "commit": "34989b8c96424c984828b390c527c60ec0972e27" },
+  "telescope-git-diff-stat.nvim": { "branch": "master", "commit": "a45d595c6e4c8b139e520ef80c77654d66988ca0" },
   "telescope-live-grep-args.nvim": { "branch": "master", "commit": "649b662a8f476fd2c0289570764459e95ebaa3f3" },
   "telescope.nvim": { "branch": "0.1.x", "commit": "a0bbec21143c7bc5f8bb02e0005fa0b982edc026" },
   "ts-autotag.nvim": { "branch": "master", "commit": "0f1dc38fddd99b468ef58938d7cd99ce1d6bcb0e" },
