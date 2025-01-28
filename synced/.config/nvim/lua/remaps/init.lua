@@ -162,6 +162,8 @@ function M.setup()
 
         return file
     end)()
+
+    vim.cmd("packadd cfilter")
 end
 
 return M
