@@ -23,10 +23,14 @@ return {
             local MID = "^=======$"
 
             local next = function()
-                vim.cmd(string.format("silent! /%s", MID))
+                if not pcall(vim.cmd, string.format("/%s", MID)) then
+                    print("No conflicts")
+                end
             end
             local prev = function()
-                vim.cmd(string.format("silent! ?%s", MID))
+                if not pcall(vim.cmd, string.format("?%s", MID)) then
+                    print("No conflicts")
+                end
             end
 
             map("]x", next)

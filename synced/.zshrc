@@ -126,9 +126,5 @@ fi
 
 # tmux!
 if [[ -z "$TMUX" ]]; then
-    if ! tmux ls &>/dev/null; then
-        tmux new -A -s 0
-    else
-        tmux a
-    fi
+    smux ./
 fi
