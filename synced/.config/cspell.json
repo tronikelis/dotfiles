@@ -13,7 +13,7 @@
   "useGitignore": true,
   "version": "0.2",
   "words": [
-    "previewable",
+    "sprintf",
     "activewindow",
     "adadadadadad",
     "autocmd",
@@ -154,6 +154,7 @@
     "playerctl",
     "polkit",
     "popin",
+    "previewable",
     "querylog",
     "reineke",
     "resizewindow",
