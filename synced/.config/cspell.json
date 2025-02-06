@@ -13,7 +13,7 @@
   "useGitignore": true,
   "version": "0.2",
   "words": [
-    "sprintf",
+    "permissionable",
     "activewindow",
     "adadadadadad",
     "autocmd",
@@ -169,6 +169,7 @@
     "shfmt",
     "slidevert",
     "solidjs",
+    "sprintf",
     "sstash",
     "statfs",
     "stdpath",
