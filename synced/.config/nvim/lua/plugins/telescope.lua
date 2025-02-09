@@ -102,6 +102,11 @@ return {
                 },
                 buffers = {
                     sort_mru = true,
+                    mappings = {
+                        i = {
+                            ["<c-x>"] = actions.delete_buffer,
+                        },
+                    },
                 },
                 oldfiles = {
                     only_cwd = true,
