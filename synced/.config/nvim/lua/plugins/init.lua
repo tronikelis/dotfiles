@@ -30,7 +30,6 @@ function M.setup()
         { import = "plugins.conflict-marker" },
         { import = "plugins.sstash" },
         { import = "plugins.none-ls" },
-        { import = "plugins.autopairs" },
 
         -- small plugins that don't need config
         {
