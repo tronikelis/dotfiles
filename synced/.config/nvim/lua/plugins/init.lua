@@ -50,7 +50,7 @@ function M.setup()
         {
             "tronikelis/debdiag.nvim",
             event = "VeryLazy",
-            opts = {},
+            opts = { ms = 1000 },
         },
         {
             "kylechui/nvim-surround",
