@@ -7,7 +7,7 @@ return {
             lazy = false,
             opts = {
                 enable = true,
-                max_lines = 3,
+                max_lines = 4,
                 multiline_threshold = 1,
                 min_window_height = 25,
             },
