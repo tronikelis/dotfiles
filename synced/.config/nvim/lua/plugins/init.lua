@@ -99,7 +99,6 @@ function M.setup()
             main = "ibl",
             event = "VeryLazy",
             opts = {
-                debounce = 400,
                 scope = {
                     show_start = false,
                     show_end = false,
