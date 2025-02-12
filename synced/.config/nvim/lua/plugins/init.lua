@@ -34,7 +34,7 @@ function M.setup()
         -- small plugins that don't need config
         {
             -- i don't think this should be lazy loaded
-            "Darazaki/indent-o-matic",
+            "NMAC427/guess-indent.nvim",
             opts = {},
         },
         {
