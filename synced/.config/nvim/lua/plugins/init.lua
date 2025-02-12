@@ -94,6 +94,18 @@ function M.setup()
             event = "VeryLazy",
             opts = {},
         },
+        {
+            "lukas-reineke/indent-blankline.nvim",
+            main = "ibl",
+            event = "VeryLazy",
+            opts = {
+                debounce = 400,
+                scope = {
+                    show_start = false,
+                    show_end = false,
+                },
+            },
+        },
     }, {
         change_detection = {
             enabled = false,
