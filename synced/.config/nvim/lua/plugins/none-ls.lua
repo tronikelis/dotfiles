@@ -18,7 +18,7 @@ return {
         }
 
         none_ls.setup({
-            debounce = 1000,
+            debounce = 2000,
             sources = {
                 cspell.diagnostics.with({
                     diagnostics_postprocess = function(diagnostic)
