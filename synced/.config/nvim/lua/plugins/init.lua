@@ -29,7 +29,6 @@ function M.setup()
         { import = "plugins.xylene" },
         { import = "plugins.conflict-marker" },
         { import = "plugins.sstash" },
-        { import = "plugins.none-ls" },
 
         -- small plugins that don't need config
         {
