@@ -18,9 +18,9 @@ return {
         }
 
         none_ls.setup({
+            debounce = 1000,
             sources = {
                 cspell.diagnostics.with({
-                    method = none_ls.methods.DIAGNOSTICS_ON_SAVE, -- cspell is slow as hell
                     diagnostics_postprocess = function(diagnostic)
                         diagnostic.severity = vim.diagnostic.severity.INFO
                     end,
