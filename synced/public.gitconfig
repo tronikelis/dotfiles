@@ -8,25 +8,45 @@
 
 [core]
 	pager = delta
+
 [interactive]
 	diffFilter = delta --color-only
 
 [init]
 	defaultBranch = master
-[branch]
-	autosetupmerge = simple
+
+[column]
+	ui = auto
+
+[tag]
+	sort = version:refname
+
 [push]
-	autosetupremote = true
+	autoSetupRemote = true
+	default = simple
+	followTags = true
+
 [commit]
 	verbose = true
+
 [branch]
+	autoSetupMerge = simple
 	sort = -committerdate
+
 [fetch]
 	prune = true
+	pruneTags = true
+	all = true
+
 [diff]
 	colorMoved = true
+	algorithm = histogram
+	renames = true
+	mnemonicPrefix = true
+
 [status]
 	showUntrackedFiles = all
+
 [alias]
 	conflicts = diff --name-only --diff-filter=U
 	blamefull = blame -w -C -C -C
@@ -41,12 +61,17 @@
 	wnew = "!git worktree add \"$1\" -b \"$1\" #"
 	wnewfrom = "!git worktree add \"$1\" -b \"$1\" \"$2\" #"
 	wadd = "!git worktree add \"$1\" \"$1\" #"
+
 [merge]
 	tool = nvimdiff
-	conflictstyle = zdiff3
+	conflictStyle = zdiff3
+
 [mergetool "nvimdiff"]
 	cmd = "nvim -d \"$LOCAL\" \"$MERGED\" \"$BASE\" \"$REMOTE\" -c \"wincmd w\" -c \"wincmd J\""
+
 [mergetool]
 	keepBackup = false
+
 [worktree]
 	guessRemote = true
+
