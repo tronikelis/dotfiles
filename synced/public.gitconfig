@@ -15,9 +15,6 @@
 [init]
 	defaultBranch = master
 
-[column]
-	ui = auto
-
 [tag]
 	sort = version:refname
 
