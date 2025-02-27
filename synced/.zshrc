@@ -27,7 +27,7 @@ zstyle ':completion:*' menu no
 # NOTE: This may lead to unexpected behavior since some flags break this plugin. See Aloxaf/fzf-tab#455.
 zstyle ':fzf-tab:*' use-fzf-default-opts yes
 # fzf should complete ONLY with enter
-zstyle ':fzf-tab:*' fzf-flags --bind=tab:bell
+zstyle ':fzf-tab:*' fzf-flags --bind=tab:toggle+down
 
 ## my things start here
 
