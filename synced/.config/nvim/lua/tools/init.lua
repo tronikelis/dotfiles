@@ -14,7 +14,6 @@ local tools = {
 
     { name = "bash-language-server", deps = { "npm" } },
     { name = "biome", deps = { "npm" } },
-    { name = "css-lsp", deps = { "npm" } },
     { name = "eslint-lsp", deps = { "npm" } },
     { name = "html-lsp", deps = { "npm" } },
     { name = "json-lsp", deps = { "npm" } },

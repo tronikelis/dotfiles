@@ -114,7 +114,6 @@ return {
             rust_analyzer = {},
             taplo = {},
             ts_ls = {},
-            cssls = {},
             yamlls = {
                 settings = {
                     yaml = {
