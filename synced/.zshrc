@@ -60,10 +60,6 @@ function cheatsh() {
     curl -s "cheat.sh/$1" | less
 }
 
-function cloned() {
-    git clone "$1" --depth 1
-}
-
 function cdmktemp() {
     cd "$(mktemp -d)"
 }
