@@ -50,12 +50,18 @@
 	root = rev-parse --show-toplevel
 	logo = log --oneline
 	# shows local branches which got their remote branch deleted
-	branchgone = "!git fetch &>/dev/null && git branch -vv | cut -c 3- | grep gone] | awk '{print $1}'"
-	veryhard = "!git reset --hard && git clean -f -d"
+	branchgone = "!git fetch &>/dev/null && git branch -vv | cut -c 3- | grep gone] | awk '{print $1}' #"
+	# reset hard, plus remove unadded files
+	veryhard = "!git reset --hard && git clean -f -d #"
 
+	# new worktree with new branch (same name) from master
 	wnew = "!git worktree add \"$1\" -b \"$1\" #"
+	# new worktree with new branch (same name) from another ref
 	wnewfrom = "!git worktree add \"$1\" -b \"$1\" \"$2\" #"
+	# new worktree from ref
 	wadd = "!git worktree add \"$1\" \"$1\" #"
+	# delete worktree and branch combo
+	wdelete = "!unset GIT_DIR; branch=\"$(cd \"$1\" && git branch --show-current)\"; git worktree remove \"$1\" && git branch -D \"$branch\" #"
 
 [merge]
 	tool = nvimdiff
