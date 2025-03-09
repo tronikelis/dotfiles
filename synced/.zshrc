@@ -42,8 +42,6 @@ HISTSIZE=100000
 SAVEHIST=100000
 KEYTIMEOUT=100
 
-alias ssh="kitten ssh"
-
 alias ls="eza --icons -a --group-directories-first"
 
 alias tdm_sync_git_pull="cd ~/.tdm && git pull && tdm sync && cd -"
