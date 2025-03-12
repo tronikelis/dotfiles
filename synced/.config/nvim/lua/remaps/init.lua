@@ -155,9 +155,9 @@ function M.setup()
         local cwd = vim.fn.getcwd()
         cwd = vim.fs.root(cwd, ".git") or cwd
 
-        local cwd_b64 = vim.base64.encode(cwd)
+        local shadafile = vim.uri_encode(cwd, "rfc2396")
 
-        local file = vim.fs.joinpath(data, "project_shada", cwd_b64)
+        local file = vim.fs.joinpath(data, "project_shada", shadafile)
         vim.fn.mkdir(vim.fs.dirname(file), "p")
 
         return file
