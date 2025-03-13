@@ -164,6 +164,11 @@ function M.setup()
     end)()
 
     vim.cmd("packadd cfilter")
+
+    local nvim_init = vim.fs.root(vim.fn.getcwd(), ".nvim_init.lua")
+    if nvim_init then
+        vim.cmd.source(nvim_init .. "/.nvim_init.lua")
+    end
 end
 
 return M
