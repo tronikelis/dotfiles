@@ -19,11 +19,11 @@ local function format_async(args)
 
     require("conform").format({ async = true, range = range }, function(err)
         if err then
-            print(" 󰅙 " .. err)
+            print("[err]: " .. err)
             return
         end
 
-        print(" 󰗠 Formatted")
+        print("Formatted")
     end)
 end
 
