@@ -19,7 +19,7 @@
 	sort = version:refname
 
 [pull]
-	rebase = true
+	ff = only
 
 [push]
 	autoSetupRemote = true
