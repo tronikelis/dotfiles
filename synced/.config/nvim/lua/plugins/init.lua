@@ -34,7 +34,16 @@ function M.setup()
         {
             -- i don't think this should be lazy loaded
             "NMAC427/guess-indent.nvim",
-            opts = {},
+            config = function()
+                local guess_indent = require("guess-indent")
+                guess_indent.setup({})
+
+                vim.api.nvim_create_autocmd("BufWritePost", {
+                    callback = function(args)
+                        guess_indent.set_from_buffer(args.buf, true, true)
+                    end,
+                })
+            end,
         },
         {
             "arthurxavierx/vim-caser",
