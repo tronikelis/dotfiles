@@ -10,7 +10,7 @@ return {
         local filename_oil = require("lualine-components.filename-oil")
         local linecount = require("lualine-components.linecount")
         local git_prompt = require("lualine-components.git-prompt")
-        local active_lsp = require("lualine-components.active-lsp")
+        -- local active_lsp = require("lualine-components.active-lsp")
         -- local git_lines = require("lualine-components.git-lines")
 
         local formatter_status = {
@@ -85,14 +85,22 @@ return {
                 lualine_x = {
                     formatter_status,
                     {
-                        active_lsp,
-                        exclude = {
+                        "lsp_status",
+                        ignore_lsp = {
                             "typos_lsp",
                             "null-ls",
-                            -- it will show gopls
                             "golangci_lint_ls",
                         },
                     },
+                    -- {
+                    --     active_lsp,
+                    --     exclude = {
+                    --         "typos_lsp",
+                    --         "null-ls",
+                    --         -- it will show gopls
+                    --         "golangci_lint_ls",
+                    --     },
+                    -- },
                     "filetype",
                 },
                 lualine_y = {

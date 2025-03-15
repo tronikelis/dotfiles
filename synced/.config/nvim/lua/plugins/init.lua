@@ -62,11 +62,6 @@ function M.setup()
             event = "VeryLazy",
         },
         {
-            "j-hui/fidget.nvim",
-            event = "VeryLazy",
-            opts = {},
-        },
-        {
             "tronikelis/gitdive.nvim",
             event = "VeryLazy",
             opts = {
