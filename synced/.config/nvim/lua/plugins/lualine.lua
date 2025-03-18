@@ -10,8 +10,6 @@ return {
         local filename_oil = require("lualine-components.filename-oil")
         local linecount = require("lualine-components.linecount")
         local git_prompt = require("lualine-components.git-prompt")
-        -- local active_lsp = require("lualine-components.active-lsp")
-        -- local git_lines = require("lualine-components.git-lines")
 
         local formatter_status = {
             function()
@@ -71,14 +69,13 @@ return {
                 lualine_b = {
                     "branch",
                     git_prompt,
-                    -- git_lines,
-                },
-                lualine_c = {
-                    "filename",
                     {
                         "diagnostics",
                         symbols = { error = "E", warn = "W", info = "I", hint = "H" },
                     },
+                },
+                lualine_c = {
+                    "filename",
                     "diff",
                 },
 
@@ -92,15 +89,6 @@ return {
                             "golangci_lint_ls",
                         },
                     },
-                    -- {
-                    --     active_lsp,
-                    --     exclude = {
-                    --         "typos_lsp",
-                    --         "null-ls",
-                    --         -- it will show gopls
-                    --         "golangci_lint_ls",
-                    --     },
-                    -- },
                     "filetype",
                 },
                 lualine_y = {
