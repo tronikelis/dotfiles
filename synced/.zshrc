@@ -1,4 +1,5 @@
 autoload -U compinit; compinit
+autoload -U bashcompinit; bashcompinit
 
 # Plugins init
 
@@ -36,6 +37,10 @@ bindkey '^j' down-history
 
 # Zsh options
 
+zstyle ':completion:*' use-cache yes
+setopt AUTO_PARAM_SLASH
+
+setopt HIST_FCNTL_LOCK
 setopt INC_APPEND_HISTORY
 setopt HIST_EXPIRE_DUPS_FIRST
 setopt HIST_IGNORE_ALL_DUPS

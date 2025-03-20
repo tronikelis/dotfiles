@@ -19,3 +19,4 @@ fi
 export EDITOR=nvim
 export VISUAL="$EDITOR"
 export COREPACK_ENABLE_AUTO_PIN=0
+export PAGER="less"
