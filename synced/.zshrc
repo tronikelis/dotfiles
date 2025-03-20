@@ -1,22 +1,14 @@
-# Path to your oh-my-zsh installation.
-export ZSH="$HOME/.oh-my-zsh"
+autoload -U +X compinit && compinit
 
-ZSH_THEME="robbyrussell"
+# Plugins init
 
-## before plugins loaded
+for name in ~/.zsh_plugins/*/*.plugin.zsh; do
+    source "$name"
+done
 
-plugins=(
-    fzf-tab
-    zsh-syntax-highlighting
-    zsh-autosuggestions
-    ssh-agent
-    bd
-    fzf-git
-)
+# Plugins options
 
-source $ZSH/oh-my-zsh.sh
-
-## after plugins loaded
+ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=50
 
 _comp_options+=(globdots)
 zstyle ':completion:*' special-dirs false
@@ -29,7 +21,12 @@ zstyle ':fzf-tab:*' use-fzf-default-opts yes
 # fzf should complete ONLY with enter
 zstyle ':fzf-tab:*' fzf-flags --bind=tab:toggle+down
 
-## my things start here
+# Binds
+
+bindkey "^[[1;5C" forward-word
+bindkey "^[[1;5D" backward-word
+bindkey "^[^[[D" forward-word
+bindkey "^[^[[C" backward-word
 
 # bind ctrl+space to accept suggestion
 bindkey '^ ' autosuggest-accept
@@ -37,22 +34,36 @@ bindkey '^ ' autosuggest-accept
 bindkey '^k' up-history
 bindkey '^j' down-history
 
-# history
-HISTSIZE=100000
-SAVEHIST=100000
+# Zsh options
+
+setopt HIST_APPEND
+setopt HIST_EXPIRE_DUPS_FIRST
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_IGNORE_DUPS
+setopt HIST_IGNORE_SPACE
+setopt HIST_SAVE_NO_DUPS
+HISTFILE=~/.zsh_history
+HISTSIZE=1000000
+SAVEHIST=1000000
+
 KEYTIMEOUT=100
 
-alias ls="eza --icons -a --group-directories-first"
+# Aliases
 
+alias ls="eza --icons -a --group-directories-first"
+alias ll="ls --long --all"
+alias ..="cd .."
 alias tdm_sync_git_pull="cd ~/.tdm && git pull && tdm sync && cd -"
+
+# Shell integrated utils
 
 # as I'm using zoxide with tmux, increase zoxide size
 export _ZO_MAXAGE=50000
 eval "$(zoxide init zsh)"
-
 eval "$(starship init zsh)"
-
 eval "$(fzf --zsh)"
+
+# Helper functions
 
 function cheatsh() {
     curl -s "cheat.sh/$1" | less
@@ -73,6 +84,8 @@ function killj() {
 function smux() {
     ~/.config/tmux/scripts/upsert_session.sh "$@"
 }
+
+# Env
 
 export LS_COLORS="$(vivid generate catppuccin-mocha)"
 
@@ -104,7 +117,7 @@ export FZF_CTRL_R_OPTS="
   --color header:italic
   --header 'Press CTRL-Y to copy command into clipboard'"
 
-[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
+# Custom setup based on system currently running
 
 system_name="$(cat "$HOME/system_name.txt" 2>/dev/null)"
 
@@ -122,7 +135,8 @@ else
     fi
 fi
 
-# tmux!
+# Tmux
+
 if [[ -z "$TMUX" ]]; then
     smux ./
 fi
