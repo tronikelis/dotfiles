@@ -38,7 +38,6 @@ bindkey '^j' down-history
 # Zsh options
 
 zstyle ':completion:*' use-cache yes
-setopt AUTO_PARAM_SLASH
 
 setopt HIST_FCNTL_LOCK
 setopt INC_APPEND_HISTORY
