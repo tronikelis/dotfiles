@@ -1,4 +1,4 @@
-autoload -U +X compinit && compinit
+autoload -U compinit; compinit
 
 # Plugins init
 
