@@ -8,7 +8,7 @@ done
 
 # Plugins options
 
-ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=50
+ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=100
 
 _comp_options+=(globdots)
 zstyle ':completion:*' special-dirs false

@@ -1,7 +1,6 @@
-#!/bin/bash -i
+#!/bin/zsh -i
 
-source ~/.oh-my-zsh/custom/plugins/fzf-git/fzf-git.sh/fzf-git.sh
-source ~/.oh-my-zsh/custom/plugins/fzf-git/_fzf_git_fzf.sh
+source ~/.zsh_plugins/fzf.git.sh/fzf-git.sh.plugin.zsh
 
 wd="$(_fzf_git_worktrees --no-multi --preview-window=bottom,50%,border-top)"
 
