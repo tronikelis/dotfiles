@@ -1,5 +1,15 @@
-autoload -U compinit; compinit
-autoload -U bashcompinit; bashcompinit
+autoload -U compinit
+
+_comp_files=(~/.zcompdump(Nmh-20))
+if (( $#_comp_files )); then
+  compinit -i -C
+else
+  compinit -i
+fi
+unset _comp_files
+
+autoload -U bashcompinit
+bashcompinit
 
 # Plugins init
 
