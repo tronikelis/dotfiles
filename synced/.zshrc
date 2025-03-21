@@ -8,9 +8,6 @@ else
 fi
 unset _comp_files
 
-autoload -U bashcompinit
-bashcompinit
-
 # Plugins init
 
 for name in ~/.zsh_plugins/*/*.plugin.zsh; do
