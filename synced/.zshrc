@@ -23,11 +23,13 @@ zstyle ':fzf-tab:*' use-fzf-default-opts yes
 zstyle ':fzf-tab:*' fzf-flags --bind=tab:toggle+down
 
 # Binds
+typeset -g -A key
 
-bindkey "^[[1;5C" forward-word
-bindkey "^[[1;5D" backward-word
-bindkey "^[^[[D" forward-word
-bindkey "^[^[[C" backward-word
+key[Control-Left]="${terminfo[kLFT5]}"
+key[Control-Right]="${terminfo[kRIT5]}"
+
+[[ -n "${key[Control-Left]}"  ]] && bindkey -- "${key[Control-Left]}"  backward-word
+[[ -n "${key[Control-Right]}" ]] && bindkey -- "${key[Control-Right]}" forward-word
 
 # bind ctrl+space to accept suggestion
 bindkey '^ ' autosuggest-accept
@@ -37,7 +39,10 @@ bindkey '^j' down-history
 
 # Zsh options
 
+zstyle ':completion:*' completer _complete _match _correct _approximate
+zstyle ':completion::match:*' original only
 zstyle ':completion:*' use-cache yes
+zstyle ':completion:*' matcher-list 'm:{[:lower:]}={[:upper:]}'
 
 setopt HIST_FCNTL_LOCK
 setopt INC_APPEND_HISTORY
