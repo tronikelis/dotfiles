@@ -8,6 +8,15 @@ else
 fi
 unset _comp_files
 
+# ssh-agent
+
+ssh_env_file=~/.ssh_env
+if ! pgrep -u "$USER" ssh-agent &>/dev/null; then
+    eval "$(ssh-agent | tee "$ssh_env_file")"
+else
+    { source "$ssh_env_file" } >/dev/null
+fi
+
 # Plugins init
 
 for name in ~/.zsh_plugins/*/*.plugin.zsh; do
