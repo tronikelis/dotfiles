@@ -16,6 +16,7 @@
 	defaultBranch = master
 
 [tag]
+	gpgsign = true
 	sort = version:refname
 
 [pull]
@@ -27,6 +28,7 @@
 	followTags = true
 
 [commit]
+	gpgsign = true
 	verbose = true
 
 [branch]
