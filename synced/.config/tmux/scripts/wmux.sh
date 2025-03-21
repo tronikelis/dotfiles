@@ -1,4 +1,4 @@
-#!/bin/zsh -i
+#!/bin/zsh -d -f -i
 
 source ~/.zsh_plugins/fzf.git.sh/fzf-git.sh.plugin.zsh
 
