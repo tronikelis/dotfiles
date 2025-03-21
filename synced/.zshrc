@@ -10,7 +10,7 @@ unset _comp_files
 
 # ssh-agent
 
-ssh_env_file=~/.ssh_env
+ssh_env_file=~/.ssh/ssh_agent_env
 if ! pgrep -u "$USER" ssh-agent &>/dev/null; then
     eval "$(ssh-agent | tee "$ssh_env_file")"
 else
