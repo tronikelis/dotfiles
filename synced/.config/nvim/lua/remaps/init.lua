@@ -55,37 +55,45 @@ function M.setup()
     vim.opt.splitbelow = true
     vim.opt.splitright = true
 
+    -- folding
+    vim.opt.foldtext = ""
+    vim.opt.foldcolumn = "0"
+    vim.opt.foldlevelstart = 99
+    vim.opt.foldmethod = "expr"
+    vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+
+    -- misc, no category really
+    vim.keymap.set("v", "K", ":m '<-2<cr>gv=gv") -- has to be :m
+    vim.keymap.set("v", "J", ":m '>+1<cr>gv=gv") -- has to be :m
+    vim.keymap.set("x", "<leader>p", [["_dP]])
+    vim.keymap.set("n", "gp", "`[v`]")
+    vim.keymap.set("n", "yc", "yy<cmd>normal gcc<cr>p")
+    vim.keymap.set("t", "<esc>", "<c-\\><c-n>")
     -- resize windows more
     for _, v in ipairs({ "+", "-", "<", ">" }) do
         local m = "<c-w>" .. v
         vim.keymap.set("n", m, "10" .. m)
     end
 
-    vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
-    vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
+    -- defaults with zz
     vim.keymap.set("n", "<C-d>", "<C-d>zz")
     vim.keymap.set("n", "<C-u>", "<C-u>zz")
     vim.keymap.set("n", "n", "nzzzv")
     vim.keymap.set("n", "N", "Nzzzv")
     vim.keymap.set("n", "n", "nzzzv")
     vim.keymap.set("n", "N", "Nzzzv")
-    vim.keymap.set("x", "<leader>p", [["_dP]])
     vim.keymap.set("n", "}", "}zz")
     vim.keymap.set("n", "{", "{zz")
     vim.keymap.set("n", "]c", "]czz")
     vim.keymap.set("n", "[c", "[czz")
-    vim.keymap.set("n", "gp", "`[v`]")
 
-    vim.keymap.set("n", "yc", "yy<cmd>normal gcc<cr>p")
-
-    -- quickfix list nav
+    -- pair mappings
     vim.keymap.set("n", "]q", utils.with_count("cnext<cr>zz"), { expr = true })
     vim.keymap.set("n", "[q", utils.with_count("cprev<cr>zz"), { expr = true })
     vim.keymap.set("n", "]Q", "<cmd>clast<cr>zz")
     vim.keymap.set("n", "[Q", "<cmd>cfirst<cr>zz")
-
-    -- terminal mode
-    vim.keymap.set("t", "<esc>", "<c-\\><c-n>")
+    vim.keymap.set("n", "]b", utils.with_count("bnext<cr>zz"), { expr = true })
+    vim.keymap.set("n", "[b", utils.with_count("bprevious<cr>zz"), { expr = true })
 
     -- autocmds
 
@@ -116,7 +124,9 @@ function M.setup()
             local mark = vim.api.nvim_buf_get_mark(args.buf, '"')
             local line_count = vim.api.nvim_buf_line_count(args.buf)
             if mark[1] > 0 and mark[1] <= line_count then
-                vim.cmd('normal! g`"zz')
+                vim.api.nvim_buf_call(args.buf, function()
+                    vim.cmd('normal! g`"zz')
+                end)
             end
         end,
     })
@@ -125,13 +135,6 @@ function M.setup()
     vim.api.nvim_create_autocmd("VimResized", {
         command = "wincmd =",
     })
-
-    -- folding
-    vim.opt.foldtext = ""
-    vim.opt.foldcolumn = "0"
-    vim.opt.foldlevelstart = 99
-    vim.opt.foldmethod = "expr"
-    vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 
     -- custom filetypes
 
@@ -151,6 +154,7 @@ function M.setup()
     -- tree sitter highlighting has priority over semantic tokens
     vim.highlight.priorities.semantic_tokens = 95
 
+    -- per-project shadafile
     vim.opt.shadafile = (function()
         local data = vim.fn.stdpath("data")
 

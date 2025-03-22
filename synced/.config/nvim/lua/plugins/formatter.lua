@@ -1,4 +1,5 @@
 local utils = require("utils")
+local option_keys = require("option_keys")
 
 vim.api.nvim_create_autocmd("VimLeavePre", {
     callback = function()
@@ -29,14 +30,14 @@ end
 
 local format_cmds = {
     enable = function()
-        vim.b.disable_autoformat = false
-        vim.g.disable_autoformat = false
+        vim.b[option_keys.disable_autoformat] = false
+        vim.g[option_keys.disable_autoformat] = false
     end,
     disable = function(args)
         if args.bang then
-            vim.g.disable_autoformat = true
+            vim.g[option_keys.disable_autoformat] = true
         else
-            vim.b.disable_autoformat = true
+            vim.b[option_keys.disable_autoformat] = true
         end
     end,
 }
@@ -95,7 +96,7 @@ return {
             stop_after_first = true,
         },
         format_on_save = function(bufnr)
-            if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
+            if vim.g[option_keys.disable_autoformat] or vim.b[bufnr][option_keys.disable_autoformat] then
                 return
             end
 
