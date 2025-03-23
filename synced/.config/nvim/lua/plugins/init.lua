@@ -97,6 +97,19 @@ function M.setup()
             event = "VeryLazy",
             opts = {},
         },
+        {
+            "bloznelis/buftrack.nvim",
+            event = "VeryLazy",
+            config = function()
+                local buftrack = require("buftrack")
+                buftrack.setup({
+                    max_tracked = 32,
+                })
+
+                vim.keymap.set("n", "[b", buftrack.prev_buffer)
+                vim.keymap.set("n", "]b", buftrack.next_buffer)
+            end,
+        },
     }, {
         change_detection = {
             enabled = false,

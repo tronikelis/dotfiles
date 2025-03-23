@@ -92,8 +92,6 @@ function M.setup()
     vim.keymap.set("n", "[q", utils.with_count("cprev<cr>zz"), { expr = true })
     vim.keymap.set("n", "]Q", "<cmd>clast<cr>zz")
     vim.keymap.set("n", "[Q", "<cmd>cfirst<cr>zz")
-    vim.keymap.set("n", "]b", utils.with_count("bnext<cr>zz"), { expr = true })
-    vim.keymap.set("n", "[b", utils.with_count("bprevious<cr>zz"), { expr = true })
 
     -- autocmds
 
