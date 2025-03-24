@@ -36,7 +36,15 @@ function M.setup()
             "NMAC427/guess-indent.nvim",
             config = function()
                 local guess_indent = require("guess-indent")
-                guess_indent.setup({})
+                guess_indent.setup({
+                    on_tab_options = {
+                        ["expandtab"] = false,
+                    },
+                    on_space_options = {
+                        ["expandtab"] = true,
+                        ["shiftwidth"] = "detected",
+                    },
+                })
 
                 vim.api.nvim_create_autocmd("BufWritePost", {
                     callback = function(args)
