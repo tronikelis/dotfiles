@@ -46,9 +46,6 @@ bindkey "^[[1;5D" backward-word
 
 # bind ctrl+space to accept suggestion
 bindkey '^ ' autosuggest-accept
-# history mappings
-bindkey '^k' up-history
-bindkey '^j' down-history
 
 # Zsh options
 
@@ -141,20 +138,8 @@ export FZF_CTRL_R_OPTS="
 
 # Custom setup based on system currently running
 
-system_name="$(cat "$HOME/system_name.txt" 2>/dev/null)"
-
-if echo "$system_name" | grep vinted_work_1 &>/dev/null; then
-    eval "$(direnv hook zsh)"
-    eval "$(mise activate)"
-else
-    FNM_PATH="$HOME/.local/share/fnm"
-    if [ -d "$FNM_PATH" ]; then
-        export PATH="$HOME/.local/share/fnm:$PATH"
-    fi
-    if [ -x "$(command -v fnm)" ]; then
-        eval "$(fnm env --shell zsh)"
-        eval "$(fnm completions --shell zsh)"
-    fi
+if [[ -r ~/.zshrc.private ]]; then
+    source ~/.zshrc.private
 fi
 
 # Tmux
