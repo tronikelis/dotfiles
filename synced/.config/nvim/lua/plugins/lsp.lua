@@ -108,7 +108,6 @@ return {
                     },
                 },
             },
-            golangci_lint_ls = {},
             jdtls = {},
             lua_ls = {},
             rust_analyzer = {},

@@ -7,8 +7,6 @@ local M = {}
 ---@type NvimConfig.Tool[]
 local tools = {
     { name = "gofumpt", deps = { "go" } },
-    { name = "golangci-lint", deps = { "go" } },
-    { name = "golangci-lint-langserver", deps = { "go" } },
     { name = "gopls", deps = { "go" } },
     { name = "hyprls", deps = { "go" } },
 
