@@ -101,7 +101,7 @@ function M.setup()
         callback = function(args)
             vim.api.nvim_buf_call(args.buf, function()
                 local save_cursor = vim.fn.getpos(".")
-                vim.cmd([[%s/\s\+$//e]])
+                vim.cmd([[undojoin | %s/\s\+$//e]])
                 vim.fn.setpos(".", save_cursor)
             end)
         end,
