@@ -74,6 +74,7 @@ function M.setup()
         local m = "<c-w>" .. v
         vim.keymap.set("n", m, "10" .. m)
     end
+    vim.keymap.set("n", "<c-k>", "<cmd>b#<cr>") -- quick switch alternate buffer
 
     -- defaults with zz
     vim.keymap.set("n", "<C-d>", "<C-d>zz")
