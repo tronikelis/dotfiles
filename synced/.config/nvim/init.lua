@@ -4,7 +4,6 @@ table.unpack = table.unpack or unpack
 
 require("remaps").setup()
 require("tools").setup()
-require("commands").setup()
 require("user_commands").setup()
 
 -- should probably load this last

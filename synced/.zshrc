@@ -39,6 +39,7 @@ zstyle ':fzf-tab:*' use-fzf-default-opts yes
 zstyle ':fzf-tab:*' fzf-flags --bind=tab:toggle+down
 
 # Binds
+
 bindkey -e
 
 bindkey "^[[1;5C" forward-word
@@ -49,8 +50,6 @@ bindkey '^ ' autosuggest-accept
 
 # Zsh options
 
-zstyle ':completion:*' completer _complete _match _correct _approximate
-zstyle ':completion::match:*' original only
 zstyle ':completion:*' use-cache yes
 zstyle ':completion:*' matcher-list 'm:{[:lower:]}={[:upper:]}'
 
