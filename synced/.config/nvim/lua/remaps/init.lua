@@ -100,8 +100,19 @@ function M.setup()
     vim.api.nvim_create_autocmd("BufWritePre", {
         callback = function(args)
             vim.api.nvim_buf_call(args.buf, function()
+                local substitute_cmd = [[%s/\s\+$//e]]
                 local save_cursor = vim.fn.getpos(".")
-                vim.cmd([[undojoin | %s/\s\+$//e]])
+
+                if
+                    -- undojoin can sometimes fail if previous command was 'undo' or 'redo'
+                    not pcall(function()
+                        vim.cmd(string.format("undojoin | %s", substitute_cmd))
+                    end)
+                then
+                    -- then we just try again without it
+                    vim.cmd(substitute_cmd)
+                end
+
                 vim.fn.setpos(".", save_cursor)
             end)
         end,
