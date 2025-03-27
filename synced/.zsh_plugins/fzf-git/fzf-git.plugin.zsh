@@ -12,7 +12,7 @@ function fzf_git() {
 }
 
 function fzf_git_branches() {
-    git branch | cut -c 3- | fzf_git "$@" | tr '\n' ' '
+    git branch | cut -c 3- | fzf_git "$@"
 }
 
 function fzf_git_worktrees() {
@@ -24,15 +24,15 @@ function fzf_git_worktrees() {
         sum="$sum$line $unix"$'\n'
     done < <(git worktree list)
 
-    sort -r -n -k 4 <<<"$sum" | fzf_git "$@" | awk '{print $1}' | tr '\n' ' '
+    sort -r -n -k 4 <<<"$sum" | fzf_git "$@" | awk '{print $1}'
 }
 
 function _fzf_git_worktrees() {
-    zle -U "$(fzf_git_worktrees)"
+    zle -U "$(fzf_git_worktrees | tr '\n' ' ')"
 }
 
 function _fzf_git_branches() {
-    zle -U "$(fzf_git_branches)"
+    zle -U "$(fzf_git_branches | tr '\n' ' ')"
 }
 
 if [[ -o interactive ]]; then
