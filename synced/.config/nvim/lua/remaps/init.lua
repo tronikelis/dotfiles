@@ -17,6 +17,7 @@ function M.setup()
     vim.g.zig_fmt_parse_errors = 0
 
     vim.opt.wrap = false
+    vim.opt.matchpairs:append("<:>")
 
     vim.opt.softtabstop = -1 -- use shiftwidth value
     vim.opt.shiftwidth = 4 -- number of spaces to << >>
