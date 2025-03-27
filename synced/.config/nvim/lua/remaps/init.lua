@@ -1,5 +1,3 @@
-local utils = require("utils")
-
 local M = {}
 
 function M.setup()
@@ -87,12 +85,6 @@ function M.setup()
     vim.keymap.set("n", "{", "{zz")
     vim.keymap.set("n", "]c", "]czz")
     vim.keymap.set("n", "[c", "[czz")
-
-    -- pair mappings
-    vim.keymap.set("n", "]q", utils.with_count("cnext<cr>zz"), { expr = true })
-    vim.keymap.set("n", "[q", utils.with_count("cprev<cr>zz"), { expr = true })
-    vim.keymap.set("n", "]Q", "<cmd>clast<cr>zz")
-    vim.keymap.set("n", "[Q", "<cmd>cfirst<cr>zz")
 
     -- autocmds
 

@@ -1,11 +1,10 @@
-local utils = require("utils")
-
 vim.diagnostic.config({
     update_in_insert = true,
     severity_sort = true,
     virtual_text = {
         source = true,
         severity = { vim.diagnostic.severity.ERROR, vim.diagnostic.severity.WARN },
+        current_line = true,
     },
     float = {
         border = "rounded",
@@ -25,10 +24,6 @@ vim.diagnostic.config({
             [vim.diagnostic.severity.HINT] = "DiagnosticSignHint",
         },
     },
-})
-
-vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
-    border = "rounded",
 })
 
 return {
@@ -143,9 +138,11 @@ return {
                     vim.keymap.set(mode, l, r, { buffer = event.buf })
                 end
 
+                map("n", "<leader>t", function()
+                    vim.lsp.buf.hover({ border = "rounded" })
+                end)
                 map("n", "<leader>e", vim.diagnostic.open_float)
                 map("n", "<leader>a", vim.lsp.buf.code_action)
-                map("n", "<leader>t", vim.lsp.buf.hover)
                 map("n", "<leader>rn", vim.lsp.buf.rename)
 
                 map("n", "gd", builtin.lsp_definitions)
@@ -166,20 +163,12 @@ return {
                 map("n", "<leader>ds", builtin.lsp_document_symbols)
                 map("n", "<leader>dS", builtin.lsp_workspace_symbols)
 
-                map(
-                    "n",
-                    "[e",
-                    utils.keymap_each_count(function()
-                        vim.diagnostic.goto_prev({ wrap = false })
-                    end)
-                )
-                map(
-                    "n",
-                    "]e",
-                    utils.keymap_each_count(function()
-                        vim.diagnostic.goto_next({ wrap = false })
-                    end)
-                )
+                map("n", "[e", function()
+                    vim.diagnostic.jump({ wrap = false, count = -vim.v.count1 })
+                end)
+                map("n", "]e", function()
+                    vim.diagnostic.jump({ wrap = false, count = vim.v.count1 })
+                end)
             end,
         })
 
