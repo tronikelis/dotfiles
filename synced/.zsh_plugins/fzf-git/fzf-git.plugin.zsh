@@ -1,6 +1,8 @@
 function unix_last_modified() {
-    local v="$(stat -f %m "$1" 2>/dev/null)"
-    if [[ $? ]]; then
+    local v=""
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        v="$(stat -f %m "$1")"
+    else
         v="$(stat -c %X "$1")"
     fi
 
