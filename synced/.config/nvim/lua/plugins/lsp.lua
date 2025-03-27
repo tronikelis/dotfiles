@@ -3,7 +3,6 @@ vim.diagnostic.config({
     severity_sort = true,
     virtual_text = {
         source = true,
-        severity = { vim.diagnostic.severity.ERROR, vim.diagnostic.severity.WARN },
         current_line = true,
     },
     float = {
