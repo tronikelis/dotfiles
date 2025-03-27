@@ -1,8 +1,8 @@
-#!/bin/zsh -d -f -i
+#!/bin/zsh
 
-source ~/.zsh_plugins/fzf.git.sh/fzf-git.sh.plugin.zsh
+source ~/.zsh_plugins/fzf-git/fzf-git.plugin.zsh
 
-wd="$(_fzf_git_worktrees --no-multi --preview-window=bottom,50%,border-top)"
+wd="$(fzf_git_worktrees --no-multi)"
 
 if [[ -z "$wd" ]]; then
     tmux display-message "empty selection"

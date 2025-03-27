@@ -1,12 +1,10 @@
-autoload -U compinit
+bindkey -e
 
-_comp_files=(~/.zcompdump(Nmh-20))
-if (( $#_comp_files )); then
-  compinit -i -C
-else
-  compinit -i
+autoload -U compinit
+if [[ "$(find ~/.zcompdump -mtime +24h &>/dev/null)" ]]; then
+    compinit
 fi
-unset _comp_files
+compinit -C
 
 # ssh-agent
 
@@ -39,8 +37,6 @@ zstyle ':fzf-tab:*' use-fzf-default-opts yes
 zstyle ':fzf-tab:*' fzf-flags --bind=tab:toggle+down
 
 # Binds
-
-bindkey -e
 
 bindkey "^[[1;5C" forward-word
 bindkey "^[[1;5D" backward-word
