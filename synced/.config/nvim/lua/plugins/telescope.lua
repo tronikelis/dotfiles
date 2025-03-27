@@ -2,14 +2,13 @@ local utils = require("utils")
 
 return {
     "nvim-telescope/telescope.nvim",
-    event = "VeryLazy",
-    branch = "0.1.x",
     dependencies = {
         "nvim-lua/plenary.nvim",
         { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
         "nvim-tree/nvim-web-devicons",
         "nvim-telescope/telescope-live-grep-args.nvim",
         "tronikelis/telescope-git-diff-stat.nvim",
+        "nvim-telescope/telescope-ui-select.nvim",
     },
     config = function()
         local actions = require("telescope.actions")
@@ -29,18 +28,10 @@ return {
 
         local with_picker_defaults = function(pickers)
             for k, v in pairs(pickers) do
-                pickers[k] = vim.tbl_deep_extend("force", picker_defaults, v)
+                pickers[k] = vim.tbl_extend("force", picker_defaults, v)
             end
 
             return pickers
-        end
-
-        local action_or_noop = function(key)
-            local success, value = pcall(function()
-                return actions[key]
-            end)
-
-            return success and value or function() end
         end
 
         local copy_current_entry = function(prompt_bufnr)
@@ -70,9 +61,8 @@ return {
                 },
                 mappings = {
                     i = {
-                        -- these will come in a future update
-                        ["<c-h>"] = action_or_noop("preview_scrolling_left"),
-                        ["<c-l>"] = action_or_noop("preview_scrolling_right"),
+                        ["<c-h>"] = actions.preview_scrolling_left,
+                        ["<c-l>"] = actions.preview_scrolling_right,
 
                         ["<c-y>"] = copy_current_entry,
                         ["<esc>"] = actions.close,
@@ -139,6 +129,9 @@ return {
                         }
                     end,
                 },
+                ["ui-select"] = {
+                    require("telescope.themes").get_cursor(),
+                },
             }),
         })
 
@@ -150,6 +143,7 @@ return {
         end
 
         require("telescope").load_extension("fzf")
+        require("telescope").load_extension("ui-select")
         require("telescope").load_extension("live_grep_args")
         require("telescope").load_extension("git_diff_stat")
 
@@ -186,8 +180,7 @@ return {
             if mode == "n" then
                 builtin.git_bcommits()
             else
-                -- when next version of telescope releases this will be available
-                -- builtin.git_bcommits_range()
+                builtin.git_bcommits_range()
             end
         end, {})
     end,

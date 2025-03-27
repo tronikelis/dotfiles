@@ -58,12 +58,6 @@ function M.setup()
             event = "VeryLazy",
         },
         {
-            "stevearc/dressing.nvim",
-            dependencies = "nvim-telescope/telescope.nvim",
-            event = "VeryLazy",
-            opts = {},
-        },
-        {
             "tronikelis/debdiag.nvim",
             event = "VeryLazy",
             opts = { ms = 1000 },

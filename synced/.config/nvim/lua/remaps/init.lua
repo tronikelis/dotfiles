@@ -1,6 +1,16 @@
 local M = {}
 
 function M.setup()
+    local del_mappings = {
+        "gri",
+        "grr",
+        "gra",
+        "grn",
+    }
+    for _, v in ipairs(del_mappings) do
+        vim.keymap.del("", v)
+    end
+
     -- interferes with <C-c> to exit insert mode
     vim.g.omni_sql_no_default_maps = true
     -- this opens a split by default, what
