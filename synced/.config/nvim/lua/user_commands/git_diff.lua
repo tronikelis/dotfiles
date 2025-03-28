@@ -29,7 +29,7 @@ function M.setup()
             return
         end
 
-        vim.cmd(string.format("silent vertical diffpatch %s", patch))
+        vim.cmd(string.format("silent vertical diffpatch %s | wincmd R", patch))
         local dangling_buf = vim.fn.bufnr(current .. ".new")
 
         vim.bo[dangling_buf].bufhidden = "delete"
