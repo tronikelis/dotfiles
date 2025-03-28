@@ -76,6 +76,9 @@ return {
                     num_pickers = 50,
                     limit_entries = 500,
                 },
+                file_ignore_patterns = {
+                    "^%.git/",
+                },
             },
             pickers = with_picker_defaults({
                 lsp_references = {
