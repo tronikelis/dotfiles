@@ -105,6 +105,11 @@ return {
                 quickfix = {
                     trim_text = true,
                 },
+                help_tags = {},
+                current_buffer_fuzzy_find = {},
+                pickers = {},
+                git_bcommits = {},
+                git_bcommits_range = {},
             }),
             extensions = with_picker_defaults({
                 live_grep_args = {
