@@ -48,7 +48,7 @@ function M.setup()
 
     if vim.fn.executable("rg") == 1 then
         -- the default is rg -uu --vimgrep, but -uu ignores .gitignore and shows hidden files
-        vim.opt.grepprg = "rg --vimgrep -S"
+        vim.opt.grepprg = "rg --vimgrep -S --hidden"
     end
 
     -- spelling
