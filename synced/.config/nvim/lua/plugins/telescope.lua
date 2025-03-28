@@ -56,9 +56,6 @@ return {
                     },
                 },
                 vimgrep_arguments = vimgrep_arguments,
-                file_ignore_patterns = {
-                    ".git/",
-                },
                 mappings = {
                     i = {
                         ["<c-h>"] = actions.preview_scrolling_left,
