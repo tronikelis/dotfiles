@@ -107,6 +107,7 @@ return {
             rust_analyzer = {},
             taplo = {},
             ts_ls = {},
+            pyright = {},
             yamlls = {
                 settings = {
                     yaml = {

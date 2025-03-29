@@ -90,6 +90,7 @@ return {
             lua = { "stylua" },
             templ = { name = "templ" },
             ruby = { name = "ruby_lsp" },
+            python = { "black" },
         },
         default_format_opts = {
             lsp_format = "fallback",

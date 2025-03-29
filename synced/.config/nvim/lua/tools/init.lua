@@ -10,6 +10,9 @@ local tools = {
     { name = "gopls", deps = { "go" } },
     { name = "hyprls", deps = { "go" } },
 
+    { name = "pyright", deps = { "python3" } },
+    { name = "black", deps = { "python3" } },
+
     { name = "bash-language-server", deps = { "npm" } },
     { name = "biome", deps = { "npm" } },
     { name = "eslint-lsp", deps = { "npm" } },
@@ -41,17 +44,13 @@ local function ensure_installed()
     ---@type string[]
     local filtered = vim.iter(tools)
         :filter(function(x)
-            if #x.deps == 0 then
-                return true
-            end
-
             for _, v in ipairs(x.deps) do
-                if vim.fn.executable(v) == 1 then
-                    return true
+                if vim.fn.executable(v) == 0 then
+                    return false
                 end
             end
 
-            return false
+            return true
         end)
         :map(function(x)
             return x.name
