@@ -49,6 +49,7 @@ bindkey '^ ' autosuggest-accept
 zstyle ':completion:*' use-cache yes
 zstyle ':completion:*' matcher-list 'm:{[:lower:]}={[:upper:]}'
 
+setopt HIST_IGNORE_SPACE
 setopt HIST_FCNTL_LOCK
 setopt INC_APPEND_HISTORY
 setopt HIST_EXPIRE_DUPS_FIRST
