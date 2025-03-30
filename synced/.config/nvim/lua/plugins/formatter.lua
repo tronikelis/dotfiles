@@ -72,10 +72,10 @@ return {
     event = "VeryLazy",
     opts = {
         formatters_by_ft = {
-            css = { "prettierd" },
-            scss = { "prettierd" },
             html = { "prettierd" },
 
+            css = biome_or_prettier,
+            scss = biome_or_prettier,
             javascript = biome_or_prettier,
             javascriptreact = biome_or_prettier,
             json = biome_or_prettier,
