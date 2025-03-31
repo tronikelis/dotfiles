@@ -97,6 +97,10 @@ function M.setup()
     vim.keymap.set("n", "]c", "]czz")
     vim.keymap.set("n", "[c", "[czz")
 
+    -- simple user commands
+
+    vim.api.nvim_create_user_command("RemoveTrailing", [[%s/\s\+$//e | nohlsearch]], {})
+
     -- autocmds
 
     -- highlights yanked text
