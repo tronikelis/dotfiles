@@ -3,7 +3,7 @@ function unix_last_modified() {
     if [[ "$OSTYPE" == "darwin"* ]]; then
         v="$(stat -f %m "$1")"
     else
-        v="$(stat -c %X "$1")"
+        v="$(stat -c %Y "$1")"
     fi
 
     echo -n "$v"
