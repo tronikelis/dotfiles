@@ -97,6 +97,32 @@ function M.setup()
     vim.keymap.set("n", "]c", "]czz")
     vim.keymap.set("n", "[c", "[czz")
 
+    -- split / join on `%`
+    vim.keymap.set("n", "gS", function()
+        local cursor_before = vim.api.nvim_win_get_cursor(0)
+        vim.cmd("normal %")
+        local cursor_after = vim.api.nvim_win_get_cursor(0)
+
+        if cursor_before[1] > cursor_after[1] then
+            cursor_before, cursor_after = cursor_after, cursor_before
+        end
+
+        local char_index = cursor_after[2] + 1
+        local char = vim.api.nvim_get_current_line():sub(char_index, char_index)
+
+        if cursor_before[1] == cursor_after[1] then
+            -- split
+            vim.api.nvim_feedkeys(
+                vim.api.nvim_replace_termcodes(string.format('"pci%s<cr><esc>O<esc>"pp', char), true, false, true),
+                "",
+                false
+            )
+        else
+            -- join
+            vim.cmd(string.format("%d,%djoin", cursor_before[1], cursor_after[1]))
+        end
+    end, {})
+
     -- simple user commands
 
     vim.api.nvim_create_user_command("RemoveTrailing", [[%s/\s\+$//e | nohlsearch]], {})
@@ -165,11 +191,6 @@ function M.setup()
     end)()
 
     vim.cmd("packadd cfilter")
-
-    local nvim_init = vim.fs.root(vim.fn.getcwd(), ".nvim_init.lua")
-    if nvim_init then
-        vim.cmd.source(nvim_init .. "/.nvim_init.lua")
-    end
 end
 
 return M
