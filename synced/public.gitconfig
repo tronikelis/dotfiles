@@ -73,7 +73,7 @@
 	conflictStyle = zdiff3
 
 [mergetool "nvimdiff"]
-	cmd = "nvim -d \"$LOCAL\" \"$MERGED\" \"$BASE\" \"$REMOTE\" -c \"wincmd w\" -c \"wincmd J\""
+	cmd = "nvim \"$MERGED\""
 
 [mergetool]
 	keepBackup = false
