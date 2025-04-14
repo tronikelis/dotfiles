@@ -81,7 +81,7 @@ eval "$(fzf --zsh)"
 # Helper functions
 
 function cheatsh() {
-    curl -s "cheat.sh/$1" | less
+    curl -s "cheat.sh/$1" | less -R
 }
 
 function cdmktemp() {
