@@ -24,7 +24,7 @@ return {
         table.insert(vimgrep_arguments, "--trim")
 
         local picker_defaults = {
-            debounce = 300,
+            debounce = 200,
         }
 
         local with_picker_defaults = function(pickers)
