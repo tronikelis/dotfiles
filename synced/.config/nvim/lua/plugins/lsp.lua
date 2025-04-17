@@ -207,7 +207,13 @@ return {
             }, {
                 { name = "path" },
             }, {
-                { name = "buffer", keyword_length = 4 },
+                {
+                    name = "buffer",
+                    option = {
+                        keyword_length = 4,
+                    },
+                    keyword_length = 4,
+                },
             }),
             mapping = cmp.mapping.preset.insert({
                 ["<C-n>"] = cmp.mapping.select_next_item({
