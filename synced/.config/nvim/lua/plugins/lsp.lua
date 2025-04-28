@@ -177,7 +177,8 @@ return {
         local default_setup = function(server, options)
             options = options or {}
             options.capabilities = cmp_capabilities
-            require("lspconfig")[server].setup(options)
+            vim.lsp.config(server, options)
+            vim.lsp.enable(server)
         end
 
         for k, v in pairs(lsps) do
