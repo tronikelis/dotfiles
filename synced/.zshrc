@@ -41,6 +41,10 @@ zstyle ':fzf-tab:*' fzf-flags --bind=tab:toggle+down
 bindkey "^[[1;5C" forward-word
 bindkey "^[[1;5D" backward-word
 
+autoload -z edit-command-line
+zle -N edit-command-line
+bindkey "^X^E" edit-command-line
+
 # bind ctrl+space to accept suggestion
 bindkey '^ ' autosuggest-accept
 

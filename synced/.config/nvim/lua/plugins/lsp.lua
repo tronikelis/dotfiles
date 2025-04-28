@@ -123,7 +123,6 @@ return {
             gdscript = {},
             templ = {},
             marksman = {},
-            clangd = {},
             hyprls = {},
             bashls = {},
             biome = {},

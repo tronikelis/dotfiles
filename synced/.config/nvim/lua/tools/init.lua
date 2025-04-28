@@ -26,7 +26,6 @@ local tools = {
     { name = "rubocop", deps = { "ruby" } },
     { name = "ruby-lsp", deps = { "ruby" } },
 
-    { name = "clangd", deps = {} },
     { name = "lua-language-server", deps = {} },
     { name = "marksman", deps = {} },
     { name = "rust-analyzer", deps = {} },
