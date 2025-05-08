@@ -26,11 +26,24 @@ vim.diagnostic.config({
     },
 })
 
+vim.keymap.set("n", "<leader>t", function()
+    vim.lsp.buf.hover({ border = "rounded" })
+end)
+vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float)
+vim.keymap.set("n", "<leader>a", vim.lsp.buf.code_action)
+vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename)
+vim.keymap.set("n", "[e", function()
+    vim.diagnostic.jump({ wrap = false, count = -vim.v.count1 })
+end)
+vim.keymap.set("n", "]e", function()
+    vim.diagnostic.jump({ wrap = false, count = vim.v.count1 })
+end)
+
 return {
     "neovim/nvim-lspconfig",
     dependencies = {
         {
-            "williamboman/mason.nvim",
+            "mason-org/mason.nvim",
             opts = {},
         },
 
@@ -43,146 +56,13 @@ return {
         "onsails/lspkind.nvim",
     },
     config = function()
-        local lsps = {
-            jsonls = {
-                settings = {
-                    json = {
-                        schemas = {
-                            {
-                                fileMatch = { "package.json" },
-                                url = "https://json.schemastore.org/package.json",
-                            },
-                            {
-                                fileMatch = { "tsconfig*.json" },
-                                url = "https://json.schemastore.org/tsconfig.json",
-                            },
-                            {
-                                fileMatch = { ".prettierr*" },
-                                url = "https://json.schemastore.org/prettierrc.json",
-                            },
-                            {
-                                fileMatch = { ".eslintr*" },
-                                url = "https://json.schemastore.org/eslintrc.json",
-                            },
-                        },
-                    },
-                },
-            },
-            tailwindcss = {
-                settings = {
-                    tailwindCSS = {
-                        experimental = {
-                            classRegex = {
-                                [["class":\s*"([^"]*)"]], -- templ
-                                { "classNames=\\{([^}]*)\\}", "[\"'`]([^\"'`]*).*?[\"'`]" },
-                                { "tv\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]" },
-                                { "cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]" },
-                                { "cx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)" },
-                                {
-                                    "{[^{]*?class\\s*?:\\s*([\"'`]+?[\\s\\S]*?[\"'`]+?)",
-                                    "[\"'`]([^\"'`]*).*?[\"'`]",
-                                },
-                            },
-                        },
-                    },
-                },
-            },
-            eslint = {},
-            zls = {
-                settings = {
-                    zls = {
-                        enable_build_on_save = true,
-                        build_on_save_step = "check",
-                    },
-                },
-            },
-            gopls = {
-                settings = {
-                    gopls = {
-                        gofumpt = true,
-                    },
-                },
-            },
-            jdtls = {},
-            lua_ls = {},
-            rust_analyzer = {},
-            taplo = {},
-            ts_ls = {},
-            pyright = {},
-            yamlls = {
-                settings = {
-                    yaml = {
-                        schemas = {
-                            ["https://json.schemastore.org/github-workflow.json"] = ".github/workflows/*.{yml,yaml}",
-                        },
-                    },
-                },
-            },
-            html = {},
-            dartls = {},
-            gdscript = {},
-            templ = {},
-            marksman = {},
-            hyprls = {},
-            bashls = {},
-            biome = {},
-            rubocop = {},
-            ruby_lsp = {},
-        }
-
-        vim.api.nvim_create_autocmd("LspAttach", {
-            callback = function(event)
-                local builtin = require("telescope.builtin")
-
-                local function map(mode, l, r)
-                    vim.keymap.set(mode, l, r, { buffer = event.buf })
-                end
-
-                map("n", "<leader>t", function()
-                    vim.lsp.buf.hover({ border = "rounded" })
-                end)
-                map("n", "<leader>e", vim.diagnostic.open_float)
-                map("n", "<leader>a", vim.lsp.buf.code_action)
-                map("n", "<leader>rn", vim.lsp.buf.rename)
-
-                map("n", "gd", builtin.lsp_definitions)
-                map("n", "gr", builtin.lsp_references)
-                map("n", "gt", builtin.lsp_type_definitions)
-                -- uppercase cause I'll prob use the gi command
-                map("n", "gI", builtin.lsp_implementations)
-
-                map("n", "<leader>dc", function()
-                    local severity = (vim.v.count == 0 and { nil } or { vim.v.count })[1]
-                    builtin.diagnostics({ bufnr = 0, severity = severity })
-                end)
-                map("n", "<leader>dC", function()
-                    local severity = (vim.v.count == 0 and { nil } or { vim.v.count })[1]
-                    builtin.diagnostics({ severity = severity })
-                end)
-
-                map("n", "<leader>ds", builtin.lsp_document_symbols)
-                map("n", "<leader>dS", builtin.lsp_workspace_symbols)
-
-                map("n", "[e", function()
-                    vim.diagnostic.jump({ wrap = false, count = -vim.v.count1 })
-                end)
-                map("n", "]e", function()
-                    vim.diagnostic.jump({ wrap = false, count = vim.v.count1 })
-                end)
-            end,
+        vim.lsp.config("*", {
+            capabilities = require("cmp_nvim_lsp").default_capabilities(),
         })
 
-        local cmp_capabilities = require("cmp_nvim_lsp").default_capabilities()
-
-        local default_setup = function(server, options)
-            options = options or {}
-            options.capabilities = cmp_capabilities
-            vim.lsp.config(server, options)
-            vim.lsp.enable(server)
-        end
-
-        for k, v in pairs(lsps) do
-            default_setup(k, v)
+        for lsp in vim.fs.dir("~/.config/nvim/lsp") do
+            local name = lsp:match("(.*)%.lua")
+            vim.lsp.enable(name)
         end
 
         local cmp = require("cmp")

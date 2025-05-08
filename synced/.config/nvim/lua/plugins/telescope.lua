@@ -189,5 +189,20 @@ return {
                 builtin.git_bcommits_range()
             end
         end, {})
+
+        vim.keymap.set("n", "gd", builtin.lsp_definitions)
+        vim.keymap.set("n", "gr", builtin.lsp_references)
+        vim.keymap.set("n", "gt", builtin.lsp_type_definitions)
+        vim.keymap.set("n", "gI", builtin.lsp_implementations)
+        vim.keymap.set("n", "<leader>dc", function()
+            local severity = (vim.v.count == 0 and { nil } or { vim.v.count })[1]
+            builtin.diagnostics({ bufnr = 0, severity = severity })
+        end)
+        vim.keymap.set("n", "<leader>dC", function()
+            local severity = (vim.v.count == 0 and { nil } or { vim.v.count })[1]
+            builtin.diagnostics({ severity = severity })
+        end)
+        vim.keymap.set("n", "<leader>ds", builtin.lsp_document_symbols)
+        vim.keymap.set("n", "<leader>dS", builtin.lsp_workspace_symbols)
     end,
 }
