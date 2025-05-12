@@ -38,6 +38,11 @@
 [fetch]
 	all = true
 
+[blame]
+	date = iso-local
+[log]
+	date = iso-local
+
 [diff]
 	colorMoved = true
 	algorithm = histogram
