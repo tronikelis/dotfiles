@@ -1,3 +1,59 @@
+### Env
+
+if [[ -f "$HOME/.cargo/env" ]]; then
+	source "$HOME/.cargo/env"
+fi
+
+function add_to_path() {
+	if [[ -d "$1" ]]; then
+		export PATH="$PATH:$1"
+	fi
+}
+
+add_to_path "$HOME/.local/bin"
+add_to_path "/opt/homebrew/bin"
+add_to_path "$HOME/.bun/bin"
+
+if [[ -x "$(command -v go)" ]]; then
+	add_to_path "$(go env GOPATH)/bin"
+fi
+
+export EDITOR=nvim
+export VISUAL="$EDITOR"
+export COREPACK_ENABLE_AUTO_PIN=0
+export PAGER="less"
+export LS_COLORS="$(vivid generate catppuccin-mocha)"
+
+export FZF_DEFAULT_OPTS=" \
+--color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8 \
+--color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc \
+--color=marker:#b4befe,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8 \
+--color=selected-bg:#45475a --layout=reverse --cycle"
+
+# Preview file content using bat (https://github.com/sharkdp/bat)
+export FZF_CTRL_T_OPTS="
+  --walker-skip .git,node_modules,target
+  --preview 'bat -n --color=always {}'
+  --bind 'ctrl-/:change-preview-window(down|hidden|)'"
+
+# Print tree structure in the preview window
+export FZF_ALT_C_OPTS="
+  --walker-skip .git,node_modules,target
+  --preview 'eza --icons --tree --color=always {}'"
+
+cmd_copy="wl-copy"
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    cmd_copy="pbcopy"
+fi
+
+# CTRL-Y to copy the command into clipboard using pbcopy
+export FZF_CTRL_R_OPTS="
+  --bind 'ctrl-y:execute-silent(echo -n {2..} | "$cmd_copy")+abort'
+  --color header:italic
+  --header 'Press CTRL-Y to copy command into clipboard'"
+
+### Env END
+
 bindkey -e
 
 autoload -U compinit
@@ -103,38 +159,6 @@ function killj() {
 function smux() {
     ~/.config/tmux/scripts/upsert_session.sh "$@"
 }
-
-# Env
-
-export LS_COLORS="$(vivid generate catppuccin-mocha)"
-
-export FZF_DEFAULT_OPTS=" \
---color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8 \
---color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc \
---color=marker:#b4befe,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8 \
---color=selected-bg:#45475a --layout=reverse --cycle"
-
-# Preview file content using bat (https://github.com/sharkdp/bat)
-export FZF_CTRL_T_OPTS="
-  --walker-skip .git,node_modules,target
-  --preview 'bat -n --color=always {}'
-  --bind 'ctrl-/:change-preview-window(down|hidden|)'"
-
-# Print tree structure in the preview window
-export FZF_ALT_C_OPTS="
-  --walker-skip .git,node_modules,target
-  --preview 'eza --icons --tree --color=always {}'"
-
-cmd_copy="wl-copy"
-if [[ "$OSTYPE" == "darwin"* ]]; then
-    cmd_copy="pbcopy"
-fi
-
-# CTRL-Y to copy the command into clipboard using pbcopy
-export FZF_CTRL_R_OPTS="
-  --bind 'ctrl-y:execute-silent(echo -n {2..} | "$cmd_copy")+abort'
-  --color header:italic
-  --header 'Press CTRL-Y to copy command into clipboard'"
 
 # Custom setup based on system currently running
 
