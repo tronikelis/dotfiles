@@ -6,6 +6,10 @@ return {
             border = "rounded",
         },
         current_line_blame = true,
+        current_line_blame_opts = {
+            -- will be drawn the last always
+            virt_text_priority = (2 ^ 16) - 1,
+        },
         on_attach = function(bufnr)
             local gitsigns = require("gitsigns")
             local opts = { buffer = bufnr }
