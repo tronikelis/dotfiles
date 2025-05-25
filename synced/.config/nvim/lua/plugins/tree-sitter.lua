@@ -1,5 +1,7 @@
 return {
     "nvim-treesitter/nvim-treesitter",
+    branch = "main",
+    build = ":TSUpdate",
     lazy = false,
     dependencies = {
         {
@@ -13,19 +15,20 @@ return {
             },
         },
     },
-    build = ":TSUpdate",
-    main = "nvim-treesitter.configs",
-    opts = {
-        -- these are usually embedded, so auto_install won't work
-        ensure_installed = { "markdown_inline", "markdown", "diff", "vim", "vimdoc" },
-        sync_install = false,
-        auto_install = true,
-        highlight = {
-            enable = true,
-            additional_vim_regex_highlighting = false,
-        },
-        indent = {
-            enable = false, -- it's really slow, try again after perf updates
-        },
-    },
+    config = function()
+        -- folding
+        vim.opt.foldtext = ""
+        vim.opt.foldcolumn = "0"
+        vim.opt.foldlevelstart = 99
+        vim.opt.foldmethod = "expr"
+        vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+
+        vim.api.nvim_create_autocmd("FileType", {
+            callback = function(ev)
+                pcall(function()
+                    vim.treesitter.start(ev.buf)
+                end)
+            end,
+        })
+    end,
 }

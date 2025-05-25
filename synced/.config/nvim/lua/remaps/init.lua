@@ -64,13 +64,6 @@ function M.setup()
     vim.opt.splitbelow = true
     vim.opt.splitright = true
 
-    -- folding
-    vim.opt.foldtext = ""
-    vim.opt.foldcolumn = "0"
-    vim.opt.foldlevelstart = 99
-    vim.opt.foldmethod = "expr"
-    vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
-
     -- misc, no category really
     vim.keymap.set("v", "K", ":m '<-2<cr>gv=gv") -- has to be :m
     vim.keymap.set("v", "J", ":m '>+1<cr>gv=gv") -- has to be :m
