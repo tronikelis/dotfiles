@@ -67,7 +67,7 @@ function M.setup()
     -- misc, no category really
     vim.keymap.set("v", "K", ":m '<-2<cr>gv=gv") -- has to be :m
     vim.keymap.set("v", "J", ":m '>+1<cr>gv=gv") -- has to be :m
-    vim.keymap.set("x", "<leader>p", [["_dP]])
+    vim.keymap.set("v", "<leader>p", [["_dP]])
     vim.keymap.set("n", "gp", "`[v`]")
     vim.keymap.set("n", "yc", "yy<cmd>normal gcc<cr>p")
     vim.keymap.set("t", "<esc>", "<c-\\><c-n>")
@@ -77,18 +77,13 @@ function M.setup()
         vim.keymap.set("n", m, "10" .. m)
     end
     vim.keymap.set("n", "<c-k>", "<cmd>b#<cr>") -- quick switch alternate buffer
+    -- search inside visual selection
+    vim.keymap.set("v", "/", "<c-\\><c-n>`</\\%V")
+    vim.keymap.set("v", "?", "<c-\\><c-n>`>?\\%V")
 
     -- defaults with zz
-    vim.keymap.set("n", "<C-d>", "<C-d>zz")
-    vim.keymap.set("n", "<C-u>", "<C-u>zz")
-    vim.keymap.set("n", "n", "nzzzv")
-    vim.keymap.set("n", "N", "Nzzzv")
-    vim.keymap.set("n", "n", "nzzzv")
-    vim.keymap.set("n", "N", "Nzzzv")
-    vim.keymap.set("n", "}", "}zz")
-    vim.keymap.set("n", "{", "{zz")
-    vim.keymap.set("n", "]c", "]czz")
-    vim.keymap.set("n", "[c", "[czz")
+    vim.keymap.set("n", "<c-d>", "<c-d>zz")
+    vim.keymap.set("n", "<c-u>", "<c-u>zz")
 
     -- split / join on `%`
     vim.keymap.set("n", "gS", function()

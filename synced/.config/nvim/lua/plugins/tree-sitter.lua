@@ -25,9 +25,10 @@ return {
 
         vim.api.nvim_create_autocmd("FileType", {
             callback = function(ev)
-                pcall(function()
+                local success, parser = pcall(vim.treesitter.get_parser, ev.buf)
+                if success and parser then
                     vim.treesitter.start(ev.buf)
-                end)
+                end
             end,
         })
     end,
