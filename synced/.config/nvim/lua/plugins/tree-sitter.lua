@@ -27,6 +27,7 @@ return {
             callback = function(ev)
                 local success, parser = pcall(vim.treesitter.get_parser, ev.buf)
                 if success and parser then
+                    vim.treesitter.stop(ev.buf)
                     vim.treesitter.start(ev.buf)
                 end
             end,
