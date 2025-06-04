@@ -161,7 +161,8 @@ function M.setup()
     vim.treesitter.language.register("bash", "zsh")
 
     -- tree sitter highlighting has priority over semantic tokens
-    vim.highlight.priorities.semantic_tokens = 95
+    vim.hl.priorities.semantic_tokens, vim.hl.priorities.treesitter =
+        vim.hl.priorities.treesitter, vim.hl.priorities.semantic_tokens
 
     -- per-project shadafile
     vim.opt.shadafile = (function()
