@@ -44,6 +44,14 @@ return {
             "css",
             "sql",
             "scss",
+            "python",
+            "java",
+            "c_sharp",
+            "kotlin",
+            "swift",
+            "php",
+            "dart",
+            "gdscript",
         })
 
         vim.api.nvim_create_autocmd("FileType", {
