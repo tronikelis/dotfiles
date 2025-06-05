@@ -23,6 +23,29 @@ return {
         vim.opt.foldmethod = "expr"
         vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 
+        require("nvim-treesitter").install({
+            "rust",
+            "markdown",
+            "typescript",
+            "tsx",
+            "jsx",
+            "javascript",
+            "json",
+            "jsonc",
+            "go",
+            "yaml",
+            "toml",
+            "lua",
+            "zig",
+            "ruby",
+            "c",
+            "cpp",
+            "bash",
+            "css",
+            "sql",
+            "scss",
+        })
+
         vim.api.nvim_create_autocmd("FileType", {
             callback = function(ev)
                 local success, parser = pcall(vim.treesitter.get_parser, ev.buf)
