@@ -66,7 +66,7 @@ compinit -C
 
 ssh_env_file=~/.ssh/ssh_agent_env
 if ! pgrep -u "$USER" ssh-agent &>/dev/null; then
-    eval "$(ssh-agent -t 1d | tee "$ssh_env_file")"
+    eval "$(ssh-agent -t 4d | tee "$ssh_env_file")"
 else
     { source "$ssh_env_file" } >/dev/null
 fi
