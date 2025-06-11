@@ -52,6 +52,8 @@ return {
             "php",
             "dart",
             "gdscript",
+            "templ",
+            "html",
         })
 
         vim.api.nvim_create_autocmd("FileType", {
