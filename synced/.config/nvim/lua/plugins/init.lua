@@ -103,6 +103,9 @@ function M.setup()
         change_detection = {
             enabled = false,
         },
+        -- lowering this fixes "could not resolve github.com",
+        -- seems like they have some sort of rate limiting thing
+        concurrency = 8,
     })
 end
 
