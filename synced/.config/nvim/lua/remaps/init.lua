@@ -85,6 +85,10 @@ function M.setup()
     vim.keymap.set("n", "<c-d>", "<c-d>zz")
     vim.keymap.set("n", "<c-u>", "<c-u>zz")
 
+    -- case sensitive * / # normal mode commands
+    vim.keymap.set("n", "*", [[<cmd>let @/='\C\<' . expand("<cword>") . '\>'<cr><cmd>let v:searchforward=1<cr>n]])
+    vim.keymap.set("n", "#", [[<cmd>let @/='\C\<' . expand("<cword>") . '\>'<cr><cmd>let v:searchforward=0<cr>n]])
+
     -- split / join on `%`
     vim.keymap.set("n", "gS", function()
         local cursor_before = vim.api.nvim_win_get_cursor(0)
