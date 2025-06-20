@@ -160,6 +160,15 @@ function smux() {
     ~/.config/tmux/scripts/upsert_session.sh "$@"
 }
 
+function wfiles() {
+    local dir="$1"
+    shift
+    while true; do
+        fd "$dir" | entr -d -r "$@"
+        sleep 0.5
+    done
+}
+
 # Custom setup based on system currently running
 
 if [[ -r ~/.zshrc.private ]]; then
