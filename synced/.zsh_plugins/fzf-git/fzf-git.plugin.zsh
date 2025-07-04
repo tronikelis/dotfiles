@@ -25,6 +25,7 @@ function fzf_git_worktrees() {
 
         sum="$sum$line $unix"$'\n'
     done < <(git worktree list)
+    sum=${sum%$'\n'}
 
     sort -r -n -k 4 <<<"$sum" | fzf_git "$@" | awk '{print $1}'
 }
