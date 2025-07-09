@@ -149,6 +149,29 @@ function M.setup()
         command = "wincmd =",
     })
 
+    -- flash black background when search wrapped
+    local normal_hl
+    local search_wrapped_timer = assert(vim.uv.new_timer())
+    vim.api.nvim_create_autocmd("SearchWrapped", {
+        callback = vim.schedule_wrap(function()
+            if not search_wrapped_timer:is_active() then
+                normal_hl = vim.api.nvim_get_hl(0, {
+                    name = "Normal",
+                })
+            end
+
+            vim.cmd([[highlight Normal guibg=black]])
+
+            search_wrapped_timer:start(
+                80,
+                0,
+                vim.schedule_wrap(function()
+                    vim.api.nvim_set_hl(0, "Normal", normal_hl)
+                end)
+            )
+        end),
+    })
+
     -- custom filetypes
 
     vim.filetype.add({
