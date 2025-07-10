@@ -149,27 +149,42 @@ function M.setup()
         command = "wincmd =",
     })
 
-    -- flash black background when search wrapped
-    local normal_hl
-    local search_wrapped_timer = assert(vim.uv.new_timer())
+    -- flash when search wrapped
     vim.api.nvim_create_autocmd("SearchWrapped", {
-        callback = vim.schedule_wrap(function()
-            if not search_wrapped_timer:is_active() then
-                normal_hl = vim.api.nvim_get_hl(0, {
-                    name = "Normal",
-                })
+        callback = function()
+            if vim.api.nvim_get_mode().mode == "c" then
+                return
             end
 
-            vim.cmd([[highlight Normal guibg=black]])
+            local win = vim.api.nvim_get_current_win()
 
-            search_wrapped_timer:start(
+            local maybe_fresh_ns = vim.api.nvim_get_hl_ns({
+                winid = win,
+            })
+            if maybe_fresh_ns == -1 then
+                maybe_fresh_ns = 0
+            end
+
+            local dirty_ns = vim.api.nvim_create_namespace("SearchWrapped/CursorLine")
+            if maybe_fresh_ns == dirty_ns then
+                return
+            end
+
+            vim.api.nvim_win_set_hl_ns(win, dirty_ns)
+
+            vim.api.nvim_set_hl(dirty_ns, "CursorLine", { link = "Search" })
+
+            local timer = assert(vim.uv.new_timer())
+            timer:start(
                 80,
                 0,
                 vim.schedule_wrap(function()
-                    vim.api.nvim_set_hl(0, "Normal", normal_hl)
+                    vim.api.nvim_win_set_hl_ns(win, maybe_fresh_ns)
+                    timer:stop()
+                    timer:close()
                 end)
             )
-        end),
+        end,
     })
 
     -- custom filetypes
