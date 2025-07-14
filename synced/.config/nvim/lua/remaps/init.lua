@@ -6,6 +6,7 @@ function M.setup()
         "grr",
         "gra",
         "grn",
+        "grt",
     }
     for _, v in ipairs(del_mappings) do
         vim.keymap.del("", v)
