@@ -8,12 +8,10 @@ local M = {}
 local tools = {
     { name = "gofumpt", deps = { "go" } },
     { name = "gopls", deps = { "go" } },
-    { name = "hyprls", deps = { "go" } },
 
     { name = "pyright", deps = { "python3" } },
     { name = "black", deps = { "python3" } },
 
-    { name = "bash-language-server", deps = { "npm" } },
     { name = "biome", deps = { "npm" } },
     { name = "eslint-lsp", deps = { "npm" } },
     { name = "html-lsp", deps = { "npm" } },
@@ -27,10 +25,7 @@ local tools = {
     { name = "ruby-lsp", deps = { "ruby" } },
 
     { name = "lua-language-server", deps = {} },
-    { name = "marksman", deps = {} },
     { name = "rust-analyzer", deps = {} },
-    { name = "shellcheck", deps = {} },
-    { name = "shfmt", deps = {} },
     { name = "stylua", deps = {} },
     { name = "taplo", deps = {} },
     { name = "templ", deps = {} },
@@ -57,6 +52,13 @@ local function ensure_installed()
         :totable()
 
     registry.refresh(function()
+        for _, v in ipairs(registry.get_installed_package_names()) do
+            if not vim.list_contains(filtered, v) then
+                print(string.format("uninstalling %s", v))
+                registry.get_package(v):uninstall()
+            end
+        end
+
         for _, v in ipairs(filtered) do
             local pkg = registry.get_package(v)
 

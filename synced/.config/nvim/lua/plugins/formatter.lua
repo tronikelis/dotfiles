@@ -83,9 +83,6 @@ return {
             typescript = biome_or_prettier,
             typescriptreact = biome_or_prettier,
 
-            sh = { "shfmt" },
-            zsh = { "shfmt" },
-
             gdscript = { "gdformat" },
             lua = { "stylua" },
             templ = { name = "templ" },
