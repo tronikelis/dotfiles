@@ -31,7 +31,15 @@ vim.keymap.set("n", "<leader>t", function()
 end)
 vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float)
 vim.keymap.set("n", "<leader>a", vim.lsp.buf.code_action)
-vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename)
+vim.keymap.set("n", "<leader>rn", function()
+    local renamed = false
+    renamed = require("ts-autotag").rename()
+    if renamed then
+        return
+    end
+
+    vim.lsp.buf.rename()
+end)
 vim.keymap.set("n", "[e", function()
     vim.diagnostic.jump({ wrap = false, count = -vim.v.count1 })
 end)
