@@ -33,7 +33,7 @@ vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float)
 vim.keymap.set("n", "<leader>a", vim.lsp.buf.code_action)
 vim.keymap.set("n", "<leader>rn", function()
     local renamed = false
-    renamed = require("ts-autotag").rename()
+    renamed = require("ts-autotag").rename(nil, true)
     if renamed then
         return
     end
