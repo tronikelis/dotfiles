@@ -41,10 +41,10 @@ vim.keymap.set("n", "<leader>rn", function()
     vim.lsp.buf.rename()
 end)
 vim.keymap.set("n", "[e", function()
-    vim.diagnostic.jump({ wrap = false, count = -vim.v.count1 })
+    vim.diagnostic.jump({ wrap = false, count = -vim.v.count1, float = true })
 end)
 vim.keymap.set("n", "]e", function()
-    vim.diagnostic.jump({ wrap = false, count = vim.v.count1 })
+    vim.diagnostic.jump({ wrap = false, count = vim.v.count1, float = true })
 end)
 
 return {
