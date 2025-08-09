@@ -54,8 +54,9 @@ function M.setup()
             end,
         },
         {
-            "arthurxavierx/vim-caser",
+            "tronikelis/caser.nvim",
             event = "VeryLazy",
+            opts = {},
         },
         {
             "tronikelis/debdiag.nvim",
