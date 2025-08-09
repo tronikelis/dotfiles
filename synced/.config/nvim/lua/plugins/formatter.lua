@@ -67,6 +67,8 @@ local function biome_or_prettier(buf)
     return { "prettierd" }
 end
 
+vim.opt.formatexpr = "v:lua.require'conform'.formatexpr()"
+
 return {
     "stevearc/conform.nvim",
     event = "VeryLazy",
