@@ -72,6 +72,8 @@
 	wadd = "!git worktree add \"$1\" \"$1\" #"
 	# delete worktree and branch combo
 	wdelete = "!unset GIT_DIR; branch=\"$(cd \"$1\" && git branch --show-current)\"; git worktree remove \"$1\" && git branch -D \"$branch\" #"
+	# delete worktrees interactive
+	wdeletei = "!~/.config/git/delete_worktrees.sh #"
 
 [merge]
 	tool = nvimdiff
