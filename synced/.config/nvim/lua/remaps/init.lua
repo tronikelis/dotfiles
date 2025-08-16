@@ -90,32 +90,6 @@ function M.setup()
     vim.keymap.set("n", "*", [[<cmd>let @/='\C\<' . expand("<cword>") . '\>'<cr><cmd>let v:searchforward=1<cr>n]])
     vim.keymap.set("n", "#", [[<cmd>let @/='\C\<' . expand("<cword>") . '\>'<cr><cmd>let v:searchforward=0<cr>n]])
 
-    -- split / join on `%`
-    vim.keymap.set("n", "gS", function()
-        local cursor_before = vim.api.nvim_win_get_cursor(0)
-        vim.cmd("normal %")
-        local cursor_after = vim.api.nvim_win_get_cursor(0)
-
-        if cursor_before[1] > cursor_after[1] then
-            cursor_before, cursor_after = cursor_after, cursor_before
-        end
-
-        local char_index = cursor_after[2] + 1
-        local char = vim.api.nvim_get_current_line():sub(char_index, char_index)
-
-        if cursor_before[1] == cursor_after[1] then
-            -- split
-            vim.api.nvim_feedkeys(
-                vim.api.nvim_replace_termcodes(string.format('"pci%s<cr><esc>O<esc>"pp', char), true, false, true),
-                "",
-                false
-            )
-        else
-            -- join
-            vim.cmd(string.format("%d,%djoin", cursor_before[1], cursor_after[1]))
-        end
-    end, {})
-
     -- simple user commands
 
     vim.api.nvim_create_user_command("RemoveTrailing", [[%s/\s\+$//e | nohlsearch]], {})
@@ -148,44 +122,6 @@ function M.setup()
     -- auto resize splits when the terminal's window is resized
     vim.api.nvim_create_autocmd("VimResized", {
         command = "wincmd =",
-    })
-
-    -- flash when search wrapped
-    vim.api.nvim_create_autocmd("SearchWrapped", {
-        callback = function()
-            if vim.api.nvim_get_mode().mode == "c" then
-                return
-            end
-
-            local win = vim.api.nvim_get_current_win()
-
-            local maybe_fresh_ns = vim.api.nvim_get_hl_ns({
-                winid = win,
-            })
-            if maybe_fresh_ns == -1 then
-                maybe_fresh_ns = 0
-            end
-
-            local dirty_ns = vim.api.nvim_create_namespace("SearchWrapped/CursorLine")
-            if maybe_fresh_ns == dirty_ns then
-                return
-            end
-
-            vim.api.nvim_win_set_hl_ns(win, dirty_ns)
-
-            vim.api.nvim_set_hl(dirty_ns, "CursorLine", { link = "Search" })
-
-            local timer = assert(vim.uv.new_timer())
-            timer:start(
-                80,
-                0,
-                vim.schedule_wrap(function()
-                    vim.api.nvim_win_set_hl_ns(win, maybe_fresh_ns)
-                    timer:stop()
-                    timer:close()
-                end)
-            )
-        end,
     })
 
     -- custom filetypes
