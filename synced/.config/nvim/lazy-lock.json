@@ -5,7 +5,6 @@
   "cmp-nvim-lsp-signature-help": { "branch": "main", "commit": "031e6ba70b0ad5eee49fd2120ff7a2e325b17fa7" },
   "conflict-marker.nvim": { "branch": "master", "commit": "86edfec5b8f93230e30b9adf37ef235fdc56f30b" },
   "conform.nvim": { "branch": "master", "commit": "973f3cb73887d510321653044791d7937c7ec0fa" },
-  "debdiag.nvim": { "branch": "master", "commit": "0bdb6206a79346f88479f7dbd8b941193f6d4515" },
   "gitdive.nvim": { "branch": "master", "commit": "5aa9939d9d7cf8f14bf8148b6d0f3a2c4a791749" },
   "gitsigns.nvim": { "branch": "main", "commit": "c7d37ca22b461f64e26f8f6701b2586128ed0bef" },
   "guess-indent.nvim": { "branch": "main", "commit": "84a4987ff36798c2fc1169cbaff67960aed9776f" },

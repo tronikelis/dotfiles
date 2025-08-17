@@ -59,11 +59,6 @@ function M.setup()
             opts = {},
         },
         {
-            "tronikelis/debdiag.nvim",
-            event = "VeryLazy",
-            opts = { ms = 1000 },
-        },
-        {
             "kylechui/nvim-surround",
             version = "*",
             event = "VeryLazy",
