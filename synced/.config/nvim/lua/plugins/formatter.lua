@@ -60,7 +60,7 @@ end, {
 })
 
 local function biome_or_prettier(buf)
-    if vim.fs.root(buf, { "biome.json", "biome.jsonc" }) then
+    if vim.fs.root(buf, { { "biome.json", "biome.jsonc" } }) then
         return { "biome" }
     end
 
