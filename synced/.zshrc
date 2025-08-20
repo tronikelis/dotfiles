@@ -165,7 +165,7 @@ function wfiles() {
     local dir="$1"
     shift
     while true; do
-        fd "$dir" | entr -d -r "$@"
+        fd . "$dir" | entr -d -r "$@"
         sleep 0.5
     done
 }
