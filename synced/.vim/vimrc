@@ -1,0 +1,6 @@
+set number
+set relativenumber
+set cursorline
+set scrolloff=20
+set incsearch
+set nowrap
