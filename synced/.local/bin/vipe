@@ -1,0 +1,17 @@
+#!/bin/bash
+
+tempfile="$(mktemp)"
+touch "$tempfile"
+
+cat >"$tempfile"
+
+if bash -c ": >/dev/tty" >/dev/null 2>/dev/null; then
+    # /dev/tty is available / writable
+    vim "$@" "$tempfile" >/dev/tty </dev/tty || exit
+else
+    vim "$@" "$tempfile" || exit
+fi
+
+cat "$tempfile"
+
+rm "$tempfile"
