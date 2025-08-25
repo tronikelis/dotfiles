@@ -1,15 +1,25 @@
 #!/bin/bash
 
+# if running inside other vim/nvim instances
+VIMRUNTIME=""
+VIM=""
+
 tempfile="$(mktemp)"
 touch "$tempfile"
 
 cat >"$tempfile"
 
-if bash -c ": >/dev/tty" >/dev/null 2>/dev/null; then
+if bash -c ">/dev/tty" >/dev/null 2>/dev/null; then
     # /dev/tty is available / writable
-    vim "$@" "$tempfile" >/dev/tty </dev/tty || exit
+    vim "$@" "$tempfile" >/dev/tty </dev/tty
 else
-    vim "$@" "$tempfile" || exit
+    vim "$@" "$tempfile"
+fi
+vim_status="$?"
+
+if [[ "$vim_status" != 0 ]]; then
+    rm "$tempfile"
+    exit "$vim_status"
 fi
 
 cat "$tempfile"
