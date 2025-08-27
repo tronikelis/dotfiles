@@ -144,14 +144,14 @@ function M.setup()
 
     -- per-project shadafile
     vim.opt.shadafile = (function()
-        local data = vim.fn.stdpath("data")
+        local state = vim.fn.stdpath("state")
 
         local cwd = vim.fn.getcwd()
         cwd = vim.fs.root(cwd, ".git") or cwd
 
         local shadafile = vim.uri_encode(cwd, "rfc2396")
 
-        local file = vim.fs.joinpath(data, "project_shada", shadafile)
+        local file = vim.fs.joinpath(state, "project_shada", shadafile)
         vim.fn.mkdir(vim.fs.dirname(file), "p")
 
         return file
