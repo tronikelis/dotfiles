@@ -1,14 +1,15 @@
-### Env
-
-if [[ -f "$HOME/.cargo/env" ]]; then
-	source "$HOME/.cargo/env"
-fi
+### Path
+# update PATH
 
 function add_to_path() {
 	if [[ -d "$1" ]]; then
 		export PATH="$PATH:$1"
 	fi
 }
+
+if [[ -e "$HOME/.cargo/env" ]]; then
+	source "$HOME/.cargo/env"
+fi
 
 add_to_path "$HOME/.local/bin"
 add_to_path "/opt/homebrew/bin"
@@ -17,6 +18,17 @@ add_to_path "$HOME/.bun/bin"
 if [[ -x "$(command -v go)" ]]; then
 	add_to_path "$(go env GOPATH)/bin"
 fi
+
+
+
+
+
+
+
+
+
+### Env
+# vars exported to child processes
 
 export EDITOR=nvim
 export VISUAL="$EDITOR"
@@ -52,34 +64,18 @@ export FZF_CTRL_R_OPTS="
   --color header:italic
   --header 'Press CTRL-Y to copy command into clipboard'"
 
-### Env END
 
-bindkey -e
 
-autoload -U compinit
-if [[ "$(find ~/.zcompdump -mtime +24h &>/dev/null)" ]]; then
-    compinit
-fi
-compinit -C
 
-# ssh-agent
 
-ssh_env_file=~/.ssh/ssh_agent_env
-if ! pgrep -u "$USER" ssh-agent &>/dev/null; then
-    eval "$(ssh-agent -t 4d | tee "$ssh_env_file")"
-else
-    { source "$ssh_env_file" } >/dev/null
-fi
 
-# Plugins init
 
-for name in ~/.zsh_plugins/*/*.plugin.zsh; do
-    source "$name"
-done
 
-# Plugins options
 
-ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=100
+### Plugins config / completion config
+# configure plugins here, before calling compinit, before sourcing plugins
+
+ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=50
 
 _comp_options+=(globdots)
 zstyle ':completion:*' special-dirs false
@@ -92,7 +88,68 @@ zstyle ':fzf-tab:*' use-fzf-default-opts yes
 # fzf should complete ONLY with enter
 zstyle ':fzf-tab:*' fzf-flags --bind=tab:toggle+down
 
-# Binds
+zstyle ':completion:*' use-cache yes
+zstyle ':completion:*' matcher-list 'm:{[:lower:]}={[:upper:]}'
+
+
+
+
+
+
+
+
+
+
+
+### Compinit initialize
+# completion cache gets cleared after some time
+
+bindkey -e
+autoload -U compinit
+if fttl ~/.zcompdump 24h; then
+    rm ~/.zcompdump
+fi
+compinit
+
+
+
+
+
+
+### Plugin source
+# source plugins in correct order
+
+# fzf-tab needs to be loaded after compinit, but before plugins which will wrap widgets
+source ~/.zsh_plugins/fzf-tab/fzf-tab.plugin.zsh
+
+source ~/.zsh_plugins/fzf-git/fzf-git.plugin.zsh
+source ~/.zsh_plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh
+source ~/.zsh_plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh
+
+
+
+
+
+
+### Ssh-agent
+# set up ssh-agent with some ttl
+
+ssh_env_file=~/.ssh/ssh_agent_env
+if ! pgrep -u "$USER" ssh-agent &>/dev/null; then
+    eval "$(ssh-agent -t 4d | tee "$ssh_env_file")"
+else
+    { source "$ssh_env_file" } >/dev/null
+fi
+
+
+
+
+
+
+
+
+### Binds
+# set up some custom binds
 
 bindkey "^[[1;5C" forward-word
 bindkey "^[[1;5D" backward-word
@@ -104,10 +161,14 @@ bindkey "^X^E" edit-command-line
 # bind ctrl+space to accept suggestion
 bindkey '^ ' autosuggest-accept
 
-# Zsh options
 
-zstyle ':completion:*' use-cache yes
-zstyle ':completion:*' matcher-list 'm:{[:lower:]}={[:upper:]}'
+
+
+
+
+
+# History
+# zsh history options
 
 setopt HIST_IGNORE_SPACE
 setopt HIST_FCNTL_LOCK
@@ -123,7 +184,13 @@ SAVEHIST=1000000
 
 KEYTIMEOUT=100
 
-# Aliases
+
+
+
+
+
+### Aliases
+# setup some aliases
 
 alias ls="eza --icons -a --group-directories-first"
 alias ll="ls --long --all"
@@ -131,7 +198,14 @@ alias ..="cd .."
 alias tdm_sync_git_pull="cd ~/.tdm && git pull && tdm sync && cd -"
 alias grep="grep --color=auto"
 
-# Shell integrated utils
+
+
+
+
+
+
+### Shell integrated utils
+# shell integration with various utils
 
 # as I'm using zoxide with tmux, increase zoxide size
 export _ZO_MAXAGE=50000
@@ -139,7 +213,15 @@ eval "$(zoxide init zsh)"
 eval "$(starship init zsh)"
 eval "$(fzf --zsh)"
 
-# Helper functions
+
+
+
+
+
+
+
+### Helper functions
+# some helpful interactive shell utils
 
 function cheatsh() {
     curl -s "cheat.sh/$1" | less -R
@@ -170,14 +252,24 @@ function wfiles() {
     done
 }
 
-# Custom setup based on system currently running
 
-if [[ -r ~/.zshrc.private ]]; then
+
+
+
+
+
+### Custom setup
+# based on system currently running
+
+if [[ -e ~/.zshrc.private ]]; then
     source ~/.zshrc.private
 fi
 
-# Tmux
 
+
+
+
+# Tmux
 if [[ -z "$TMUX" ]]; then
     smux ./
 fi

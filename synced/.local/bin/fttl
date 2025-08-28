@@ -1,0 +1,30 @@
+#!/bin/bash
+
+# success means target exceeds ttl
+
+target="$1"
+ttl="$2"
+
+if [[ ! "$target" ]]; then
+    echo "provide target"
+    exit 1
+fi
+
+if [[ ! "$ttl" ]]; then
+    echo "provide ttl"
+    exit 1
+fi
+
+find_result="$(find "$target" -maxdepth 0 -mtime +"$ttl" 2>/dev/null)"
+
+# didn't find the file
+if [[ "$?" != 0 ]]; then
+    exit 2
+fi
+
+# find returns if target is older than specified
+if [[ "$find_result" ]]; then
+    exit 0
+fi
+
+exit 2

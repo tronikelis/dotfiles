@@ -16,17 +16,13 @@ branch="$(
 
 root="$(
     cd "$wd" || exit
-    while true; do
-        cd .. || exit
-        if [[ "$(pwd)" == "/" ]]; then
-            break
-        fi
+    # because there are 2 .git, 1 will be in $wd, another one for worktree root
+    # so avoiding matching the current one like this
+    cd ../ || exit
 
-        if stat ".git" &>/dev/null; then
-            basename "$(pwd)"
-            break
-        fi
-    done
+    if v="$(froot .git)"; then
+        basename "$v"
+    fi
 )"
 
 # probably not a worktree

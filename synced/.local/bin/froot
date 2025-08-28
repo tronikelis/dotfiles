@@ -1,0 +1,22 @@
+#!/bin/bash
+
+target="$1"
+
+if [[ ! "$target" ]]; then
+    echo "provide target"
+    exit 1
+fi
+
+while true; do
+    if [[ "$(pwd)" == "/" ]]; then
+        exit 1
+    fi
+
+    parent="$(pwd)/$target"
+    if [[ -e "$parent" ]]; then
+        echo "$parent"
+        exit 0
+    fi
+
+    cd ../ || exit
+done
