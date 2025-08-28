@@ -1,11 +1,21 @@
-### Path
-# update PATH
+### Config helpers
+# used only in this zshrc, internal
 
 function add_to_path() {
 	if [[ -d "$1" ]]; then
 		export PATH="$PATH:$1"
 	fi
 }
+
+function is_executable() {
+    test -x "$(command -v "$1")"
+}
+
+
+
+
+### Path
+# update PATH
 
 if [[ -e "$HOME/.cargo/env" ]]; then
 	source "$HOME/.cargo/env"
@@ -15,7 +25,7 @@ add_to_path "$HOME/.local/bin"
 add_to_path "/opt/homebrew/bin"
 add_to_path "$HOME/.bun/bin"
 
-if [[ -x "$(command -v go)" ]]; then
+if is_executable "go"; then
 	add_to_path "$(go env GOPATH)/bin"
 fi
 
@@ -34,7 +44,9 @@ export EDITOR=nvim
 export VISUAL="$EDITOR"
 export COREPACK_ENABLE_AUTO_PIN=0
 export PAGER="less"
-export LS_COLORS="$(vivid generate catppuccin-mocha)"
+if is_executable vivid; then
+    export LS_COLORS="$(vivid generate catppuccin-mocha)"
+fi
 
 export FZF_DEFAULT_OPTS=" \
 --color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8 \
@@ -167,7 +179,7 @@ bindkey '^ ' autosuggest-accept
 
 
 
-# History
+### History
 # zsh history options
 
 setopt HIST_IGNORE_SPACE
@@ -207,11 +219,17 @@ alias grep="grep --color=auto"
 ### Shell integrated utils
 # shell integration with various utils
 
-# as I'm using zoxide with tmux, increase zoxide size
-export _ZO_MAXAGE=50000
-eval "$(zoxide init zsh)"
-eval "$(starship init zsh)"
-eval "$(fzf --zsh)"
+if is_executable zoxide; then
+    # as I'm using zoxide with tmux, increase zoxide size
+    export _ZO_MAXAGE=50000
+    eval "$(zoxide init zsh)"
+fi
+if is_executable starship; then
+    eval "$(starship init zsh)"
+fi
+if is_executable fzf; then
+    eval "$(fzf --zsh)"
+fi
 
 
 
@@ -269,7 +287,9 @@ fi
 
 
 
-# Tmux
+### Tmux
+# init tmux
+
 if [[ -z "$TMUX" ]]; then
     smux ./
 fi
