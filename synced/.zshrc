@@ -16,7 +16,7 @@ preexec() {
 
 function add_to_path() {
 	if [[ -d "$1" ]]; then
-		export PATH="$PATH:$1"
+		export PATH="$1:$PATH"
 	fi
 }
 
