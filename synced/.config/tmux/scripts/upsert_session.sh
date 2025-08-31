@@ -16,7 +16,7 @@ zoxide add "$wd"
 
 name="$(printf "$name" | tr . _)"
 
-if [[ -z $TMUX ]]; then
+if [[ -z "$TMUX" ]]; then
     tmux new-session -A -s "$name" -c "$wd"
     exit 0
 fi
