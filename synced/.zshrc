@@ -44,6 +44,7 @@ export EDITOR=nvim
 export VISUAL="$EDITOR"
 export COREPACK_ENABLE_AUTO_PIN=0
 export PAGER="less"
+export LESS="--mouse" # make mouse scrolling work with less
 if is_executable vivid; then
     export LS_COLORS="$(vivid generate catppuccin-mocha)"
 fi
@@ -285,11 +286,3 @@ fi
 
 
 
-
-
-### Tmux
-# init tmux
-
-if [[ -z "$TMUX" ]]; then
-    smux ./
-fi
