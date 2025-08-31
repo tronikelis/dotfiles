@@ -1,3 +1,16 @@
+### Shell hooks
+# integration for other thingies
+
+# osc 133
+preexec() {
+  echo -n "\\x1b]133;A\\x1b\\"
+}
+
+
+
+
+
+
 ### Config helpers
 # used only in this zshrc, internal
 
@@ -283,6 +296,5 @@ function wfiles() {
 if [[ -e ~/.zshrc.private ]]; then
     source ~/.zshrc.private
 fi
-
 
 
