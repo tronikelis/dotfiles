@@ -297,4 +297,7 @@ if [[ -e ~/.zshrc.private ]]; then
     source ~/.zshrc.private
 fi
 
+# remove duplicates in $PATH
+typeset -aU path
+
 
