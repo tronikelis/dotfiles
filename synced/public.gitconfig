@@ -47,7 +47,6 @@
 	colorMoved = true
 	algorithm = histogram
 	renames = true
-	mnemonicPrefix = true
 
 [status]
 	showUntrackedFiles = all
@@ -60,7 +59,7 @@
 	root = rev-parse --show-toplevel
 	logo = log --oneline
 	# shows local branches which got their remote branch deleted
-	branchgone = "!git fetch &>/dev/null && git branch -vv | cut -c 3- | grep gone] | awk '{print $1}' #"
+	bgone = "!git fetch &>/dev/null && git branch -vv | cut -c 3- | grep gone] | awk '{print $1}' #"
 	# reset hard, plus remove unadded files
 	veryhard = "!git reset --hard && git clean -f -d #"
 
@@ -74,6 +73,8 @@
 	wdelete = "!unset GIT_DIR; branch=\"$(cd \"$1\" && git branch --show-current)\"; git worktree remove \"$1\" && git branch -D \"$branch\" #"
 	# delete worktrees interactive
 	wdeletei = "!~/.config/git/delete_worktrees.sh #"
+	# pretty print sorted branches by time
+	brecent = "!git branch --sort=-committerdate --color=always --format='%(color:yellow)%(committerdate:short)|||%(color:blue)%(committerdate:relative)|||%(color:reset)%(refname:short)|||%(authorname)' | column -t -s '|||' #"
 
 [merge]
 	tool = nvimdiff
