@@ -1,5 +1,4 @@
 local utils = require("utils")
-local option_keys = require("option_keys")
 
 return {
     "nvim-lualine/lualine.nvim",
@@ -25,7 +24,7 @@ return {
                     return ""
                 end
 
-                if vim.g[option_keys.disable_autoformat] or vim.b[option_keys.disable_autoformat] then
+                if vim.g.disable_autoformat or vim.b.disable_autoformat then
                     ok = not_ok
                 end
 

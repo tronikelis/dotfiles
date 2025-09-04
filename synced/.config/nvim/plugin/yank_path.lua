@@ -1,7 +1,3 @@
-local utils = require("utils")
-
-local M = {}
-
 local function expand(flags)
     if vim.bo.filetype == "oil" then
         return vim.fn.fnamemodify(require("oil").get_current_dir(), flags)
@@ -27,22 +23,19 @@ local action_map = {
     relative = create_copy_expand(":~:."),
 }
 
-function M.setup()
-    local function yank_path(ev)
-        local action = action_map[ev.fargs[1] or "relative"]
-        if action then
-            action(ev)
-        end
+local function yank_path(ev)
+    local action = action_map[ev.fargs[1] or "relative"]
+    if action then
+        action(ev)
     end
-
-    vim.api.nvim_create_user_command("YankPath", yank_path, {
-        desc = "Yanks file paths into system clipboard",
-        nargs = "?",
-        complete = function(query)
-            return utils.prefix_filter(query, vim.tbl_keys(action_map))
-        end,
-        range = true,
-    })
 end
 
-return M
+vim.api.nvim_create_user_command("YankPath", yank_path, {
+    desc = "Yanks file paths into system clipboard",
+    nargs = "?",
+    complete = function(query)
+        local utils = require("utils")
+        return utils.prefix_filter(query, vim.tbl_keys(action_map))
+    end,
+    range = true,
+})

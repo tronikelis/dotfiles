@@ -1,5 +1,3 @@
-local M = {}
-
 ---@class NvimConfig.Tool
 ---@field name string
 ---@field deps string[]
@@ -71,11 +69,7 @@ local function ensure_installed()
     end)
 end
 
-function M.setup()
-    vim.api.nvim_create_autocmd("User", {
-        pattern = "LazyDone",
-        callback = ensure_installed,
-    })
-end
-
-return M
+vim.api.nvim_create_autocmd("User", {
+    pattern = "LazyDone",
+    callback = ensure_installed,
+})
