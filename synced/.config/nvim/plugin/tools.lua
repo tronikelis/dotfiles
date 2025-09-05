@@ -69,7 +69,6 @@ local function ensure_installed()
     end)
 end
 
-vim.api.nvim_create_autocmd("User", {
-    pattern = "LazyDone",
+vim.api.nvim_create_autocmd("VimEnter", {
     callback = ensure_installed,
 })
