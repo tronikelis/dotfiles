@@ -68,38 +68,34 @@ end
 
 vim.opt.formatexpr = "v:lua.require'conform'.formatexpr()"
 
-return {
-    "stevearc/conform.nvim",
-    event = "VeryLazy",
-    opts = {
-        formatters_by_ft = {
-            html = { "prettierd" },
+require("conform").setup({
+    formatters_by_ft = {
+        html = { "prettierd" },
 
-            css = biome_or_prettier,
-            scss = biome_or_prettier,
-            javascript = biome_or_prettier,
-            javascriptreact = biome_or_prettier,
-            json = biome_or_prettier,
-            jsonc = biome_or_prettier,
-            typescript = biome_or_prettier,
-            typescriptreact = biome_or_prettier,
+        css = biome_or_prettier,
+        scss = biome_or_prettier,
+        javascript = biome_or_prettier,
+        javascriptreact = biome_or_prettier,
+        json = biome_or_prettier,
+        jsonc = biome_or_prettier,
+        typescript = biome_or_prettier,
+        typescriptreact = biome_or_prettier,
 
-            gdscript = { "gdformat" },
-            lua = { "stylua" },
-            templ = { name = "templ" },
-            ruby = { name = "ruby_lsp" },
-            python = { "black" },
-        },
-        default_format_opts = {
-            lsp_format = "fallback",
-            stop_after_first = true,
-        },
-        format_on_save = function(bufnr)
-            if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
-                return
-            end
-
-            return {}
-        end,
+        gdscript = { "gdformat" },
+        lua = { "stylua" },
+        templ = { name = "templ" },
+        ruby = { name = "ruby_lsp" },
+        python = { "black" },
     },
-}
+    default_format_opts = {
+        lsp_format = "fallback",
+        stop_after_first = true,
+    },
+    format_on_save = function(bufnr)
+        if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
+            return
+        end
+
+        return {}
+    end,
+})
