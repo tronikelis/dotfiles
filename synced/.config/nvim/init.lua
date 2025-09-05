@@ -2,6 +2,43 @@
 -- but nvim still uses older lua that does not support it, so fallback
 table.unpack = table.unpack or unpack
 
+require("paq")({
+    "NMAC427/guess-indent.nvim",
+    "folke/lazydev.nvim",
+    "folke/ts-comments.nvim",
+    "hrsh7th/cmp-buffer",
+    "hrsh7th/cmp-nvim-lsp",
+    "hrsh7th/cmp-nvim-lsp-signature-help",
+    "hrsh7th/nvim-cmp",
+    "kylechui/nvim-surround",
+    "lewis6991/gitsigns.nvim",
+    "mason-org/mason.nvim",
+    "mbbill/undotree",
+    "neovim/nvim-lspconfig",
+    "nvim-lua/plenary.nvim",
+    "nvim-lualine/lualine.nvim",
+    "nvim-telescope/telescope-live-grep-args.nvim",
+    "nvim-telescope/telescope-ui-select.nvim",
+    "nvim-telescope/telescope.nvim",
+    "nvim-tree/nvim-web-devicons",
+    "nvim-treesitter/nvim-treesitter-context",
+    "onsails/lspkind.nvim",
+    "savq/paq-nvim",
+    "stevearc/conform.nvim",
+    "stevearc/oil.nvim",
+    "tronikelis/caser.nvim",
+    "tronikelis/conflict-marker.nvim",
+    "tronikelis/gitdive.nvim",
+    "tronikelis/lualine-components.nvim",
+    "tronikelis/sstash.nvim",
+    "tronikelis/telescope-git-diff-stat.nvim",
+    "tronikelis/ts-autotag.nvim",
+    "tronikelis/xylene.nvim",
+    { "catppuccin/nvim", branch = "v1.11.0" },
+    { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+    { "nvim-treesitter/nvim-treesitter", branch = "main", build = ":TSUpdate" },
+})
+
 local del_mappings = {
     "gri",
     "grr",

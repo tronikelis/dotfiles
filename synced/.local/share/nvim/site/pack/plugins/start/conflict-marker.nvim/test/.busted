@@ -1,5 +1,0 @@
-return {
-    _all = {
-        lua = "./lua.sh",
-    },
-}
