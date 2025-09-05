@@ -1,5 +1,3 @@
-require("hooks").after_update("telescope-fzf-native.nvim", "make")
-
 local utils = require("utils")
 
 local actions = require("telescope.actions")

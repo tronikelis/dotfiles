@@ -1,5 +1,3 @@
-require("hooks").after_update("nvim-treesitter", ":TSUpdate")
-
 require("treesitter-context").setup({
     enable = true,
     max_lines = 5,
