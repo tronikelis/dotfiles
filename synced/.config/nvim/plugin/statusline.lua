@@ -9,7 +9,11 @@ local cmp = {}
 local hi_pattern = "%%#%s#%s%%*"
 
 function _G._statusline_component(name)
-    return cmp[name]()
+    local prompt = cmp[name]()
+    if prompt ~= "" then
+        prompt = " " .. prompt
+    end
+    return prompt
 end
 
 if not vim.g.did_statusline then
@@ -57,15 +61,38 @@ end
 function cmp.git()
     run_git_status()
 
-    local symbol = "  "
+    local symbol = " "
 
     if not vim.b.gitsigns_status_dict then
-        return " "
+        return ""
     end
 
-    local raw = symbol .. vim.b.gitsigns_status_dict.head .. " " .. git_status
+    local prompt = hi_pattern:format("Conditional", symbol .. vim.b.gitsigns_status_dict.head .. git_status)
+    return prompt
+end
 
-    return hi_pattern:format("Conditional", raw) .. " "
+function cmp.git_lines()
+    if not vim.b.gitsigns_status_dict then
+        return ""
+    end
+
+    local lines = {}
+    if vim.b.gitsigns_status_dict.added and vim.b.gitsigns_status_dict.added ~= 0 then
+        table.insert(lines, hi_pattern:format("GitsignsAdd", "+" .. vim.b.gitsigns_status_dict.added))
+    end
+    if vim.b.gitsigns_status_dict.changed and vim.b.gitsigns_status_dict.changed ~= 0 then
+        table.insert(lines, hi_pattern:format("GitsignsChange", "~" .. vim.b.gitsigns_status_dict.changed))
+    end
+    if vim.b.gitsigns_status_dict.removed and vim.b.gitsigns_status_dict.removed ~= 0 then
+        table.insert(lines, hi_pattern:format("GitsignsDelete", "-" .. vim.b.gitsigns_status_dict.removed))
+    end
+
+    local prompt = table.concat(lines, " ")
+    if prompt ~= "" then
+        prompt = string.format("(%s)", prompt)
+    end
+
+    return prompt
 end
 
 function cmp.lines()
@@ -169,7 +196,8 @@ function cmp.diagnostics()
         table.insert(diagnostics, hi_pattern:format("DiagnosticHint", "H" .. hints))
     end
 
-    return table.concat(diagnostics, " ")
+    local prompt = table.concat(diagnostics, " ")
+    return prompt
 end
 
 function cmp.attached_lsp()
@@ -178,25 +206,26 @@ function cmp.attached_lsp()
         return ""
     end
 
-    return "󰒓 " .. clients
+    return " 󰒓 " .. clients
 end
 
 vim.opt.statusline = table.concat({
     '%{%v:lua._statusline_component("git")%}',
-    "%t ",
+    " %t",
     "%r",
-    "%m",
-    ' %{%v:lua._statusline_component("diagnostics")%}',
+    "%m ",
+    '%{%v:lua._statusline_component("diagnostics")%}',
+    '%{%v:lua._statusline_component("git_lines")%}',
     "%<",
     "%=",
-    '%{%v:lua._statusline_component("formatters")%} ',
-    '%{%v:lua._statusline_component("attached_lsp")%} ',
-    '%{%v:lua._statusline_component("filetype")%} ',
+    '%{%v:lua._statusline_component("formatters")%}',
+    '%{%v:lua._statusline_component("attached_lsp")%}',
+    '%{%v:lua._statusline_component("filetype")%}',
     ' %{%v:lua._statusline_component("lines")%}',
 })
 
 vim.opt.tabline = table.concat({
-    ' %{%v:lua._statusline_component("full_file")%} ',
+    '%{%v:lua._statusline_component("full_file")%}',
     "%r",
     "%m",
 })
