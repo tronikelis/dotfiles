@@ -187,6 +187,7 @@ vim.opt.statusline = table.concat({
     "%r",
     "%m",
     ' %{%v:lua._statusline_component("diagnostics")%}',
+    "%<",
     "%=",
     '%{%v:lua._statusline_component("formatters")%} ',
     '%{%v:lua._statusline_component("attached_lsp")%} ',
