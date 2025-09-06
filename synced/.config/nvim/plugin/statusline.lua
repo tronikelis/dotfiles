@@ -41,7 +41,7 @@ local function run_git_status()
     git_status_running = true
 
     local cwd = vim.fn.expand("%:p:h")
-    if cwd:sub(1, 1) ~= "/" then
+    if cwd:sub(1, 1) ~= "/" or vim.bo.buftype ~= "" then
         cwd = nil
     end
 
@@ -68,7 +68,7 @@ function cmp.git()
     end
 
     local prompt = hi_pattern:format("Conditional", symbol .. vim.b.gitsigns_status_dict.head .. git_status)
-    return prompt
+    return prompt .. " "
 end
 
 function cmp.git_lines()
