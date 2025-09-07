@@ -46,7 +46,8 @@ local function run_git_status()
     end
 
     vim.system(
-        { "bash", "-c", [[starship module git_status | perl -pe 's/\e\[[0-9;]*m//g'; sleep 1]] }, -- sleep here to not spam
+        -- sleep here to not spam
+        { "bash", "-c", [[sleep 1; starship module git_status | perl -pe 's/\e\[[0-9;]*m//g']] },
         { cwd = cwd },
         function(out)
             git_status_running = false
