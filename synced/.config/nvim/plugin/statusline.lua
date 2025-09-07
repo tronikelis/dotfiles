@@ -17,18 +17,16 @@ function _G._statusline_component(name)
 end
 
 if not vim.g.did_statusline then
+    local interval = 2000
     local timer = assert(vim.uv.new_timer())
-    local function callback()
-        timer:start(
-            2000,
-            0,
-            vim.schedule_wrap(function()
-                vim.cmd("redrawstatus")
-                callback()
-            end)
-        )
-    end
-    callback()
+
+    timer:start(
+        interval,
+        interval,
+        vim.schedule_wrap(function()
+            vim.cmd("redrawstatus")
+        end)
+    )
 end
 vim.g.did_statusline = true
 
