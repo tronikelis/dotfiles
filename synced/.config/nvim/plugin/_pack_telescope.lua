@@ -41,6 +41,13 @@ local function setup()
         actions.close(prompt_bufnr)
     end
 
+    local function pass_mappings(mappings)
+        return {
+            n = mappings,
+            i = mappings,
+        }
+    end
+
     require("telescope").setup({
         defaults = {
             sorting_strategy = "ascending",
@@ -57,21 +64,26 @@ local function setup()
                 },
             },
             vimgrep_arguments = vimgrep_arguments,
-            mappings = {
-                i = {
-                    ["<c-h>"] = actions.preview_scrolling_left,
-                    ["<c-l>"] = actions.preview_scrolling_right,
+            mappings = pass_mappings({
+                ["<c-h>"] = actions.preview_scrolling_left,
+                ["<c-l>"] = actions.preview_scrolling_right,
 
-                    ["<c-y>"] = copy_current_entry,
-                    ["<esc>"] = actions.close,
+                ["<c-d>"] = actions.preview_scrolling_down,
+                ["<c-u>"] = actions.preview_scrolling_up,
 
-                    ["<c-f>"] = actions.cycle_previewers_next,
-                    ["<c-b>"] = actions.cycle_previewers_prev,
+                ["<c-y>"] = copy_current_entry,
 
-                    ["<c-s>"] = actions.file_split,
-                    ["<c-v>"] = actions.file_vsplit,
-                },
-            },
+                ["<c-f>"] = actions.cycle_previewers_next,
+                ["<c-b>"] = actions.cycle_previewers_prev,
+
+                ["<c-n>"] = actions.move_selection_next,
+                ["<c-p>"] = actions.move_selection_previous,
+
+                ["<c-c>"] = actions.close,
+
+                ["<c-s>"] = actions.file_split,
+                ["<c-v>"] = actions.file_vsplit,
+            }),
             path_display = { "truncate" },
             cache_picker = {
                 num_pickers = 50,
@@ -93,11 +105,9 @@ local function setup()
             },
             buffers = {
                 sort_mru = true,
-                mappings = {
-                    i = {
-                        ["<c-x>"] = actions.delete_buffer,
-                    },
-                },
+                mappings = pass_mappings({
+                    ["<c-x>"] = actions.delete_buffer,
+                }),
             },
             oldfiles = {
                 only_cwd = true,
@@ -114,12 +124,10 @@ local function setup()
         }),
         extensions = with_picker_defaults({
             live_grep_args = {
-                mappings = {
-                    i = {
-                        ["<c-space>"] = actions.to_fuzzy_refine,
-                        ["<c-f>"] = lga_actions.quote_prompt({ postfix = " -F" }),
-                    },
-                },
+                mappings = pass_mappings({
+                    ["<c-space>"] = actions.to_fuzzy_refine,
+                    ["<c-f>"] = lga_actions.quote_prompt({ postfix = " -F" }),
+                }),
             },
             git_diff_stat = {
                 preview_get_command = function(opts, entry)
