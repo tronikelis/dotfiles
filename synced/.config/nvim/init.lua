@@ -3,6 +3,7 @@
 table.unpack = table.unpack or unpack
 
 require("paq")({
+    "ibhagwan/fzf-lua",
     "NMAC427/guess-indent.nvim",
     "folke/lazydev.nvim",
     "folke/ts-comments.nvim",
@@ -16,9 +17,6 @@ require("paq")({
     "mbbill/undotree",
     "neovim/nvim-lspconfig",
     "nvim-lua/plenary.nvim",
-    "nvim-telescope/telescope-live-grep-args.nvim",
-    "nvim-telescope/telescope-ui-select.nvim",
-    "nvim-telescope/telescope.nvim",
     "nvim-tree/nvim-web-devicons",
     "nvim-treesitter/nvim-treesitter-context",
     "onsails/lspkind.nvim",
@@ -29,11 +27,9 @@ require("paq")({
     "tronikelis/conflict-marker.nvim",
     "tronikelis/gitdive.nvim",
     "tronikelis/sstash.nvim",
-    "tronikelis/telescope-git-diff-stat.nvim",
     "tronikelis/ts-autotag.nvim",
     "tronikelis/xylene.nvim",
     { "catppuccin/nvim", branch = "v1.11.0" },
-    { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
     { "nvim-treesitter/nvim-treesitter", branch = "main", build = ":TSUpdate" },
 })
 
