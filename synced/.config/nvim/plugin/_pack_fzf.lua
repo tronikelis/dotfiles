@@ -5,6 +5,44 @@ local function current_wd()
     return vim.fn.expand("%:p:h")
 end
 
+local function action_motion_edit(_, opts)
+    local buf = vim.api.nvim_create_buf(false, true)
+
+    vim.api.nvim_buf_set_lines(buf, 0, -1, true, { opts.query or "" })
+    local winid = vim.api.nvim_open_win(buf, true, {
+        relative = "editor",
+        width = 100,
+        height = 1,
+        row = 4,
+        col = vim.o.columns / 4,
+        border = "rounded",
+        title = "Fzf query:",
+        style = "minimal",
+    })
+
+    local function close()
+        vim.api.nvim_buf_delete(buf, { force = true })
+        require("fzf-lua").resume()
+    end
+
+    local function accept()
+        opts.query = vim.api.nvim_buf_get_lines(buf, 0, 1, true)[1]
+        close()
+    end
+
+    vim.api.nvim_create_autocmd("WinClosed", {
+        pattern = tostring(winid),
+        once = true,
+        callback = close,
+    })
+
+    vim.keymap.set("n", "<esc>", close, { buffer = buf })
+    vim.keymap.set("n", "q", close, { buffer = buf })
+
+    vim.keymap.set({ "n", "i" }, "<c-c>", accept, { buffer = buf })
+    vim.keymap.set({ "n", "i" }, "<enter>", accept, { buffer = buf })
+end
+
 local actions = require("fzf-lua").actions
 
 require("fzf-lua").setup({
@@ -14,6 +52,7 @@ require("fzf-lua").setup({
         files = {
             ["ctrl-s"] = actions.file_split,
             ["ctrl-v"] = actions.file_vsplit,
+            ["ctrl-x"] = action_motion_edit,
         },
     },
 })
