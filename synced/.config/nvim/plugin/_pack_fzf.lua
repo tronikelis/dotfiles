@@ -7,14 +7,16 @@ end
 
 local function action_motion_edit(_, opts)
     local buf = vim.api.nvim_create_buf(false, true)
-
     vim.api.nvim_buf_set_lines(buf, 0, -1, true, { opts.query or "" })
+
+    local width = math.min(50, vim.o.columns - 10)
+    local height = 1
     local winid = vim.api.nvim_open_win(buf, true, {
         relative = "editor",
-        width = 100,
-        height = 1,
-        row = 4,
-        col = vim.o.columns / 4,
+        width = width,
+        height = height,
+        row = math.min(10, vim.o.lines),
+        col = math.floor((vim.o.columns - width) / 2),
         border = "rounded",
         title = "Fzf query:",
         style = "minimal",
