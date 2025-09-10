@@ -190,3 +190,6 @@ vim.opt.shadafile = (function()
 
     return file
 end)()
+
+vim.opt.wildmenu = true
+vim.opt.wildmode = "longest:full,full"
