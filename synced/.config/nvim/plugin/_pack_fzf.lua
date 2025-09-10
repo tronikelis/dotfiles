@@ -54,7 +54,7 @@ require("fzf-lua").setup({
         files = {
             ["ctrl-s"] = actions.file_split,
             ["ctrl-v"] = actions.file_vsplit,
-            ["ctrl-x"] = action_motion_edit,
+            ["ctrl-i"] = action_motion_edit,
         },
     },
 })
