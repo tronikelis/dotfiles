@@ -22,20 +22,26 @@ local function action_motion_edit(_, opts)
         style = "minimal",
     })
 
+    local group = vim.api.nvim_create_augroup("fzflua/action_motion_edit", {})
+
     local function close()
+        vim.api.nvim_del_augroup_by_id(group)
         vim.api.nvim_buf_delete(buf, { force = true })
-        require("fzf-lua").resume()
     end
 
     local function accept()
         opts.query = vim.api.nvim_buf_get_lines(buf, 0, 1, true)[1]
         close()
+        require("fzf-lua").resume()
     end
 
-    vim.api.nvim_create_autocmd("WinClosed", {
-        pattern = tostring(winid),
-        once = true,
-        callback = close,
+    vim.api.nvim_create_autocmd("WinLeave", {
+        group = group,
+        callback = function()
+            if vim.api.nvim_get_current_win() == winid then
+                close()
+            end
+        end,
     })
 
     vim.keymap.set("n", "<esc>", close, { buffer = buf })
