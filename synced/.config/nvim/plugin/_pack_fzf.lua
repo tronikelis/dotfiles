@@ -26,7 +26,12 @@ local function action_motion_edit(_, opts)
 
     local function close()
         vim.api.nvim_del_augroup_by_id(group)
-        vim.api.nvim_buf_delete(buf, { force = true })
+        if vim.api.nvim_buf_is_valid(buf) then
+            vim.api.nvim_buf_delete(buf, { force = true })
+        end
+        if vim.api.nvim_win_is_valid(winid) then
+            vim.api.nvim_win_close(winid, true)
+        end
     end
 
     local function accept()
