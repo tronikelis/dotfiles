@@ -221,7 +221,6 @@ KEYTIMEOUT=100
 alias ls="eza --icons -a --group-directories-first"
 alias ll="ls --long --all"
 alias ..="cd .."
-alias tdm_sync_git_pull="cd ~/.tdm && git pull && tdm sync && cd -"
 alias grep="grep --color=auto"
 
 
