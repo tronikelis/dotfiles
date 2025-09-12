@@ -1,6 +1,6 @@
 # My dotfiles
 
-Managed by [https://github.com/Tronikelis/tdm](https://github.com/Tronikelis/tdm)
+Managed by gnu stow
 
 ## Some of the things I use
 
