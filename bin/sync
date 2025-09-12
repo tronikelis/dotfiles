@@ -1,0 +1,5 @@
+#!/bin/bash
+
+cd ~/dotfiles/synced || exit
+
+stow -t ~ --restow .

@@ -1,0 +1,17 @@
+#!/bin/bash
+
+set -eo pipefail
+
+if [[ ! "$1" ]]; then
+    echo "provide target"
+    exit 1
+fi
+
+abs="$(pwd)/$1"
+relative="${abs#"$HOME"}"
+
+mkdir -p "$HOME/dotfiles/synced/$(dirname "$relative")"
+
+mv "$abs" "$HOME/dotfiles/synced/$(dirname "$relative")/$1"
+
+~/dotfiles/bin/sync
