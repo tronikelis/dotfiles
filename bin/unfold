@@ -1,0 +1,12 @@
+#!/bin/bash
+
+set -eo pipefail
+
+if [[ ! "$1" ]]; then
+    echo "provide stow link"
+    exit 1
+fi
+
+rm "$1" && mkdir "$1"
+
+~/dotfiles/bin/sync
