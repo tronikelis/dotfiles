@@ -68,6 +68,18 @@ require("fzf-lua").setup({
             ["ctrl-i"] = action_motion_edit,
         },
     },
+
+    grep = {
+        rg_opts = "--trim " .. require("fzf-lua.defaults").defaults.grep.rg_opts,
+    },
+
+    defaults = {
+        trim_entry = true,
+    },
+
+    oldfiles = {
+        include_current_session = true,
+    },
 })
 
 require("fzf-lua").register_ui_select()
