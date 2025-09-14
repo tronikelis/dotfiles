@@ -104,6 +104,10 @@ vim.keymap.set("n", "<leader>fg", function()
     require("fzf-lua").live_grep()
 end)
 
+vim.keymap.set("n", "<leader>fp", function()
+    require("fzf-lua").grep_project()
+end)
+
 vim.keymap.set("n", "<leader>fG", function()
     require("fzf-lua").grep_cword()
 end)
