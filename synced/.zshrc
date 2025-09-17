@@ -274,7 +274,12 @@ function smux() {
     ~/.config/tmux/scripts/upsert_session.sh "$@"
 }
 
-function wfiles() {
+function wfilesp() {
+    if [[ ! "$1" ]]; then
+        echo "Provide dir"
+        return 1
+    fi
+
     local dir="$1"
     shift
     while true; do
@@ -283,6 +288,19 @@ function wfiles() {
     done
 }
 
+function wfilesn() {
+    if [[ ! "$1" ]]; then
+        echo "Provide dir"
+        return 1
+    fi
+
+    local dir="$1"
+    shift
+    while true; do
+        fd . "$dir" | entr -d "$@"
+        sleep 0.5
+    done
+}
 
 
 
