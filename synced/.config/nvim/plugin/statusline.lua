@@ -221,7 +221,7 @@ vim.opt.statusline = table.concat({
     "%=",
     '%{%v:lua._statusline_component("formatters")%}',
     '%{%v:lua._statusline_component("attached_lsp")%}',
-    '%{%v:lua._statusline_component("filetype")%}',
+    ' %{%v:lua._statusline_component("filetype")%}',
     ' %{%v:lua._statusline_component("lines")%}',
 })
 
