@@ -282,8 +282,9 @@ function wfilesp() {
 
     local dir="$1"
     shift
+    local args="$@"
     while true; do
-        fd . "$dir" | entr -d -r "$@"
+        fd . "$dir" | entr -d -r -s "$args"
         sleep 0.5
     done
 }
@@ -296,8 +297,9 @@ function wfilesn() {
 
     local dir="$1"
     shift
+    local args="$@"
     while true; do
-        fd . "$dir" | entr -d "$@"
+        fd . "$dir" | entr -d -s "$args"
         sleep 0.5
     done
 }
