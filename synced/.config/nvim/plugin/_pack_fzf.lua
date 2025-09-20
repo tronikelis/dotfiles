@@ -88,6 +88,10 @@ vim.keymap.set("n", "<c-p>", function()
     require("fzf-lua").files()
 end)
 
+vim.keymap.set("n", "<leader>=", function()
+    require("fzf-lua").resume()
+end)
+
 vim.keymap.set("n", "<leader>fr", function()
     require("fzf-lua").files({
         cwd = current_wd(),
