@@ -11,6 +11,10 @@ vim.diagnostic.config({
         border = "rounded",
         source = true,
     },
+    jump = {
+        wrap = false,
+        float = true,
+    },
     signs = {
         text = {
             [vim.diagnostic.severity.ERROR] = "",
@@ -42,16 +46,16 @@ vim.keymap.set("n", "<leader>rn", function()
     vim.lsp.buf.rename()
 end)
 vim.keymap.set("n", "[e", function()
-    vim.diagnostic.jump({ severity = vim.diagnostic.severity.E, wrap = false, count = -vim.v.count1, float = true })
+    vim.diagnostic.jump({ severity = vim.diagnostic.severity.E, count = -vim.v.count1 })
 end)
 vim.keymap.set("n", "]e", function()
-    vim.diagnostic.jump({ severity = vim.diagnostic.severity.E, wrap = false, count = vim.v.count1, float = true })
+    vim.diagnostic.jump({ severity = vim.diagnostic.severity.E, count = vim.v.count1 })
 end)
 vim.keymap.set("n", "[w", function()
-    vim.diagnostic.jump({ severity = vim.diagnostic.severity.W, wrap = false, count = -vim.v.count1, float = true })
+    vim.diagnostic.jump({ severity = vim.diagnostic.severity.W, count = -vim.v.count1 })
 end)
 vim.keymap.set("n", "]w", function()
-    vim.diagnostic.jump({ severity = vim.diagnostic.severity.W, wrap = false, count = vim.v.count1, float = true })
+    vim.diagnostic.jump({ severity = vim.diagnostic.severity.W, count = vim.v.count1 })
 end)
 
 vim.lsp.config("*", {
