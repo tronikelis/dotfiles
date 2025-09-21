@@ -1,0 +1,29 @@
+#!/bin/bash
+
+if [[ ! "$1" ]]; then
+    echo "provide filename"
+    exit 1
+fi
+
+if [[ ! -f "$1" ]]; then
+    echo "provide a normal file"
+    exit 1
+fi
+
+
+dir="$(mktemp -d)/$(dirname "$1")"
+mkdir -p "$dir" || exit
+
+me="$(whoami)"
+
+editable_file="$dir/$(basename "$1")"
+
+sudo cp "$1" "$dir" || exit
+
+sudo chown "$me" "$editable_file" || exit
+
+"$VISUAL" "$editable_file" || exit
+
+sudo cp "$editable_file" "$1" || exit
+
+echo "written"
