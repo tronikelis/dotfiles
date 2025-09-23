@@ -29,6 +29,7 @@ local tools = {
     { name = "taplo", deps = {} },
     { name = "templ", deps = {} },
     { name = "zls", deps = {} },
+    { name = "clangd", deps = {} },
 }
 
 local function ensure_installed()
