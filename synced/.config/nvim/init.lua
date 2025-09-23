@@ -174,6 +174,7 @@ vim.filetype.add({
         [".*/hypr/.*%.conf"] = "hyprlang",
         [".*%.gitconfig"] = "gitconfig",
         ["Dockerfile.*"] = "dockerfile",
+        ["%.env%..*"] = "sh",
     },
 })
 
