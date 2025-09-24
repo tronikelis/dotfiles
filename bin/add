@@ -12,6 +12,6 @@ relative="${abs#"$HOME"}"
 
 mkdir -p "$HOME/dotfiles/synced/$(dirname "$relative")"
 
-mv "$abs" "$HOME/dotfiles/synced/$(dirname "$relative")/$1"
+mv "$abs" "$HOME/dotfiles/synced/$(dirname "$relative")/$(basename "$1")"
 
 ~/dotfiles/bin/sync
