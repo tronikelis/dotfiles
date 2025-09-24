@@ -1,3 +1,3 @@
 #!/bin/bash
 
-tmux ls | fzf --tmux | awk '{print $1}' | rev | cut -c 2- | rev | xargs tmux switch -t
+tmux ls -F '#{session_name}' | fzf --tmux | xargs -I{} tmux switch -t="{}"
