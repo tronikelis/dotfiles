@@ -54,7 +54,8 @@
 [alias]
 	conflicts = diff --name-only --diff-filter=U
 	blamefull = blame -w -C -C -C
-	diffw = diff --color-words
+	diffc = diff --color-words
+	diffw = diff --ignore-space-at-eol -b -w --ignore-blank-lines
 	cleanfd = clean -f -d
 	root = rev-parse --show-toplevel
 	logo = log --oneline
