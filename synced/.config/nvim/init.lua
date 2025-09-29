@@ -176,6 +176,10 @@ vim.filetype.add({
         ["Dockerfile.*"] = "dockerfile",
         ["%.env%..*"] = "sh",
     },
+    extension = {
+        avsc = "json",
+        avdl = "avro-idl",
+    },
 })
 
 -- tree sitter
