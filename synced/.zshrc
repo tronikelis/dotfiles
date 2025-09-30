@@ -151,6 +151,7 @@ source ~/.zsh_plugins/fzf-tab/fzf-tab.plugin.zsh
 source ~/.zsh_plugins/fzf-git/fzf-git.plugin.zsh
 source ~/.zsh_plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh
 source ~/.zsh_plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh
+source ~/.zsh_plugins/fzf/fzf.plugin.zsh
 
 
 
@@ -239,9 +240,6 @@ if is_executable zoxide; then
 fi
 if is_executable starship; then
     eval "$(starship init zsh)"
-fi
-if is_executable fzf; then
-    eval "$(fzf --zsh)"
 fi
 
 
