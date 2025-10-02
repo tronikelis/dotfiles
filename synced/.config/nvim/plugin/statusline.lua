@@ -17,7 +17,7 @@ function _G._statusline_component(name)
 end
 
 if not vim.g.did_statusline then
-    local interval = 2000
+    local interval = 3000
     local timer = assert(vim.uv.new_timer())
 
     timer:start(
@@ -45,7 +45,7 @@ local function run_git_status()
 
     vim.system(
         -- sleep here to not spam
-        { "bash", "-c", [[sleep 1; starship module git_status | perl -pe 's/\e\[[0-9;]*m//g']] },
+        { "bash", "-c", [[sleep 3; starship module git_status | perl -pe 's/\e\[[0-9;]*m//g']] },
         { cwd = cwd },
         function(out)
             git_status_running = false
