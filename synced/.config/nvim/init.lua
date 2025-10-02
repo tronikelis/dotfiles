@@ -133,14 +133,22 @@ vim.keymap.set("n", "#", [[<cmd>let @/='\C\<' . expand("<cword>") . '\>'<cr><cmd
 -- simple user commands
 
 vim.api.nvim_create_user_command("RemoveTrailing", [[%s/\s\+$//e | nohlsearch]], {})
-vim.api.nvim_create_user_command("BreakComma", function(ev)
-    vim.cmd({
-        cmd = "s",
-        args = { [[/,/,\r/g]] },
-        range = { ev.line1, ev.line2 },
-    })
-    vim.cmd("noh")
-end, { range = true })
+
+---@param name string
+---@param arg string
+local function create_substitute_user_command(name, arg)
+    vim.api.nvim_create_user_command(name, function(ev)
+        vim.cmd({
+            cmd = "s",
+            args = { arg },
+            range = { ev.line1, ev.line2 },
+        })
+        vim.cmd("noh")
+    end, { range = true })
+end
+
+create_substitute_user_command("BreakComma", [[/,/,\r/g]])
+create_substitute_user_command("FoldNewlines", [[/\(\S.*\n\s*\)\n/\1]])
 
 -- autocmds
 
