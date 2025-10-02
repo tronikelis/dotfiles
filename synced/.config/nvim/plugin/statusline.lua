@@ -178,14 +178,12 @@ function cmp.formatters()
 end
 
 function cmp.diagnostics()
-    local function get_diagnostic_count(severity)
-        return vim.diagnostic.count(0, { severity = severity })[severity] or 0
-    end
+    local count = vim.diagnostic.count(0)
 
-    local errors = get_diagnostic_count(vim.diagnostic.severity.E)
-    local warnings = get_diagnostic_count(vim.diagnostic.severity.W)
-    local infos = get_diagnostic_count(vim.diagnostic.severity.I)
-    local hints = get_diagnostic_count(vim.diagnostic.severity.HINT)
+    local errors = count[vim.diagnostic.severity.E] or 0
+    local warnings = count[vim.diagnostic.severity.W] or 0
+    local infos = count[vim.diagnostic.severity.I] or 0
+    local hints = count[vim.diagnostic.severity.HINT] or 0
 
     local diagnostics = {}
     if errors ~= 0 then
