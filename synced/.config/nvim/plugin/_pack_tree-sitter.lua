@@ -1,3 +1,5 @@
+local augroup = vim.api.nvim_create_augroup("plugin/_pack_tree-sitter.lua", {})
+
 require("treesitter-context").setup({
     enable = true,
     max_lines = 5,
@@ -46,6 +48,7 @@ require("nvim-treesitter").install({
 })
 
 vim.api.nvim_create_autocmd("FileType", {
+    group = augroup,
     callback = function(ev)
         local success, parser = pcall(vim.treesitter.get_parser, ev.buf)
         if success and parser then

@@ -1,3 +1,5 @@
+local augroup = vim.api.nvim_create_augroup("plugin/_pack_oil.lua", {})
+
 local oil = require("oil")
 
 oil.setup({
@@ -14,6 +16,7 @@ oil.setup({
 local actions = require("oil.actions")
 
 vim.api.nvim_create_autocmd("FileType", {
+    group = augroup,
     pattern = "oil",
     callback = function(event)
         local bufnr = event.buf

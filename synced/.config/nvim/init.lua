@@ -2,6 +2,8 @@
 -- but nvim still uses older lua that does not support it, so fallback
 table.unpack = table.unpack or unpack
 
+local augroup = vim.api.nvim_create_augroup("init.lua", {})
+
 require("paq")({
     "ibhagwan/fzf-lua",
     "NMAC427/guess-indent.nvim",
@@ -33,16 +35,19 @@ require("paq")({
     { "nvim-treesitter/nvim-treesitter", branch = "main", build = ":TSUpdate" },
 })
 
-local del_mappings = {
-    "gri",
-    "grr",
-    "gra",
-    "grn",
-    "grt",
-}
-for _, v in ipairs(del_mappings) do
-    vim.keymap.del("", v)
+if not vim.g.del_mappings then
+    local del_mappings = {
+        "gri",
+        "grr",
+        "gra",
+        "grn",
+        "grt",
+    }
+    for _, v in ipairs(del_mappings) do
+        vim.keymap.del("", v)
+    end
 end
+vim.g.del_mappings = true
 
 -- interferes with <C-c> to exit insert mode
 vim.g.omni_sql_no_default_maps = true
@@ -141,6 +146,7 @@ end, { range = true })
 
 -- highlights yanked text
 vim.api.nvim_create_autocmd("TextYankPost", {
+    group = augroup,
     callback = function()
         vim.highlight.on_yank({
             higroup = "IncSearch",
@@ -151,6 +157,7 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 
 -- restore cursor to file position in previous editing session
 vim.api.nvim_create_autocmd("BufReadPost", {
+    group = augroup,
     callback = function(args)
         local mark = vim.api.nvim_buf_get_mark(args.buf, '"')
         local line_count = vim.api.nvim_buf_line_count(args.buf)
@@ -164,6 +171,7 @@ vim.api.nvim_create_autocmd("BufReadPost", {
 
 -- auto resize splits when the terminal's window is resized
 vim.api.nvim_create_autocmd("VimResized", {
+    group = augroup,
     command = "wincmd =",
 })
 

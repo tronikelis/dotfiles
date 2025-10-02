@@ -1,6 +1,9 @@
+local augroup = vim.api.nvim_create_augroup("plugin/_pack_formatter.lua", {})
+
 local utils = require("utils")
 
 vim.api.nvim_create_autocmd("VimLeavePre", {
+    group = augroup,
     callback = function()
         vim.fn.jobstart("killall prettierd eslint_d", { detach = true })
     end,

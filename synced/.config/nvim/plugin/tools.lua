@@ -1,3 +1,5 @@
+local augroup = vim.api.nvim_create_augroup("plugin/tools.lua", {})
+
 ---@class NvimConfig.Tool
 ---@field name string
 ---@field deps string[]
@@ -71,5 +73,6 @@ local function ensure_installed()
 end
 
 vim.api.nvim_create_autocmd("VimEnter", {
+    group = augroup,
     callback = ensure_installed,
 })

@@ -1,3 +1,5 @@
+local augroup = vim.api.nvim_create_augroup("plugin/_pack_lsp.lua", {})
+
 require("mason").setup()
 
 vim.diagnostic.config({
@@ -148,6 +150,7 @@ local function stop_snippet()
 end
 
 vim.api.nvim_create_autocmd("InsertLeave", {
+    group = augroup,
     callback = stop_snippet,
 })
 
