@@ -76,6 +76,8 @@
 	wdeletei = "!~/.config/git/delete_worktrees.sh #"
 	# pretty print sorted branches by time
 	brecent = "!git branch --sort=-committerdate --color=always --format='%(color:yellow)%(committerdate:short)|||%(color:blue)%(committerdate:relative)|||%(color:reset)%(refname:short)|||%(authorname)' | column -t -s '|||' #"
+	# cherry but squashed version
+	cherry-squash = "!git reset --soft \"$(git merge-base --fork-point \"$1\")\" &>/dev/null && git commit -m 'squashed' &>/dev/null && git cherry -v \"$1\" && git reset --hard HEAD@{2} &>/dev/null #"
 
 [merge]
 	tool = nvimdiff
