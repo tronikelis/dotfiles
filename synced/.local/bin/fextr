@@ -2,6 +2,7 @@
 
 i="$1"
 nf="$2"
+fs="$3"
 
 if [[ ! "$i" ]]; then
     echo "provide i"
@@ -12,11 +13,15 @@ if [[ ! "$nf" ]]; then
     exit 1
 fi
 
-awk  "
+if [[ ! "$fs" ]]; then
+    fs=" "
+fi
+
+awk -F "$fs" "
     {
         var = \"\"
         for (i = $i; i <= NF - $nf; i++) {
-            var = var \" \" \$i
+            var = var FS \$i
         }
         print var
     }
