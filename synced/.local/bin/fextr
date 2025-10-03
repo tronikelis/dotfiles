@@ -25,4 +25,4 @@ awk -F "$fs" "
         }
         print var
     }
-" | cut -c 2-
+" | cut -c "$((${#fs} + 1))"-
