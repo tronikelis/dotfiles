@@ -20,14 +20,14 @@ function fzf_git_branches() {
 function fzf_git_worktrees() {
     local sum=""
     while read -r line; do
-        local t="$(awk '{print $1}' <<<"$line")"
+        local t="$(fextr 1 2 <<<"$line")"
         local unix="$(unix_last_modified "$t")"
 
         sum="$sum$line $unix"$'\n'
     done < <(git worktree list)
     sum=${sum%$'\n'}
 
-    sort -r -n -k 4 <<<"$sum" | fzf_git "$@" | awk '{print $1}'
+    sort -r -n -k 4 <<<"$sum" | fzf_git "$@" | fextr 1 3
 }
 
 function _fzf_git_worktrees() {
