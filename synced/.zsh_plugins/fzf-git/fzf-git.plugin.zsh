@@ -31,7 +31,7 @@ function fzf_git_worktrees() {
 }
 
 function _fzf_git_worktrees() {
-    zle -U "$(fzf_git_worktrees | tr '\n' ' ')"
+    zle -U "$(fzf_git_worktrees | shellescape | tr '\n' ' ')"
 }
 
 function _fzf_git_branches() {
