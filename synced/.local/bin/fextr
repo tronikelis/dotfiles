@@ -1,0 +1,23 @@
+#!/bin/bash
+
+i="$1"
+nf="$2"
+
+if [[ ! "$i" ]]; then
+    echo "provide i"
+    exit 1
+fi
+if [[ ! "$nf" ]]; then
+    echo "provide nf"
+    exit 1
+fi
+
+awk  "
+    {
+        var = \"\"
+        for (i = $i; i <= NF - $nf; i++) {
+            var = var \" \" \$i
+        }
+        print var
+    }
+" | cut -c 2-
