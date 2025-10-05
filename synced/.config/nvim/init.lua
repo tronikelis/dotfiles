@@ -198,12 +198,8 @@ vim.filetype.add({
     },
 })
 
--- tree sitter
-
-vim.treesitter.language.register("bash", "zsh")
-
+-- tree sitter highlighting has priority over semantic tokens
 if vim.hl.priorities.semantic_tokens > vim.hl.priorities.treesitter then
-    -- tree sitter highlighting has priority over semantic tokens
     vim.hl.priorities.semantic_tokens, vim.hl.priorities.treesitter =
         vim.hl.priorities.treesitter, vim.hl.priorities.semantic_tokens
 end
