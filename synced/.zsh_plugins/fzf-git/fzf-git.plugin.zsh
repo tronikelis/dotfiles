@@ -21,6 +21,9 @@ function fzf_git_worktrees() {
     local sum=""
     while read -r line; do
         local t="$(fextr 1 2 <<<"$line")"
+        if [[ ! "$t" ]]; then
+            continue
+        fi
         local unix="$(unix_last_modified "$t")"
 
         sum="$sum$line $unix"$'\n'
