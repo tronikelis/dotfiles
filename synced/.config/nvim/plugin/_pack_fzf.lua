@@ -1,3 +1,5 @@
+local augroup = vim.api.nvim_create_augroup("plugin/_pack_fzf.lua", {})
+
 local function current_wd()
     if vim.bo.filetype == "oil" then
         return require("oil").get_current_dir()
@@ -79,6 +81,7 @@ require("fzf-lua").setup({
 
     oldfiles = {
         include_current_session = true,
+        cwd_only = true,
     },
 })
 
@@ -152,26 +155,31 @@ vim.keymap.set("n", "<leader>dC", function()
     require("fzf-lua").diagnostics_workspace()
 end)
 
-vim.keymap.set("n", "<leader>ds", function()
-    require("fzf-lua").lsp_document_symbols()
-end)
+vim.api.nvim_create_autocmd("LspAttach", {
+    group = augroup,
+    callback = function(ev)
+        vim.keymap.set("n", "<leader>ds", function()
+            require("fzf-lua").lsp_document_symbols()
+        end, { buffer = ev.buf })
 
-vim.keymap.set("n", "<leader>dS", function()
-    require("fzf-lua").lsp_workspace_symbols()
-end)
+        vim.keymap.set("n", "<leader>dS", function()
+            require("fzf-lua").lsp_workspace_symbols()
+        end, { buffer = ev.buf })
 
-vim.keymap.set("n", "gI", function()
-    require("fzf-lua").lsp_implementations()
-end)
+        vim.keymap.set("n", "gI", function()
+            require("fzf-lua").lsp_implementations()
+        end, { buffer = ev.buf })
 
-vim.keymap.set("n", "gt", function()
-    require("fzf-lua").lsp_typedefs()
-end)
+        vim.keymap.set("n", "gt", function()
+            require("fzf-lua").lsp_typedefs()
+        end, { buffer = ev.buf })
 
-vim.keymap.set("n", "gd", function()
-    require("fzf-lua").lsp_definitions()
-end)
+        vim.keymap.set("n", "gd", function()
+            require("fzf-lua").lsp_definitions()
+        end, { buffer = ev.buf })
 
-vim.keymap.set("n", "gr", function()
-    require("fzf-lua").lsp_references()
-end)
+        vim.keymap.set("n", "gr", function()
+            require("fzf-lua").lsp_references()
+        end, { buffer = ev.buf })
+    end,
+})
