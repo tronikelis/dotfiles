@@ -195,6 +195,9 @@ vim.filetype.add({
     extension = {
         avsc = "json",
         avdl = "avro-idl",
+        profile = "sd",
+        sd = "sd",
+        yql = "yql",
     },
 })
 

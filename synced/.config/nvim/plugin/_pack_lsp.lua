@@ -64,8 +64,9 @@ vim.lsp.config("*", {
     capabilities = require("cmp_nvim_lsp").default_capabilities(),
 })
 
-for lsp in vim.fs.dir("~/.config/nvim/lsp") do
+for lsp in vim.fs.dir("~/.config/nvim/lua/lsp") do
     local name = lsp:match("(.*)%.lua")
+    vim.lsp.config(name, require(string.format("lsp.%s", name)))
     vim.lsp.enable(name)
 end
 
