@@ -62,11 +62,18 @@ if is_executable vivid; then
     export LS_COLORS="$(vivid generate catppuccin-mocha)"
 fi
 
+cmd_copy="wl-copy"
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    cmd_copy="pbcopy"
+fi
+
 export FZF_DEFAULT_OPTS=" \
 --color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8 \
 --color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc \
 --color=marker:#b4befe,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8 \
---color=selected-bg:#45475a --layout=reverse --cycle"
+--color=selected-bg:#45475a --layout=reverse --cycle \
+--bind 'ctrl-y:execute-silent(echo -n {} | "$cmd_copy")+abort' \
+--bind ctrl-w:top"
 
 # Preview file content using bat (https://github.com/sharkdp/bat)
 export FZF_CTRL_T_OPTS="
@@ -78,11 +85,6 @@ export FZF_CTRL_T_OPTS="
 export FZF_ALT_C_OPTS="
   --walker-skip .git,node_modules,target
   --preview 'eza --icons --tree --color=always {}'"
-
-cmd_copy="wl-copy"
-if [[ "$OSTYPE" == "darwin"* ]]; then
-    cmd_copy="pbcopy"
-fi
 
 # CTRL-Y to copy the command into clipboard using pbcopy
 export FZF_CTRL_R_OPTS="
@@ -258,6 +260,14 @@ function cheatsh() {
 
 function cdmktemp() {
     cd "$(mktemp -d)"
+}
+
+function cdroot() {
+    if [[ ! "$1" ]]; then
+        echo "provide target"
+        return 1
+    fi
+    cd "$(dirname "$(froot "$1")")"
 }
 
 function killp() {
