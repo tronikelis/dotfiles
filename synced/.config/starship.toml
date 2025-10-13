@@ -16,6 +16,9 @@ style = "bold lavender"
 disabled = false
 symbol = "👑 "
 
+[git_status]
+use_git_executable = true
+
 # palette tables should be last in the config ⚓️
 [palettes.catppuccin_mocha]
 rosewater = "#f5e0dc"
