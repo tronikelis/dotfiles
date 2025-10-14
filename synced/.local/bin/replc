@@ -1,12 +1,18 @@
 #!/bin/bash
 
+function make_temp() {
+    local file="$(mktemp -u)$1"
+    touch "$file" || exit
+    echo "$file"
+}
+
 function make_fifo() {
     local fifo="$(mktemp -u)"
     mkfifo "$fifo" || exit
     echo "$fifo"
 }
 
-in="$(mktemp --suffix=.c)"
+in="$(make_temp .c)"
 
 fifo="$(make_fifo)"
 
@@ -37,7 +43,7 @@ exec 3>&1
 
 wait
 
-out="$(mktemp --suffix=.o)"
+out="$(make_temp .o)"
 
 if ! gcc_out="$(gcc "$in" -o "$out")"; then
     echo "$gcc_out"
