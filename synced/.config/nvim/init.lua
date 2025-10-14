@@ -143,7 +143,7 @@ end, { range = true })
 vim.api.nvim_create_user_command("FoldNewlines", function(ev)
     local prefix = string.format("%d,%d", ev.line1, ev.line2)
     if ev.bang then
-        vim.cmd(prefix .. [[g!/\S\+.*$/norm dd]])
+        vim.cmd(prefix .. [[g!/\S\+.*$/normal! dd]])
     else
         vim.cmd(prefix .. [[s/\(\S\+.*$\)\(\n\s*$\)\{2,}/\1\r/e]])
     end
