@@ -155,6 +155,10 @@ vim.keymap.set("n", "<leader>dC", function()
     require("fzf-lua").diagnostics_workspace()
 end)
 
+vim.keymap.set("n", "<leader>ch", function()
+    require("fzf-lua").command_history()
+end)
+
 vim.api.nvim_create_autocmd("LspAttach", {
     group = augroup,
     callback = function(ev)
