@@ -155,12 +155,12 @@ vim.api.nvim_create_autocmd("InsertLeave", {
     callback = stop_snippet,
 })
 
-vim.keymap.set({ "i", "s", "n" }, "<a-n>", function()
+vim.keymap.set({ "i", "s", "n" }, "<c-f>", function()
     if vim.snippet.active({ direction = 1 }) then
         vim.snippet.jump(1)
     end
 end)
-vim.keymap.set({ "i", "s", "n" }, "<a-p>", function()
+vim.keymap.set({ "i", "s", "n" }, "<c-b>", function()
     if vim.snippet.active({ direction = -1 }) then
         vim.snippet.jump(-1)
     end
