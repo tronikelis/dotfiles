@@ -187,3 +187,22 @@ vim.api.nvim_create_autocmd("LspAttach", {
         end, { buffer = ev.buf })
     end,
 })
+
+vim.api.nvim_create_user_command("GitDiff", function(ev)
+    ---@type string?
+    local ref
+
+    if #ev.fargs == 1 then
+        ref = ev.fargs[1]
+    elseif #ev.fargs > 1 then
+        local out = vim.system(require("utils").flatten({ "git", ev.fargs }), { text = true }):wait()
+        if out.code ~= 0 then
+            vim.notify(tostring(out.stderr), vim.log.levels.ERROR)
+            return
+        end
+
+        ref = vim.trim(out.stdout)
+    end
+
+    require("fzf-lua").git_diff({ ref = ref })
+end, { nargs = "*" })
