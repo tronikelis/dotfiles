@@ -5,8 +5,19 @@ vim.cmd("packadd cfilter")
 ---@param buf integer
 ---@return integer
 local function cmd_preview(ev, ns, buf)
-    -- jump to err line
-    vim.cmd("cc")
+    local qflist = vim.fn.getqflist()
+    local in_qflist = false
+    for _, v in ipairs(qflist) do
+        if v.bufnr == vim.api.nvim_get_current_buf() then
+            in_qflist = true
+            break
+        end
+    end
+    if not in_qflist then
+        vim.api.nvim_buf_set_lines(buf, 0, -1, true, { "Switch to quickfix entry" })
+        return 2
+    end
+
     return require("utils").inc_command_diff_preview(ev, ns, buf)
 end
 
