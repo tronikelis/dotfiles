@@ -1,7 +1,5 @@
 local augroup = vim.api.nvim_create_augroup("plugin/_pack_formatter.lua", {})
 
-local utils = require("utils")
-
 vim.api.nvim_create_autocmd("VimLeavePre", {
     group = augroup,
     callback = function()
@@ -57,7 +55,7 @@ end, {
     range = true,
     nargs = "?",
     complete = function(query)
-        return utils.prefix_filter(query, vim.tbl_keys(format_cmds))
+        return require("utils").prefix_filter(query, vim.tbl_keys(format_cmds))
     end,
 })
 

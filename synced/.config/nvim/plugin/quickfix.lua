@@ -1,8 +1,13 @@
 vim.cmd("packadd cfilter")
 
-local function cmd_preview(ev)
-    vim.cmd(ev.args)
-    return 1
+---@param ev table
+---@param ns integer
+---@param buf integer
+---@return integer
+local function cmd_preview(ev, ns, buf)
+    -- jump to err line
+    vim.cmd("cc")
+    return require("utils").inc_command_diff_preview(ev, ns, buf)
 end
 
 vim.api.nvim_create_user_command("Cfdo", function(ev)
