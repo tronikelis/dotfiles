@@ -10,6 +10,7 @@ local function cmd_preview(ev, ns, buf)
     for _, v in ipairs(qflist) do
         if v.bufnr == vim.api.nvim_get_current_buf() then
             in_qflist = true
+            vim.api.nvim_win_set_cursor(0, { v.lnum, v.col - 1 })
             break
         end
     end
