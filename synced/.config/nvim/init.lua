@@ -35,6 +35,13 @@ require("paq")({
     { "nvim-treesitter/nvim-treesitter", branch = "main", build = ":TSUpdate" },
 })
 
+require("catppuccin").setup({
+    flavour = "mocha",
+    no_italic = true,
+})
+
+vim.cmd.colorscheme("catppuccin")
+
 if not vim.g.del_mappings then
     local del_mappings = {
         "gri",
