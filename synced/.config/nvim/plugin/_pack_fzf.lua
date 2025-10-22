@@ -143,7 +143,7 @@ vim.keymap.set("n", "<leader>gs", function()
     require("fzf-lua").git_status()
 end)
 
-vim.keymap.set("n", "<leader>gc", function()
+vim.keymap.set({ "n", "v" }, "<leader>gc", function()
     require("fzf-lua").git_bcommits()
 end)
 
