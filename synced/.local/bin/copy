@@ -1,0 +1,21 @@
+#!/bin/bash
+
+function is_executable() {
+    test -x "$(command -v "$1")"
+}
+
+if is_executable "pbcopy"; then
+    exec pbcopy "$@"
+fi
+
+if is_executable "wl-copy"; then
+    exec wl-copy "$@"
+fi
+
+if is_executable "xclip"; then
+    exec xclip -selection clipboard "$@"
+fi
+
+echo "no clipboard provider found" >&2
+
+exit 1
