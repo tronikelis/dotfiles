@@ -107,8 +107,20 @@ vim.keymap.set("n", "<leader>fR", function()
     })
 end)
 
-vim.keymap.set("n", "<leader>fg", function()
-    require("fzf-lua").live_grep()
+local function get_visual_selection()
+    local mode = vim.api.nvim_get_mode().mode
+    assert(vim.list_contains({ "v", "V", "\22" }, mode))
+    return vim.fn.getregion(vim.fn.getpos("v"), vim.fn.getpos("."), { type = mode })
+end
+
+vim.keymap.set({ "n", "v" }, "<leader>fg", function()
+    if vim.list_contains({ "v", "V", "\22" }, vim.api.nvim_get_mode().mode) then
+        require("fzf-lua").grep({
+            search = vim.trim(get_visual_selection()[1]),
+        })
+    else
+        require("fzf-lua").live_grep()
+    end
 end)
 
 vim.keymap.set("n", "<leader>fp", function()
