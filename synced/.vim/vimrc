@@ -4,4 +4,5 @@ set cursorline
 set scrolloff=20
 set incsearch
 set nowrap
+set hlsearch
 set ttimeoutlen=50
