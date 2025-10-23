@@ -1,0 +1,18 @@
+#!/bin/bash
+
+if [[ ! "$1" ]]; then
+    echo "provide file as 1 arg" >&2
+    exit 1
+fi
+
+temp="$(mktemp)"
+
+cp "$1" "$temp"
+
+shift
+bash -c "$*" <"$temp"
+status="$?"
+
+rm "$temp"
+
+exit "$status"

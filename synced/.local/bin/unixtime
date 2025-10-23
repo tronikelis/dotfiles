@@ -2,7 +2,7 @@
 
 if [[ "$1" ]]; then
     echo "$(date -r "$1" -Iseconds)"
-    exit 0
+    exit
 fi
 
 echo "$(date +%s)"
