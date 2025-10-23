@@ -1,7 +1,13 @@
 #!/bin/bash
 
 if [[ "$1" ]]; then
-    echo "$(date -r "$1" -Iseconds)"
+    if [[ "$OSTYPE" == 'darwin'* ]]; then
+        converted="$(date -r "$1" -Iseconds)"
+    else
+        converted="$(date -d @"$1" -Iseconds)"
+    fi
+
+    echo "$converted"
     exit
 fi
 
