@@ -60,87 +60,64 @@ vim.keymap.set("n", "]w", function()
     vim.diagnostic.jump({ severity = vim.diagnostic.severity.W, count = vim.v.count1 })
 end)
 
-vim.lsp.config("*", {
-    capabilities = require("cmp_nvim_lsp").default_capabilities(),
-})
-
 for lsp in vim.fs.dir("~/.config/nvim/lua/lsp") do
     local name = lsp:match("(.*)%.lua")
     vim.lsp.config(name, require(string.format("lsp.%s", name)))
     vim.lsp.enable(name)
 end
 
-local cmp = require("cmp")
-cmp.setup({
-    preselect = cmp.PreselectMode.Item,
+require("blink.cmp").setup({
     completion = {
-        completeopt = "menu,menuone,noinsert",
-        -- disables triggering popup when line is empty
-        -- https://github.com/hrsh7th/nvim-cmp/pull/2087
-        get_trigger_characters = function(trigger_characters)
-            if vim.trim(vim.api.nvim_get_current_line()) == "" then
-                return {}
-            end
-
-            return trigger_characters
-        end,
-        keyword_length = 1,
-    },
-    sources = cmp.config.sources({
-        { name = "nvim_lsp" },
-        { name = "nvim_lsp_signature_help" },
-    }, {
-        {
-            name = "buffer",
-            option = {
-                keyword_length = 4,
-            },
-            keyword_length = 4,
+        documentation = {
+            window = { border = "rounded" },
+            auto_show = true,
+            auto_show_delay_ms = 0,
         },
-    }),
-    mapping = cmp.mapping.preset.insert({
-        ["<C-n>"] = cmp.mapping.select_next_item({
-            behavior = cmp.SelectBehavior.Select,
-        }),
-        ["<C-p>"] = cmp.mapping.select_prev_item({
-            behavior = cmp.SelectBehavior.Select,
-        }),
-
-        ["<C-b>"] = cmp.mapping.scroll_docs(-4),
-        ["<C-f>"] = cmp.mapping.scroll_docs(4),
-
-        ["<Tab>"] = cmp.mapping.confirm({ select = true }),
-        ["<C-Space>"] = cmp.mapping.complete({}),
-    }),
-    formatting = {
-        format = require("lspkind").cmp_format({
-            maxwidth = {
-                menu = 30,
+        menu = {
+            border = "rounded",
+            auto_show_delay_ms = 100,
+        },
+        accept = {
+            auto_brackets = { enabled = false },
+        },
+        list = {
+            selection = {
+                preselect = true,
+                auto_insert = false,
             },
-            ellipsis_char = "...",
-            -- shows details like auto import sources
-            show_labelDetails = true,
-            mode = "symbol",
-            menu = {
-                nvim_lsp = "[LSP]",
-                path = "[PTH]",
-                buffer = "[BUF]",
-            },
-        }),
-    },
-    window = {
-        completion = cmp.config.window.bordered(),
-        documentation = cmp.config.window.bordered(),
-    },
-    view = {
-        entries = {
-            selection_order = "near_cursor",
         },
     },
-    snippet = {
-        expand = function(arg)
-            vim.snippet.expand(arg.body)
+    keymap = { preset = "super-tab" },
+    sources = {
+        default = {
+            "lsp",
+            "buffer",
+        },
+        providers = {
+            buffer = {
+                min_keyword_length = 6,
+            },
+        },
+    },
+    fuzzy = {
+        sorts = { "score", "sort_text" },
+        max_typos = function(keyword)
+            return math.floor(#keyword / 6)
         end,
+        prebuilt_binaries = {
+            download = false,
+        },
+    },
+    cmdline = {
+        enabled = false,
+    },
+    term = {
+        enabled = false,
+    },
+    signature = {
+        enabled = true,
+        trigger = { enabled = false },
+        window = { border = "rounded" },
     },
 })
 
