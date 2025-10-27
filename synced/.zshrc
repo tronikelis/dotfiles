@@ -283,33 +283,31 @@ function smux() {
     ~/.config/tmux/scripts/upsert_session.sh "$@"
 }
 
-function wfilesp() {
-    if [[ ! "$1" ]]; then
-        echo "Provide dir"
+function wfiles() {
+    local flags
+    case "$1" in
+        "r")
+            flags="-r"
+            ;;
+        "n")
+            ;;
+        *)
+            echo "first argument r/n" >&2
+            return 1
+            ;;
+    esac
+    local dir="$2"
+    if [[ ! "$dir" ]]; then
+        echo "second argument directory" >&2
         return 1
     fi
 
-    local dir="$1"
     shift
-    local args="$@"
-    while true; do
-        fd . "$dir" | entr -d -r -s "$args"
-        sleep 0.5
-    done
-}
-
-function wfilesn() {
-    if [[ ! "$1" ]]; then
-        echo "Provide dir"
-        return 1
-    fi
-
-    local dir="$1"
     shift
-    local args="$@"
+
     while true; do
-        fd . "$dir" | entr -d -s "$args"
-        sleep 0.5
+        fd . "$dir" | entr -d -s $flags "$*"
+        sleep 1
     done
 }
 
