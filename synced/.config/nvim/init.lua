@@ -90,7 +90,6 @@ vim.opt.listchars = {
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 
-vim.opt.smartindent = true
 vim.opt.autoindent = true
 
 if vim.fn.executable("rg") == 1 then

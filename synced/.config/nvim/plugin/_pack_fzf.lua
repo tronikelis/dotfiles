@@ -171,6 +171,31 @@ vim.keymap.set("n", "<leader>ch", function()
     require("fzf-lua").command_history()
 end)
 
+vim.keymap.set("n", "<leader>oo", function()
+    require("fzf-lua").fzf_exec("fd -t d", {
+        prompt = "Oil> ",
+        fn_transform = function(x)
+            return require("fzf-lua").utils.ansi_codes.magenta(x)
+        end,
+        fzf_opts = {
+            ["--preview"] = "ls -Cp --color=always {}",
+        },
+        actions = {
+            default = function(item)
+                require("oil").open(item[1])
+            end,
+            ["ctrl-s"] = function(item)
+                vim.cmd("new")
+                require("oil").open(item[1])
+            end,
+            ["ctrl-v"] = function(item)
+                vim.cmd("vertical new")
+                require("oil").open(item[1])
+            end,
+        },
+    })
+end)
+
 vim.api.nvim_create_autocmd("LspAttach", {
     group = augroup,
     callback = function(ev)
