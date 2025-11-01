@@ -71,7 +71,7 @@ require("blink.cmp").setup({
         documentation = {
             window = { border = "rounded" },
             auto_show = true,
-            auto_show_delay_ms = 0,
+            auto_show_delay_ms = 500,
         },
         menu = {
             border = "rounded",
