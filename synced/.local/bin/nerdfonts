@@ -1,0 +1,7 @@
+#!/bin/bash
+
+curl -s -L 'https://github.com/ryanoasis/nerd-fonts/blob/master/glyphnames.json?raw=true' |
+    jq -r 'del(.[] | select(.char == null)) | to_entries | .[] | [.value.char, .value.code, .key] | @tsv' |
+    fzf --tmux |
+    fextr 1 2
+
