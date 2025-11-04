@@ -1,7 +1,12 @@
 #!/bin/bash
 
-curl -s -L 'https://github.com/ryanoasis/nerd-fonts/blob/master/glyphnames.json?raw=true' |
-    jq -r 'del(.[] | select(.char == null)) | to_entries | .[] | [.value.char, .value.code, .key] | @tsv' |
-    fzf --tmux |
-    fextr 1 2
+function nerdfonts() {
+    curl -s -L 'https://github.com/ryanoasis/nerd-fonts/blob/master/glyphnames.json?raw=true' |
+        jq -r 'del(.[] | select(.char == null)) | to_entries | .[] | [.value.char, .value.code, .key] | @tsv'
+}
 
+if [[ $# == 0 ]]; then
+	nerdfonts | fzf --tmux | awk '{print $1}'
+else
+	nerdfonts | grep -i --color=never "$*" | awk '{print $1}'
+fi

@@ -8,9 +8,6 @@ function emojis() {
 
 if [[ $# == 0 ]]; then
 	emojis | fzf --tmux | awk '{print $1}'
-elif [[ $# == 1 ]]; then
-	emojis | grep -i --color=never "$@" | awk '{print $1}'
 else
-    echo "provide 0/1 arguments" >&2
-	exit 1
+	emojis | grep -i --color=never "$*" | awk '{print $1}'
 fi
