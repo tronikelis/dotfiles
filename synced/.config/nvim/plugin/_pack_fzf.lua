@@ -178,7 +178,7 @@ vim.keymap.set("n", "<leader>oo", function()
             return require("fzf-lua").utils.ansi_codes.magenta(x)
         end,
         fzf_opts = {
-            ["--preview"] = "ls -Cp --color=always {}",
+            ["--preview"] = "ls -LCp --color=always {}",
         },
         actions = {
             default = function(item)

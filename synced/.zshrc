@@ -317,7 +317,9 @@ function _git_commit_message_from_branch() {
 zle -N _git_commit_message_from_branch
 bindkey "^gm" _git_commit_message_from_branch
 
-
+function cpcmd() {
+    history | tail -n 1 | fextr 2 0 | copy
+}
 
 
 

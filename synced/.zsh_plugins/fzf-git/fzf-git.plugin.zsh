@@ -1,3 +1,5 @@
+preview_git_log="git log --oneline --color=always"
+
 function unix_last_modified() {
     local v=""
     if [[ "$OSTYPE" == "darwin"* ]]; then
@@ -14,7 +16,9 @@ function fzf_git() {
 }
 
 function fzf_git_branches() {
-    git branch | cut -c 3- | fzf_git "$@"
+    git branch |
+        cut -c 3- |
+        fzf_git --preview-window down --preview "$preview_git_log {}" "$@"
 }
 
 function fzf_git_worktrees() {
@@ -30,7 +34,9 @@ function fzf_git_worktrees() {
     done < <(git worktree list)
     sum=${sum%$'\n'}
 
-    sort -r -n -k 4 <<<"$sum" | fzf_git "$@" | fextr 1 3
+    sort -r -n -k 4 <<<"$sum" |
+        fzf_git --preview-window down --preview "cd \"\$(echo {} | fextr 1 3)\" && $preview_git_log" "$@" |
+        fextr 1 3
 }
 
 function _fzf_git_worktrees() {
