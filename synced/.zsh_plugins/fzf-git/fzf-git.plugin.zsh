@@ -1,4 +1,4 @@
-preview_git_log="git log --oneline --color=always"
+preview_git_log="git log --pretty=format:'%C(yellow)%h %Cblue%ad %Cgreen%an %Creset%s' --date=short --color=always"
 
 function unix_last_modified() {
     local v=""

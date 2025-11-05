@@ -136,11 +136,14 @@ vim.keymap.set("n", "#", [[<cmd>let @/='\C\<' . expand("<cword>") . '\>'<cr><cmd
 
 vim.api.nvim_create_user_command("RemoveTrailing", [[%s/\s\+$//e | nohlsearch]], {})
 
-vim.api.nvim_create_user_command("BreakComma", function(ev)
+vim.api.nvim_create_user_command("BreakChar", function(ev)
     local prefix = string.format("%d,%d", ev.line1, ev.line2)
-    vim.cmd(prefix .. [[s/,/,\r/ge]])
+    vim.cmd(prefix .. [[s/]] .. ev.fargs[1] .. [[/]] .. ev.fargs[1] .. [[\r/ge]])
     vim.cmd("noh")
-end, { range = true })
+end, {
+    range = true,
+    nargs = 1,
+})
 
 vim.api.nvim_create_user_command("FoldNewlines", function(ev)
     local prefix = string.format("%d,%d", ev.line1, ev.line2)
