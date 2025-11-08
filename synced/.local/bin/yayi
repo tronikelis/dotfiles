@@ -1,0 +1,49 @@
+#!/bin/bash
+
+function is_executable() {
+    test -x "$(command -v "$1")"
+}
+
+choice="$(fzf --prompt "Action> " << EOF
+install
+delete
+EOF
+)"
+
+if [[ ! "$choice" ]]; then
+    echo "No choice, aborting" >&2
+    exit 1
+fi
+
+manager="pacman"
+if is_executable yay; then
+    manager="yay"
+fi
+
+function install() {
+    "$manager" -Slq |
+        fzf --prompt "Install> " --multi --preview "$manager -Si {1}" |
+        xargs -r -o "$manager" -S
+}
+
+function delete() {
+    "$manager" -Qq |
+        fzf --prompt "Delete> " --multi --preview ""$manager" -Qi {1}" |
+        xargs -r -o "$manager" -Rns
+}
+
+case "$choice" in
+    "install")
+        install
+        ;;
+    "delete")
+        delete
+        ;;
+    *)
+        echo "Unknown command $choice, aborting" >&2
+        exit 1
+        ;;
+esac
+    
+
+
