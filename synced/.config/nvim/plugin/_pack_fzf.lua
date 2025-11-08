@@ -172,8 +172,10 @@ vim.keymap.set("n", "<leader>ch", function()
 end)
 
 vim.keymap.set("n", "<leader>oo", function()
-    require("fzf-lua").fzf_exec("fd -t d", {
-        prompt = "Oil> ",
+    require("fzf-lua").fzf_exec("fd -t d --color=never --hidden --exclude .git", {
+        winopts = {
+            title = "Oil",
+        },
         fn_transform = function(x)
             return require("fzf-lua").utils.ansi_codes.magenta(x)
         end,
