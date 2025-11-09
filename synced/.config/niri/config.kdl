@@ -1,3 +1,6 @@
+// until next release
+// include "own.kdl"
+
 input {
     keyboard {
         xkb {
@@ -95,6 +98,7 @@ spawn-sh-at-startup "nm-applet"
 spawn-sh-at-startup "hyprpaper"
 spawn-sh-at-startup "udiskie"
 spawn-sh-at-startup "kanshi"
+
 
 environment {
     QT_QPA_PLATFORMTHEME "qt6ct"
