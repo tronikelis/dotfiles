@@ -177,4 +177,7 @@ binds {
     Mod+Up { focus-workspace-up; }
     Mod+Shift+Down { move-window-down-or-to-workspace-down; }
     Mod+Shift+Up { move-window-up-or-to-workspace-up; }
+
+    Mod+E { move-column-to-last; }
+    Mod+A { move-column-to-first; }
 }
