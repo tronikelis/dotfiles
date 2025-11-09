@@ -1,10 +1,11 @@
 // -*- mode: jsonc -*-
 {
+  "height": 40,
   "fixed-center": false,
   "layer": "top",
   "spacing": 0,
   "margin": 4,
-  "modules-left": ["hyprland/workspaces"],
+  "modules-left": ["niri/workspaces", "niri/window"],
   "modules-right": [
     "tray",
     "network",
@@ -13,11 +14,15 @@
     "memory",
     "disk",
     "battery",
-    "hyprland/language",
+    "niri/language",
     "clock",
     "custom/lock",
     "custom/shutdown",
   ],
+  "niri/window": {
+    "format": "{}",
+    "icon": true,
+  },
   "network": {
     "format": "{bandwidthTotalBytes}",
     "format-wifi": "{bandwidthTotalBytes} | 󰖩 ",
@@ -31,7 +36,7 @@
     "tooltip-format": "Disk: {specific_used:0.2f}GB / {specific_free:0.2f}GB",
     "unit": "GB",
   },
-  "hyprland/language": {
+  "niri/language": {
     "format": "{short}",
     "tooltip-format": "Kbd: {long}",
     "format-alt": "{long}",
@@ -43,7 +48,7 @@
   },
   "custom/lock": {
     "format": "",
-    "on-click": "~/.config/waybar/scripts/confirm.sh 'logout' 'hyprctl dispatch exit'",
+    "on-click": "~/.config/waybar/scripts/confirm.sh 'logout' 'niri msg action quit'",
     "tooltip-format": "hyprctl dispatch exit",
   },
   "tray": {
@@ -93,6 +98,6 @@
     "format-icons": {
       "default": [" ", " ", " "],
     },
-    "on-click": "hyprctl dispatch exec [floating] pavucontrol-qt",
+    "on-click": "niri msg action spawn-sh -- pavucontrol-qt",
   },
 }

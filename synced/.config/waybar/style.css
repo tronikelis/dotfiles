@@ -11,36 +11,36 @@
 @define-color flamingo #f2cdcd;
 
 * {
-    border: none;
-    border-radius: 0px;
-    font-family: "Roboto Mono", monospace;
-    font-size: 13px;
+  border: none;
+  border-radius: 0px;
+  font-family: "Roboto Mono", monospace;
+  font-size: 13px;
 }
 
 window#waybar {
-    background-color: transparent;
+  background-color: transparent;
 }
 
 #workspaces {
-    border-radius: 10px;
-    background-color: @base;
-    padding-top: 6px;
-    padding-bottom: 6px;
-    padding-right: 24px;
-    padding-left: 24px;
+  border-radius: 10px;
+  background-color: @base;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  padding-right: 24px;
+  padding-left: 24px;
 }
 
 #workspaces button {
-    color: @text;
+  color: @text;
 }
 
 #workspaces button.active {
-    color: @crust;
-    background-color: @mauve;
-    font-weight: 800;
-    border-radius: 10px;
-    padding-left: 12px;
-    padding-right: 12px;
+  color: @crust;
+  background-color: @mauve;
+  font-weight: 800;
+  border-radius: 10px;
+  padding-left: 12px;
+  padding-right: 12px;
 }
 
 #workspaces,
@@ -54,97 +54,100 @@ window#waybar {
 #language,
 #clock,
 #custom-lock {
-    color: @text;
+  color: @text;
 }
 
 #custom-lock,
 #custom-shutdown {
-    color: @red;
-    background-color: @base;
+  color: @red;
+  background-color: @base;
 }
 
 #custom-lock {
-    margin-left: 12px;
-    border-radius: 10px 0px 0px 10px;
-    padding-right: 8px;
-    padding-left: 10px;
+  margin-left: 12px;
+  border-radius: 10px 0px 0px 10px;
+  padding-right: 8px;
+  padding-left: 10px;
 }
 
 #custom-shutdown {
-    border-radius: 0px 10px 10px 0px;
-    padding-right: 10px;
+  border-radius: 0px 10px 10px 0px;
+  padding-right: 10px;
 }
-
 
 #language,
 #clock {
-    background-color: @base;
-    color: @lavender;
+  background-color: @base;
+  color: @lavender;
 }
 
 #language {
-    background-color: @base;
-    padding-right: 6px;
-    padding-left: 10px;
-    border-radius: 10px 0px 0px 10px;
-    margin-left: 12px;
+  background-color: @base;
+  padding-right: 6px;
+  padding-left: 10px;
+  border-radius: 10px 0px 0px 10px;
+  margin-left: 12px;
 }
 
 #clock {
-    background-color: @base;
-    padding-right: 10px;
-    border-radius: 0px 10px 10px 0px;
+  background-color: @base;
+  padding-right: 10px;
+  border-radius: 0px 10px 10px 0px;
 }
-
 
 #disk,
 #cpu,
 #memory {
-    background-color: @base;
-    color: @blue;
+  background-color: @base;
+  color: @blue;
 }
 
 #memory {
-    padding-right: 10px;
+  padding-right: 10px;
 }
 
 #disk {
-    border-radius: 0px 10px 10px 0px;
-    padding-right: 10px;
+  border-radius: 0px 10px 10px 0px;
+  padding-right: 10px;
 }
 
 #cpu {
-    border-radius: 10px 0px 0px 10px;
-    padding-left: 10px;
-    padding-right: 10px;
+  border-radius: 10px 0px 0px 10px;
+  padding-left: 10px;
+  padding-right: 10px;
 }
-
 
 #pulseaudio,
 #network,
 #tray {
-    background-color: @base;
-    border-radius: 10px;
-    padding-left: 10px;
-    padding-right: 10px;
-    margin-right: 12px;
+  background-color: @base;
+  border-radius: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-right: 12px;
 }
 
 #pulseaudio {
-    color: @pink;
+  color: @pink;
 }
 
 #network {
-    color: @green;
+  color: @green;
 }
 
-
-
 #battery {
-    background-color: @base;
-    color: @flamingo;
-    margin-left: 12px;
-    border-radius: 10px;
-    padding-left: 10px;
-    padding-right: 10px;
+  background-color: @base;
+  color: @flamingo;
+  margin-left: 12px;
+  border-radius: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+#window {
+  border-radius: 10px;
+  background-color: @base;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-left: 12px;
 }
