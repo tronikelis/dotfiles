@@ -98,11 +98,10 @@ spawn-sh-at-startup "nm-applet"
 spawn-sh-at-startup "hyprpaper"
 spawn-sh-at-startup "udiskie"
 spawn-sh-at-startup "kanshi"
-
+spawn-sh-at-startup "gsettings set org.gnome.desktop.interface color-scheme prefer-dark"
 
 environment {
     QT_QPA_PLATFORMTHEME "qt6ct"
-    QT_QPA_PLATFORM "wayland"
     GDK_BACKEND "wayland,x11,*"
     QT_QPA_PLATFORM "wayland;xcb"
     SDL_VIDEODRIVER "wayland"
@@ -163,7 +162,6 @@ binds {
     Mod+Shift+F { fullscreen-window; }
 
     Mod+Return { expand-column-to-available-width; }
-
 
     Mod+C { center-column; }
 
