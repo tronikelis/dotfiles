@@ -6,7 +6,7 @@ Managed by gnu stow
 
 - neovim
 - tmux
-- hyprland
+- niri / hyprland
 - arch
 - kitty
 
