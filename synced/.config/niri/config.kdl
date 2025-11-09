@@ -1,0 +1,183 @@
+// until next release
+// include "own.kdl"
+
+input {
+    keyboard {
+        xkb {
+            layout "us,lt"
+        }
+        numlock
+    }
+
+    touchpad {
+        tap
+        natural-scroll
+        accel-profile "flat"
+        scroll-method "two-finger"
+    }
+
+    mouse {
+        accel-profile "flat"
+    }
+
+    trackpoint {
+    }
+
+    focus-follows-mouse max-scroll-amount="0%"
+}
+
+layout {
+    gaps 4
+
+    // When to center a column when changing focus, options are:
+    // - "never", default behavior, focusing an off-screen column will keep at the left
+    //   or right edge of the screen.
+    // - "always", the focused column will always be centered.
+    // - "on-overflow", focusing a column will center it if it doesn't fit
+    //   together with the previously focused column.
+    center-focused-column "never"
+
+    // You can customize the widths that "switch-preset-column-width" (Mod+R) toggles between.
+    preset-column-widths {
+        // Proportion sets the width as a fraction of the output width, taking gaps into account.
+        // For example, you can perfectly fit four windows sized "proportion 0.25" on an output.
+        // The default preset widths are 1/3, 1/2 and 2/3 of the output.
+        proportion 0.5
+        proportion 0.66667
+        proportion 0.33333
+
+        // Fixed sets the width in logical pixels exactly.
+        // fixed 1920
+    }
+
+    default-column-width { 
+        proportion 1.0
+    }
+
+    // You can change how the focus ring looks.
+    focus-ring {
+        off
+    }
+
+    border {
+        width 2
+        active-color "#f5c2e7"
+        inactive-color "#1e1e2e"
+        urgent-color "#f38ba8"
+    }
+}
+
+prefer-no-csd
+screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
+
+animations {
+}
+
+window-rule {
+    match app-id="^zen$" title="^Picture-in-Picture$"
+    open-floating true
+}
+
+window-rule {
+    match app-id="pavucontrol-qt"
+    open-floating true
+}
+
+window-rule {
+    geometry-corner-radius 6
+    clip-to-geometry true
+}
+
+spawn-sh-at-startup "waybar"
+spawn-sh-at-startup "systemctl --user import-environment XDG_SESSION_TYPE XDG_CURRENT_DESKTOP"
+spawn-sh-at-startup "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
+spawn-sh-at-startup "/usr/lib/polkit-kde-authentication-agent-1"
+spawn-sh-at-startup "dunst"
+spawn-sh-at-startup "nm-applet"
+spawn-sh-at-startup "hyprpaper"
+spawn-sh-at-startup "udiskie"
+spawn-sh-at-startup "kanshi"
+spawn-sh-at-startup "gsettings set org.gnome.desktop.interface color-scheme prefer-dark"
+
+environment {
+    QT_QPA_PLATFORMTHEME "qt6ct"
+    GDK_BACKEND "wayland,x11,*"
+    QT_QPA_PLATFORM "wayland;xcb"
+    SDL_VIDEODRIVER "wayland"
+    CLUTTER_BACKEND "wayland"
+    XDG_SESSION_TYPE "wayland"
+    QT_AUTO_SCREEN_SCALE_FACTOR "1"
+    QT_WAYLAND_DISABLE_WINDOWDECORATION "1"
+    ELECTRON_OZONE_PLATFORM_HINT "auto"
+}
+
+hotkey-overlay {
+    skip-at-startup
+}
+
+binds {
+    Alt+Shift+L { switch-layout "next"; }
+
+    Mod+Slash { show-hotkey-overlay; }
+
+    Mod+t hotkey-overlay-title="terminal" { spawn-sh "kitty"; }
+    Mod+p hotkey-overlay-title="finder" { spawn-sh "rofi -show drun"; }
+    Mod+b hotkey-overlay-title="browser" { spawn-sh "zen-browser"; }
+
+    XF86AudioRaiseVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1+"; }
+    XF86AudioLowerVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1-"; }
+    XF86AudioMute        allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle"; }
+    XF86AudioMicMute     allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle"; }
+
+    XF86MonBrightnessDown  allow-when-locked=true { spawn-sh "brightnessctl set 10%-"; }
+    XF86MonBrightnessUp    allow-when-locked=true { spawn-sh "brightnessctl set +10%"; }
+
+    Mod+O repeat=false { toggle-overview; }
+
+    Mod+Q { close-window; }
+
+    Mod+H     { focus-column-left; }
+    Mod+J     { focus-window-down; }
+    Mod+K     { focus-window-up; }
+    Mod+L     { focus-column-right; }
+    Mod+WheelScrollDown { focus-column-right; }
+    Mod+WheelScrollUp { focus-column-left; }
+
+    Mod+Shift+H     { move-column-left; }
+    Mod+Shift+J     { move-window-down; }
+    Mod+Shift+K     { move-window-up; }
+    Mod+Shift+L     { move-column-right; }
+
+    Mod+R { switch-preset-column-width; }
+
+    Mod+Comma  { consume-or-expel-window-left; }
+    Mod+Period { consume-or-expel-window-right; }
+
+    Mod+BracketLeft  { consume-window-into-column; }
+    Mod+BracketRight { expel-window-from-column; }
+
+    Mod+F { maximize-column; }
+    Mod+G { reset-window-height; }
+    Mod+Shift+F { fullscreen-window; }
+
+    Mod+Return { expand-column-to-available-width; }
+
+    Mod+C { center-column; }
+
+    Mod+V       { toggle-window-floating; }
+    Mod+Shift+V { switch-focus-between-floating-and-tiling; }
+
+    Print { screenshot; }
+    Ctrl+Print { screenshot-screen; }
+    Mod+Print { screenshot-window; }
+
+    Mod+Escape allow-inhibiting=false { toggle-keyboard-shortcuts-inhibit; }
+
+    Mod+Down { focus-workspace-down; }
+    Mod+Up { focus-workspace-up; }
+    Mod+Shift+Down { move-window-down-or-to-workspace-down; }
+    Mod+Shift+Up { move-window-up-or-to-workspace-up; }
+
+    Mod+E { move-column-to-last; }
+    Mod+A { move-column-to-first; }
+}
