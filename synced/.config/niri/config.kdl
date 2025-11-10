@@ -23,7 +23,7 @@ input {
     trackpoint {
     }
 
-    focus-follows-mouse max-scroll-amount="0%"
+    focus-follows-mouse max-scroll-amount="10%"
 }
 
 layout {
