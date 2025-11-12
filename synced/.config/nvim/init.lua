@@ -229,6 +229,7 @@ end)()
 
 vim.opt.wildmenu = true
 vim.opt.wildmode = "longest:full,full"
+vim.opt.completeopt = "menu,popup,fuzzy,longest"
 
 vim.opt.tagcase = "followscs"
 
