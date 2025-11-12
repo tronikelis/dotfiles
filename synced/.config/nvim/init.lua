@@ -229,3 +229,13 @@ end)()
 
 vim.opt.wildmenu = true
 vim.opt.wildmode = "longest:full,full"
+
+vim.opt.tagcase = "followscs"
+
+-- unset the default lsp tagfunc config
+vim.api.nvim_create_autocmd("LspAttach", {
+    group = augroup,
+    callback = function(ev)
+        vim.bo[ev.buf].tagfunc = ""
+    end,
+})
