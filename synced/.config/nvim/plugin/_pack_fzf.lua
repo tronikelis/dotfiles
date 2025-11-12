@@ -171,6 +171,10 @@ vim.keymap.set("n", "<leader>ch", function()
     require("fzf-lua").command_history()
 end)
 
+vim.keymap.set("n", "<leader>ct", function()
+    require("fzf-lua").tags_grep_cword()
+end)
+
 vim.keymap.set("n", "<leader>oo", function()
     require("fzf-lua").fzf_exec("fd -t d --color=never --hidden --exclude .git", {
         winopts = {
