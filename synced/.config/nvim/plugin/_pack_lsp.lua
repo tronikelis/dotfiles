@@ -92,10 +92,18 @@ require("blink.cmp").setup({
         default = {
             "lsp",
             "buffer",
+            "ctags",
         },
         providers = {
+            lsp = { fallbacks = { "buffer", "ctags" } },
             buffer = {
                 min_keyword_length = 6,
+            },
+            ctags = {
+                name = "Ctags",
+                module = "blink-ctags",
+                score_offset = -10,
+                min_keyword_length = 4,
             },
         },
     },

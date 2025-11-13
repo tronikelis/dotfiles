@@ -20,6 +20,7 @@ require("paq")({
     "savq/paq-nvim",
     "stevearc/conform.nvim",
     "stevearc/oil.nvim",
+    "tronikelis/blink-cmp-ctags",
     "tronikelis/caser.nvim",
     "tronikelis/conflict-marker.nvim",
     "tronikelis/gitdive.nvim",
