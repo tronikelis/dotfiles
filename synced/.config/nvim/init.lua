@@ -27,7 +27,7 @@ require("paq")({
     "tronikelis/sstash.nvim",
     "tronikelis/ts-autotag.nvim",
     "tronikelis/xylene.nvim",
-    { "saghen/blink.cmp", branch = "v1.7.0", build = "cargo build --release" },
+    { "saghen/blink.cmp", branch = "v1.8.0", build = "cargo build --release" },
     { "catppuccin/nvim", branch = "v1.11.0" },
     { "nvim-treesitter/nvim-treesitter", branch = "main", build = ":TSUpdate" },
 })
