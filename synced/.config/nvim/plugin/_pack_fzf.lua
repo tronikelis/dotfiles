@@ -176,7 +176,12 @@ vim.keymap.set("n", "<leader>ct", function()
 end)
 
 vim.keymap.set("n", "<leader>cT", function()
-    require("fzf-lua").tags_grep_cword()
+    local cword = vim.fn.expand("<cword>")
+    if cword == "" then
+        print("Empty cword")
+        return
+    end
+    vim.cmd.Taglist(cword)
 end)
 
 vim.keymap.set("n", "<leader>oo", function()
