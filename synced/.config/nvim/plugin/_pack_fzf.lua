@@ -172,6 +172,10 @@ vim.keymap.set("n", "<leader>ch", function()
 end)
 
 vim.keymap.set("n", "<leader>ct", function()
+    require("fzf-lua").tags()
+end)
+
+vim.keymap.set("n", "<leader>cT", function()
     require("fzf-lua").tags_grep_cword()
 end)
 
