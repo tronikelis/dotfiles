@@ -29,6 +29,11 @@ local function goto_match(entry_str)
 end
 
 vim.api.nvim_create_user_command("Taglist", function(ev)
+    if vim.bo.buftype ~= "" then
+        print("Taglist requires normal buffer")
+        return
+    end
+
     local keyword = ev.fargs[1]
     local matches = vim.fn.taglist(string.format("^%s$", vim.fn.escape(keyword, "^$")), vim.fn.expand("%:p"))
 
