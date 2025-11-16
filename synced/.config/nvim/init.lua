@@ -117,7 +117,6 @@ vim.keymap.set("v", "J", ":m '>+1<cr>gv=gv") -- has to be :m
 vim.keymap.set("v", "<leader>p", [["_dP]])
 vim.keymap.set("n", "gp", "`[v`]")
 vim.keymap.set("n", "yc", "yy<cmd>normal gcc<cr>p")
-vim.keymap.set("t", "<esc>", "<c-\\><c-n>")
 -- resize windows more
 for _, v in ipairs({ "+", "-", "<", ">" }) do
     local m = "<c-w>" .. v
@@ -239,5 +238,12 @@ vim.api.nvim_create_autocmd("LspAttach", {
     group = augroup,
     callback = function(ev)
         vim.bo[ev.buf].tagfunc = ""
+    end,
+})
+
+vim.api.nvim_create_autocmd("TermOpen", {
+    group = augroup,
+    callback = function()
+        vim.cmd("startinsert")
     end,
 })
