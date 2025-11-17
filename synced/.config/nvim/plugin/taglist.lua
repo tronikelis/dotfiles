@@ -2,7 +2,11 @@ local fzf_lua = require("fzf-lua")
 local builtin = require("fzf-lua.previewer.builtin")
 local ansi_codes = fzf_lua.utils.ansi_codes
 
-local entry_matcher = "^.* .\t(.*)\t(.*)$"
+local function parse_entry(entry_str)
+    local filename = entry_str:match("^.+ . (.+): /(.+)/$")
+    local ctag = require("fzf-lua.path").entry_to_ctag(entry_str, false)
+    return filename, ctag
+end
 
 local CtagsPreviewer = builtin.tags:extend()
 
@@ -13,19 +17,19 @@ function CtagsPreviewer:new(o, opts, fzf_win)
 end
 
 function CtagsPreviewer:parse_entry(entry_str)
-    local filename, excmd = entry_str:match(entry_matcher)
+    local filename, ctag = parse_entry(entry_str)
 
     return {
         path = filename,
-        ctag = excmd:sub(2, -2),
+        ctag = ctag,
     }
 end
 
 local function goto_match(entry_str)
-    local filename, excmd = entry_str:match(entry_matcher)
+    local filename, ctag = parse_entry(entry_str)
     vim.cmd.e(filename)
     vim.api.nvim_win_set_cursor(0, { 1, 0 })
-    vim.fn.search(excmd:sub(2, -2), "W")
+    vim.fn.search(ctag, "W")
 end
 
 vim.api.nvim_create_user_command("Taglist", function(ev)
@@ -42,7 +46,7 @@ vim.api.nvim_create_user_command("Taglist", function(ev)
         table.insert(
             rows,
             string.format(
-                "%s %s\t%s\t%s",
+                "%s %s %s: %s",
                 ansi_codes.magenta(v.name),
                 ansi_codes.yellow(v.kind),
                 vim.fn.fnamemodify(v.filename, ":~:."),
