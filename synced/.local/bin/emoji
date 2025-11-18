@@ -7,7 +7,7 @@ function emojis() {
 }
 
 if [[ $# == 0 ]]; then
-	emojis | fzf --tmux | awk '{print $1}'
+	emojis | fzf --multi --tmux | awk '{print $1}'
 else
 	emojis | grep -i --color=never "$*" | awk '{print $1}'
 fi
