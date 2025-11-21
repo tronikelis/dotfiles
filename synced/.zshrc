@@ -272,7 +272,7 @@ function cdroot() {
 }
 
 function killp() {
-    lsof -i:$1 | grep LISTEN | awk '{print $2}' | xargs kill
+    lsof -i:$1 | grep LISTEN | awk '{print $2}' | xargs -r kill
 }
 
 function killj() {
