@@ -83,6 +83,8 @@
 	cherry-squash = "!git reset --soft \"$(git merge-base --fork-point \"$1\")\" &>/dev/null && git commit -m 'squashed' &>/dev/null && git cherry -v \"$1\" && git reset --hard HEAD@{2} &>/dev/null #"
 	# restore files interactively
 	restorei = "!git status --porcelain | fzf --preview \"git diff -- {2..} | delta\" --multi --tmux 70%,70% | fextr 2 0 | xargs -r git restore \"$@\" -- #"
+	# add files interactively
+	addi = "!git status --porcelain | fzf --preview \"git diff -- {2..} | delta; bat --color=always {2..}\" --multi --tmux 70%,70% | fextr 2 0 | xargs -r git add \"$@\" -- #"
 
 [merge]
 	tool = nvimdiff
