@@ -18,11 +18,14 @@ local actions = require("oil.actions")
 vim.api.nvim_create_autocmd("FileType", {
     group = augroup,
     pattern = "oil",
-    callback = function(event)
-        local bufnr = event.buf
+    callback = function(ev)
+        local opts = {
+            buffer = ev.buf,
+        }
 
-        vim.keymap.set("n", "<Cr>", actions.select.callback, { buffer = bufnr })
-        vim.keymap.set("n", "-", actions.parent.callback, { buffer = bufnr })
+        vim.keymap.set("n", "<Cr>", actions.select.callback, opts)
+        vim.keymap.set("n", "-", actions.parent.callback, opts)
+        vim.keymap.set("n", "<esc>", actions.close.callback, opts)
     end,
 })
 

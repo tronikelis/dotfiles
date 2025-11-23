@@ -74,13 +74,23 @@ animations {
 }
 
 window-rule {
+    match app-id="org.kde.dolphin"
+    open-floating true
+    default-window-height { proportion 0.6; }
+    default-column-width { proportion 0.6; }
+}
+
+window-rule {
     match app-id="^zen$" title="^Picture-in-Picture$"
     open-floating true
+    default-floating-position x=32 y=32 relative-to="bottom-left"
 }
 
 window-rule {
     match app-id="pavucontrol-qt"
     open-floating true
+    default-window-height { proportion 0.6; }
+    default-column-width { proportion 0.6; }
 }
 
 window-rule {
@@ -123,6 +133,7 @@ binds {
     Mod+t hotkey-overlay-title="terminal" { spawn-sh "kitty"; }
     Mod+p hotkey-overlay-title="finder" { spawn-sh "rofi -show drun"; }
     Mod+b hotkey-overlay-title="browser" { spawn-sh "zen-browser"; }
+    Mod+d hotkey-overlay-title="filemanager" { spawn-sh "dolphin"; }
 
     XF86AudioRaiseVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1+"; }
     XF86AudioLowerVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1-"; }
