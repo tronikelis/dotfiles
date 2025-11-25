@@ -33,13 +33,13 @@ local function goto_match(entry_str)
 end
 
 vim.api.nvim_create_user_command("Taglist", function(ev)
-    if vim.bo.buftype ~= "" then
-        print("Taglist requires normal buffer")
-        return
+    local file
+    if vim.bo.buftype == "" then
+        file = vim.fn.expand("%:p")
     end
 
     local keyword = ev.fargs[1]
-    local matches = vim.fn.taglist(string.format("^%s$", vim.fn.escape(keyword, "^$")), vim.fn.expand("%:p"))
+    local matches = vim.fn.taglist(keyword and string.format("^%s$", vim.fn.escape(keyword, "^$")) or ".", file)
 
     local rows = {}
     for _, v in ipairs(matches) do
@@ -55,9 +55,15 @@ vim.api.nvim_create_user_command("Taglist", function(ev)
         )
     end
 
+    local fzf_opts = {}
+    if not keyword then
+        fzf_opts["-n"] = 1
+    end
+
     fzf_lua.fzf_exec(rows, {
-        prompt = string.format("%s> ", keyword),
+        prompt = keyword and string.format("%s> ", keyword) or nil,
         previewer = CtagsPreviewer,
+        fzf_opts = fzf_opts,
         winopts = {
             title = "Taglist",
         },
@@ -76,5 +82,5 @@ vim.api.nvim_create_user_command("Taglist", function(ev)
         },
     })
 end, {
-    nargs = 1,
+    nargs = "?",
 })

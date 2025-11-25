@@ -172,7 +172,7 @@ vim.keymap.set("n", "<leader>ch", function()
 end)
 
 vim.keymap.set("n", "<leader>ct", function()
-    require("fzf-lua").tags()
+    vim.cmd.Taglist()
 end)
 
 vim.keymap.set("n", "<leader>cT", function()
