@@ -66,6 +66,8 @@
 	bgone = "!git fetch &>/dev/null && git branch -vv | cut -c 3- | grep gone] | awk '{print $1}' #"
 	# reset hard, plus remove unadded files
 	veryhard = "!git reset --hard && git clean -f -d #"
+	# nuke all files
+	nuke = "!cd \"$(git root)\" && ls -A | grep -v '^.git$' | xargs -r rm -r #"
 
 	# new worktree with new branch (same name) from master
 	wnew = "!git worktree add \"$1\" -b \"$1\" #"
