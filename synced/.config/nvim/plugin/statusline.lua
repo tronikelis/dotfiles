@@ -222,19 +222,25 @@ vim.api.nvim_create_autocmd("LspProgress", {
     group = augroup,
     callback = function(ev)
         local value = ev.data.params.value
+        progress_msg = ""
 
         if vim.tbl_contains({ "end" }, value.kind) then
-            progress_msg = ""
             vim.cmd("redrawstatus")
             return
         end
 
-        progress_msg = value.title
+        local messages = {}
         if value.percentage then
-            progress_msg = string.format("[%s]: ", value.percentage) .. progress_msg
+            table.insert(messages, string.format("[%s%%%%]", value.percentage))
+        end
+        if value.message then
+            table.insert(messages, string.format("%s", value.message))
+        end
+        if value.title then
+            table.insert(messages, value.title)
         end
 
-        progress_msg = string.format(hi_pattern, "Comment", progress_msg)
+        progress_msg = string.format(hi_pattern, "Comment", table.concat(messages, " "))
         vim.cmd("redrawstatus")
     end,
 })
