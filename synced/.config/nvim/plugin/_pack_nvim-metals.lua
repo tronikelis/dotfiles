@@ -5,9 +5,8 @@ vim.api.nvim_create_autocmd("FileType", {
     pattern = { "scala", "sbt" },
     callback = function()
         local metals_config = require("metals").bare_config()
-        metals_config.settings = vim.tbl_deep_extend("force", metals_config.settings, {
-            enableSemanticHighlighting = false,
-        })
+        metals_config.settings.enableSemanticHighlighting = false
+        metals_config.init_options.statusBarProvider = "off"
         require("metals").initialize_or_attach(metals_config)
     end,
 })
