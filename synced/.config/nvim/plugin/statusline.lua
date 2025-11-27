@@ -26,7 +26,7 @@ if not vim.g.did_statusline then
         interval,
         interval,
         vim.schedule_wrap(function()
-            vim.cmd("redrawstatus")
+            vim.cmd("redrawstatus!")
         end)
     )
 end
@@ -216,16 +216,22 @@ function cmp.attached_lsp()
     return " 󰒓 " .. clients
 end
 
-local progress_msg = ""
-
 vim.api.nvim_create_autocmd("LspProgress", {
     group = augroup,
     callback = function(ev)
+        local client = assert(vim.lsp.get_client_by_id(ev.data.client_id))
+
+        local function set(msg)
+            for k in pairs(client.attached_buffers) do
+                vim.b[k].statusline_progress_msg = msg
+            end
+        end
+        set()
+
         local value = ev.data.params.value
-        progress_msg = ""
 
         if vim.tbl_contains({ "end" }, value.kind) then
-            vim.cmd("redrawstatus")
+            vim.cmd("redrawstatus!")
             return
         end
 
@@ -240,13 +246,13 @@ vim.api.nvim_create_autocmd("LspProgress", {
             table.insert(messages, value.title)
         end
 
-        progress_msg = string.format(hi_pattern, "Comment", table.concat(messages, " "))
-        vim.cmd("redrawstatus")
+        set(string.format(hi_pattern, "Comment", table.concat(messages, " ")))
+        vim.cmd("redrawstatus!")
     end,
 })
 
 function cmp.progress()
-    return progress_msg
+    return vim.b.statusline_progress_msg or ""
 end
 
 vim.opt.statusline = table.concat({
