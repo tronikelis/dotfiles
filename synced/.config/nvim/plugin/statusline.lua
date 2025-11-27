@@ -1,3 +1,5 @@
+local augroup = vim.api.nvim_create_augroup("plugin/statusline.lua", {})
+
 local cmp = {}
 
 --- highlight pattern
@@ -214,6 +216,33 @@ function cmp.attached_lsp()
     return " 󰒓 " .. clients
 end
 
+local progress_msg = ""
+
+vim.api.nvim_create_autocmd("LspProgress", {
+    group = augroup,
+    callback = function(ev)
+        local value = ev.data.params.value
+
+        if vim.tbl_contains({ "end" }, value.kind) then
+            progress_msg = ""
+            vim.cmd("redrawstatus")
+            return
+        end
+
+        progress_msg = value.title
+        if value.percentage then
+            progress_msg = string.format("[%s]: ", value.percentage) .. progress_msg
+        end
+
+        progress_msg = string.format(hi_pattern, "Comment", progress_msg)
+        vim.cmd("redrawstatus")
+    end,
+})
+
+function cmp.progress()
+    return progress_msg
+end
+
 vim.opt.statusline = table.concat({
     '%{%v:lua._statusline_component("git")%}',
     " %t",
@@ -222,6 +251,8 @@ vim.opt.statusline = table.concat({
     '%{%v:lua._statusline_component("diagnostics")%}',
     '%{%v:lua._statusline_component("git_lines")%}',
     "%<",
+    "%=",
+    '%{%v:lua._statusline_component("progress")%}',
     "%=",
     '%{%v:lua._statusline_component("formatters")%}',
     '%{%v:lua._statusline_component("attached_lsp")%}',
