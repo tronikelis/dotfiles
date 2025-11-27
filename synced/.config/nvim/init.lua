@@ -5,19 +5,21 @@ table.unpack = table.unpack or unpack
 local augroup = vim.api.nvim_create_augroup("init.lua", {})
 
 require("paq")({
-    "ibhagwan/fzf-lua",
     "NMAC427/guess-indent.nvim",
     "folke/lazydev.nvim",
     "folke/ts-comments.nvim",
+    "ibhagwan/fzf-lua",
     "kylechui/nvim-surround",
     "lewis6991/gitsigns.nvim",
     "mason-org/mason.nvim",
     "mbbill/undotree",
+    "mfussenegger/nvim-jdtls",
     "neovim/nvim-lspconfig",
     "nvim-lua/plenary.nvim",
     "nvim-tree/nvim-web-devicons",
     "nvim-treesitter/nvim-treesitter-context",
     "savq/paq-nvim",
+    "scalameta/nvim-metals",
     "stevearc/conform.nvim",
     "stevearc/oil.nvim",
     "tronikelis/blink-cmp-ctags",
@@ -27,9 +29,9 @@ require("paq")({
     "tronikelis/sstash.nvim",
     "tronikelis/ts-autotag.nvim",
     "tronikelis/xylene.nvim",
-    { "saghen/blink.cmp", branch = "v1.8.0", build = "cargo build --release" },
     { "catppuccin/nvim", branch = "v1.11.0" },
     { "nvim-treesitter/nvim-treesitter", branch = "main", build = ":TSUpdate" },
+    { "saghen/blink.cmp", branch = "v1.8.0", build = "cargo build --release" },
 })
 
 require("catppuccin").setup({

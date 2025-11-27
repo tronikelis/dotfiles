@@ -60,9 +60,8 @@ vim.keymap.set("n", "]w", function()
     vim.diagnostic.jump({ severity = vim.diagnostic.severity.W, count = vim.v.count1 })
 end)
 
-for lsp in vim.fs.dir("~/.config/nvim/lua/lsp") do
+for lsp in vim.fs.dir("~/.config/nvim/after/lsp") do
     local name = lsp:match("(.*)%.lua")
-    vim.lsp.config(name, require(string.format("lsp.%s", name)))
     vim.lsp.enable(name)
 end
 
