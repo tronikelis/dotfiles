@@ -234,7 +234,7 @@ vim.api.nvim_create_autocmd("LspProgress", {
             table.insert(messages, string.format("[%s%%%%]", value.percentage))
         end
         if value.message then
-            table.insert(messages, string.format("%s", value.message))
+            table.insert(messages, value.message)
         end
         if value.title then
             table.insert(messages, value.title)
