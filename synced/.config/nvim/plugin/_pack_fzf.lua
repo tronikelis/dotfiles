@@ -58,6 +58,20 @@ local function action_motion_edit(_, opts)
     vim.keymap.set({ "n", "i" }, "<enter>", accept, { buffer = buf })
 end
 
+local function cwd_child()
+    local cwd = vim.fn.getcwd()
+    local wd = current_wd()
+
+    while vim.fs.dirname(wd) ~= cwd do
+        if wd == "/" then
+            break
+        end
+        wd = vim.fs.dirname(wd)
+    end
+
+    return wd
+end
+
 local actions = require("fzf-lua").actions
 
 require("fzf-lua").setup({
@@ -104,6 +118,18 @@ end)
 vim.keymap.set("n", "<leader>fR", function()
     require("fzf-lua").live_grep({
         cwd = current_wd(),
+    })
+end)
+
+vim.keymap.set("n", "<leader>fh", function()
+    require("fzf-lua").files({
+        cwd = cwd_child(),
+    })
+end)
+
+vim.keymap.set("n", "<leader>fH", function()
+    require("fzf-lua").live_grep({
+        cwd = cwd_child(),
     })
 end)
 
