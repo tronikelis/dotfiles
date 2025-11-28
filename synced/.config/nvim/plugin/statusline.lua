@@ -32,30 +32,48 @@ if not vim.g.did_statusline then
 end
 vim.g.did_statusline = true
 
-local git_status_running = false
+---@type table<string, string?>
+local root_to_git_status = {}
+---@type table<string, vim.SystemObj?>
+local root_to_git_status_system = {}
+
 local function run_git_status()
-    if git_status_running then
+    if vim.bo.buftype ~= "" then
         return
     end
 
-    local cwd = vim.fn.expand("%:p:h")
-    if cwd:sub(1, 1) ~= "/" or vim.bo.buftype ~= "" then
+    local root = vim.fs.root(0, ".git")
+    if not root then
         return
     end
 
-    local bufnr = vim.api.nvim_get_current_buf()
+    local obj = root_to_git_status_system[root]
+    if obj then
+        return
+    end
 
-    git_status_running = true
-    vim.system(
+    root_to_git_status_system[root] = vim.system(
         -- sleep here to not spam
         { "bash", "-c", [[sleep 3; starship module git_status | perl -pe 's/\e\[[0-9;]*m//g']] },
-        { cwd = cwd },
+        { cwd = vim.fn.expand("%:p:h"), text = true },
         function(out)
-            git_status_running = false
             local stdout = vim.trim(out.stdout or "")
-            vim.b[bufnr].statusline_git_status = stdout
+            root_to_git_status_system[root] = nil
+            root_to_git_status[root] = stdout
         end
     )
+end
+
+local function get_git_status()
+    if vim.bo.buftype ~= "" then
+        return
+    end
+
+    local root = vim.fs.root(0, ".git")
+    if not root then
+        return
+    end
+    return root_to_git_status[root]
 end
 
 function cmp.git()
@@ -67,10 +85,8 @@ function cmp.git()
         return ""
     end
 
-    local prompt = hi_pattern:format(
-        "Conditional",
-        symbol .. vim.b.gitsigns_status_dict.head .. (vim.b.statusline_git_status or "")
-    )
+    local prompt =
+        hi_pattern:format("Conditional", symbol .. vim.b.gitsigns_status_dict.head .. (get_git_status() or ""))
     return prompt .. " "
 end
 
