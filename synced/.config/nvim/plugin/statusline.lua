@@ -189,27 +189,19 @@ function cmp.diagnostics()
     local infos = count[vim.diagnostic.severity.I] or 0
     local hints = count[vim.diagnostic.severity.HINT] or 0
 
-    local emoticon
     local diagnostics = {}
     if errors ~= 0 then
-        emoticon = emoticon or string.format(hi_pattern, "DiagnosticError", "(°□°;)")
         table.insert(diagnostics, hi_pattern:format("DiagnosticError", "E" .. errors))
     end
     if warnings ~= 0 then
-        emoticon = emoticon or string.format(hi_pattern, "DiagnosticWarn", "(•ิ_•ิ)?")
         table.insert(diagnostics, hi_pattern:format("DiagnosticWarn", "W" .. warnings))
     end
     if infos ~= 0 then
-        -- emoticon = emoticon or string.format(hi_pattern, "DiagnosticInfo", "(￢_￢)")
         table.insert(diagnostics, hi_pattern:format("DiagnosticInfo", "I" .. infos))
     end
     if hints ~= 0 then
-        -- emoticon = emoticon or string.format(hi_pattern, "DiagnosticHint", "(ーー;)")
         table.insert(diagnostics, hi_pattern:format("DiagnosticHint", "H" .. hints))
     end
-    emoticon = emoticon or string.format(hi_pattern, "DiagnosticOk", "(>⩊<)")
-
-    table.insert(diagnostics, 1, emoticon)
 
     local prompt = table.concat(diagnostics, " ")
     return prompt
