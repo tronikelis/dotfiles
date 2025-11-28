@@ -38,7 +38,7 @@ local root_to_git_status = {}
 local root_to_git_status_system = {}
 
 local function run_git_status()
-    if vim.bo.buftype ~= "" then
+    if vim.bo.buftype ~= "" or vim.fn.expand("%:p"):sub(1, 1) ~= "/" then
         return
     end
 
@@ -65,7 +65,7 @@ local function run_git_status()
 end
 
 local function get_git_status()
-    if vim.bo.buftype ~= "" then
+    if vim.bo.buftype ~= "" or vim.fn.expand("%:p"):sub(1, 1) ~= "/" then
         return
     end
 
