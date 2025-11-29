@@ -55,7 +55,7 @@ local function run_git_status()
     root_to_git_status_system[root] = vim.system(
         -- sleep here to not spam
         { "bash", "-c", [[sleep 3; starship module git_status | perl -pe 's/\e\[[0-9;]*m//g']] },
-        { cwd = vim.fn.expand("%:p:h"), text = true },
+        { cwd = root, text = true },
         function(out)
             local stdout = vim.trim(out.stdout or "")
             root_to_git_status_system[root] = nil
