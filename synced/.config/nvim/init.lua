@@ -4,6 +4,10 @@ table.unpack = table.unpack or unpack
 
 local augroup = vim.api.nvim_create_augroup("init.lua", {})
 
+-- todo:
+-- set chistory=50
+-- try out Difftool builtin plugin 0.12
+
 require("paq")({
     "NMAC427/guess-indent.nvim",
     "folke/lazydev.nvim",
@@ -12,10 +16,9 @@ require("paq")({
     "kylechui/nvim-surround",
     "lewis6991/gitsigns.nvim",
     "mason-org/mason.nvim",
-    "mbbill/undotree",
+    "mbbill/undotree", -- replace with builtin undotree plugin 0.12
     "mfussenegger/nvim-jdtls",
     "neovim/nvim-lspconfig",
-    "nvim-lua/plenary.nvim",
     "nvim-tree/nvim-web-devicons",
     "nvim-treesitter/nvim-treesitter-context",
     "savq/paq-nvim",
