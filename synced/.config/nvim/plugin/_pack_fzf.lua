@@ -62,7 +62,7 @@ local function cwd_child()
     local cwd = vim.fn.getcwd()
     local wd = current_wd()
 
-    while vim.fs.dirname(wd) ~= cwd do
+    while wd ~= cwd and vim.fs.dirname(wd) ~= cwd do
         if wd == "/" then
             break
         end
