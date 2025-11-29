@@ -1,0 +1,13 @@
+#!/bin/bash
+
+if ! man "$@" >/dev/null; then
+    exit
+fi
+
+line="$(man "$@" | nl -d '' -b a | fzf --exact | awk '{print $1}')"
+
+if [[ ! "$line" ]]; then
+    exit 1
+fi
+
+man -P "less -f +:$line" "$@"
