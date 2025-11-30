@@ -37,12 +37,22 @@ local root_to_git_status = {}
 ---@type table<string, vim.SystemObj?>
 local root_to_git_status_system = {}
 
+local function get_buffer_git_root()
+    local root = vim.b.git_root or vim.fs.root(0, ".git")
+    if not root then
+        return
+    end
+    vim.b.git_root = root
+
+    return root
+end
+
 local function run_git_status()
     if vim.bo.buftype ~= "" or vim.fn.expand("%:p"):sub(1, 1) ~= "/" then
         return
     end
 
-    local root = vim.fs.root(0, ".git")
+    local root = get_buffer_git_root()
     if not root then
         return
     end
@@ -69,7 +79,7 @@ local function get_git_status()
         return
     end
 
-    local root = vim.fs.root(0, ".git")
+    local root = get_buffer_git_root()
     if not root then
         return
     end
