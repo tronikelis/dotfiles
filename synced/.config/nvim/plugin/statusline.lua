@@ -38,8 +38,14 @@ local root_to_git_status = {}
 local root_to_git_status_system = {}
 
 local function get_buffer_git_root()
-    local root = vim.b.git_root or vim.fs.root(0, ".git")
+    local cached_root = vim.b.git_root
+    if cached_root == "" then
+        return
+    end
+
+    local root = cached_root or vim.fs.root(0, ".git")
     if not root then
+        vim.b.git_root = ""
         return
     end
     vim.b.git_root = root
