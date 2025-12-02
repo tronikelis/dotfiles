@@ -197,6 +197,10 @@ vim.keymap.set("n", "<leader>ch", function()
     require("fzf-lua").command_history()
 end)
 
+vim.keymap.set("n", "<leader>cm", function()
+    require("fzf-lua").commands()
+end)
+
 vim.keymap.set("n", "<leader>ct", function()
     vim.cmd.Taglist()
 end)

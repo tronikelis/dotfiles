@@ -116,6 +116,35 @@ vim.opt.termguicolors = true
 vim.opt.splitbelow = true
 vim.opt.splitright = true
 
+-- enabled lsps
+vim.g.lsps = {
+    biome = true,
+    clangd = true,
+    dartls = true,
+    eslint = true,
+    gdscript = true,
+    gopls = true,
+    html = true,
+    jdtls = true,
+    jsonls = true,
+    lua_ls = true,
+    marksman = true,
+    pyright = true,
+    rubocop = true,
+    ruby_lsp = true,
+    rust_analyzer = true,
+    tailwindcss = true,
+    taplo = true,
+    templ = true,
+    ts_ls = true,
+    vespa_ls = true,
+    yamlls = true,
+    zls = true,
+}
+
+vim.opt.diffopt:append("algorithm:histogram")
+vim.opt.exrc = true
+
 -- misc, no category really
 vim.keymap.set("v", "K", ":m '<-2<cr>gv=gv") -- has to be :m
 vim.keymap.set("v", "J", ":m '>+1<cr>gv=gv") -- has to be :m
@@ -264,5 +293,3 @@ vim.api.nvim_create_autocmd("TextYankPost", {
         end
     end,
 })
-
-vim.opt.diffopt:append("algorithm:histogram")
