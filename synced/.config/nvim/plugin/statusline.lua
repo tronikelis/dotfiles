@@ -32,6 +32,12 @@ if not vim.g.did_statusline then
 end
 vim.g.did_statusline = true
 
+---@param v string
+local function escape(v)
+    local res = v:gsub("%%", "%%%%")
+    return res
+end
+
 ---@type table<string, string?>
 local root_to_git_status = {}
 ---@type table<string, vim.SystemObj?>
@@ -101,8 +107,10 @@ function cmp.git()
         return ""
     end
 
-    local prompt =
-        hi_pattern:format("Conditional", symbol .. vim.b.gitsigns_status_dict.head .. (get_git_status() or ""))
+    local prompt = hi_pattern:format(
+        "Conditional",
+        symbol .. escape(vim.b.gitsigns_status_dict.head) .. escape(get_git_status() or "")
+    )
     return prompt .. " "
 end
 
@@ -156,16 +164,16 @@ function cmp.full_file()
     if vim.bo.filetype == "oil" then
         local dir = require("oil").get_current_dir()
         if dir then
-            dir = vim.fn.fnamemodify(dir, ":~:.")
+            dir = escape(vim.fn.fnamemodify(dir, ":~:."))
             return hi_pattern:format("Directory", " ") .. dir
         end
     end
 
     local icon, hl = require("nvim-web-devicons").get_icon(file)
     if icon and hl then
-        file = hi_pattern:format(hl, icon .. " ") .. file
+        file = hi_pattern:format(hl, icon .. " ") .. escape(file)
     else
-        file = " " .. file
+        file = " " .. escape(file)
     end
     return file
 end
@@ -199,7 +207,7 @@ function cmp.formatters()
 
     local fmts = vim.iter(formatters)
         :map(function(x)
-            return x.name
+            return escape(x.name)
         end)
         :totable()
 
@@ -272,10 +280,10 @@ vim.api.nvim_create_autocmd("LspProgress", {
             table.insert(messages, string.format("[%s%%%%]", value.percentage))
         end
         if value.message then
-            table.insert(messages, value.message)
+            table.insert(messages, escape(value.message))
         end
         if value.title then
-            table.insert(messages, value.title)
+            table.insert(messages, escape(value.title))
         end
 
         set(string.format(hi_pattern, "Comment", table.concat(messages, " ")))

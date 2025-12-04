@@ -68,6 +68,8 @@ export FZF_DEFAULT_OPTS=" \
 --color=marker:#b4befe,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8 \
 --color=selected-bg:#45475a --layout=reverse --cycle \
 --bind 'ctrl-y:execute-silent(echo -n {} | copy)+abort' \
+--bind 'ctrl-left:backward-word' \
+--bind 'ctrl-right:forward-word' \
 --bind ctrl-w:top"
 
 # Preview file content using bat (https://github.com/sharkdp/bat)
