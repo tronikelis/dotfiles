@@ -30,16 +30,15 @@ function is_executable() {
 ### Path
 # update PATH
 
-if [[ -e "$HOME/.cargo/env" ]]; then
-	source "$HOME/.cargo/env"
-fi
-
 add_to_path "$HOME/.local/bin"
 add_to_path "/opt/homebrew/bin"
 add_to_path "$HOME/.bun/bin"
 
 if is_executable "go"; then
 	add_to_path "$(go env GOPATH)/bin"
+fi
+if [[ -e "$HOME/.cargo/env" ]]; then
+	source "$HOME/.cargo/env"
 fi
 
 

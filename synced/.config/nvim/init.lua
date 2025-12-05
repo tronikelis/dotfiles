@@ -15,7 +15,6 @@ require("paq")({
     "ibhagwan/fzf-lua",
     "kylechui/nvim-surround",
     "lewis6991/gitsigns.nvim",
-    "mason-org/mason.nvim",
     "mbbill/undotree", -- replace with builtin undotree plugin 0.12
     "mfussenegger/nvim-jdtls",
     "neovim/nvim-lspconfig",
@@ -117,30 +116,32 @@ vim.opt.splitbelow = true
 vim.opt.splitright = true
 
 -- enabled lsps
-vim.g.lsps = {
-    biome = true,
-    clangd = true,
-    dartls = true,
-    eslint = true,
-    gdscript = true,
-    gopls = true,
-    html = true,
-    jdtls = true,
-    jsonls = true,
-    lua_ls = true,
-    marksman = true,
-    pyright = true,
-    rubocop = true,
-    ruby_lsp = true,
-    rust_analyzer = true,
-    tailwindcss = true,
-    taplo = true,
-    templ = true,
-    ts_ls = true,
-    vespa_ls = true,
-    yamlls = true,
-    zls = true,
-}
+for _, v in pairs({
+    "biome",
+    "clangd",
+    "dartls",
+    "eslint",
+    "gdscript",
+    "gopls",
+    "html",
+    "jdtls",
+    "jsonls",
+    "lua_ls",
+    "marksman",
+    "pyright",
+    "rubocop",
+    "ruby_lsp",
+    "rust_analyzer",
+    "tailwindcss",
+    "taplo",
+    "templ",
+    "ts_ls",
+    "vespa_ls",
+    "yamlls",
+    "zls",
+}) do
+    vim.lsp.enable(v)
+end
 
 vim.opt.diffopt:append("algorithm:histogram")
 vim.opt.exrc = true

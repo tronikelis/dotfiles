@@ -1,7 +1,5 @@
 local augroup = vim.api.nvim_create_augroup("plugin/_pack_lsp.lua", {})
 
-require("mason").setup()
-
 vim.diagnostic.config({
     underline = true,
     severity_sort = true,
@@ -59,10 +57,6 @@ end)
 vim.keymap.set("n", "]w", function()
     vim.diagnostic.jump({ severity = vim.diagnostic.severity.W, count = vim.v.count1 })
 end)
-
-for k, v in pairs(vim.g.lsps or {}) do
-    vim.lsp.enable(k, v)
-end
 
 require("blink.cmp").setup({
     completion = {
