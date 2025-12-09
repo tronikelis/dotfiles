@@ -108,6 +108,7 @@ spawn-sh-at-startup "hyprpaper"
 spawn-sh-at-startup "udiskie"
 spawn-sh-at-startup "kanshi"
 spawn-sh-at-startup "gsettings set org.gnome.desktop.interface color-scheme prefer-dark"
+spawn-sh-at-startup "xremap ~/.config/xremap/config.yml"
 
 environment {
     QT_QPA_PLATFORMTHEME "qt6ct"
