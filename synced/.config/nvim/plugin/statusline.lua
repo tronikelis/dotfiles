@@ -18,20 +18,6 @@ function _G._statusline_component(name)
     return prompt
 end
 
-if not vim.g.did_statusline then
-    local interval = 3000
-    local timer = assert(vim.uv.new_timer())
-
-    timer:start(
-        interval,
-        interval,
-        vim.schedule_wrap(function()
-            vim.cmd("redrawstatus!")
-        end)
-    )
-end
-vim.g.did_statusline = true
-
 ---@param v string
 local function escape(v)
     local res = v:gsub("%%", "%%%%")
