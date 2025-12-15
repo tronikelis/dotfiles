@@ -63,6 +63,8 @@
 	root = rev-parse --show-toplevel
 	logo = log --oneline
 	last = rev-parse --abbrev-ref @{-1}
+	# deletes last used branch
+	branchdelast = "!git branch -d \"$(git last)\" #"
 	# shows local branches which got their remote branch deleted
 	bgone = "!git fetch &>/dev/null && git branch -vv | cut -c 3- | grep gone] | awk '{print $1}' #"
 	# reset hard, plus remove unadded files
