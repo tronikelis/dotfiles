@@ -182,8 +182,8 @@ fi
 ### Binds
 # set up some custom binds
 
-bindkey "^[[1;5C" forward-word
-bindkey "^[[1;5D" backward-word
+bindkey "^[[1;5C" vi-forward-word
+bindkey "^[[1;5D" vi-backward-word
 
 autoload -z edit-command-line
 zle -N edit-command-line
