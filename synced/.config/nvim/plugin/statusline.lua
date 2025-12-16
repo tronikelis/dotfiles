@@ -24,11 +24,11 @@ local function escape(v)
     return res
 end
 
-_G.__statusline_root_to_git_status = {}
+_G.__statusline_root_to_git_status = _G.__statusline_root_to_git_status or {}
 ---@type table<string, string?>
 local root_to_git_status = _G.__statusline_root_to_git_status
 
-_G.__statusline_root_to_git_status_system = {}
+_G.__statusline_root_to_git_status_system = _G.__statusline_root_to_git_status_system or {}
 ---@type table<string, vim.SystemObj?>
 local root_to_git_status_system = _G.__statusline_root_to_git_status_system
 
