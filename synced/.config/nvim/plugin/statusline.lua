@@ -24,10 +24,13 @@ local function escape(v)
     return res
 end
 
+_G.__statusline_root_to_git_status = {}
 ---@type table<string, string?>
-local root_to_git_status = {}
+local root_to_git_status = _G.__statusline_root_to_git_status
+
+_G.__statusline_root_to_git_status_system = {}
 ---@type table<string, vim.SystemObj?>
-local root_to_git_status_system = {}
+local root_to_git_status_system = _G.__statusline_root_to_git_status_system
 
 local function get_buffer_git_root()
     local cached_root = vim.b.git_root
