@@ -7,13 +7,6 @@ require("treesitter-context").setup({
     min_window_height = 25,
 })
 
--- folding
-vim.opt.foldtext = ""
-vim.opt.foldcolumn = "0"
-vim.opt.foldlevelstart = 99
-vim.opt.foldmethod = "expr"
-vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
-
 require("nvim-treesitter").install({
     "rust",
     "markdown",

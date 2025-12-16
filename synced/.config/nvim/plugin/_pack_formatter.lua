@@ -67,8 +67,6 @@ local function biome_or_prettier(buf)
     return { "prettierd" }
 end
 
-vim.opt.formatexpr = "v:lua.require'conform'.formatexpr()"
-
 require("conform").setup({
     formatters_by_ft = {
         html = { "prettierd" },
