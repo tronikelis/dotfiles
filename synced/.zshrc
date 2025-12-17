@@ -69,7 +69,7 @@ export FZF_DEFAULT_OPTS=" \
 --bind 'ctrl-y:execute-silent(echo -n {} | copy)+abort' \
 --bind 'ctrl-left:backward-word' \
 --bind 'ctrl-right:forward-word' \
---bind ctrl-w:top"
+--bind ctrl-r:top"
 
 # Preview file content using bat (https://github.com/sharkdp/bat)
 export FZF_CTRL_T_OPTS="
