@@ -7,7 +7,9 @@ VIM=""
 tempfile="$(mktemp)"
 touch "$tempfile"
 
-cat >"$tempfile"
+if [[ ! -t 0 ]]; then
+    cat >"$tempfile"
+fi
 
 if bash -c ">/dev/tty" >/dev/null 2>/dev/null; then
     # /dev/tty is available / writable
