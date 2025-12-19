@@ -28,6 +28,7 @@ require("paq")({
     "tronikelis/caser.nvim",
     "tronikelis/conflict-marker.nvim",
     "tronikelis/gitdive.nvim",
+    "tronikelis/indent-textobject.nvim",
     "tronikelis/sstash.nvim",
     "tronikelis/ts-autotag.nvim",
     "tronikelis/xylene.nvim",
