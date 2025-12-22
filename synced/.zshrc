@@ -322,6 +322,15 @@ function cpcmd() {
     history | tail -n 1 | fextr 2 0 | sed 's/\\n/\n/g' | copy
 }
 
+function showmem() {
+    ps -o rss,command -p "$1" | tail -1 | awk '{printf $1/1024 " MiB\t"; $1=""; print $0}'
+}
+
+
+
+
+
+
 
 
 ### Custom setup
