@@ -1,0 +1,17 @@
+#!/bin/bash
+
+function is_executable() {
+    test -x "$(command -v "$1")"
+}
+
+if is_executable "xdg-open"; then
+    exec xdg-open "$@"
+fi
+
+if is_executable "open"; then
+    exec open "$@"
+fi
+
+echo "no open provider found" >&2
+
+exit 1
