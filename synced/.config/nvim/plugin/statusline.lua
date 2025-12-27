@@ -128,6 +128,9 @@ function cmp.git_lines()
 end
 
 function cmp.lines()
+    if vim.api.nvim_buf_line_count(0) < 1000 then
+        return string.format("%d:%%-3c", vim.api.nvim_buf_line_count(0))
+    end
     return string.format("%.1fK:%%-3c", vim.api.nvim_buf_line_count(0) / 1000)
 end
 
