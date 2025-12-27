@@ -128,23 +128,7 @@ function cmp.git_lines()
 end
 
 function cmp.lines()
-    local ln = vim.api.nvim_buf_line_count(0)
-    local suffix = ""
-
-    if ln >= 1000 then
-        suffix = "K"
-        ln = ln / 1000
-
-        local dotIndex = string.find(ln, ".", 1, true)
-
-        if dotIndex ~= nil then
-            ln = string.sub(ln, 1, dotIndex + 1)
-        else
-            ln = ln .. ".0"
-        end
-    end
-
-    return tostring(ln) .. suffix .. ":" .. "%-3c"
+    return string.format("%.1fK:%%-3c", vim.api.nvim_buf_line_count(0) / 1000)
 end
 
 function cmp.full_file()
