@@ -22,18 +22,24 @@ pane_window="$(
 pane="$(echo "$pane_window" | awk '{print $1}')"
 window="$(echo "$pane_window" | awk '{print $2}')"
 
+cmd=":drop $filename"
+if [[ "$filename" == "$line" ]]; then
+    # no suffix found
+    line=""
+fi
+if [[ "$line" ]]; then
+    cmd="$cmd | $line"
+fi
+
+# open nvim if not already open
 if [[ ! "$pane" ]]; then
-    tmux display-message "$EDITOR not open in any panes"
-    exit 1
+    tmux new-window -c "#{pane_current_path}"
+    pane="$(tmux display-message -p '#{pane_id}')"
+    tmux send-keys -t "$pane" "$EDITOR" Enter
 fi
 
 tmux send-keys -t "$pane" -X cancel 2>/dev/null || true
 tmux send-keys -t "$pane" Escape
-
-cmd=":drop $filename"
-if [[ "$line" && "$filename" != "$line" ]]; then
-    cmd="$cmd | $line"
-fi
 
 tmux send-keys -t "$pane" "$cmd" Enter
 tmux select-window -t "$window"
