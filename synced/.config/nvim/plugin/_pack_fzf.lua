@@ -10,6 +10,8 @@ end
 local function action_motion_edit(_, opts)
     local buf = vim.api.nvim_create_buf(false, true)
     vim.api.nvim_buf_set_lines(buf, 0, -1, true, { opts.query or "" })
+    vim.bo[buf].bufhidden = "wipe"
+    vim.bo[buf].undofile = false
 
     local width = math.min(50, vim.o.columns - 10)
     local height = 1
@@ -270,6 +272,29 @@ vim.api.nvim_create_autocmd("LspAttach", {
     end,
 })
 
+---@param ref string?
+local function navigate_to_first_git_hunk(ref)
+    local out = vim.system({
+        "bash",
+        "-c",
+        string.format(
+            "git diff %s -- %s | grep ^@@ | head -n 1",
+            vim.fn.shellescape(ref or "@"),
+            vim.fn.shellescape(vim.fn.expand("%"))
+        ),
+    }, { text = true }):wait()
+    if out.code ~= 0 then
+        vim.notify(tostring(out.stderr), vim.log.levels.ERROR)
+        return
+    end
+
+    local stdout = vim.trim(out.stdout)
+    local line = stdout:match("%+(%d+)")
+    if line then
+        vim.cmd(line)
+    end
+end
+
 vim.api.nvim_create_user_command("GitDiff", function(ev)
     ---@type string?
     local ref
@@ -286,5 +311,20 @@ vim.api.nvim_create_user_command("GitDiff", function(ev)
         ref = vim.trim(out.stdout)
     end
 
-    require("fzf-lua").git_diff({ ref = ref })
+    require("fzf-lua").git_diff({
+        ref = ref,
+        winopts = {
+            fullscreen = true,
+            preview = {
+                layout = "vertical",
+                vertical = "up:80%",
+            },
+        },
+        actions = {
+            ["enter"] = function(...)
+                require("fzf-lua").actions.file_edit_or_qf(...)
+                navigate_to_first_git_hunk(ref)
+            end,
+        },
+    })
 end, { nargs = "*" })

@@ -276,13 +276,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
     end,
 })
 
-vim.api.nvim_create_autocmd("TermOpen", {
-    group = augroup,
-    callback = function()
-        vim.cmd("startinsert")
-    end,
-})
-
 -- yankring
 vim.api.nvim_create_autocmd("TextYankPost", {
     group = augroup,
