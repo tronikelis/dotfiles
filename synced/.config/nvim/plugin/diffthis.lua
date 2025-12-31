@@ -45,7 +45,8 @@ local function attach(prev_buf, cursor)
     })
 end
 
-local function diffthis()
+---@param ev vim.api.keyset.create_user_command.command_args
+local function diffthis(ev)
     if vim.bo.buftype ~= "" or vim.fn.expand("%:p"):sub(1, 1) ~= "/" then
         print("can git diff only files")
         return
@@ -58,8 +59,17 @@ local function diffthis()
     local buf = new_buf()
     vim.api.nvim_set_current_buf(buf)
 
-    local cmd =
-        string.format("git diff -U999999999 -- %s | delta --line-numbers --paging=never", vim.fn.shellescape(file))
+    local extra_options = vim.iter(ev.fargs)
+        :map(function(v)
+            return vim.fn.shellescape(v)
+        end)
+        :totable()
+
+    local cmd = string.format(
+        "git diff %s -- %s | delta --line-numbers --paging=never",
+        table.concat(extra_options, " "),
+        vim.fn.shellescape(file)
+    )
 
     vim.fn.jobstart(cmd, {
         term = true,
@@ -71,4 +81,6 @@ local function diffthis()
     })
 end
 
-vim.api.nvim_create_user_command("Diffthis", diffthis, {})
+vim.api.nvim_create_user_command("Diffthis", diffthis, {
+    nargs = "*",
+})
