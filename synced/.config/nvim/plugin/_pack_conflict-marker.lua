@@ -30,7 +30,7 @@ require("conflict-marker").setup({
             end
         end
 
-        map("]h", next)
-        map("[h", prev)
+        map("]x", next)
+        map("[x", prev)
     end,
 })

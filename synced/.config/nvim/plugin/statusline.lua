@@ -24,6 +24,33 @@ local function escape(v)
     return res
 end
 
+local function refresh_timer()
+    local timer = _G.__statusline_timer or assert(vim.uv.new_timer())
+    _G.__statusline_timer = timer
+    return timer
+end
+local function start_refresh_timer()
+    refresh_timer():start(
+        0,
+        3000,
+        vim.schedule_wrap(function()
+            vim.cmd("redrawstatus!")
+        end)
+    )
+end
+local function stop_refresh_timer()
+    refresh_timer():stop()
+end
+start_refresh_timer()
+vim.api.nvim_create_autocmd("FocusGained", {
+    group = augroup,
+    callback = start_refresh_timer,
+})
+vim.api.nvim_create_autocmd("FocusLost", {
+    group = augroup,
+    callback = stop_refresh_timer,
+})
+
 _G.__statusline_root_to_git_status = _G.__statusline_root_to_git_status or {}
 ---@type table<string, string?>
 local root_to_git_status = _G.__statusline_root_to_git_status
