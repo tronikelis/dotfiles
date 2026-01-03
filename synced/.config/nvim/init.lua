@@ -80,7 +80,6 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 vim.opt.clipboard = "unnamedplus"
 vim.opt.undofile = true
-vim.opt.updatetime = 1000
 vim.opt.inccommand = "split"
 vim.opt.cursorline = true
 vim.opt.scrolloff = 10
