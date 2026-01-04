@@ -109,17 +109,16 @@ local function set_formatexpr(buf)
     end
 end
 
+vim.api.nvim_create_autocmd("LspAttach", {
+    group = augroup,
+    callback = function(ev)
+        set_formatexpr(ev.buf)
+    end,
+})
+
 vim.api.nvim_create_autocmd("FileType", {
     group = augroup,
-    callback = function()
-        local buf = vim.api.nvim_get_current_buf()
-        set_formatexpr(buf)
-        vim.api.nvim_create_autocmd("LspAttach", {
-            group = augroup,
-            buffer = buf,
-            callback = function()
-                set_formatexpr(buf)
-            end,
-        })
+    callback = function(ev)
+        set_formatexpr(ev.buf)
     end,
 })
