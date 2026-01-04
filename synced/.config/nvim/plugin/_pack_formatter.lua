@@ -101,11 +101,25 @@ require("conform").setup({
     end,
 })
 
+---@param buf integer
+local function set_formatexpr(buf)
+    local formatters, lsp = require("conform").list_formatters_to_run(buf)
+    if lsp or #formatters ~= 0 then
+        vim.bo[buf].formatexpr = "v:lua.require'conform'.formatexpr()"
+    end
+end
+
 vim.api.nvim_create_autocmd("FileType", {
     group = augroup,
     callback = function()
-        if #require("conform").list_formatters() ~= 0 then
-            vim.bo.formatexpr = "v:lua.require'conform'.formatexpr()"
-        end
+        local buf = vim.api.nvim_get_current_buf()
+        set_formatexpr(buf)
+        vim.api.nvim_create_autocmd("LspAttach", {
+            group = augroup,
+            buffer = buf,
+            callback = function()
+                set_formatexpr(buf)
+            end,
+        })
     end,
 })
