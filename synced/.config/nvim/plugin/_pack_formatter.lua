@@ -100,3 +100,12 @@ require("conform").setup({
         return {}
     end,
 })
+
+vim.api.nvim_create_autocmd("FileType", {
+    group = augroup,
+    callback = function()
+        if #require("conform").list_formatters() ~= 0 then
+            vim.bo.formatexpr = "v:lua.require'conform'.formatexpr()"
+        end
+    end,
+})
