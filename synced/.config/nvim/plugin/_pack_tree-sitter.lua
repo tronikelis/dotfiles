@@ -40,6 +40,16 @@ require("nvim-treesitter").install({
     "html",
 })
 
+vim.api.nvim_create_autocmd("BufWinEnter", {
+    group = augroup,
+    callback = function(ev)
+        if vim.b[ev.buf].is_treesitter_started then
+            vim.wo.foldmethod = "expr"
+            vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+        end
+    end,
+})
+
 vim.api.nvim_create_autocmd("FileType", {
     group = augroup,
     callback = function(ev)
@@ -47,14 +57,7 @@ vim.api.nvim_create_autocmd("FileType", {
         local success, parser = pcall(vim.treesitter.get_parser, ev.buf)
         if success and parser then
             vim.treesitter.start(ev.buf)
-            vim.api.nvim_create_autocmd("BufWinEnter", {
-                group = augroup,
-                buffer = ev.buf,
-                callback = function()
-                    vim.wo.foldmethod = "expr"
-                    vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
-                end,
-            })
+            vim.b[ev.buf].is_treesitter_started = true
         end
     end,
 })
