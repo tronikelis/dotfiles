@@ -47,6 +47,14 @@ vim.api.nvim_create_autocmd("FileType", {
         local success, parser = pcall(vim.treesitter.get_parser, ev.buf)
         if success and parser then
             vim.treesitter.start(ev.buf)
+            vim.api.nvim_create_autocmd("BufWinEnter", {
+                group = augroup,
+                buffer = ev.buf,
+                callback = function()
+                    vim.wo.foldmethod = "expr"
+                    vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+                end,
+            })
         end
     end,
 })
