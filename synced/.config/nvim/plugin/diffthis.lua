@@ -9,11 +9,11 @@ end
 ---@return number?
 local function get_diff_current_line()
     local line = vim.api.nvim_get_current_line()
-    local num = line:match("^ %d*%s*⋮ (%d+)")
+    local num = line:match("^ %d*%s*⋮%s*(%d+)")
     if num then
         return tonumber(num)
     end
-    num = line:match("^ (%d+)")
+    num = line:match("^%s*(%d+)")
     if num then
         return tonumber(num)
     end
