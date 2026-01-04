@@ -29,9 +29,11 @@ local function format_async(args)
 end
 
 local format_cmds = {
-    enable = function()
+    enable = function(args)
+        if args.bang then
+            vim.g.disable_autoformat = false
+        end
         vim.b.disable_autoformat = false
-        vim.g.disable_autoformat = false
     end,
     disable = function(args)
         if args.bang then
