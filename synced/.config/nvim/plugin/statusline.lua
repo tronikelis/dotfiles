@@ -155,10 +155,11 @@ function cmp.git_lines()
 end
 
 function cmp.lines()
+    local winnr_expr = "%{winnr()}"
     if vim.api.nvim_buf_line_count(0) < 1000 then
-        return string.format("%d:%%-3c", vim.api.nvim_buf_line_count(0))
+        return string.format("%s:%d:%%-3c", winnr_expr, vim.api.nvim_buf_line_count(0))
     end
-    return string.format("%.1fK:%%-3c", vim.api.nvim_buf_line_count(0) / 1000)
+    return string.format("%s:%.1fK:%%-3c", winnr_expr, vim.api.nvim_buf_line_count(0) / 1000)
 end
 
 function cmp.full_file()
