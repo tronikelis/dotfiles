@@ -81,7 +81,7 @@
 	# delete worktree and branch combo
 	wdelete = "!unset GIT_DIR; branch=\"$(cd \"$1\" && git branch --show-current)\"; git worktree remove \"$1\" && git branch -D \"$branch\" #"
 	# delete worktrees interactive
-	wdeletei = "!~/.config/git/delete_worktrees.sh #"
+	wdeletei = "!zsh -c 'source ~/.zsh_plugins/fzf-git/fzf-git.plugin.zsh; fzf_git_worktrees' | xargs -L 1 -r git wdelete #"
 	# pretty print sorted branches by time
 	brecent = "!git branch --sort=-committerdate --color=always --format='%(color:yellow)%(committerdate:short)|||%(color:blue)%(committerdate:relative)|||%(color:reset)%(refname:short)|||%(authorname)' | column -t -s '|||' #"
 	# cherry but squashed version
