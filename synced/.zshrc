@@ -139,7 +139,7 @@ autoload -U compinit
 if fttl ~/.zcompdump 24h; then
     rm ~/.zcompdump
 fi
-compinit
+compinit -C
 
 
 
@@ -342,5 +342,4 @@ fi
 
 # remove duplicates in $PATH
 typeset -aU path
-
 
