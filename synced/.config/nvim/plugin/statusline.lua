@@ -173,7 +173,7 @@ function cmp.full_file()
         end
     end
 
-    local icon, hl = require("nvim-web-devicons").get_icon(file)
+    local icon, hl = require("nvim-web-devicons").get_icon(vim.fs.basename(file))
     if icon and hl then
         file = hi_pattern:format(hl, icon .. " ") .. escape(file)
     else
