@@ -92,6 +92,8 @@
 	addi = "!git status --porcelain | fzf --preview \"set -o pipefail; git diff --exit-code -- {2..} | delta && bat --color=always {2..}\" --multi --tmux 70%,70% | fextr 2 0 | xargs -r git add \"$@\" -- #"
 	# switch branches interactively
 	switchi = "!zsh -c 'source ~/.zsh_plugins/fzf-git/fzf-git.plugin.zsh; fzf_git_branches --no-multi' | xargs -L 1 -r git switch \"$@\" #"
+	# delete branches interactively
+	branchdei = "!zsh -c 'source ~/.zsh_plugins/fzf-git/fzf-git.plugin.zsh; fzf_git_branches' | xargs -r git branch \"${1--d}\" \"$@\" #"
 
 [merge]
 	tool = nvimdiff
