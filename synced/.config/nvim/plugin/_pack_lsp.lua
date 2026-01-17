@@ -57,6 +57,9 @@ end)
 vim.keymap.set("n", "]w", function()
     vim.diagnostic.jump({ severity = vim.diagnostic.severity.W, count = vim.v.count1 })
 end)
+vim.keymap.set({ "n", "i" }, "<c-s>", function()
+    vim.lsp.buf.signature_help({ border = "rounded" })
+end)
 
 require("blink.cmp").setup({
     completion = {
@@ -113,11 +116,6 @@ require("blink.cmp").setup({
     },
     term = {
         enabled = false,
-    },
-    signature = {
-        enabled = true,
-        trigger = { enabled = false },
-        window = { border = "rounded" },
     },
 })
 
