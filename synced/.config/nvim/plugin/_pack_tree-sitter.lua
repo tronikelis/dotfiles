@@ -15,7 +15,6 @@ require("nvim-treesitter").install({
     "jsx",
     "javascript",
     "json",
-    "jsonc",
     "go",
     "yaml",
     "toml",
