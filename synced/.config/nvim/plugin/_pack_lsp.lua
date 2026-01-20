@@ -103,7 +103,6 @@ require("blink.cmp").setup({
         },
     },
     fuzzy = {
-        sorts = { "score", "sort_text" },
         max_typos = function(keyword)
             return math.floor(#keyword / 6)
         end,
