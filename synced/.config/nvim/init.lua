@@ -289,5 +289,3 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 -- folding
 vim.opt.foldcolumn = "0"
 vim.opt.foldlevelstart = 99
-vim.opt.foldmethod = "expr"
-vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"

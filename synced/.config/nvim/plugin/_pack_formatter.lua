@@ -106,6 +106,7 @@ local function set_formatexpr(buf)
     local formatters, lsp = require("conform").list_formatters_to_run(buf)
     if lsp or #formatters ~= 0 then
         vim.bo[buf].formatexpr = "v:lua.require'conform'.formatexpr()"
+        vim.b[buf].undo_ftplugin = (vim.b[buf].undo_ftplugin or "") .. "\n setl formatexpr<"
     end
 end
 
