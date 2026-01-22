@@ -1,12 +1,12 @@
 #!/bin/bash
 
-name="${1-scratch}"
+set -eu
 
-if ! tmux has-session -t="$name" 2>/dev/null; then
-    dir="/var/tmp/tmux/$(openssl rand -hex 4)"
-    mkdir -p "$dir" || exit
+id="$(openssl rand -hex 4)"
+name="${1-scratch}/$id"
 
-    tmux new-session -ds "$name" -c "$dir"
-fi
+dir="/var/tmp/tmux/$id"
+mkdir -p "$dir"
 
+tmux new-session -ds "$name" -c "$dir"
 tmux switch-client -t "$name"

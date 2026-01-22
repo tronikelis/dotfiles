@@ -83,7 +83,6 @@ vim.opt.undofile = true
 vim.opt.inccommand = "split"
 vim.opt.cursorline = true
 vim.opt.scrolloff = 10
-vim.opt.sidescrolloff = 10
 vim.opt.guicursor = "n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20,a:blinkwait1000-blinkoff500-blinkon500"
 vim.opt.ttimeoutlen = 10 -- faster insert mode exits
 vim.opt.listchars = {
@@ -91,6 +90,7 @@ vim.opt.listchars = {
     space = "•",
     tab = "• ",
 }
+vim.opt.sidescroll = 10
 
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
