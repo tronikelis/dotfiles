@@ -60,6 +60,7 @@ local function on_win(_, win, buf, top, bottom)
         return false
     end
 
+    assert(vim.api.nvim_get_current_buf() == buf, "current buffer on_win sanity check")
     vim.wo[win][0].conceallevel = 2
     vim.wo[win][0].concealcursor = "nvic"
 
