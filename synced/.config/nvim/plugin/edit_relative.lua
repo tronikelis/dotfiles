@@ -19,10 +19,14 @@ end
 local function complete(query)
     query = query or ""
 
-    local out = vim.system(
-        { "bash", "-c", string.format([[fd -t f --strip-cwd-prefix=always | fzf -f %s]], vim.fn.shellescape(query)) },
-        { text = true, cwd = get_cwd() }
-    ):wait()
+    local out = vim.system({
+        "bash",
+        "-c",
+        string.format(
+            [[fd -t f --strip-cwd-prefix=always --hidden | fzf -f %s | head -n 100]],
+            vim.fn.shellescape(query)
+        ),
+    }, { text = true, cwd = get_cwd() }):wait()
 
     return vim.split(out.stdout or "", "\n", { trimempty = true })
 end
