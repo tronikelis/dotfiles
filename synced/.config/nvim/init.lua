@@ -91,6 +91,7 @@ vim.opt.listchars = {
     tab = "• ",
 }
 vim.opt.sidescroll = 10
+vim.opt.sidescrolloff = 2
 
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
