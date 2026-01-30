@@ -195,6 +195,10 @@ vim.keymap.set("n", "<leader>dC", function()
     require("fzf-lua").diagnostics_workspace()
 end)
 
+vim.keymap.set("n", "<leader>dt", function()
+    require("fzf-lua").treesitter()
+end)
+
 vim.keymap.set("n", "<leader>ch", function()
     require("fzf-lua").command_history()
 end)
