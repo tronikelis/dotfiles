@@ -71,6 +71,8 @@
 	veryhard = "!git reset --hard && git clean -f -d #"
 	# nuke all files
 	nuke = "!cd \"$(git root)\" && ls -A | grep -v '^.git$' | xargs -r rm -r #"
+	# amend and push with lease
+	ampush = "!git commit -a --amend --no-edit && git push --force-with-lease #"
 
 	# new worktree with new branch (same name) from master
 	wnew = "!git worktree add \"$1\" -b \"$1\" #"
