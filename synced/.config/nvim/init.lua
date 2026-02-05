@@ -34,7 +34,7 @@ require("paq")({
     "tronikelis/xylene.nvim",
     { "catppuccin/nvim", branch = "v1.11.0" },
     { "nvim-treesitter/nvim-treesitter", branch = "main", build = ":TSUpdate" },
-    { "saghen/blink.cmp", branch = "v1.8.0", build = "cargo build --release" },
+    { "saghen/blink.cmp", branch = "v1.9.1", build = "cargo build --release" },
 })
 
 require("catppuccin").setup({
