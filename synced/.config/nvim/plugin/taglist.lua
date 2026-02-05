@@ -39,7 +39,7 @@ vim.api.nvim_create_user_command("Taglist", function(ev)
     end
 
     local keyword = ev.fargs[1]
-    local matches = vim.fn.taglist(keyword and string.format("^%s$", vim.fn.escape(keyword, "^$")) or ".", file)
+    local matches = vim.fn.taglist(keyword and string.format("^%s", vim.fn.escape(keyword, "^$")) or ".", file)
 
     local rows = {}
     for _, v in ipairs(matches) do
