@@ -8,34 +8,83 @@ local augroup = vim.api.nvim_create_augroup("init.lua", {})
 -- set chistory=50
 -- try out Difftool builtin plugin 0.12
 
-require("paq")({
-    "NMAC427/guess-indent.nvim",
-    "folke/lazydev.nvim",
-    "folke/ts-comments.nvim",
-    "ibhagwan/fzf-lua",
-    "kylechui/nvim-surround",
-    "lewis6991/gitsigns.nvim",
-    "mbbill/undotree", -- replace with builtin undotree plugin 0.12
-    "mfussenegger/nvim-jdtls",
-    "neovim/nvim-lspconfig",
-    "nvim-tree/nvim-web-devicons",
-    "nvim-treesitter/nvim-treesitter-context",
-    "savq/paq-nvim",
-    "scalameta/nvim-metals",
-    "stevearc/conform.nvim",
-    "stevearc/oil.nvim",
-    "tronikelis/blink-cmp-ctags",
-    "tronikelis/caser.nvim",
-    "tronikelis/conflict-marker.nvim",
-    "tronikelis/gitdive.nvim",
-    "tronikelis/indent-textobject.nvim",
-    "tronikelis/sstash.nvim",
-    "tronikelis/ts-autotag.nvim",
-    "tronikelis/xylene.nvim",
-    { "catppuccin/nvim", branch = "v1.11.0" },
-    { "nvim-treesitter/nvim-treesitter", branch = "main", build = ":TSUpdate" },
-    { "saghen/blink.cmp", branch = "v1.9.1", build = "cargo build --release" },
-})
+if vim.fn.has("nvim-0.12") == 1 then
+    local pack_hooks = {
+        {
+            "blink.cmp",
+            { "install", "update" },
+            function(path)
+                print("compiling blink.cmp so")
+                vim.system({ "cargo", "build", "--release" }, { cwd = path, text = true }, function(ev)
+                    if ev.code == 0 then
+                        print("blink.cmp compilation success")
+                    else
+                        print("stdout:\n", ev.stdout, "stderr:\n", ev.stderr)
+                    end
+                end)
+            end,
+        },
+        {
+            "nvim-treesitter",
+            { "install", "update" },
+            function()
+                vim.cmd("TSUpdate")
+            end,
+            { packadd = true },
+        },
+    }
+
+    vim.api.nvim_create_autocmd("PackChanged", {
+        group = augroup,
+        callback = function(ev)
+            local name, kind, path, active = ev.data.spec.name, ev.data.kind, ev.data.path, ev.data.active
+            for _, hook in ipairs(pack_hooks) do
+                if hook[1] == name and vim.tbl_contains(hook[2], kind) then
+                    print("running hook for", name)
+                    if (hook[4] or {}).packadd then
+                        if not active then
+                            vim.cmd.packadd(name)
+                        end
+                    end
+
+                    hook[3](path)
+                    break
+                end
+            end
+        end,
+    })
+
+    local function gh(x)
+        return "https://github.com/" .. x
+    end
+    vim.pack.add({
+        gh("NMAC427/guess-indent.nvim"),
+        gh("folke/lazydev.nvim"),
+        gh("folke/ts-comments.nvim"),
+        gh("ibhagwan/fzf-lua"),
+        gh("kylechui/nvim-surround"),
+        gh("lewis6991/gitsigns.nvim"),
+        gh("mbbill/undotree"), -- replace with builtin undotree plugin 0.12
+        gh("mfussenegger/nvim-jdtls"),
+        gh("neovim/nvim-lspconfig"),
+        gh("nvim-tree/nvim-web-devicons"),
+        gh("nvim-treesitter/nvim-treesitter-context"),
+        gh("scalameta/nvim-metals"),
+        gh("stevearc/conform.nvim"),
+        gh("stevearc/oil.nvim"),
+        gh("tronikelis/blink-cmp-ctags"),
+        gh("tronikelis/caser.nvim"),
+        gh("tronikelis/conflict-marker.nvim"),
+        gh("tronikelis/gitdive.nvim"),
+        gh("tronikelis/indent-textobject.nvim"),
+        gh("tronikelis/sstash.nvim"),
+        gh("tronikelis/ts-autotag.nvim"),
+        gh("tronikelis/xylene.nvim"),
+        { src = gh("catppuccin/nvim"), version = "v1.11.0" },
+        { src = gh("nvim-treesitter/nvim-treesitter"), version = "main" },
+        { src = gh("saghen/blink.cmp"), version = "v1.9.1", build = "cargo build --release" },
+    })
+end
 
 require("catppuccin").setup({
     flavour = "mocha",
