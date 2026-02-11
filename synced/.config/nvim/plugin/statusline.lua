@@ -125,7 +125,7 @@ function cmp.git()
 
     local prompt = hi_pattern:format(
         "Conditional",
-        symbol .. escape(vim.b.gitsigns_status_dict.head) .. escape(get_git_status() or "")
+        symbol .. escape(vim.b.gitsigns_status_dict.head or "") .. escape(get_git_status() or "")
     )
     return prompt .. " "
 end
