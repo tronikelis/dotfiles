@@ -141,7 +141,7 @@ local function get_visual_selection()
     return vim.fn.getregion(vim.fn.getpos("v"), vim.fn.getpos("."), { type = mode })
 end
 
-vim.keymap.set({ "n", "v" }, "<leader>fg", function()
+vim.keymap.set({ "n", "x" }, "<leader>fg", function()
     if vim.list_contains({ "v", "V", "\22" }, vim.api.nvim_get_mode().mode) then
         require("fzf-lua").grep({
             search = vim.trim(get_visual_selection()[1]),
@@ -183,7 +183,7 @@ vim.keymap.set("n", "<leader>gs", function()
     require("fzf-lua").git_status()
 end)
 
-vim.keymap.set({ "n", "v" }, "<leader>gc", function()
+vim.keymap.set({ "n", "x" }, "<leader>gc", function()
     require("fzf-lua").git_bcommits()
 end)
 

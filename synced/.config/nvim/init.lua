@@ -178,8 +178,8 @@ vim.opt.diffopt:append("algorithm:histogram")
 vim.opt.exrc = true
 
 -- misc, no category really
-vim.keymap.set("v", "K", ":m '<-2<cr>gv=gv") -- has to be :m
-vim.keymap.set("v", "J", ":m '>+1<cr>gv=gv") -- has to be :m
+vim.keymap.set("x", "K", ":m '<-2<cr>gv=gv") -- has to be :m
+vim.keymap.set("x", "J", ":m '>+1<cr>gv=gv") -- has to be :m
 vim.keymap.set("n", "gp", "`[v`]")
 vim.keymap.set("n", "yc", "yy<cmd>normal gcc<cr>p")
 -- resize windows more
