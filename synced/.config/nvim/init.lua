@@ -62,7 +62,7 @@ if vim.fn.has("nvim-0.12") == 1 then
         gh("tronikelis/xylene.nvim"),
         { src = gh("catppuccin/nvim"), version = "v1.11.0" },
         { src = gh("nvim-treesitter/nvim-treesitter"), version = "main" },
-        { src = gh("saghen/blink.cmp"), version = "v1.9.1", build = "cargo build --release" },
+        { src = gh("saghen/blink.cmp"), version = "v1.9.1" },
     })
 end
 
