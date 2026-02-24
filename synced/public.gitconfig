@@ -63,6 +63,7 @@
 	root = rev-parse --show-toplevel
 	logo = log --oneline
 	last = rev-parse --abbrev-ref @{-1}
+
 	# deletes last used branch
 	branchdelast = "!git branch -d \"$(git last)\" #"
 	# shows local branches which got their remote branch deleted
@@ -73,7 +74,6 @@
 	nuke = "!cd \"$(git root)\" && ls -A | grep -v '^.git$' | xargs -r rm -r #"
 	# amend and push with lease
 	ampush = "!git commit -a --amend --no-edit && git push --force-with-lease #"
-
 	# new worktree with new branch (same name) from master
 	wnew = "!git worktree add \"$1\" -b \"$1\" #"
 	# new worktree with new branch (same name) from another ref
@@ -89,13 +89,16 @@
 	# cherry but squashed version
 	cherry-squash = "!git reset --soft \"$(git merge-base --fork-point \"$1\")\" &>/dev/null && git commit -m 'squashed' &>/dev/null && git cherry -v \"$1\" && git reset --hard HEAD@{2} &>/dev/null #"
 	# restore files interactively
-	restorei = "!git status --porcelain | fzf --preview \"set -o pipefail; git diff --exit-code -- {2..} | delta && bat --color=always {2..}\" --multi --tmux 70%,70% | fextr 2 0 | xargs -r git restore \"$@\" -- #"
+	restorei = "!zsh -c 'source ~/.zsh_plugins/fzf-git/fzf-git.plugin.zsh; fzf_git_status' | xargs -r git restore \"$@\" -- #"
 	# add files interactively
-	addi = "!git status --porcelain | fzf --preview \"set -o pipefail; git diff --exit-code -- {2..} | delta && bat --color=always {2..}\" --multi --tmux 70%,70% | fextr 2 0 | xargs -r git add \"$@\" -- #"
+	addi = "!zsh -c 'source ~/.zsh_plugins/fzf-git/fzf-git.plugin.zsh; fzf_git_status' | xargs -r git add \"$@\" -- #"
 	# switch branches interactively
 	switchi = "!zsh -c 'source ~/.zsh_plugins/fzf-git/fzf-git.plugin.zsh; fzf_git_branches --no-multi' | xargs -L 1 -r git switch \"$@\" #"
 	# delete branches interactively
 	branchdei = "!zsh -c 'source ~/.zsh_plugins/fzf-git/fzf-git.plugin.zsh; fzf_git_branches' | xargs -r git branch \"${1--d}\" \"$@\" #"
+
+	# revision contains a patch from stdin
+	revcontains = "!~/.config/git/scripts/revcontains.sh \"$@\" #"
 
 [merge]
 	tool = nvimdiff

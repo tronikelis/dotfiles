@@ -39,6 +39,12 @@ function fzf_git_worktrees() {
         fextr 1 3
 }
 
+function fzf_git_status() {
+    git status --short |
+        fzf_git --preview "set -o pipefail; git diff --exit-code -- {2..} | delta && bat --color=always {2..}" |
+        fextr 2 0
+}
+
 function _fzf_git_worktrees() {
     zle -U "$(fzf_git_worktrees | shellescape | tr '\n' ' ')"
 }
@@ -47,10 +53,16 @@ function _fzf_git_branches() {
     zle -U "$(fzf_git_branches | tr '\n' ' ')"
 }
 
+function _fzf_git_status() {
+    zle -U "$(fzf_git_status | shellescape | tr '\n' ' ')"
+}
+
 if [[ -o interactive ]]; then
     zle -N _fzf_git_worktrees
     zle -N _fzf_git_branches
+    zle -N _fzf_git_status
 
     bindkey "^gb" _fzf_git_branches
     bindkey "^gw" _fzf_git_worktrees
+    bindkey "^gs" _fzf_git_status
 fi
