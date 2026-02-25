@@ -2,25 +2,26 @@
 
 set -eu
 
-function patch_id() {
-    git patch-id --stable | awk '{print $1}'
-}
-
 if [[ -t 0 ]]; then
     echo "stdin is tty, expected patch data" >&2
     exit 2
 fi
 
 target="$1"
-patch_id="$(patch_id)"
+patch_id="$(git patch-id --stable | awk '{print $1}')"
 
-
-for commit in $(git rev-list "$target"); do
-    if [[ "$(git show "$commit" | patch_id)" == "$patch_id" ]]; then
-        echo "$commit"
-        exit 0
+parallel_command="$(
+cat << "EOF"
+    if [[ "$(git show "$1" | git patch-id --stable | awk '{print $1}')" == "$0" ]]; then
+        echo "$1"
+        exit 255
     fi
-done
+    exit 0
+EOF
+)"
 
-echo "not found in $target" >&2
+if ! git rev-list "$target" | xargs -r -L1 -P$(nproc) bash -c "$parallel_command" "$patch_id" 2>/dev/null; then
+    exit 0
+fi
+
 exit 1
