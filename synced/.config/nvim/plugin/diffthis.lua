@@ -22,6 +22,9 @@ end
 ---@param prev_buf integer
 ---@param cursor integer[]
 local function attach(prev_buf, cursor)
+    vim.wo[0][0].number = true
+    vim.wo[0][0].relativenumber = true
+
     vim.cmd("stopinsert")
     vim.fn.search(string.format([[^ \d*\s*⋮ %d]], cursor[1]), "cw")
 
