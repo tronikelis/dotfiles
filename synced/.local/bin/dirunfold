@@ -1,0 +1,7 @@
+#!/bin/bash
+
+set -eu
+shopt -s dotglob
+
+mv "$1"/* ./
+rmdir "$1"
