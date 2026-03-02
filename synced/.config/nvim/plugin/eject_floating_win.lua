@@ -1,5 +1,5 @@
 vim.keymap.set("n", "<c-w>d", function()
-    local windows = vim.fn.gettabinfo()[1].windows
+    local windows = vim.fn.gettabinfo()[vim.fn.tabpagenr()].windows
 
     for _, v in ipairs(windows) do
         if vim.api.nvim_win_get_config(v).relative ~= "" then

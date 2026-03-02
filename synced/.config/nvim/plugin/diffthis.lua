@@ -19,9 +19,10 @@ local function get_diff_current_line()
     end
 end
 
+---@param tabid integer
 ---@param prev_buf integer
 ---@param cursor integer[]
-local function attach(prev_buf, cursor)
+local function attach(tabid, prev_buf, cursor)
     vim.wo[0][0].number = true
     vim.wo[0][0].relativenumber = true
 
@@ -40,6 +41,9 @@ local function attach(prev_buf, cursor)
         callback = function()
             local current_line = get_diff_current_line()
             vim.schedule(function()
+                if vim.api.nvim_tabpage_is_valid(tabid) then
+                    vim.cmd.tabclose(vim.api.nvim_tabpage_get_number(tabid))
+                end
                 if current_line and vim.api.nvim_get_current_buf() == prev_buf then
                     vim.cmd(tostring(current_line))
                 end
@@ -60,6 +64,10 @@ local function diffthis(ev)
 
     local prev_buf = vim.api.nvim_get_current_buf()
     local buf = new_buf()
+
+    vim.cmd("tab split")
+    local tabid = vim.api.nvim_get_current_tabpage()
+
     vim.api.nvim_set_current_buf(buf)
 
     local extra_options = vim.iter(ev.fargs)
@@ -78,7 +86,7 @@ local function diffthis(ev)
         term = true,
         on_exit = function()
             vim.api.nvim_buf_call(buf, function()
-                attach(prev_buf, cursor)
+                attach(tabid, prev_buf, cursor)
             end)
         end,
     })

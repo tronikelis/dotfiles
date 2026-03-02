@@ -299,6 +299,13 @@ function cmp.progress()
     return vim.b.statusline_progress_msg or ""
 end
 
+function cmp.tabpage_nr_non_empty()
+    if vim.fn.tabpagenr("$") == 1 then
+        return ""
+    end
+    return " [%{tabpagenr()}/%{tabpagenr('$')}]"
+end
+
 vim.opt.statusline = table.concat({
     '%{%v:lua._statusline_component("git")%}',
     " %t",
@@ -320,5 +327,7 @@ vim.opt.tabline = table.concat({
     '%{%v:lua._statusline_component("full_file")%}',
     "%r",
     "%m",
+    "%=",
+    '%{%v:lua._statusline_component("tabpage_nr_non_empty")%}',
 })
 vim.opt.showtabline = 2
