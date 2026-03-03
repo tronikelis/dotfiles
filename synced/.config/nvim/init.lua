@@ -147,7 +147,7 @@ vim.opt.splitbelow = true
 vim.opt.splitright = true
 
 -- enabled lsps
-for _, v in pairs({
+for _, v in ipairs({
     "biome",
     "clangd",
     "dartls",
