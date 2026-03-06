@@ -24,4 +24,5 @@ if ! git rev-list "$target" | xargs -r -L1 -P$(nproc) bash -c "$parallel_command
     exit 0
 fi
 
+echo
 exit 1
