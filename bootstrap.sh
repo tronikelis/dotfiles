@@ -121,7 +121,6 @@ sudo tee /etc/systemd/system/xremap.service << EOF
 Description=Xremap
 
 [Service]
-Unit=root
 Type=simple
 ExecStart=$(which xremap) --watch $HOME/.config/xremap/config.yml
 Restart=always
@@ -171,9 +170,8 @@ Description=rate-mirrors
 
 [Service]
 User=ratemirrors
-Unit=root
 Type=oneshot
-ExecStart=$(which bash) -c 'set -o pipefail; sleep 600; rate-mirrors --protocol https arch | tee /etc/pacman.d/mirrorlist'
+ExecStart=$(which bash) -c 'set -euo pipefail; sleep 600; tmp="\$(rate-mirrors --protocol https arch)"; tee /etc/pacman.d/mirrorlist <<<"\$tmp"'
 
 [Install]
 WantedBy=multi-user.target
