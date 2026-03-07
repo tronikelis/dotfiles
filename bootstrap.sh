@@ -1,142 +1,200 @@
 #!/bin/bash
 
-cd ~
+set -eu
 
-# install yay
+function is_executable {
+    test -x "$(command -v "$1")"
+}
+function cdmktemp {
+	cd "$(mktemp -d)"
+}
+cdmktemp
 
-sudo pacman -S --needed git base-devel && git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si
-sudo sed -i -e "s/#Color/Color/" /etc/pacman.conf
-cd ~
+function setup_locale {
+	LT_LOCALE="lt_LT.UTF-8 UTF-8"
+	sudo sed -i "s/#$LT_LOCALE/$LT_LOCALE/" /etc/locale.gen
+	sudo locale-gen
+}
 
-yay -Y --gendb
+function setup_yay {
+	if ! is_executable yay; then
+		sudo pacman -S --needed git base-devel
+		git clone https://aur.archlinux.org/yay.git
+		cd yay
+		makepkg -si
 
-# install my used packages
+		yay -Y --gendb
+		yay -Y --devel --save
+	fi
+}
 
-packages=(
-	"tokei"
-	"eza"
-	"bat"
-	"jdk-openjdk"
-	"kdialog"
-	"starship"
-	"zoxide"
-	"unp"
-	"p7zip"
-	"unrar"
-	"spectacle"
-	"ripgrep"
-	"fd"
-	"fzf"
-	"zenity"
-	"trash-cli"
-	"neofetch"
-	"gnome-keyring"
-	"signal-desktop"
-	"firefox"
-	"gwenview"
-	"kimageformats"
-	"qt6-imageformats"
-	"zsh"
-	"neovim"
-	"unzip"
-	"wl-clipboard"
-	"noto-fonts"
-	"noto-fonts-extra"
-	"noto-fonts-emoji"
-	"noto-fonts-cjk"
-	"kitty"
-	"vlc"
-	"go"
-	"man-db"
-	"man-pages"
-	"ufw"
-	"docker"
-	"docker-compose"
-	"partitionmanager"
-	"dosfstools"
-	"ntfs-3g"
-)
+function setup_pacman_configs {
+	sudo sed -i 's/#Color/Color/' /etc/pacman.conf
+	sudo sed -i 's/ debug / !debug /' /etc/makepkg.conf
+}
 
-yay -S "${packages[@]}" --noconfirm
+function setup_chaoticaur {
+	sudo pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com
+	sudo pacman-key --lsign-key 3056513887B78AEB
 
-yay -Y --devel --save
+	sudo pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst'
+	sudo pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst'
 
-# rust install, I tried from extra repo it does not work
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+	if ! grep "chaotic-aur" /etc/pacman.conf &>/dev/null; then
+sudo tee -a /etc/pacman.conf << EOF
+[chaotic-aur]
+Include = /etc/pacman.d/chaotic-mirrorlist
+EOF
+	fi
 
-# firewall
-sudo systemctl start ufw.service
-sudo systemctl enable ufw.service
-sudo ufw enable
-sudo ufw default deny incoming
-sudo ufw default allow outgoing
+	sudo pacman -Syu
+}
 
-# docker
-sudo groupadd docker
-sudo systemctl enable docker.service
-sudo systemctl start docker.service
-sudo usermod -aG docker $USER
-sudo chmod +x $(where docker-compose)
-sudo chgrp docker $(where docker-compose)
+function setup_packages {
+	packages=(
+		"docker"
+		"git-delta"
+		"bat"
+		"rate-mirrors"
+		"pacman-contrib"
+		"neovim"
+		"chaotic-aur/zen-browser-bin"
+		"ufw"
+		"less"
+		"git"
+		"man-db"
+		"man-pages"
+		"starship"
+		"ripgrep"
+		"fd"
+		"fzf"
+		"tmux"
+		"stow"
+		"kitty"
+		"aur/xremap-kde-bin"
+		"zsh"
+		"eza"
+		"tree-sitter-cli"
+		"zoxide"
+		"unzip"
+		"go"
+		"vivid"
+		"chaotic-aur/vesktop"
+		"wl-clipboard"
+		"mpv"
+		"gwenview"
+	)
+	yay -S "${packages[@]}" --noconfirm
 
-# oh my zsh
+	sudo systemctl start docker
+	sudo systemctl enable docker
+}
 
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+function setup_paccache {
+	sudo systemctl start paccache.timer
+	sudo systemctl enable paccache.timer
+}
 
-# nvm
+function setup_firewall {
+	sudo ufw enable
+}
 
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"                   # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
+function setup_shell {
+	chsh -s $(which zsh)
+}
 
-nvm install --lts
-nvm alias default node
-corepack enable
+function setup_dotfiles {
+	if [[ ! -e ~/dotfiles ]]; then
+		git clone 'https://github.com/tronikelis/dotfiles.git' ~/dotfiles
+	fi
 
-# chaotic aur
-sudo pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com
-sudo pacman-key --lsign-key 3056513887B78AEB
-sudo pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst' --noconfirm
-sudo pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst' --noconfirm
+	mkdir -p ~/.local/bin
+	~/dotfiles/bin/sync
 
-printf "[chaotic-aur]\nInclude = /etc/pacman.d/chaotic-mirrorlist" | sudo tee -a /etc/pacman.conf
+	bat cache --build
+}
 
-# dotfiles
+function setup_xremap {
 
-git clone https://github.com/Tronikelis/dotfiles.git ./.tdm
-go install github.com/Tronikelis/tdm@v0.1.0
+sudo tee /etc/systemd/system/xremap.service << EOF
+[Unit]
+Description=Xremap
 
-export PATH=${PATH}:$(go env GOPATH)/bin
-tdm sync
+[Service]
+Unit=root
+Type=simple
+ExecStart=$(which xremap) --watch $HOME/.config/xremap/config.yml
+Restart=always
 
-# fonts
+[Install]
+WantedBy=multi-user.target
+EOF
 
-mkdir -p "./.local/share/fonts/"
+	sudo systemctl start xremap
+	sudo systemctl enable xremap
+}
 
-(
-	cd $(mktemp -d)
-	wget "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/NerdFontsSymbolsOnly.zip"
-	unp NerdFontsSymbolsOnly.zip
-	cp SymbolsNerdFont-Regular.ttf ~/.local/share/fonts/
-	cp SymbolsNerdFontMono-Regular.ttf ~/.local/share/fonts/
+function setup_tmux {
+	mkdir -p ~/.tmux/plugins
+	mkdir -p ~/.config/tmux
+	if [[ ! -e ~/.tmux/plugins/tpm ]]; then
+		git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+	fi
+}
 
-	cd $(mktemp -d)
-	wget "https://github.com/JetBrains/JetBrainsMono/releases/download/v2.304/JetBrainsMono-2.304.zip"
-	unp JetBrainsMono-2.304.zip
-	cp -r ./fonts/ttf/. ~/.local/share/fonts
-)
+function setup_fonts {
+	cdmktemp
+	mkdir -p ~/.local/share/fonts
 
-fc-cache -r
+	curl -LO 'https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/NerdFontsSymbolsOnly.zip'
+	unzip 'NerdFontsSymbolsOnly.zip'
+	cp *.ttf ~/.local/share/fonts
 
-# git config
-git config --global alias.conflicts "diff --name-only --diff-filter=U"
-git config --global push.autosetupremote true
-git config --global branch.autosetupmerge simple
-git config --global init.defaultBranch master
+	curl -LO 'https://download.jetbrains.com/fonts/JetBrainsMono-2.304.zip'
+	unzip "JetBrainsMono-2.304.zip"
+	cp fonts/ttf/* ~/.local/share/fonts
 
-# optional packages
-# mailspring vesktop
+	fc-cache -r
+}
 
-# cleanup
-rm -rf yay
+function setup_ratemirrors {
+	sudo groupadd mirrorlistchangers || true
+	sudo useradd --system --shell /usr/bin/nologin --home-dir / ratemirrors || true
+	sudo usermod -a -G mirrorlistchangers ratemirrors
+
+	sudo chown root:mirrorlistchangers /etc/pacman.d/mirrorlist
+	sudo chmod 664 /etc/pacman.d/mirrorlist
+
+sudo tee /etc/systemd/system/ratemirrors.service << EOF
+[Unit]
+Description=rate-mirrors
+
+[Service]
+User=ratemirrors
+Unit=root
+Type=oneshot
+ExecStart=$(which bash) -c 'set -o pipefail; sleep 600; rate-mirrors --protocol https arch | tee /etc/pacman.d/mirrorlist'
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+	# sudo systemctl start ratemirrors
+	sudo systemctl enable ratemirrors
+}
+
+setup_chaoticaur
+setup_pacman_configs
+setup_locale
+setup_yay
+
+setup_packages
+
+setup_paccache
+setup_firewall
+setup_dotfiles
+setup_shell
+setup_xremap
+setup_ratemirrors
+setup_fonts
+setup_tmux
