@@ -37,6 +37,9 @@ require("nvim-treesitter").install({
     "gdscript",
     "templ",
     "html",
+}, {
+    -- otherwise github rate limits
+    max_jobs = 2,
 })
 
 vim.api.nvim_create_autocmd("FileType", {
