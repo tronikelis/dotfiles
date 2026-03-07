@@ -108,6 +108,7 @@ function setup_dotfiles {
 		git clone 'https://github.com/tronikelis/dotfiles.git' ~/dotfiles
 	fi
 
+	mkdir -p ~/.config/tmux
 	mkdir -p ~/.local/bin
 	~/dotfiles/bin/sync
 
@@ -135,7 +136,6 @@ EOF
 
 function setup_tmux {
 	mkdir -p ~/.tmux/plugins
-	mkdir -p ~/.config/tmux
 	if [[ ! -e ~/.tmux/plugins/tpm ]]; then
 		git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 	fi
@@ -188,6 +188,7 @@ setup_yay
 
 setup_packages
 
+setup_tmux
 setup_paccache
 setup_firewall
 setup_dotfiles
@@ -195,4 +196,3 @@ setup_shell
 setup_xremap
 setup_ratemirrors
 setup_fonts
-setup_tmux
