@@ -181,10 +181,30 @@ EOF
 	sudo systemctl enable ratemirrors
 }
 
+function setup_gitconfig {
+	if [[ ! -e ~/.gitconfig ]]; then
+sudo tee -a ~/.gitconfig << EOF
+[include]
+	path = public.gitconfig
+
+#[user]
+#	email =
+#	name =
+#	signingkey =
+#[gpg "ssh"]
+#	program = ~/.config/git/scripts/ssh_program.sh
+#	allowedSignersFile = ~/.ssh/git_allowed_signers
+#[gpg]
+#	format = ssh
+EOF
+	fi
+}
+
 setup_chaoticaur
 setup_pacman_configs
 setup_locale
 setup_yay
+setup_gitconfig
 
 setup_packages
 
