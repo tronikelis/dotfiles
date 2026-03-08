@@ -86,8 +86,11 @@ function setup_packages {
 	)
 	yay -S "${packages[@]}" --noconfirm
 
+	# docker setup
 	sudo systemctl start docker
 	sudo systemctl enable docker
+	sudo groupadd docker &>/dev/null || true
+	sudo usermod -aG docker "$USER"
 }
 
 function setup_paccache {
