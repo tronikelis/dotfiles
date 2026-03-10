@@ -301,7 +301,11 @@ vim.opt.tagcase = "followscs"
 vim.api.nvim_create_autocmd("LspAttach", {
     group = augroup,
     callback = function(ev)
-        vim.bo[ev.buf].tagfunc = ""
+        vim.api.nvim_buf_call(ev.buf, function()
+            vim.cmd([[
+                setl tagfunc<
+            ]])
+        end)
     end,
 })
 

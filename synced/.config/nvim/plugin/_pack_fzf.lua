@@ -39,9 +39,11 @@ local function action_motion_edit(_, opts)
     end
 
     local function accept()
-        opts.query = vim.api.nvim_buf_get_lines(buf, 0, 1, true)[1]
+        local query = vim.api.nvim_buf_get_lines(buf, 0, 1, true)[1]
+        -- otherwise this just opens same window again
+        require("fzf-lua.win").close()
         close()
-        require("fzf-lua").resume()
+        require("fzf-lua").resume({ query = query, __call_opts = { query = nil, search = nil } })
     end
 
     vim.api.nvim_create_autocmd("WinLeave", {
