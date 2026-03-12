@@ -230,9 +230,7 @@ vim.keymap.set("n", "<leader>oo", function()
         fn_transform = function(x)
             return require("fzf-lua").utils.ansi_codes.magenta(x)
         end,
-        fzf_opts = {
-            ["--preview"] = "ls -LCp --color=always {}",
-        },
+        preview = "ls -LCp --color=always {}",
         actions = {
             default = function(item)
                 require("oil").open(item[1])
@@ -278,17 +276,15 @@ vim.api.nvim_create_autocmd("LspAttach", {
     end,
 })
 
----@param ref string?
-local function navigate_to_first_git_hunk(ref)
+---@param file string
+---@param fargs_joined string
+---@param cwd string?
+local function navigate_to_first_git_hunk(file, fargs_joined, cwd)
     local out = vim.system({
         "bash",
         "-c",
-        string.format(
-            "git diff %s -- %s | grep ^@@ | head -n 1",
-            vim.fn.shellescape(ref or "@"),
-            vim.fn.shellescape(vim.fn.expand("%"))
-        ),
-    }, { text = true }):wait()
+        string.format("git diff %s -- %s | grep ^@@ | head -n 1", fargs_joined, vim.fn.shellescape(file)),
+    }, { text = true, cwd = cwd }):wait()
     if out.code ~= 0 then
         vim.notify(tostring(out.stderr), vim.log.levels.ERROR)
         return
@@ -302,34 +298,36 @@ local function navigate_to_first_git_hunk(ref)
 end
 
 vim.api.nvim_create_user_command("GitDiff", function(ev)
-    ---@type string?
-    local ref
+    local fargs_joined = table.concat(
+        vim.iter(ev.fargs)
+            :map(function(v)
+                return vim.fn.shellescape(v)
+            end)
+            :totable(),
+        " "
+    )
+    local cmd = string.format("git diff --name-only %s", fargs_joined)
+    local preview = string.format("git diff %s -- {} | delta", fargs_joined)
 
-    if #ev.fargs == 1 then
-        ref = ev.fargs[1]
-    elseif #ev.fargs > 1 then
-        local out = vim.system(require("utils").flatten({ "git", ev.fargs }), { text = true }):wait()
-        if out.code ~= 0 then
-            vim.notify(tostring(out.stderr), vim.log.levels.ERROR)
-            return
-        end
+    local cwd = vim.fs.root(0, ".git")
 
-        ref = vim.trim(out.stdout)
-    end
-
-    require("fzf-lua").git_diff({
-        ref = ref,
+    require("fzf-lua").fzf_exec(cmd, {
+        preview = preview,
+        cwd = cwd,
         winopts = {
             fullscreen = true,
             preview = {
                 layout = "vertical",
                 vertical = "up:80%",
             },
+            title = "Git Diff",
         },
         actions = {
             ["enter"] = function(...)
                 require("fzf-lua").actions.file_edit_or_qf(...)
-                navigate_to_first_git_hunk(ref)
+                local file = { ... }
+                file = file[1][1]
+                navigate_to_first_git_hunk(file, fargs_joined, cwd)
             end,
         },
     })
