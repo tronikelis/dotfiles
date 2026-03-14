@@ -24,6 +24,7 @@ require("nvim-treesitter").install({
     "c",
     "cpp",
     "bash",
+    "zsh",
     "css",
     "sql",
     "scss",
