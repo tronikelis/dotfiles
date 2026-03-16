@@ -324,7 +324,7 @@ vim.api.nvim_create_user_command("GitDiff", function(ev)
         },
         actions = {
             ["enter"] = function(...)
-                require("fzf-lua").actions.file_edit_or_qf(...)
+                require("fzf-lua").actions.file_edit(...)
                 local file = { ... }
                 file = file[1][1]
                 navigate_to_first_git_hunk(file, fargs_joined, cwd)
