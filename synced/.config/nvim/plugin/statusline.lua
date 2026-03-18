@@ -185,6 +185,7 @@ end
 function cmp.filetype()
     local filetype = vim.bo.filetype
     local icon, hl = require("nvim-web-devicons").get_icon_by_filetype(filetype)
+    filetype = escape(filetype)
 
     if icon and hl then
         filetype = hi_pattern:format(hl, icon .. " ") .. filetype
