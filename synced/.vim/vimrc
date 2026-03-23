@@ -6,3 +6,7 @@ set incsearch
 set nowrap
 set hlsearch
 set ttimeoutlen=50
+set softtabstop=-1
+set shiftwidth=4
+set tabstop=4
+set expandtab
