@@ -172,7 +172,7 @@ source ~/.zsh_plugins/fzf/fzf.plugin.zsh
 
 ssh_env_file=~/.ssh/ssh_agent_env
 if ! pgrep -u "$USER" ssh-agent &>/dev/null; then
-    eval "$(ssh-agent -t 1d | tee "$ssh_env_file")"
+    source <(ssh-agent -t 1d | tee "$ssh_env_file")
     chmod 600 "$ssh_env_file"
 else
     { source "$ssh_env_file" } >/dev/null
@@ -246,10 +246,10 @@ alias grep="grep --color=auto"
 if is_executable zoxide; then
     # as I'm using zoxide with tmux, increase zoxide size
     export _ZO_MAXAGE=50000
-    eval "$(zoxide init zsh)"
+    source <(zoxide init zsh)
 fi
 if is_executable starship; then
-    eval "$(starship init zsh)"
+    source <(starship init zsh)
 fi
 
 
