@@ -6,6 +6,9 @@ local function get_cwd()
     if vim.bo.filetype == "oil" then
         return require("oil").get_current_dir()
     end
+    if vim.bo.buftype ~= "" then
+        return
+    end
     return vim.fn.expand("%:p:h")
 end
 
@@ -32,7 +35,6 @@ local function complete(query)
 end
 
 vim.api.nvim_create_user_command("E", accept, {
-    desc = "Kinda like :e but relative and depth 1",
     nargs = 1,
     complete = complete,
 })
