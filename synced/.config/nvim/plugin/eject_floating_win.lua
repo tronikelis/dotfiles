@@ -1,4 +1,4 @@
-vim.keymap.set("n", "<c-w>d", function()
+vim.keymap.set("n", "<c-w>e", function()
     local windows = vim.fn.gettabinfo()[vim.fn.tabpagenr()].windows
 
     for _, v in ipairs(windows) do
@@ -10,4 +10,4 @@ vim.keymap.set("n", "<c-w>d", function()
         end
     end
 end)
-vim.keymap.set("n", "<c-w><c-d>", "<c-w>d", { remap = true })
+vim.keymap.set("n", "<c-w><c-e>", "<c-w>e", { remap = true })

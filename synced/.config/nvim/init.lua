@@ -74,21 +74,6 @@ require("catppuccin").setup({
 
 vim.cmd.colorscheme("catppuccin")
 
-if not vim.g.del_mappings then
-    local del_mappings = {
-        "gri",
-        "grr",
-        "gra",
-        "grn",
-        "grt",
-        "grx",
-    }
-    for _, v in ipairs(del_mappings) do
-        vim.keymap.del("", v)
-    end
-end
-vim.g.del_mappings = true
-
 -- interferes with <C-c> to exit insert mode
 vim.g.omni_sql_no_default_maps = true
 -- this opens a split by default, what

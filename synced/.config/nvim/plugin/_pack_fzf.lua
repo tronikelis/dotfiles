@@ -1,5 +1,3 @@
-local augroup = vim.api.nvim_create_augroup("plugin/_pack_fzf.lua", {})
-
 local function current_wd()
     if vim.bo.filetype == "oil" then
         return require("oil").get_current_dir()
@@ -245,35 +243,6 @@ vim.keymap.set("n", "<leader>oo", function()
         },
     })
 end)
-
-vim.api.nvim_create_autocmd("LspAttach", {
-    group = augroup,
-    callback = function(ev)
-        vim.keymap.set("n", "<leader>ds", function()
-            require("fzf-lua").lsp_document_symbols()
-        end, { buffer = ev.buf })
-
-        vim.keymap.set("n", "<leader>dS", function()
-            require("fzf-lua").lsp_workspace_symbols()
-        end, { buffer = ev.buf })
-
-        vim.keymap.set("n", "gI", function()
-            require("fzf-lua").lsp_implementations()
-        end, { buffer = ev.buf })
-
-        vim.keymap.set("n", "gt", function()
-            require("fzf-lua").lsp_typedefs()
-        end, { buffer = ev.buf })
-
-        vim.keymap.set("n", "gd", function()
-            require("fzf-lua").lsp_definitions()
-        end, { buffer = ev.buf })
-
-        vim.keymap.set("n", "gr", function()
-            require("fzf-lua").lsp_references()
-        end, { buffer = ev.buf })
-    end,
-})
 
 ---@param file string
 ---@param fargs_joined string
