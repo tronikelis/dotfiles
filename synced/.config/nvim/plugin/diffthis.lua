@@ -54,12 +54,21 @@ end
 
 ---@param ev vim.api.keyset.create_user_command.command_args
 local function diffthis(ev)
-    if vim.bo.buftype ~= "" or vim.fn.expand("%:p"):sub(1, 1) ~= "/" then
-        print("can git diff only files")
+    if
+        not require("utils").assert_notify(
+            vim.bo.buftype == "" and vim.fn.expand("%:p"):sub(1, 1) == "/",
+            "Buffer not a regular file"
+        )
+    then
         return
     end
 
-    local file = vim.fn.expand("%")
+    local git_root = vim.fs.root(0, ".git")
+    if not require("utils").assert_notify(git_root, "Buffer not in git directory") then
+        return
+    end
+
+    local file = vim.fn.expand("%:p"):sub(#git_root + 2)
     local cursor = vim.api.nvim_win_get_cursor(0)
 
     local prev_buf = vim.api.nvim_get_current_buf()
@@ -83,6 +92,7 @@ local function diffthis(ev)
     )
 
     vim.fn.jobstart(cmd, {
+        cwd = git_root,
         term = true,
         on_exit = function()
             vim.api.nvim_buf_call(buf, function()

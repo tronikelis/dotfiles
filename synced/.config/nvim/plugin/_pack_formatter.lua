@@ -19,12 +19,11 @@ local function format_async(args)
     end
 
     require("conform").format({ async = true, range = range }, function(err)
-        if err then
-            print("[err]: " .. err)
+        if not require("utils").assert_notify(not err, err) then
             return
         end
 
-        print("Formatted")
+        vim.notify("Formatted")
     end)
 end
 

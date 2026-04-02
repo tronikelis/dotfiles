@@ -12,9 +12,8 @@ while true; do
         exit 1
     fi
 
-    parent="$(pwd)/$target"
-    if [[ -e "$parent" ]]; then
-        echo "$parent"
+    if [[ -e "$(pwd)/$target" ]]; then
+        pwd
         exit 0
     fi
 

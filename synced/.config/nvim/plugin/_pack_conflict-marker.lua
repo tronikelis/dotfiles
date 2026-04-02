@@ -21,12 +21,12 @@ require("conflict-marker").setup({
 
         local next = function()
             if not pcall(vim.cmd, string.format("/%s", MID)) then
-                print("No conflicts")
+                vim.notify("No conflicts")
             end
         end
         local prev = function()
             if not pcall(vim.cmd, string.format("?%s", MID)) then
-                print("No conflicts")
+                vim.notify("No conflicts")
             end
         end
 

@@ -215,8 +215,7 @@ end)
 
 vim.keymap.set("n", "<leader>cT", function()
     local cword = vim.fn.expand("<cword>")
-    if cword == "" then
-        print("Empty cword")
+    if not require("utils").assert_notify(cword ~= "", "Empty cword") then
         return
     end
     vim.cmd.Taglist(cword)
@@ -285,8 +284,7 @@ local function navigate_to_first_git_hunk(file, fargs_joined, cwd)
         "-c",
         string.format("git diff %s -- %s | grep ^@@ | head -n 1", fargs_joined, vim.fn.shellescape(file)),
     }, { text = true, cwd = cwd }):wait()
-    if out.code ~= 0 then
-        vim.notify(tostring(out.stderr), vim.log.levels.ERROR)
+    if not require("utils").assert_notify(out.code == 0, out.stderr) then
         return
     end
 

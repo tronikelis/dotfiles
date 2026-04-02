@@ -21,7 +21,7 @@ root="$(
     cd ../ || exit
 
     if v="$(froot .git)"; then
-        basename "$(dirname "$v")"
+        basename "$v"
     fi
 )"
 

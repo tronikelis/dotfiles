@@ -1,6 +1,7 @@
-if vim.fn.executable("fzf") == 0 or vim.fn.executable("fd") == 0 then
-    print(":E command requires fzf and fd")
-end
+require("utils").assert_notify(
+    vim.fn.executable("fzf") == 1 and vim.fn.executable("fd") == 1,
+    ":E command requires fzf and fd"
+)
 
 local function get_cwd()
     if vim.bo.filetype == "oil" then

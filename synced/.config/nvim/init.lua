@@ -4,67 +4,63 @@ table.unpack = table.unpack or unpack
 
 local augroup = vim.api.nvim_create_augroup("init.lua", {})
 
--- todo:
--- set chistory=50
--- try out Difftool builtin plugin 0.12
+require("pack").set_hooks({
+    {
+        "blink.cmp",
+        { "install", "update" },
+        function(path)
+            vim.notify("Compiling blink.cmp so")
+            vim.system({ "cargo", "build", "--release" }, { cwd = path, text = true }, function(ev)
+                if ev.code == 0 then
+                    vim.notify("Blink.cmp compilation success")
+                else
+                    vim.notify("Stdout:\n" .. ev.stdout or "" .. "Stderr:\n" .. ev.stderr or "")
+                end
+            end)
+        end,
+    },
+    {
+        "nvim-treesitter",
+        { "install", "update" },
+        function()
+            vim.cmd("TSUpdate")
+        end,
+        { packadd = true },
+    },
+})
 
-if vim.fn.has("nvim-0.12") == 1 then
-    require("pack").set_hooks({
-        {
-            "blink.cmp",
-            { "install", "update" },
-            function(path)
-                print("compiling blink.cmp so")
-                vim.system({ "cargo", "build", "--release" }, { cwd = path, text = true }, function(ev)
-                    if ev.code == 0 then
-                        print("blink.cmp compilation success")
-                    else
-                        print("stdout:\n", ev.stdout, "stderr:\n", ev.stderr)
-                    end
-                end)
-            end,
-        },
-        {
-            "nvim-treesitter",
-            { "install", "update" },
-            function()
-                vim.cmd("TSUpdate")
-            end,
-            { packadd = true },
-        },
-    })
-
-    local function gh(x)
-        return "https://github.com/" .. x
-    end
-    vim.pack.add({
-        gh("NMAC427/guess-indent.nvim"),
-        gh("folke/lazydev.nvim"),
-        gh("folke/ts-comments.nvim"),
-        gh("ibhagwan/fzf-lua"),
-        gh("kylechui/nvim-surround"),
-        gh("lewis6991/gitsigns.nvim"),
-        gh("mbbill/undotree"), -- replace with builtin undotree plugin 0.12
-        gh("mfussenegger/nvim-jdtls"),
-        gh("neovim/nvim-lspconfig"),
-        gh("nvim-tree/nvim-web-devicons"),
-        gh("nvim-treesitter/nvim-treesitter-context"),
-        gh("scalameta/nvim-metals"),
-        gh("stevearc/conform.nvim"),
-        gh("stevearc/oil.nvim"),
-        gh("tronikelis/blink-cmp-ctags"),
-        gh("tronikelis/caser.nvim"),
-        gh("tronikelis/conflict-marker.nvim"),
-        gh("tronikelis/gitdive.nvim"),
-        gh("tronikelis/indent-textobject.nvim"),
-        gh("tronikelis/sstash.nvim"),
-        gh("tronikelis/ts-autotag.nvim"),
-        gh("tronikelis/xylene.nvim"),
-        { src = gh("catppuccin/nvim"), version = "v1.11.0" },
-        { src = gh("nvim-treesitter/nvim-treesitter"), version = "main" },
-        { src = gh("saghen/blink.cmp"), version = "v1.9.1" },
-    })
+local function gh(name)
+    return "https://github.com/" .. name
 end
+vim.pack.add({
+    gh("NMAC427/guess-indent.nvim"),
+    gh("folke/lazydev.nvim"),
+    gh("folke/ts-comments.nvim"),
+    gh("ibhagwan/fzf-lua"),
+    gh("kylechui/nvim-surround"),
+    gh("lewis6991/gitsigns.nvim"),
+    gh("mfussenegger/nvim-jdtls"),
+    gh("neovim/nvim-lspconfig"),
+    gh("nvim-tree/nvim-web-devicons"),
+    gh("nvim-treesitter/nvim-treesitter-context"),
+    gh("scalameta/nvim-metals"),
+    gh("stevearc/conform.nvim"),
+    gh("stevearc/oil.nvim"),
+    gh("tronikelis/blink-cmp-ctags"),
+    gh("tronikelis/caser.nvim"),
+    gh("tronikelis/conflict-marker.nvim"),
+    gh("tronikelis/gitdive.nvim"),
+    gh("tronikelis/indent-textobject.nvim"),
+    gh("tronikelis/sstash.nvim"),
+    gh("tronikelis/ts-autotag.nvim"),
+    gh("tronikelis/xylene.nvim"),
+    { src = gh("catppuccin/nvim"), version = "v1.11.0" },
+    { src = gh("nvim-treesitter/nvim-treesitter"), version = "main" },
+    { src = gh("saghen/blink.cmp"), version = "v1.10.1" },
+})
+
+-- todo: difftool?
+vim.cmd("packadd nvim.undotree")
 
 require("catppuccin").setup({
     flavour = "mocha",
@@ -81,6 +77,7 @@ if not vim.g.del_mappings then
         "gra",
         "grn",
         "grt",
+        "grx",
     }
     for _, v in ipairs(del_mappings) do
         vim.keymap.del("", v)
@@ -199,11 +196,16 @@ vim.keymap.set("n", "#", [[<cmd>let @/='\C\<' . expand("<cword>") . '\>'<cr><cmd
 
 -- simple user commands
 
-vim.api.nvim_create_user_command("RemoveTrailing", [[%s/\s\+$//e | nohlsearch]], {})
+vim.api.nvim_create_user_command("RemoveTrailing", function(ev)
+    local prefix = string.format("%d,%d", ev.line1, ev.line2)
+    vim.cmd(prefix .. [[s/\s\+$//e]])
+    vim.cmd("nohlsearch")
+end, { range = true })
 
 vim.api.nvim_create_user_command("BreakChar", function(ev)
     local prefix = string.format("%d,%d", ev.line1, ev.line2)
-    vim.cmd(prefix .. [[s/]] .. ev.fargs[1] .. [[/]] .. ev.fargs[1] .. [[\r/ge]])
+    local escaped = vim.fn.escape(ev.fargs[1] or "", "\\")
+    vim.cmd(prefix .. [[s/\V]] .. escaped .. [[/]] .. escaped .. [[\r/ge]])
     vim.cmd("noh")
 end, {
     range = true,
@@ -217,7 +219,7 @@ vim.api.nvim_create_user_command("FoldNewlines", function(ev)
     else
         vim.cmd(prefix .. [[s/\(\S\+.*$\)\(\n\s*$\)\{2,}/\1\r/e]])
     end
-    vim.cmd("noh")
+    vim.cmd("nohlsearch")
 end, { range = true, bang = true })
 
 -- autocmds
@@ -326,3 +328,5 @@ vim.opt.foldcolumn = "0"
 vim.opt.foldlevelstart = 99
 
 vim.opt.winborder = "rounded"
+vim.opt.chistory = 25
+vim.opt.lhistory = 25

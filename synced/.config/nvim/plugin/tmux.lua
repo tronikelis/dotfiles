@@ -5,9 +5,7 @@ vim.api.nvim_create_user_command("Tmux", function(ev)
     end
 
     local out = vim.system(require("utils").flatten({ "tmux", "split-window", ev.fargs, "-c", cwd })):wait()
-    if out.code ~= 0 then
-        vim.notify(tostring(out.stderr), vim.log.levels.ERROR)
-    end
+    require("utils").assert_notify(out.code == 0, out.stderr)
 end, {
     nargs = "*",
 })

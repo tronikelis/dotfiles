@@ -10,10 +10,14 @@ end
 
 vim.api.nvim_create_user_command("GitShow", function(ev)
     local current_buf = vim.api.nvim_get_current_buf()
-    assert(vim.bo.buftype == "", "buftype not empty")
+    if not require("utils").assert_notify(vim.bo.buftype == "", "Buftype not empty") then
+        return
+    end
 
     local git_root = vim.fs.root(current_buf, ".git")
-    assert(git_root, "not in git directory")
+    if not require("utils").assert_notify(git_root, "Not in git directory") then
+        return
+    end
     local file = vim.fn.expand("%:p"):sub(#git_root + 2)
 
     local bufname = string.format("gitshow:%s:///%s", ev.fargs[1], vim.fn.fnamemodify(file, ":~:."))
@@ -34,8 +38,7 @@ vim.api.nvim_create_user_command("GitShow", function(ev)
             text = true,
             cwd = git_root,
             stdout = function(err, data)
-                if err then
-                    print("error reading stdout:", err)
+                if not require("utils").assert_notify(not err, err) then
                     return
                 end
                 if not data then

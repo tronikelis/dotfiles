@@ -275,7 +275,7 @@ function cdroot() {
         echo "provide target"
         return 1
     fi
-    cd "$(dirname "$(froot "$1")")"
+    cd "$(froot "$1")"
 }
 
 function killp() {

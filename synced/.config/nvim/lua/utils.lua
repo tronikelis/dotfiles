@@ -35,7 +35,7 @@ function M.inc_command_diff_preview(ev, ns, buf)
     vim.cmd(ev.args)
     local new_lines = vim.api.nvim_buf_get_lines(0, 0, -1, true)
 
-    local diff = vim.diff(table.concat(old_lines, "\n"), table.concat(new_lines, "\n"))
+    local diff = vim.text.diff(table.concat(old_lines, "\n"), table.concat(new_lines, "\n"))
     vim.api.nvim_buf_set_lines(buf, 0, -1, true, vim.split(diff, "\n"))
 
     pcall(function()
@@ -45,6 +45,17 @@ function M.inc_command_diff_preview(ev, ns, buf)
     end)
 
     return 2
+end
+
+---@param bool any
+---@param msg any
+---@param level integer?
+---@return boolean
+function M.assert_notify(bool, msg, level)
+    if not bool then
+        vim.notify(tostring(msg), level or vim.log.levels.ERROR)
+    end
+    return not not bool
 end
 
 return M

@@ -229,9 +229,9 @@ end
 function cmp.diagnostics()
     local count = vim.diagnostic.count(0)
 
-    local errors = count[vim.diagnostic.severity.E] or 0
-    local warnings = count[vim.diagnostic.severity.W] or 0
-    local infos = count[vim.diagnostic.severity.I] or 0
+    local errors = count[vim.diagnostic.severity.ERROR] or 0
+    local warnings = count[vim.diagnostic.severity.WARN] or 0
+    local infos = count[vim.diagnostic.severity.INFO] or 0
     local hints = count[vim.diagnostic.severity.HINT] or 0
 
     local diagnostics = {}
@@ -261,50 +261,39 @@ function cmp.attached_lsp()
     return " 󰒓 " .. clients
 end
 
-vim.api.nvim_create_autocmd("LspProgress", {
-    group = augroup,
-    callback = function(ev)
-        local client = assert(vim.lsp.get_client_by_id(ev.data.client_id))
-
-        local function set(msg)
-            for k in pairs(client.attached_buffers) do
-                vim.b[k].statusline_progress_msg = msg
-            end
-        end
-        set()
-
-        local value = ev.data.params.value
-
-        if vim.tbl_contains({ "end" }, value.kind) then
-            vim.cmd("redrawstatus!")
-            return
-        end
-
-        local messages = {}
-        if value.percentage then
-            table.insert(messages, string.format("[%s%%%%]", value.percentage))
-        end
-        if value.message then
-            table.insert(messages, escape(value.message))
-        end
-        if value.title then
-            table.insert(messages, escape(value.title))
-        end
-
-        set(string.format(hi_pattern, "Comment", table.concat(messages, " ")))
-        vim.cmd("redrawstatus!")
-    end,
-})
-
-function cmp.progress()
-    return vim.b.statusline_progress_msg or ""
-end
-
 function cmp.tabpage_nr_non_empty()
     if vim.fn.tabpagenr("$") == 1 then
         return ""
     end
     return " [%{tabpagenr()}/%{tabpagenr('$')}]"
+end
+
+local lsp_status = ""
+vim.api.nvim_create_autocmd("LspProgress", {
+    group = augroup,
+    callback = function(ev)
+        if vim.tbl_contains({ "end" }, ev.data.params.value.kind) then
+            lsp_status = ""
+            return
+        end
+        lsp_status = vim.lsp.status()
+    end,
+})
+vim.api.nvim_create_autocmd({ "LspProgress", "Progress" }, {
+    group = augroup,
+    command = "redrawstatus!",
+})
+
+function cmp.progress()
+    local status = {}
+    local function insert(value)
+        if value and value ~= "" then
+            table.insert(status, value)
+        end
+    end
+    insert(vim.ui.progress_status())
+    insert(escape(lsp_status))
+    return string.format(hi_pattern, "Comment", table.concat(status, " / "))
 end
 
 vim.opt.statusline = table.concat({
