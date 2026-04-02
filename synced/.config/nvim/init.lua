@@ -10,13 +10,17 @@ require("pack").set_hooks({
         { "install", "update" },
         function(path)
             vim.notify("Compiling blink.cmp so")
-            vim.system({ "cargo", "build", "--release" }, { cwd = path, text = true }, function(ev)
-                if ev.code == 0 then
-                    vim.notify("Blink.cmp compilation success")
-                else
-                    vim.notify("Stdout:\n" .. ev.stdout or "" .. "Stderr:\n" .. ev.stderr or "")
-                end
-            end)
+            vim.system(
+                { "cargo", "build", "--release" },
+                { cwd = path, text = true },
+                vim.schedule_wrap(function(ev)
+                    if ev.code == 0 then
+                        vim.notify("Blink.cmp compilation success")
+                    else
+                        vim.notify("Stdout:\n" .. ev.stdout or "" .. "Stderr:\n" .. ev.stderr or "")
+                    end
+                end)
+            )
         end,
     },
     {

@@ -308,6 +308,9 @@ vim.api.nvim_create_user_command("GitDiff", function(ev)
     local preview = string.format("git diff %s -- {} | delta", fargs_joined)
 
     local cwd = vim.fs.root(0, ".git")
+    if not require("utils").assert_notify(cwd, "Not in git directory") then
+        return
+    end
 
     require("fzf-lua").fzf_exec(cmd, {
         preview = preview,

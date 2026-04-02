@@ -53,7 +53,9 @@ end
 ---@return boolean
 function M.assert_notify(bool, msg, level)
     if not bool then
-        vim.notify(tostring(msg), level or vim.log.levels.ERROR)
+        vim.schedule(function()
+            vim.notify(tostring(msg), level or vim.log.levels.ERROR)
+        end)
     end
     return not not bool
 end
