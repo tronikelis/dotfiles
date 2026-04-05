@@ -57,7 +57,7 @@ vim.pack.add({
     "https://github.com/tronikelis/xylene.nvim",
     { src = "https://github.com/catppuccin/nvim", version = "v1.11.0", name = "catppuccin-nvim" },
     { src = "https://github.com/nvim-treesitter/nvim-treesitter", version = "main" },
-    { src = "https://github.com/saghen/blink.cmp", version = "v1.10.1" },
+    { src = "https://github.com/saghen/blink.cmp", version = "v1.10.2" },
 })
 
 -- todo: difftool?

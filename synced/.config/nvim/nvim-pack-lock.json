@@ -5,9 +5,9 @@
       "src": "https://github.com/tronikelis/blink-cmp-ctags"
     },
     "blink.cmp": {
-      "rev": "451168851e8e2466bc97ee3e026c3dcb9141ce07",
+      "rev": "78336bc89ee5365633bcf754d93df01678b5c08f",
       "src": "https://github.com/saghen/blink.cmp",
-      "version": "'v1.10.1'"
+      "version": "'v1.10.2'"
     },
     "caser.nvim": {
       "rev": "1e8c5e28ec5bc02015ab56beb95480d905bf5007",
