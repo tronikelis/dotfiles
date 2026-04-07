@@ -60,8 +60,10 @@ vim.pack.add({
     { src = "https://github.com/saghen/blink.cmp", version = "v1.10.2" },
 })
 
+-- optional std plugins
 -- todo: difftool?
-vim.cmd("packadd nvim.undotree")
+vim.cmd("packadd! nvim.undotree")
+vim.cmd("packadd! cfilter")
 
 require("catppuccin").setup({
     flavour = "mocha",

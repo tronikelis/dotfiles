@@ -1,5 +1,3 @@
-vim.cmd("packadd cfilter")
-
 ---@param ev table
 ---@param ns integer
 ---@param buf integer
