@@ -31,6 +31,47 @@ vim.diagnostic.config({
     },
 })
 
+vim.keymap.set("n", "<leader>td", function()
+    local buf = vim.api.nvim_get_current_buf()
+    local win = vim.api.nvim_get_current_win()
+
+    local timer = _G.__toggle_diagnostics_timer or assert(vim.uv.new_timer())
+    _G.__toggle_diagnostics_timer = timer
+
+    local function show()
+        timer:stop()
+        vim.schedule(function()
+            if vim.api.nvim_buf_is_valid(buf) then
+                vim.diagnostic.show(nil, buf)
+            end
+        end)
+    end
+    local function hide()
+        timer:start(1000 * 60 * 5, 0, show)
+        vim.schedule(function()
+            if vim.api.nvim_buf_is_valid(buf) then
+                vim.diagnostic.hide(nil, buf)
+            end
+        end)
+    end
+
+    vim.api.nvim_create_autocmd("WinLeave", {
+        group = vim.api.nvim_create_augroup("toggle_diagnostics_win_leave", {}),
+        callback = function()
+            if vim.api.nvim_get_current_win() == win then
+                show()
+                return true
+            end
+        end,
+    })
+
+    if timer:is_active() then
+        show()
+    else
+        hide()
+    end
+end)
+
 vim.keymap.set("n", "grd", function()
     require("fzf-lua").lsp_definitions()
 end)
