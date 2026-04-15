@@ -1,0 +1,34 @@
+#!/bin/bash
+
+set -eu
+
+function start_fzf {
+    fzf --print-query --disabled --preview-window down,80% --preview "$1"
+}
+
+if [[ "$#" == 0 ]]; then
+    echo "Provide program to run" >&2
+    exit 1
+fi
+
+preview="$* {q}"
+tmpfile="/dev/null"
+
+if [[ ! -t 0 ]]; then
+    tmpfile="$(mktemp)"
+    trap 'rm "$tmpfile"' EXIT
+    cat >"$tmpfile"
+    preview="$* {q} <$tmpfile"
+fi
+
+query="$(cat "${tmpfile}" | start_fzf "$preview" | head -n 1)"
+
+if [[ ! "$query" ]]; then
+    echo "Empty query, proceed?" >&2
+    read proceed </dev/tty
+    if [[ "${proceed,,}" == "n" ]]; then
+        exit 1
+    fi
+fi
+
+"$@" "$query" <"${tmpfile}"
