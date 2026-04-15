@@ -281,7 +281,7 @@ function smux() {
 }
 
 function wfiles() {
-    local flags
+    local flags=""
     case "$1" in
         "r")
             flags="-r"
@@ -304,7 +304,15 @@ function wfiles() {
 
     while true; do
         fd . "$dir" | entr -d -s $flags "$*"
-        sleep 1
+        # entr normally returns one of the following values:
+        #
+        # 0 Normal termination after receiving SIGINT
+        # 1 No regular files were provided as input or an error occurred
+        # 2 Files were added or removed from a directory
+        exit_status="$?"
+        if [[ "$exit_status" == 0 || "$exit_status" == 1 ]]; then
+            return 1
+        fi
     done
 }
 
