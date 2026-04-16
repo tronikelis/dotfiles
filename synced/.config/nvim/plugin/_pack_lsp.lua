@@ -42,7 +42,7 @@ vim.keymap.set("n", "<leader>td", function()
         timer:stop()
         vim.schedule(function()
             if vim.api.nvim_buf_is_valid(buf) then
-                vim.diagnostic.show(nil, buf)
+                vim.diagnostic.enable(true, { bufnr = buf })
             end
         end)
     end
@@ -50,7 +50,7 @@ vim.keymap.set("n", "<leader>td", function()
         timer:start(1000 * 60 * 5, 0, show)
         vim.schedule(function()
             if vim.api.nvim_buf_is_valid(buf) then
-                vim.diagnostic.hide(nil, buf)
+                vim.diagnostic.enable(false, { bufnr = buf })
             end
         end)
     end
