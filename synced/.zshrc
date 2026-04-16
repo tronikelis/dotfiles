@@ -6,6 +6,10 @@ preexec() {
   echo -n "\\x1b]133;A\\x1b\\"
 }
 
+# blinking block cursor
+precmd() {
+    printf '\033[1 q'
+}
 
 
 
