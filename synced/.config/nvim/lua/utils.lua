@@ -29,20 +29,22 @@ end
 ---@param ev table
 ---@param ns integer
 ---@param buf integer
+---@param whitelist string[]
 ---@return integer
-function M.inc_command_diff_preview(ev, ns, buf)
+function M.inc_command_diff_preview(ev, ns, buf, whitelist)
     local old_lines = vim.api.nvim_buf_get_lines(0, 0, -1, true)
-    vim.cmd(ev.args)
+
+    local command = vim.api.nvim_parse_cmd(ev.args, {})
+    if not vim.tbl_contains(whitelist, command.cmd) then
+        vim.api.nvim_buf_set_lines(buf, 0, -1, true, { string.format('"%s" not in whitelist', command.cmd) })
+        return 2
+    end
+    vim.api.nvim_cmd(command, {})
+
     local new_lines = vim.api.nvim_buf_get_lines(0, 0, -1, true)
 
     local diff = vim.text.diff(table.concat(old_lines, "\n"), table.concat(new_lines, "\n"))
     vim.api.nvim_buf_set_lines(buf, 0, -1, true, vim.split(diff, "\n"))
-
-    pcall(function()
-        if not vim.treesitter.get_parser(buf, nil, { error = false }) then
-            vim.treesitter.start(buf, "diff")
-        end
-    end)
 
     return 2
 end

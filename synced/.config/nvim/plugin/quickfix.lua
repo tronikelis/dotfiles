@@ -17,7 +17,9 @@ local function cmd_preview(ev, ns, buf)
         return 2
     end
 
-    return require("utils").inc_command_diff_preview(ev, ns, buf)
+    return require("utils").inc_command_diff_preview(ev, ns, buf, {
+        "substitute",
+    })
 end
 
 vim.api.nvim_create_user_command("Cfdo", function(ev)
