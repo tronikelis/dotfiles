@@ -2,13 +2,22 @@ local augroup = vim.api.nvim_create_augroup("plugin/statusline.lua", {})
 
 local cmp = {}
 
---- highlight pattern
--- This has three parts:
--- 1. the highlight group
--- 2. text content
--- 3. special sequence to restore highlight: %*
--- Example pattern: %#SomeHighlight#some-text%*
-local hi_pattern = "%%#%s#%s%%*"
+---@param group string
+---@param value string
+local function get_hl_pattern(group, value)
+    --- highlight pattern
+    -- This has three parts:
+    -- 1. the highlight group
+    -- 2. text content
+    -- 3. special sequence to restore highlight: %*
+    -- Example pattern: %#SomeHighlight#some-text%*
+    local format = "%%#%s#%s%%*"
+
+    if tostring(vim.api.nvim_get_current_win()) ~= vim.g.actual_curwin then
+        group = "StatusLineNC"
+    end
+    return format:format(group, value)
+end
 
 function _G._statusline_component(name)
     local prompt = cmp[name]()
@@ -123,7 +132,7 @@ function cmp.git()
         return ""
     end
 
-    local prompt = hi_pattern:format(
+    local prompt = get_hl_pattern(
         "Conditional",
         symbol .. escape(vim.b.gitsigns_status_dict.head or "") .. escape(get_git_status() or "")
     )
@@ -137,13 +146,13 @@ function cmp.git_lines()
 
     local lines = {}
     if vim.b.gitsigns_status_dict.added and vim.b.gitsigns_status_dict.added ~= 0 then
-        table.insert(lines, hi_pattern:format("GitsignsAdd", "+" .. vim.b.gitsigns_status_dict.added))
+        table.insert(lines, get_hl_pattern("GitsignsAdd", "+" .. vim.b.gitsigns_status_dict.added))
     end
     if vim.b.gitsigns_status_dict.changed and vim.b.gitsigns_status_dict.changed ~= 0 then
-        table.insert(lines, hi_pattern:format("GitsignsChange", "~" .. vim.b.gitsigns_status_dict.changed))
+        table.insert(lines, get_hl_pattern("GitsignsChange", "~" .. vim.b.gitsigns_status_dict.changed))
     end
     if vim.b.gitsigns_status_dict.removed and vim.b.gitsigns_status_dict.removed ~= 0 then
-        table.insert(lines, hi_pattern:format("GitsignsDelete", "-" .. vim.b.gitsigns_status_dict.removed))
+        table.insert(lines, get_hl_pattern("GitsignsDelete", "-" .. vim.b.gitsigns_status_dict.removed))
     end
 
     local prompt = table.concat(lines, " ")
@@ -169,13 +178,13 @@ function cmp.full_file()
         local dir = require("oil").get_current_dir()
         if dir then
             dir = escape(vim.fn.fnamemodify(dir, ":~:."))
-            return hi_pattern:format("Directory", " ") .. dir
+            return get_hl_pattern("Directory", " ") .. dir
         end
     end
 
     local icon, hl = require("nvim-web-devicons").get_icon(vim.fs.basename(file))
     if icon and hl then
-        file = hi_pattern:format(hl, icon .. " ") .. escape(file)
+        file = get_hl_pattern(hl, icon .. " ") .. escape(file)
     else
         file = " " .. escape(file)
     end
@@ -188,7 +197,7 @@ function cmp.filetype()
     filetype = escape(filetype)
 
     if icon and hl then
-        filetype = hi_pattern:format(hl, icon .. " ") .. filetype
+        filetype = get_hl_pattern(hl, icon .. " ") .. filetype
     end
 
     return filetype
@@ -236,16 +245,16 @@ function cmp.diagnostics()
 
     local diagnostics = {}
     if errors ~= 0 then
-        table.insert(diagnostics, hi_pattern:format("DiagnosticError", "E" .. errors))
+        table.insert(diagnostics, get_hl_pattern("DiagnosticError", "E" .. errors))
     end
     if warnings ~= 0 then
-        table.insert(diagnostics, hi_pattern:format("DiagnosticWarn", "W" .. warnings))
+        table.insert(diagnostics, get_hl_pattern("DiagnosticWarn", "W" .. warnings))
     end
     if infos ~= 0 then
-        table.insert(diagnostics, hi_pattern:format("DiagnosticInfo", "I" .. infos))
+        table.insert(diagnostics, get_hl_pattern("DiagnosticInfo", "I" .. infos))
     end
     if hints ~= 0 then
-        table.insert(diagnostics, hi_pattern:format("DiagnosticHint", "H" .. hints))
+        table.insert(diagnostics, get_hl_pattern("DiagnosticHint", "H" .. hints))
     end
 
     local prompt = table.concat(diagnostics, " ")
@@ -293,7 +302,7 @@ function cmp.progress()
     end
     insert(vim.ui.progress_status())
     insert(escape(lsp_status))
-    return string.format(hi_pattern, "Comment", table.concat(status, " / "))
+    return get_hl_pattern("Comment", table.concat(status, " / "))
 end
 
 vim.opt.statusline = table.concat({
