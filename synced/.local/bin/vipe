@@ -6,6 +6,7 @@ VIM=""
 
 tempfile="$(mktemp)"
 touch "$tempfile"
+trap 'rm "$tempfile"' EXIT
 
 if [[ ! -t 0 ]]; then
     cat >"$tempfile"
@@ -20,10 +21,7 @@ fi
 vim_status="$?"
 
 if [[ "$vim_status" != 0 ]]; then
-    rm "$tempfile"
     exit "$vim_status"
 fi
 
 cat "$tempfile"
-
-rm "$tempfile"

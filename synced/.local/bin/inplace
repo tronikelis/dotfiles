@@ -6,13 +6,9 @@ if [[ ! "$1" ]]; then
 fi
 
 temp="$(mktemp)"
+trap 'rm "$temp"' EXIT
 
 cp "$1" "$temp"
 
 shift
 bash -c "$*" <"$temp"
-status="$?"
-
-rm "$temp"
-
-exit "$status"

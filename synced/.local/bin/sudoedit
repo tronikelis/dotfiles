@@ -13,6 +13,7 @@ fi
 
 dir="$(mktemp -d)/$(dirname "$1")"
 mkdir -p "$dir" || exit
+trap 'rm -r "$dir"' EXIT
 
 me="$(whoami)"
 
