@@ -183,8 +183,8 @@ vim.keymap.set("n", "<c-u>", "<c-u>zz")
 vim.keymap.set("n", "*", [[<cmd>let @/='\C\<' . expand("<cword>") . '\>'<cr><cmd>let v:searchforward=1<cr>n]])
 vim.keymap.set("n", "#", [[<cmd>let @/='\C\<' . expand("<cword>") . '\>'<cr><cmd>let v:searchforward=0<cr>n]])
 
-vim.keymap.set("n", "[[", [[<cmd>eval searchpair('\[', '', '\]', 'bW')<cr>]])
-vim.keymap.set("n", "]]", [[<cmd>eval searchpair('\[', '', '\]', 'W')<cr>]])
+vim.keymap.set({ "n", "x" }, "[[", [[<cmd>eval searchpair('\[', '', '\]', 'bW')<cr>]])
+vim.keymap.set({ "n", "x" }, "]]", [[<cmd>eval searchpair('\[', '', '\]', 'W')<cr>]])
 
 -- simple user commands
 
