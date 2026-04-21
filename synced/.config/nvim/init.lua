@@ -179,8 +179,8 @@ vim.keymap.set("n", "<c-k>", "<cmd>b#<cr>") -- quick switch alternate buffer
 vim.keymap.set("n", "<c-d>", "<c-d>zz")
 vim.keymap.set("n", "<c-u>", "<c-u>zz")
 
-vim.keymap.set({ "n", "x" }, "[[", [[<cmd>eval searchpair('\[', '', '\]', 'bW')<cr>]])
-vim.keymap.set({ "n", "x" }, "]]", [[<cmd>eval searchpair('\[', '', '\]', 'W')<cr>]])
+vim.keymap.set({ "n", "x" }, "g[", [[<cmd>eval searchpair('\[', '', '\]', 'bW')<cr>]])
+vim.keymap.set({ "n", "x" }, "g]", [[<cmd>eval searchpair('\[', '', '\]', 'W')<cr>]])
 
 -- simple user commands
 
