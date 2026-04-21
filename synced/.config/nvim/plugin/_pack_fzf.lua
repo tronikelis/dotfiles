@@ -103,6 +103,35 @@ require("fzf-lua").setup({
 
 require("fzf-lua").register_ui_select()
 
+---@param mappings [string?, string?]
+---@param get_opts fun(): table
+local function map_files_grep_picker(mappings, get_opts)
+    local function get_visual_selection()
+        local mode = vim.api.nvim_get_mode().mode
+        assert(vim.list_contains({ "v", "V", "\22" }, mode))
+        return vim.fn.getregion(vim.fn.getpos("v"), vim.fn.getpos("."), { type = mode })
+    end
+
+    if mappings[1] then
+        vim.keymap.set("n", mappings[1], function()
+            local opts = get_opts()
+            require("fzf-lua").files(opts)
+        end)
+    end
+    if mappings[2] then
+        vim.keymap.set({ "n", "x" }, mappings[2], function()
+            local opts = get_opts()
+            if vim.list_contains({ "v", "V", "\22" }, vim.api.nvim_get_mode().mode) then
+                require("fzf-lua").grep(vim.tbl_extend("force", opts, {
+                    search = vim.trim(get_visual_selection()[1]),
+                }))
+            else
+                require("fzf-lua").live_grep(opts)
+            end
+        end)
+    end
+end
+
 vim.keymap.set("n", "<c-p>", function()
     require("fzf-lua").files()
 end)
@@ -111,52 +140,24 @@ vim.keymap.set("n", "<leader>=", function()
     require("fzf-lua").resume()
 end)
 
-vim.keymap.set("n", "<leader>fr", function()
-    require("fzf-lua").files({
-        cwd = current_wd(),
-    })
+map_files_grep_picker({ "<leader>fr", "<leader>fR" }, function()
+    return { cwd = current_wd() }
 end)
 
-vim.keymap.set("n", "<leader>fR", function()
-    require("fzf-lua").live_grep({
-        cwd = current_wd(),
-    })
+map_files_grep_picker({ "<leader>fh", "<leader>fH" }, function()
+    return { cwd = cwd_child() }
 end)
 
-vim.keymap.set("n", "<leader>fh", function()
-    require("fzf-lua").files({
-        cwd = cwd_child(),
-    })
-end)
-
-vim.keymap.set("n", "<leader>fH", function()
-    require("fzf-lua").live_grep({
-        cwd = cwd_child(),
-    })
-end)
-
-local function get_visual_selection()
-    local mode = vim.api.nvim_get_mode().mode
-    assert(vim.list_contains({ "v", "V", "\22" }, mode))
-    return vim.fn.getregion(vim.fn.getpos("v"), vim.fn.getpos("."), { type = mode })
-end
-
-vim.keymap.set({ "n", "x" }, "<leader>fg", function()
-    if vim.list_contains({ "v", "V", "\22" }, vim.api.nvim_get_mode().mode) then
-        require("fzf-lua").grep({
-            search = vim.trim(get_visual_selection()[1]),
-        })
-    else
-        require("fzf-lua").live_grep()
-    end
-end)
-
-vim.keymap.set("n", "<leader>fp", function()
-    require("fzf-lua").grep_project()
+map_files_grep_picker({ nil, "<leader>fg" }, function()
+    return {}
 end)
 
 vim.keymap.set("n", "<leader>fG", function()
     require("fzf-lua").grep_cword()
+end)
+
+vim.keymap.set("n", "<leader>fp", function()
+    require("fzf-lua").grep_project()
 end)
 
 vim.keymap.set("n", "<leader>of", function()
