@@ -179,10 +179,6 @@ vim.keymap.set("n", "<c-k>", "<cmd>b#<cr>") -- quick switch alternate buffer
 vim.keymap.set("n", "<c-d>", "<c-d>zz")
 vim.keymap.set("n", "<c-u>", "<c-u>zz")
 
--- case sensitive * / # normal mode commands
-vim.keymap.set("n", "*", [[<cmd>let @/='\C\<' . expand("<cword>") . '\>'<cr><cmd>let v:searchforward=1<cr>n]])
-vim.keymap.set("n", "#", [[<cmd>let @/='\C\<' . expand("<cword>") . '\>'<cr><cmd>let v:searchforward=0<cr>n]])
-
 vim.keymap.set({ "n", "x" }, "[[", [[<cmd>eval searchpair('\[', '', '\]', 'bW')<cr>]])
 vim.keymap.set({ "n", "x" }, "]]", [[<cmd>eval searchpair('\[', '', '\]', 'W')<cr>]])
 
