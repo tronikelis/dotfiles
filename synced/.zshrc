@@ -24,8 +24,8 @@ function add_to_path() {
 	fi
 }
 
-function is_executable() {
-    test -x "$(command -v "$1")"
+function command_exists() {
+    command -v "$1" &>/dev/null
 }
 
 
@@ -38,7 +38,7 @@ add_to_path "$HOME/.local/bin"
 add_to_path "/opt/homebrew/bin"
 add_to_path "$HOME/.bun/bin"
 
-if is_executable "go"; then
+if command_exists "go"; then
 	add_to_path "$(go env GOPATH)/bin"
 fi
 if [[ -e "$HOME/.cargo/env" ]]; then
@@ -61,7 +61,7 @@ export VISUAL="$EDITOR"
 export COREPACK_ENABLE_AUTO_PIN=0
 export PAGER="less"
 export LESS="--mouse" # make mouse scrolling work with less
-if is_executable vivid; then
+if command_exists vivid; then
     export LS_COLORS="$(vivid generate catppuccin-mocha)"
 fi
 
@@ -237,12 +237,12 @@ alias grep="grep --color=auto"
 ### Shell integrated utils
 # shell integration with various utils
 
-if is_executable zoxide; then
+if command_exists zoxide; then
     # as I'm using zoxide with tmux, increase zoxide size
     export _ZO_MAXAGE=50000
     source <(zoxide init zsh)
 fi
-if is_executable starship; then
+if command_exists starship; then
     source <(starship init zsh)
 fi
 
