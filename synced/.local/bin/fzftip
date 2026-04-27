@@ -31,4 +31,6 @@ if [[ ! "$query" ]]; then
     fi
 fi
 
+echo "$@ '$query'" >&2
+
 "$@" "$query" <"${tmpfile}"
