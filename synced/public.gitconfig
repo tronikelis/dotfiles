@@ -64,6 +64,8 @@
 	logo = log --oneline
 	last = rev-parse --abbrev-ref @{-1}
 
+	# like git logo, but with dates and authors
+	logov = "!git log --pretty=format:'%C(yellow)%h %Cblue%ad %Cgreen%an %Creset%s' --date=short --color=auto \"$@\" #"
 	# deletes last used branch
 	branchdelast = "!git branch -d \"$(git last)\" #"
 	# shows local branches which got their remote branch deleted

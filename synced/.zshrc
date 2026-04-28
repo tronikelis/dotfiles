@@ -347,6 +347,10 @@ function showmem() {
     ps -o rss,command -p "$1" | tail -1 | awk '{printf $1/1024 " MiB\t"; $1=""; print $0}'
 }
 
+function tmpvar() {
+    tmp="$(mktemp)"
+    echo "$tmp"
+}
 
 
 
