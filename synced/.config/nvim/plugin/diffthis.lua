@@ -71,13 +71,10 @@ local function diffthis(ev)
     local file = vim.fn.expand("%:p"):sub(#git_root + 2)
     local cursor = vim.api.nvim_win_get_cursor(0)
 
-    local prev_buf = vim.api.nvim_get_current_buf()
-    local buf = new_buf()
-
-    vim.cmd("tab split")
-    local tabid = vim.api.nvim_get_current_tabpage()
-
-    vim.api.nvim_set_current_buf(buf)
+    if vim.system(require("utils").flatten({ "git", "diff", ev.fargs, "--quiet", "--", file })):wait().code == 0 then
+        vim.notify("No differences")
+        return
+    end
 
     local extra_options = vim.iter(ev.fargs)
         :map(function(v)
@@ -90,6 +87,14 @@ local function diffthis(ev)
         table.concat(extra_options, " "),
         vim.fn.shellescape(file)
     )
+
+    local prev_buf = vim.api.nvim_get_current_buf()
+    local buf = new_buf()
+
+    vim.cmd("tab split")
+    local tabid = vim.api.nvim_get_current_tabpage()
+
+    vim.api.nvim_set_current_buf(buf)
 
     vim.fn.jobstart(cmd, {
         cwd = git_root,

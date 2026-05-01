@@ -23,7 +23,7 @@ function M.prefix_filter(query, list)
 end
 
 function M.flatten(tbl)
-    return vim.iter(tbl):flatten():totable()
+    return vim.iter(tbl):flatten(math.huge):totable()
 end
 
 ---@param ev table
