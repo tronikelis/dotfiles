@@ -25,7 +25,7 @@ vim.api.nvim_create_autocmd("FileType", {
 
         vim.keymap.set("n", "<Cr>", actions.select.callback, opts)
         vim.keymap.set("n", "-", actions.parent.callback, opts)
-        vim.keymap.set("n", "<esc>", actions.close.callback, opts)
+        vim.keymap.set("n", "<c-c>", actions.close.callback, opts)
     end,
 })
 
