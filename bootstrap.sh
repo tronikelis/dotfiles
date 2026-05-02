@@ -100,6 +100,8 @@ function setup_paccache {
 
 function setup_firewall {
 	sudo ufw enable
+	sudo systemctl enable ufw
+	sudo systemctl start ufw
 }
 
 function setup_shell {
