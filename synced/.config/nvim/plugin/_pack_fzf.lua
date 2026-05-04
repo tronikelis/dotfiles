@@ -274,11 +274,17 @@ vim.api.nvim_create_user_command("GitDiff", function(ev)
             :totable(),
         " "
     )
+
     local cmd = string.format("git diff --name-only %s", fargs_joined)
     local preview = string.format("git diff %s -- {} | delta", fargs_joined)
 
     local cwd = vim.fs.root(0, ".git")
     if not require("utils").assert_notify(cwd, "Not in git directory") then
+        return
+    end
+
+    if vim.system({ "bash", "-c", string.format("git diff %s --quiet", fargs_joined) }):wait().code == 0 then
+        vim.notify("No differences")
         return
     end
 
