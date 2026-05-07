@@ -187,10 +187,11 @@ EOF
 }
 
 function setup_gitconfig {
-	if [[ ! -e ~/.gitconfig ]]; then
-sudo tee -a ~/.gitconfig << EOF
+	if [[ ! -e ~/.config/git/config ]]; then
+		mkdir -p ~/.config/git
+sudo tee -a ~/.config/git/config << EOF
 [include]
-	path = public.gitconfig
+	path = public.config
 
 #[user]
 #	email =
