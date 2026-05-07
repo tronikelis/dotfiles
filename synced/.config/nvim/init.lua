@@ -248,7 +248,7 @@ vim.api.nvim_create_autocmd("VimResized", {
 vim.filetype.add({
     pattern = {
         [".*/hypr/.*%.conf"] = "hyprlang",
-        [".*/.config/git/.*%.config"] = "gitconfig",
+        [".*/%.config/git/.*%.config"] = "gitconfig",
         ["Dockerfile.*"] = "dockerfile",
         ["%.env%..*"] = "sh",
     },
