@@ -189,7 +189,7 @@ EOF
 function setup_gitconfig {
 	if [[ ! -e ~/.config/git/config ]]; then
 		mkdir -p ~/.config/git
-sudo tee -a ~/.config/git/config << EOF
+tee -a ~/.config/git/config << EOF
 [include]
 	path = public.config
 
