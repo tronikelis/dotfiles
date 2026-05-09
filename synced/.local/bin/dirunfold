@@ -3,5 +3,10 @@
 set -eu
 shopt -s dotglob
 
+if [[ ! -d "$1" ]]; then
+    echo "argument is not directory" >&2
+    exit 1
+fi
+
 mv "$1"/* ./
 rmdir "$1"
