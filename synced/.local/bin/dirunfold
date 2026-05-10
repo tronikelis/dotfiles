@@ -8,5 +8,14 @@ if [[ ! -d "$1" ]]; then
     exit 1
 fi
 
-mv "$1"/* ./
-rmdir "$1"
+while true; do
+    random_id="$RANDOM"
+    if [[ ! -e "$1/$random_id" && ! -e "$random_id" ]]; then
+        break
+    fi
+done
+
+mv "$1" "$random_id"
+
+mv "$random_id"/* ./
+rmdir "$random_id"
