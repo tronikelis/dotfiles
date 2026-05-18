@@ -1,4 +1,4 @@
-local augroup = vim.api.nvim_create_augroup("plugin/_pack_formatter.lua", {})
+local augroup = vim.api.nvim_create_augroup("plugin/_pack_conform.lua", {})
 
 vim.api.nvim_create_autocmd("VimLeavePre", {
     group = augroup,

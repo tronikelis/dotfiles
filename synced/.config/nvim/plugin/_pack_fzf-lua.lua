@@ -208,18 +208,6 @@ vim.keymap.set("n", "<leader>cm", function()
     require("fzf-lua").commands()
 end)
 
-vim.keymap.set("n", "<leader>ct", function()
-    vim.cmd.Taglist()
-end)
-
-vim.keymap.set("n", "<leader>cT", function()
-    local cword = vim.fn.expand("<cword>")
-    if not require("utils").assert_notify(cword ~= "", "Empty cword") then
-        return
-    end
-    vim.cmd.Taglist(cword)
-end)
-
 vim.keymap.set("n", "<leader>oo", function()
     require("fzf-lua").fzf_exec("fd -t d --color=never --hidden --exclude .git", {
         winopts = {
