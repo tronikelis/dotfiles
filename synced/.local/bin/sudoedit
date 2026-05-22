@@ -2,7 +2,7 @@
 
 set -eu
 
-if [[ ! "$1" ]]; then
+if [[ ! "${1-}" ]]; then
     echo "provide filename"
     exit 1
 fi
@@ -12,20 +12,28 @@ if [[ ! -f "$1" ]]; then
     exit 1
 fi
 
+function atomic_move_without_permissions {
+    local dst="$1"
+    local src="$2"
+
+    local dir="$(sudo mktemp -d)"
+    sudo cp "$dst" "$dir"
+    local from="$dir/$(basename "$dst")"
+
+    cat "$src" | sudo tee "$from" >/dev/null
+    sudo mv "$from" "$dst"
+}
+
 dir="$(mktemp -d)/$(dirname "$1")"
+dir="${dir%/.}"
 mkdir -p "$dir"
 trap 'rm -r "$dir"' EXIT
 
-me="$(whoami)"
-
-editable_file="$dir/$(basename "$1")"
-
 sudo cp "$1" "$dir"
-
-sudo chown "$me" "$editable_file"
-
+editable_file="$dir/$(basename "$1")"
+sudo chown "$(whoami)" "$editable_file"
 "$VISUAL" "$editable_file"
 
-sudo cp "$editable_file" "$1"
+atomic_move_without_permissions "$1" "$editable_file"
 
 echo "written"

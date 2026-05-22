@@ -2,7 +2,7 @@
 
 set -eu
 
-if [[ ! "$1" ]]; then
+if [[ ! "${1-}" ]]; then
     echo "provide executable name" >&2
     exit 1
 fi
