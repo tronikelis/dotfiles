@@ -1,0 +1,12 @@
+diff --git a/synced/.config/git/scripts/git-prompt.sh b/synced/.config/git/scripts/git-prompt.sh
+index 6186c47..4dcf4df 100644
+--- a/synced/.config/git/scripts/git-prompt.sh
++++ b/synced/.config/git/scripts/git-prompt.sh
+@@ -645,6 +645,7 @@ __git_ps1 ()
+ 	local z="${GIT_PS1_STATESEPARATOR- }"
+ 
+ 	b=${b##refs/heads/}
++	b="${b//[%]/%%}"
+ 	if [ "$pcmode" = yes ] && [ "$ps1_expanded" = yes ]; then
+ 		__git_ps1_branch_name=$b
+ 		b="\${__git_ps1_branch_name}"
