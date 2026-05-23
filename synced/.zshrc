@@ -96,7 +96,7 @@ GIT_PS1_SHOWUPSTREAM="auto"
 GIT_PS1_SHOWCONFLICTSTATE=yes
 GIT_PS1_SHOWCOLORHINTS=1
 function precmd_set_git {
-    prompt_git="$(__git_ps1)"
+    prompt_git="$(__git_ps1 2>/dev/null)"
 }
 add-zsh-hook precmd precmd_set_git
 
