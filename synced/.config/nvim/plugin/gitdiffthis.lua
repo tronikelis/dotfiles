@@ -53,7 +53,7 @@ local function attach(tabid, prev_buf, cursor)
 end
 
 ---@param ev vim.api.keyset.create_user_command.command_args
-local function diffthis(ev)
+local function gitdiffthis(ev)
     if
         not require("utils").assert_notify(
             vim.bo.buftype == "" and vim.fn.expand("%:p"):sub(1, 1) == "/",
@@ -110,6 +110,6 @@ local function diffthis(ev)
     })
 end
 
-vim.api.nvim_create_user_command("Diffthis", diffthis, {
+vim.api.nvim_create_user_command("GitDiffthis", gitdiffthis, {
     nargs = "*",
 })
