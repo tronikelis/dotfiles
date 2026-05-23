@@ -111,6 +111,7 @@ local function run_git_status()
                 GIT_PS1_SHOWUNTRACKEDFILES=1
                 GIT_PS1_SHOWUPSTREAM="auto"
                 GIT_PS1_SHOWCONFLICTSTATE=yes
+                export GIT_OPTIONAL_LOCKS=0
                 echo "[$(__git_ps1 '%s' | awk '{print $2}')]"
             else
                 echo "n/a"
