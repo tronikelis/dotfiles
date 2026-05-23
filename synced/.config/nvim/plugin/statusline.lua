@@ -315,7 +315,7 @@ function cmp.progress()
     end
     insert(vim.ui.progress_status())
     insert(escape(lsp_status))
-    return get_hl_pattern("Comment", table.concat(status, " / "))
+    return get_hl_pattern("Whitespace", table.concat(status, " / "))
 end
 
 vim.opt.statusline = table.concat({

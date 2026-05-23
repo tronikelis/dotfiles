@@ -71,7 +71,10 @@ local function diffthis(ev)
     local file = vim.fn.expand("%:p"):sub(#git_root + 2)
     local cursor = vim.api.nvim_win_get_cursor(0)
 
-    if vim.system(require("utils").flatten({ "git", "diff", ev.fargs, "--quiet", "--", file })):wait().code == 0 then
+    if
+        vim.system(require("utils").flatten({ "git", "diff", ev.fargs, "--quiet", "--", file }), { cwd = git_root })
+            :wait().code == 0
+    then
         vim.notify("No differences")
         return
     end

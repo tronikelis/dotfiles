@@ -271,7 +271,9 @@ vim.api.nvim_create_user_command("GitDiff", function(ev)
         return
     end
 
-    if vim.system({ "bash", "-c", string.format("git diff %s --quiet", fargs_joined) }):wait().code == 0 then
+    if
+        vim.system({ "bash", "-c", string.format("git diff %s --quiet", fargs_joined) }, { cwd = cwd }):wait().code == 0
+    then
         vim.notify("No differences")
         return
     end
