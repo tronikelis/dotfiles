@@ -104,7 +104,7 @@ function precmd_set_prompt_directory {
     prompt_directory="$(pwd)"
 
     local git_root="$(git rev-parse --show-toplevel 2>/dev/null)"
-    if [[ "$git_root" ]];then
+    if [[ "$git_root" ]]; then
         prompt_directory="$(realpath .)" # git resolves symlinks
         prompt_directory="$(basename "$git_root")${prompt_directory#"$git_root"}"
         return 0

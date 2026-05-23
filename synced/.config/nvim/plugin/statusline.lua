@@ -99,16 +99,28 @@ local function run_git_status()
         return
     end
 
-    root_to_git_status_system[root] = vim.system(
-        -- sleep here to not spam
-        { "bash", "-c", [[sleep 3; starship module git_status | perl -pe 's/\e\[[0-9;]*m//g']] },
-        { cwd = root, text = true },
-        function(out)
-            local stdout = vim.trim(out.stdout or "")
-            root_to_git_status_system[root] = nil
-            root_to_git_status[root] = stdout
-        end
-    )
+    root_to_git_status_system[root] = vim.system({
+        "bash",
+        "-c",
+        [[
+            sleep 3 # sleep here to not spam
+            if [ -e ~/.config/git/scripts/git-prompt.sh ]; then
+                source ~/.config/git/scripts/git-prompt.sh
+                GIT_PS1_SHOWDIRTYSTATE=1
+                GIT_PS1_SHOWSTASHSTATE=1
+                GIT_PS1_SHOWUNTRACKEDFILES=1
+                GIT_PS1_SHOWUPSTREAM="auto"
+                GIT_PS1_SHOWCONFLICTSTATE=yes
+                echo "[$(__git_ps1 '%s' | awk '{print $2}')]"
+            else
+                echo "n/a"
+            fi
+        ]],
+    }, { cwd = root, text = true }, function(out)
+        local stdout = vim.trim(out.stdout or "")
+        root_to_git_status_system[root] = nil
+        root_to_git_status[root] = stdout
+    end)
 end
 
 local function get_git_status()
