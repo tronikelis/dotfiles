@@ -1,38 +1,33 @@
-### Shell hooks
-# integration for other thingies
+autoload -Uz add-zsh-hook
 
-# osc 133
-preexec() {
-  echo -n "\\x1b]133;A\\x1b\\"
+function preexec_osc_133 {
+    echo -n "\\x1b]133;A\\x1b\\"
 }
+add-zsh-hook preexec preexec_osc_133
 
-# blinking block cursor
-precmd() {
+function precmd_cursor_block {
     printf '\033[1 q'
 }
+add-zsh-hook precmd precmd_cursor_block
 
 
-
-
-
-### Config helpers
-# used only in this zshrc, internal
-
-function add_to_path() {
+function add_to_path {
 	if [[ -d "$1" ]]; then
 		export PATH="$1:$PATH"
 	fi
 }
 
-function command_exists() {
+function command_exists {
     command -v "$1" &>/dev/null
 }
 
-
-
-
-### Path
-# update PATH
+function strip_home_from_path {
+    if [[ "$1" == "$HOME"* ]]; then
+        echo "~${1#"$HOME"}"
+        return 0
+    fi
+    echo "$1"
+}
 
 add_to_path "$HOME/.local/bin"
 add_to_path "/opt/homebrew/bin"
@@ -46,21 +41,12 @@ if [[ -e "$HOME/.cargo/env" ]]; then
 fi
 
 
-
-
-
-
-
-
-
-### Env
-# vars exported to child processes
-
 export EDITOR=nvim
 export VISUAL="$EDITOR"
 export COREPACK_ENABLE_AUTO_PIN=0
 export PAGER="less"
 export LESS="--mouse" # make mouse scrolling work with less
+
 if command_exists vivid; then
     export LS_COLORS="$(vivid generate catppuccin-mocha)"
 fi
@@ -97,15 +83,71 @@ export FZF_CTRL_R_OPTS="
   --header 'Press CTRL-Y to copy command into clipboard'"
 
 
+setopt PROMPT_SUBST
 
+if [[ -e ~/.config/git/scripts/git-prompt.sh ]]; then
+    source ~/.config/git/scripts/git-prompt.sh
+fi
 
+GIT_PS1_SHOWDIRTYSTATE=1
+GIT_PS1_SHOWSTASHSTATE=1
+GIT_PS1_SHOWUNTRACKEDFILES=1
+GIT_PS1_SHOWUPSTREAM="auto"
+GIT_PS1_SHOWCONFLICTSTATE=yes
+GIT_PS1_SHOWCOLORHINTS=1
+function precmd_set_git {
+    prompt_git="$(__git_ps1)"
+}
+add-zsh-hook precmd precmd_set_git
 
+function precmd_set_prompt_directory {
+    prompt_directory="$(pwd)"
 
+    local git_root="$(git rev-parse --show-toplevel 2>/dev/null)"
+    if [[ "$git_root" ]];then
+        prompt_directory="$(realpath .)" # git resolves symlinks
+        prompt_directory="$(basename "$git_root")${prompt_directory#"$git_root"}"
+        return 0
+    fi
 
+    prompt_directory="$(strip_home_from_path "$prompt_directory")"
+}
+add-zsh-hook precmd precmd_set_prompt_directory
 
+function precmd_print_newline {
+    if [[ ! "$__precmd_print_newline" ]]; then
+        __precmd_print_newline=1
+        return 0
+    fi
+    echo
+}
+add-zsh-hook precmd precmd_print_newline
 
-### Plugins config / completion config
-# configure plugins here, before calling compinit, before sourcing plugins
+function precmd_set_prompt_jobs {
+    prompt_jobs=""
+    if [[ ! "$jobstates" ]]; then
+        return 0
+    fi
+    prompt_jobs="$(echo "$jobstates" | tr ' ' '\n' | wc -l) "
+}
+add-zsh-hook precmd precmd_set_prompt_jobs
+
+function precmd_set_caret {
+    local exit_status="$?"
+    prompt_caret=">"
+    if [[ "$exit_status" != 0 && "$exit_status" != 130 ]]; then
+        prompt_caret="%F{#f38ba8}<%f"
+    fi
+}
+add-zsh-hook precmd precmd_set_caret
+
+prompt_newline=$'\n'
+PS1='%F{#b4befe}${prompt_directory//[%]/%%}%f\
+%B${prompt_git}%b\
+${prompt_newline//[%]/%%}\
+%F{#eba0ac}%B${prompt_jobs//[%]/%%}%b%f\
+%F{#89dceb}%B${prompt_caret}%b%f '
+
 
 ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=50
 
@@ -126,32 +168,12 @@ zstyle ':completion:*' use-cache yes
 # fuzzy completion for zsh
 zstyle ':completion:*' matcher-list '' 'm:{a-z\-}={A-Z\_}' 'r:|?=** m:{a-z\-}={A-Z\_}'
 
-
-
-
-
-
-
-
-
-
-### Compinit initialize
-# completion cache gets cleared after some time
-
 bindkey -e
-autoload -U compinit
+autoload -Uz compinit
 if fttl ~/.zcompdump 24h; then
     rm ~/.zcompdump
 fi
 compinit -C
-
-
-
-
-
-
-### Plugin source
-# source plugins in correct order
 
 # fzf-tab needs to be loaded after compinit, but before plugins which will wrap widgets
 source ~/.zsh_plugins/fzf-tab/fzf-tab.plugin.zsh
@@ -162,13 +184,6 @@ source ~/.zsh_plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh
 source ~/.zsh_plugins/fzf/fzf.plugin.zsh
 
 
-
-
-
-
-### Ssh-agent
-# set up ssh-agent with some ttl
-
 ssh_env_file=~/.ssh/ssh_agent_env
 if ! pgrep -u "$USER" ssh-agent &>/dev/null; then
     source <(ssh-agent -t 1d | tee "$ssh_env_file")
@@ -178,33 +193,16 @@ else
 fi
 
 
-
-
-
-
-
-
-### Binds
-# set up some custom binds
-
 bindkey "^[[1;5C" vi-forward-word
 bindkey "^[[1;5D" vi-backward-word
 
-autoload -z edit-command-line
+autoload -Uz edit-command-line
 zle -N edit-command-line
 bindkey "^X^E" edit-command-line
 
 # bind ctrl+space to accept suggestion
 bindkey '^ ' autosuggest-accept
 
-
-
-
-
-
-
-### History
-# zsh history options
 
 setopt HIST_IGNORE_SPACE
 setopt HIST_FCNTL_LOCK
@@ -217,16 +215,8 @@ setopt HIST_SAVE_NO_DUPS
 HISTFILE=~/.zsh_history
 HISTSIZE=1000000
 SAVEHIST=1000000
-
 KEYTIMEOUT=100
 
-
-
-
-
-
-### Aliases
-# setup some aliases
 
 alias ls="eza --icons -a --group-directories-first"
 alias ll="ls --long --all"
@@ -234,42 +224,22 @@ alias ..="cd .."
 alias grep="grep --color=auto"
 
 
-
-
-
-
-
-### Shell integrated utils
-# shell integration with various utils
-
 if command_exists zoxide; then
     # as I'm using zoxide with tmux, increase zoxide size
     export _ZO_MAXAGE=50000
     source <(zoxide init zsh)
 fi
-if command_exists starship; then
-    source <(starship init zsh)
-fi
 
 
-
-
-
-
-
-
-### Helper functions
-# some helpful interactive shell utils
-
-function cheatsh() {
+function cheatsh {
     curl -s "cheat.sh/$1" | less -R
 }
 
-function cdmktemp() {
+function cdmktemp {
     cd "$(mktemp -d)"
 }
 
-function cdroot() {
+function cdroot {
     if [[ ! "$1" ]]; then
         echo "provide target"
         return 1
@@ -277,19 +247,19 @@ function cdroot() {
     cd "$(froot "$1")"
 }
 
-function killp() {
+function killp {
     lsof -i:$1 | tail -n +2 | awk '{print $2}' | xargs -r kill
 }
 
-function killj() {
+function killj {
     kill %${(k)^jobstates}
 }
 
-function smux() {
+function smux {
     ~/.config/tmux/scripts/upsert_session.sh "$@"
 }
 
-function wfiles() {
+function wfiles {
     local flags=""
     case "$1" in
         "r")
@@ -325,17 +295,17 @@ function wfiles() {
     done
 }
 
-function _git_commit_message_from_branch() {
+function _git_commit_message_from_branch {
     zle -U "$(git branch --show-current | sed 's/\//: /g ; s/_/ /g')"
 }
 zle -N _git_commit_message_from_branch
 bindkey "^gm" _git_commit_message_from_branch
 
-function cpcmd() {
+function cpcmd {
     history | tail -n 1 | fextr 2 0 | sed 's/\\n/\n/g' | copy
 }
 
-function cpcmdout() {
+function cpcmdout {
     tmux copy-mode
     tmux send -X previous-prompt
     tmux send -X begin-selection
@@ -343,24 +313,17 @@ function cpcmdout() {
     tmux send -X copy-selection-and-cancel
 }
 
-function showmem() {
+function showmem {
     ps -o rss,command -p "$1" | tail -1 | awk '{printf $1/1024 " MiB\t"; $1=""; print $0}'
 }
 
-function tmpvar() {
+function tmpvar {
     tmp="$(mktemp)"
     echo "$tmp"
 }
 
 
-
-
-
-
-
-### Custom setup
-# based on system currently running
-
+# custom setup
 if [[ -e ~/.zshrc.private ]]; then
     source ~/.zshrc.private
 fi
