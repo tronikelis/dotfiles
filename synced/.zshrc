@@ -99,6 +99,9 @@ function precmd_set_git {
     if [[ "$(git config --bool bash.promptShowUntrackedFiles)" == "false" ]]; then
         unset GIT_PS1_SHOWUNTRACKEDFILES
     fi
+    if [[ "$(git config --bool bash.promptShowDirtyState)" == "false" ]]; then
+        unset GIT_PS1_SHOWDIRTYSTATE
+    fi
     prompt_git="$(__git_ps1 2>/dev/null)"
 }
 add-zsh-hook precmd precmd_set_git
