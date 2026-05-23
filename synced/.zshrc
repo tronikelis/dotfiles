@@ -89,13 +89,16 @@ if [[ -e ~/.config/git/scripts/git-prompt.sh ]]; then
     source ~/.config/git/scripts/git-prompt.sh
 fi
 
-GIT_PS1_SHOWDIRTYSTATE=1
-GIT_PS1_SHOWSTASHSTATE=1
-GIT_PS1_SHOWUNTRACKEDFILES=1
-GIT_PS1_SHOWUPSTREAM="auto"
-GIT_PS1_SHOWCONFLICTSTATE=yes
-GIT_PS1_SHOWCOLORHINTS=1
 function precmd_set_git {
+    GIT_PS1_SHOWDIRTYSTATE=1
+    GIT_PS1_SHOWSTASHSTATE=1
+    GIT_PS1_SHOWUNTRACKEDFILES=1
+    GIT_PS1_SHOWUPSTREAM="auto"
+    GIT_PS1_SHOWCONFLICTSTATE=yes
+    GIT_PS1_SHOWCOLORHINTS=1
+    if [[ "$(git config --bool bash.promptShowUntrackedFiles)" == "false" ]]; then
+        unset GIT_PS1_SHOWUNTRACKEDFILES
+    fi
     prompt_git="$(__git_ps1 2>/dev/null)"
 }
 add-zsh-hook precmd precmd_set_git
