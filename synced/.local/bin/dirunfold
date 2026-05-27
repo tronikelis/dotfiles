@@ -8,14 +8,17 @@ if [[ ! -d "$1" ]]; then
     exit 1
 fi
 
+cd "$(dirname "$1")"
+dir="$(basename "$1")"
+
 while true; do
     random_id="$RANDOM"
-    if [[ ! -e "$1/$random_id" && ! -e "$random_id" ]]; then
+    if [[ ! -e "$dir/$random_id" && ! -e "$random_id" ]]; then
         break
     fi
 done
 
-mv "$1" "$random_id"
+mv "$dir" "$random_id"
 
 mv "$random_id"/* ./
 rmdir "$random_id"
