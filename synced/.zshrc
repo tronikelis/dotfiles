@@ -142,17 +142,38 @@ function precmd_set_caret {
     local exit_status="$?"
     prompt_caret=">"
     if [[ "$exit_status" != 0 && "$exit_status" != 130 ]]; then
-        prompt_caret="%F{#f38ba8}<%f"
+        prompt_caret="%F{red}<%f"
     fi
 }
 add-zsh-hook precmd precmd_set_caret
 
+function precmd_command_time {
+    prompt_command_time=""
+    if [[ "$prev_command_time" ]]; then
+        prompt_command_time="$(($(date +%s)-$prev_command_time))"
+        prompt_command_time="$(($prompt_command_time/60))"
+        if [[ "$prompt_command_time" == 0 ]]; then
+            prompt_command_time=""
+        else
+            prompt_command_time=" took %F{yellow}%B${prompt_command_time}m%b%f"
+        fi
+        prev_command_time=""
+    fi
+}
+add-zsh-hook precmd precmd_command_time
+
+function preexec_command_time {
+    prev_command_time="$(date +%s)"
+}
+add-zsh-hook preexec preexec_command_time
+
 prompt_newline=$'\n'
-PS1='%F{#b4befe}${prompt_directory//[%]/%%}%f\
+PS1='%F{blue}${prompt_directory//[%]/%%}%f\
 %B${prompt_git}%b\
+${prompt_command_time}\
 ${prompt_newline//[%]/%%}\
-%F{#eba0ac}%B${prompt_jobs//[%]/%%}%b%f\
-%F{#89dceb}%B${prompt_caret}%b%f '
+%F{red}%B${prompt_jobs//[%]/%%}%b%f\
+%F{cyan}%B${prompt_caret}%b%f '
 
 
 ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=50
