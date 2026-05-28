@@ -19,6 +19,7 @@ local function cmd_preview(ev, ns, buf)
 
     return require("utils").inc_command_diff_preview(ev, ns, buf, {
         "substitute",
+        "normal",
     })
 end
 

@@ -43,7 +43,15 @@ function M.inc_command_diff_preview(ev, ns, buf, whitelist)
 
     local new_lines = vim.api.nvim_buf_get_lines(0, 0, -1, true)
 
-    local diff = vim.text.diff(table.concat(old_lines, "\n"), table.concat(new_lines, "\n"))
+    local old_lines_str = table.concat(old_lines, "\n")
+    local new_lines_str = table.concat(new_lines, "\n")
+
+    local diff_indices = vim.text.diff(old_lines_str, new_lines_str, { result_type = "indices" })
+    for _, indices in ipairs(diff_indices) do
+        vim.hl.range(0, ns, "Substitute", { indices[3] - 1, 0 }, { indices[3] + indices[4] - 1, 0 })
+    end
+
+    local diff = vim.text.diff(old_lines_str, new_lines_str)
     vim.api.nvim_buf_set_lines(buf, 0, -1, true, vim.split(diff, "\n"))
 
     return 2
