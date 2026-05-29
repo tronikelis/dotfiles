@@ -1,12 +1,5 @@
 local augroup = vim.api.nvim_create_augroup("plugin/_pack_conform.lua", {})
 
-vim.api.nvim_create_autocmd("VimLeavePre", {
-    group = augroup,
-    callback = function()
-        vim.fn.jobstart("killall prettierd eslint_d", { detach = true })
-    end,
-})
-
 local function format_async(args)
     local range = nil
 
@@ -60,27 +53,8 @@ end, {
     end,
 })
 
-local function biome_or_prettier(buf)
-    if vim.fs.root(buf, { { "biome.json", "biome.jsonc" } }) then
-        return { "biome" }
-    end
-
-    return { "prettierd" }
-end
-
 require("conform").setup({
     formatters_by_ft = {
-        html = { "prettierd" },
-
-        css = biome_or_prettier,
-        scss = biome_or_prettier,
-        javascript = biome_or_prettier,
-        javascriptreact = biome_or_prettier,
-        json = biome_or_prettier,
-        jsonc = biome_or_prettier,
-        typescript = biome_or_prettier,
-        typescriptreact = biome_or_prettier,
-
         gdscript = { "gdformat" },
         lua = { "stylua" },
         templ = { name = "templ" },
