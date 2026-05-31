@@ -88,7 +88,7 @@
       "src": "https://github.com/tronikelis/sstash.nvim"
     },
     "ts-autotag.nvim": {
-      "rev": "35f79f6253dff5cc43cf943d74c4b2734370a81d",
+      "rev": "07bcd146fa22558adf0d900e4a2601b6d142c805",
       "src": "https://github.com/tronikelis/ts-autotag.nvim"
     },
     "ts-comments.nvim": {
