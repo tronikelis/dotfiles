@@ -213,9 +213,6 @@ vim.keymap.set("n", "<leader>oo", function()
         winopts = {
             title = "Oil",
         },
-        fn_transform = function(x)
-            return require("fzf-lua").utils.ansi_codes.magenta(x)
-        end,
         preview = "ls -LCp --color=always {}",
         actions = {
             default = function(item)
