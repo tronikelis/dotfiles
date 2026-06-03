@@ -192,8 +192,8 @@ end, { range = true })
 
 vim.api.nvim_create_user_command("BreakChar", function(ev)
     local prefix = string.format("%d,%d", ev.line1, ev.line2)
-    local escaped = vim.fn.escape(ev.fargs[1] or "", "\\")
-    vim.cmd(prefix .. [[s/\V]] .. escaped .. [[/]] .. escaped .. [[\r/ge]])
+    local arg = ev.fargs[1] or ""
+    vim.cmd(prefix .. [[s/\V]] .. arg .. [[/]] .. arg .. [[\r/ge]])
     vim.cmd("nohlsearch")
 end, {
     range = true,
