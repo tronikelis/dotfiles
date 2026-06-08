@@ -322,6 +322,7 @@ function wfiles {
     done
 }
 
+# https://sumnerevans.com/posts/software-engineering/stop-using-conventional-commits/
 # branch format: <scope>#<word>_<word>
 function _git_commit_message_from_branch {
     zle -U "$(git branch --show-current | sed 's/#/: /g ; s/_/ /g')"
