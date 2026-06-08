@@ -322,8 +322,9 @@ function wfiles {
     done
 }
 
+# branch format: <scope>#<word>_<word>
 function _git_commit_message_from_branch {
-    zle -U "$(git branch --show-current | sed 's/\//: /g ; s/_/ /g')"
+    zle -U "$(git branch --show-current | sed 's/#/: /g ; s/_/ /g')"
 }
 zle -N _git_commit_message_from_branch
 bindkey "^gm" _git_commit_message_from_branch
