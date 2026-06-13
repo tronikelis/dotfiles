@@ -16,38 +16,19 @@ function setup_locale {
 	sudo locale-gen
 }
 
-function setup_yay {
-	if ! is_executable yay; then
-		sudo pacman -S --needed git base-devel
-		git clone https://aur.archlinux.org/yay.git
-		cd yay
+function setup_paru {
+	if ! is_executable paru; then
+		sudo pacman -S --needed base-devel
+		git clone https://aur.archlinux.org/paru.git
+		cd paru
 		makepkg -si
-
-		yay -Y --gendb
-		yay -Y --devel --save
+		paru --gendb
 	fi
 }
 
 function setup_pacman_configs {
 	sudo sed -i 's/#Color/Color/' /etc/pacman.conf
 	sudo sed -i 's/ debug / !debug /' /etc/makepkg.conf
-}
-
-function setup_chaoticaur {
-	sudo pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com
-	sudo pacman-key --lsign-key 3056513887B78AEB
-
-	sudo pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst'
-	sudo pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst'
-
-	if ! grep "chaotic-aur" /etc/pacman.conf &>/dev/null; then
-sudo tee -a /etc/pacman.conf << EOF
-[chaotic-aur]
-Include = /etc/pacman.d/chaotic-mirrorlist
-EOF
-	fi
-
-	sudo pacman -Syu
 }
 
 function setup_packages {
@@ -58,7 +39,6 @@ function setup_packages {
 		"rate-mirrors"
 		"pacman-contrib"
 		"neovim"
-		"chaotic-aur/zen-browser-bin"
 		"ufw"
 		"less"
 		"git"
@@ -79,12 +59,11 @@ function setup_packages {
 		"unzip"
 		"go"
 		"vivid"
-		"chaotic-aur/vesktop"
 		"wl-clipboard"
 		"mpv"
 		"gwenview"
 	)
-	yay -S "${packages[@]}" --noconfirm
+	paru -S "${packages[@]}"
 
 	# docker setup
 	sudo systemctl start docker
@@ -206,10 +185,9 @@ EOF
 	fi
 }
 
-setup_chaoticaur
 setup_pacman_configs
 setup_locale
-setup_yay
+setup_paru
 setup_gitconfig
 
 setup_packages
