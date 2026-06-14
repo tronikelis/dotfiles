@@ -79,7 +79,10 @@ vim.g.omni_sql_no_default_maps = true
 vim.g.zig_fmt_parse_errors = 0
 
 vim.opt.wrap = false
+
 vim.opt.matchpairs:append("<:>")
+vim.g.matchparen_timeout = 20
+vim.g.matchparen_insert_timeout = 20
 
 vim.opt.softtabstop = -1 -- use shiftwidth value
 vim.opt.shiftwidth = 4 -- number of spaces to << >>
