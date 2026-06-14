@@ -213,7 +213,7 @@ source ~/.zsh_plugins/fzf/fzf.plugin.zsh
 
 ssh_env_file=~/.ssh/ssh_agent_env
 if ! pgrep -u "$USER" ssh-agent &>/dev/null; then
-    source <(ssh-agent -t 1d | tee "$ssh_env_file")
+    source <(ssh-agent -t 4h | tee "$ssh_env_file")
     chmod 600 "$ssh_env_file"
 else
     { source "$ssh_env_file" } >/dev/null
