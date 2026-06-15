@@ -1,7 +1,7 @@
 {
   "plugins": {
     "blink-cmp-ctags": {
-      "rev": "d780c91b799ac16fa2e446139a5c75782b494ac2",
+      "rev": "cf757b0537383b16a124a8945bca8609ffeb9995",
       "src": "https://github.com/tronikelis/blink-cmp-ctags"
     },
     "blink.cmp": {
