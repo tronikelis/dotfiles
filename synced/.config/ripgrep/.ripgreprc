@@ -1,0 +1,4 @@
+# make it consistent with vim
+--smart-case
+# grep also does it
+--hidden

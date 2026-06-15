@@ -246,22 +246,32 @@ vim.api.nvim_create_autocmd("VimResized", {
     command = "wincmd =",
 })
 
--- custom filetypes
-
-vim.filetype.add({
-    pattern = {
-        [".*/hypr/.*%.conf"] = "hyprlang",
-        [".*/%.config/git/.*%.config"] = "gitconfig",
-        ["Dockerfile.*"] = "dockerfile",
-        ["%.env%..*"] = "sh",
-    },
-    extension = {
-        avsc = "json",
-        avdl = "avro-idl",
-        sd = "sd",
-        yql = "yql",
-    },
-})
+-- filetype detect
+do
+    local function maybe_sh(_, bufnr)
+        local content = vim.api.nvim_buf_get_lines(bufnr, 0, 100, false)
+        for _, v in ipairs(content) do
+            if v:find("^export%s+[%w_]+=") then
+                return "sh"
+            end
+        end
+    end
+    vim.filetype.add({
+        filename = {
+            [".env"] = maybe_sh,
+        },
+        pattern = {
+            [".*/%.config/git/[^/]*%.config"] = "gitconfig",
+            [".*/%.env%.[^/]*"] = { maybe_sh, { priority = 10 } },
+        },
+        extension = {
+            avsc = "json",
+            avdl = "avro-idl",
+            sd = "sd",
+            yql = "yql",
+        },
+    })
+end
 
 -- tree sitter highlighting has priority over semantic tokens
 if vim.hl.priorities.semantic_tokens > vim.hl.priorities.treesitter then

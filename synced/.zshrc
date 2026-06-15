@@ -82,6 +82,7 @@ export FZF_CTRL_R_OPTS="
   --color header:italic
   --header 'Press CTRL-Y to copy command into clipboard'"
 
+export RIPGREP_CONFIG_PATH=~/.config/ripgrep/.ripgreprc
 
 setopt PROMPT_SUBST
 
