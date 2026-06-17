@@ -16,13 +16,15 @@ function setup_locale {
 	sudo locale-gen
 }
 
-function setup_paru {
-	if ! is_executable paru; then
-		sudo pacman -S --needed base-devel
-		git clone https://aur.archlinux.org/paru.git
-		cd paru
+function setup_yay {
+	if ! is_executable yay; then
+		sudo pacman -S --needed git base-devel
+		git clone https://aur.archlinux.org/yay.git
+		cd yay
 		makepkg -si
-		paru --gendb
+
+		yay -Y --gendb
+		yay -Y --devel --save
 	fi
 }
 
@@ -63,7 +65,7 @@ function setup_packages {
 		"mpv"
 		"gwenview"
 	)
-	paru -S "${packages[@]}"
+	yay -S "${packages[@]}" --noconfirm
 
 	# docker setup
 	sudo systemctl start docker
@@ -187,7 +189,7 @@ EOF
 
 setup_pacman_configs
 setup_locale
-setup_paru
+setup_yay
 setup_gitconfig
 
 setup_packages
