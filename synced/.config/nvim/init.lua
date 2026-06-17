@@ -52,7 +52,6 @@ vim.pack.add({
     "https://github.com/tronikelis/conflict-marker.nvim",
     "https://github.com/tronikelis/gitdive.nvim",
     "https://github.com/tronikelis/indent-textobject.nvim",
-    "https://github.com/tronikelis/sstash.nvim",
     "https://github.com/tronikelis/ts-autotag.nvim",
     "https://github.com/tronikelis/xylene.nvim",
     { src = "https://github.com/catppuccin/nvim", version = "v1.11.0", name = "catppuccin-nvim" },

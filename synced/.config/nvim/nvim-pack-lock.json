@@ -83,10 +83,6 @@
       "rev": "0fcc83805ad11cf714a949c98c605ed717e0b83e",
       "src": "https://github.com/stevearc/oil.nvim"
     },
-    "sstash.nvim": {
-      "rev": "097abddd157088561fc3c7974a61e0d6ea85b417",
-      "src": "https://github.com/tronikelis/sstash.nvim"
-    },
     "ts-autotag.nvim": {
       "rev": "b1d0dd4fe5e63e9a744595bdfd41b74c3dea2e88",
       "src": "https://github.com/tronikelis/ts-autotag.nvim"
