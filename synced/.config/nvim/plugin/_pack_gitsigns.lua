@@ -8,25 +8,11 @@ require("gitsigns").setup({
         virt_text_priority = (2 ^ 16) - 1,
     },
     on_attach = function(bufnr)
-        local gitsigns = require("gitsigns")
         local opts = { buffer = bufnr }
 
-        vim.keymap.set("n", "<leader>hp", gitsigns.preview_hunk, opts)
-        vim.keymap.set("n", "<leader>hr", gitsigns.reset_hunk, opts)
-
-        vim.keymap.set("n", "<leader>hb", function()
-            gitsigns.blame_line()
-        end, opts)
-        vim.keymap.set("n", "<leader>hB", function()
-            gitsigns.blame_line({ full = true })
-        end, opts)
-
-        vim.keymap.set("n", "[h", function()
-            gitsigns.nav_hunk("prev", { target = "all", count = vim.v.count1, wrap = false, preview = true })
-        end, opts)
-
-        vim.keymap.set("n", "]h", function()
-            gitsigns.nav_hunk("next", { target = "all", count = vim.v.count1, wrap = false, preview = true })
-        end, opts)
+        vim.keymap.set("n", "<leader>hp", "<cmd>Gitsigns preview_hunk<cr>", opts)
+        vim.keymap.set("n", "<leader>hr", "<cmd>Gitsigns reset_hunk<cr>", opts)
+        vim.keymap.set("n", "[h", "<cmd>Gitsigns nav_hunk prev<cr>", opts)
+        vim.keymap.set("n", "]h", "<cmd>Gitsigns nav_hunk next<cr>", opts)
     end,
 })
