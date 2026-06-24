@@ -10,7 +10,7 @@
       "version": "'v1.10.2'"
     },
     "caser.nvim": {
-      "rev": "1e8c5e28ec5bc02015ab56beb95480d905bf5007",
+      "rev": "ac542ea5ce4dd2a64f3e56a598f6f834bc47a6f4",
       "src": "https://github.com/tronikelis/caser.nvim"
     },
     "catppuccin-nvim": {
@@ -19,7 +19,7 @@
       "version": "'v1.11.0'"
     },
     "conflict-marker.nvim": {
-      "rev": "42fedfdfaad7163570366744f3ed202cedc6e70e",
+      "rev": "5d3e2c52eef66e795938bd6da7fe2b30db6d4bd6",
       "src": "https://github.com/tronikelis/conflict-marker.nvim"
     },
     "conform.nvim": {
@@ -43,7 +43,7 @@
       "src": "https://github.com/NMAC427/guess-indent.nvim"
     },
     "indent-textobject.nvim": {
-      "rev": "230ff5f1c9cd760ba3ef140cef93b5d0b5cb5968",
+      "rev": "55295b1a89235beeb28084f9bbbb9b9693436737",
       "src": "https://github.com/tronikelis/indent-textobject.nvim"
     },
     "lazydev.nvim": {
