@@ -246,7 +246,7 @@ local function navigate_to_first_git_hunk(file, fargs_joined, cwd)
     local stdout = vim.trim(out.stdout)
     local line = stdout:match("%+(%d+)")
     if line then
-        vim.cmd(string.format("keepjumps normal! %dG", line))
+        vim.cmd(string.format("normal! %dG", line))
     end
 end
 
