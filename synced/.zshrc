@@ -64,7 +64,7 @@ export FZF_DEFAULT_OPTS=" \
 --bind 'ctrl-y:execute-silent(echo -n {} | copy)+abort' \
 --bind 'ctrl-left:backward-word' \
 --bind 'ctrl-right:forward-word' \
---bind ctrl-k:top"
+--bind ctrl-k:kill-line"
 
 # Preview file content using bat (https://github.com/sharkdp/bat)
 export FZF_CTRL_T_OPTS="
@@ -223,6 +223,7 @@ fi
 
 bindkey "^[[1;5C" vi-forward-word
 bindkey "^[[1;5D" vi-backward-word
+bindkey \^U backward-kill-line
 
 autoload -Uz edit-command-line
 zle -N edit-command-line
