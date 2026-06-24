@@ -43,7 +43,7 @@
       "src": "https://github.com/NMAC427/guess-indent.nvim"
     },
     "indent-textobject.nvim": {
-      "rev": "55295b1a89235beeb28084f9bbbb9b9693436737",
+      "rev": "355fc317c7bf4cb66fc251b2cbeb2e817bda5e0e",
       "src": "https://github.com/tronikelis/indent-textobject.nvim"
     },
     "lazydev.nvim": {
