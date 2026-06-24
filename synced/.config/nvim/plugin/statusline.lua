@@ -137,13 +137,12 @@ local function get_git_status()
 end
 
 function cmp.git()
-    run_git_status()
-
-    local symbol = " "
-
     if not vim.b.gitsigns_status_dict then
         return ""
     end
+    run_git_status()
+
+    local symbol = " "
 
     local prompt = get_hl_pattern(
         "Conditional",
