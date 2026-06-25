@@ -10,7 +10,7 @@
       "version": "'v1.10.2'"
     },
     "caser.nvim": {
-      "rev": "ac542ea5ce4dd2a64f3e56a598f6f834bc47a6f4",
+      "rev": "30abafbf676a29421ec2c02403bbf08cf53b24de",
       "src": "https://github.com/tronikelis/caser.nvim"
     },
     "catppuccin-nvim": {
@@ -19,7 +19,7 @@
       "version": "'v1.11.0'"
     },
     "conflict-marker.nvim": {
-      "rev": "5d3e2c52eef66e795938bd6da7fe2b30db6d4bd6",
+      "rev": "43de41e9db407d6594310b0af219e673a15b1eb7",
       "src": "https://github.com/tronikelis/conflict-marker.nvim"
     },
     "conform.nvim": {
@@ -31,7 +31,7 @@
       "src": "https://github.com/ibhagwan/fzf-lua"
     },
     "gitdive.nvim": {
-      "rev": "62ad457a2e3cc09f78d628b248963841d6f0a086",
+      "rev": "3e37e8c7ee965878ac333ef070d7e66eef6efb01",
       "src": "https://github.com/tronikelis/gitdive.nvim"
     },
     "gitsigns.nvim": {
@@ -84,7 +84,7 @@
       "src": "https://github.com/stevearc/oil.nvim"
     },
     "ts-autotag.nvim": {
-      "rev": "b1d0dd4fe5e63e9a744595bdfd41b74c3dea2e88",
+      "rev": "6178353d9003e91eb053d69cf9a4d72e28137daa",
       "src": "https://github.com/tronikelis/ts-autotag.nvim"
     },
     "ts-comments.nvim": {
@@ -92,7 +92,7 @@
       "src": "https://github.com/folke/ts-comments.nvim"
     },
     "xylene.nvim": {
-      "rev": "5ba4041f682f976811e149245f0f11fca48fd048",
+      "rev": "cc1bca34c7b4cb7b8bd9d5e596db7b669f1882b9",
       "src": "https://github.com/tronikelis/xylene.nvim"
     }
   }
