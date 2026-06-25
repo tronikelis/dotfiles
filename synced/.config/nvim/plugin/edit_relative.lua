@@ -1,7 +1,4 @@
-require("utils").assert_notify(
-    vim.fn.executable("fzf") == 1 and vim.fn.executable("fd") == 1,
-    ":E command requires fzf and fd"
-)
+require("utils").assert_notify(vim.fn.executable("fd") == 1, ":E command requires fd", vim.log.levels.INFO)
 
 local function get_cwd()
     if vim.bo.filetype == "oil" then
@@ -21,17 +18,11 @@ local function accept(arg)
 end
 
 local function complete(query)
-    query = query or ""
-
-    local out = vim.system({
-        "bash",
-        "-c",
-        string.format(
-            [[fd -t f --strip-cwd-prefix=always --hidden | fzf -f %s | head -n 100]],
-            vim.fn.shellescape(query)
-        ),
-    }, { text = true, cwd = get_cwd() }):wait()
-
+    local out = vim.system(
+        { "fd", "--type", "f", "--hidden", "--full-path", "--max-results", "100", query },
+        { text = true, cwd = get_cwd() }
+    ):wait()
+    require("utils").assert_notify(out.code == 0, "fd command failed")
     return vim.split(out.stdout or "", "\n", { trimempty = true })
 end
 
