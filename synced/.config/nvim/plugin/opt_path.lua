@@ -11,7 +11,6 @@ function FindFunc(arg)
     return vim.split(out.stdout or "", "\n", { trimempty = true })
 end
 
-vim.opt.path:append("**")
 if has_fd then
     vim.opt.findfunc = "v:lua.FindFunc"
 end
