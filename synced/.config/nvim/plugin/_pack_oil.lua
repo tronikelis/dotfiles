@@ -1,9 +1,10 @@
-local augroup = vim.api.nvim_create_augroup("plugin/_pack_oil.lua", {})
-
-local oil = require("oil")
-
-oil.setup({
+require("oil").setup({
     use_default_keymaps = false,
+    keymaps = {
+        ["<cr>"] = { "actions.select", mode = "n" },
+        ["-"] = { "actions.parent", mode = "n" },
+        ["<c-c>"] = { "actions.close", mode = "n" },
+    },
     view_options = {
         show_hidden = true,
         is_always_hidden = function(name)
@@ -13,23 +14,9 @@ oil.setup({
     watch_for_changes = true,
 })
 
-local actions = require("oil.actions")
-
-vim.api.nvim_create_autocmd("FileType", {
-    group = augroup,
-    pattern = "oil",
-    callback = function(ev)
-        local opts = {
-            buffer = ev.buf,
-        }
-
-        vim.keymap.set("n", "<Cr>", actions.select.callback, opts)
-        vim.keymap.set("n", "-", actions.parent.callback, opts)
-        vim.keymap.set("n", "<c-c>", actions.close.callback, opts)
-    end,
-})
-
-vim.keymap.set("n", "-", oil.open)
+vim.keymap.set("n", "-", function()
+    require("oil").open()
+end)
 vim.keymap.set("n", "<leader>-", function()
-    oil.open(vim.fn.getcwd())
+    require("oil").open(vim.fn.getcwd())
 end)
