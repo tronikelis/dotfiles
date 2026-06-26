@@ -74,15 +74,13 @@ local function cwd_child()
     return wd
 end
 
-local actions = require("fzf-lua").actions
-
 require("fzf-lua").setup({
     "telescope",
-    fzf_opts = { ["--layout"] = "reverse" },
+    fzf_colors = true,
+    fzf_opts = { ["--layout"] = "reverse", ["--cycle"] = true },
     actions = {
         files = {
-            ["ctrl-s"] = actions.file_split,
-            ["ctrl-v"] = actions.file_vsplit,
+            true,
             ["ctrl-i"] = action_motion_edit,
         },
     },
@@ -100,7 +98,6 @@ require("fzf-lua").setup({
         cwd_only = true,
     },
 })
-
 require("fzf-lua").register_ui_select()
 
 ---@param mappings [string?, string?]
