@@ -1,0 +1,6 @@
+#env
+LESS = --mouse -i
+
+#command
+/ forw-search ^W
+? back-search ^W
