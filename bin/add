@@ -3,15 +3,20 @@
 set -eo pipefail
 
 if [[ ! "$1" ]]; then
-    echo "provide target"
+    echo "provide target" >&2
     exit 1
 fi
 
-abs="$(pwd)/$1"
+if [[ ! -f "$1" ]]; then
+    echo "provide normal file" >&2
+    exit 1
+fi
+
+abs="$(resolvepath "$1")"
 relative="${abs#"$HOME"}"
 
-mkdir -p "$HOME/dotfiles/synced/$(dirname "$relative")"
-
-mv "$abs" "$HOME/dotfiles/synced/$(dirname "$relative")/$(basename "$1")"
+destdir="$HOME/dotfiles/synced/$(dirname "$relative")"
+mkdir -p "$destdir"
+mv "$abs" "$destdir"
 
 ~/dotfiles/bin/sync

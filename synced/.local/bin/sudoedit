@@ -2,38 +2,56 @@
 
 set -eu
 
-if [[ ! "${1-}" ]]; then
-    echo "provide filename"
-    exit 1
-fi
-
-if [[ ! -f "$1" ]]; then
-    echo "provide a normal file"
-    exit 1
-fi
-
-function atomic_move_without_permissions {
+function sudo_atomic_update {
     local dst="$1"
     local src="$2"
+    if [[ ! -e "$dst" ]]; then
+        sudo touch "$dst"
+    fi
 
-    local dir="$(sudo mktemp -d)"
-    sudo cp "$dst" "$dir"
-    local from="$dir/$(basename "$dst")"
+    local from="$(mktemp)"
+    sudo cp --preserve=all "$dst" "$from" # "from" now has correct permissions
 
     cat "$src" | sudo tee "$from" >/dev/null
     sudo mv "$from" "$dst"
 }
 
-dir="$(mktemp -d)/$(dirname "$1")"
-dir="${dir%/.}"
+if [[ ! "${1-}" ]]; then
+    echo "provide filename" >&2
+    exit 1
+fi
+target="$1"
+
+if [[ -e "$target" && ! -f "$target" ]]; then
+    echo "provide a normal file" >&2
+    exit 1
+fi
+
+if [[ -e "$target" ]]; then
+    target="$(resolvepath "$target")"
+else
+    # if inlined, script skips errors
+    dir="$(resolvepath "$(dirname "$target")")"
+    target="$dir/$(basename "$target")"
+fi
+
+dir="$(mktemp -d)/$(dirname "$target")"
 mkdir -p "$dir"
 trap 'rm -r "$dir"' EXIT
 
-sudo cp "$1" "$dir"
-editable_file="$dir/$(basename "$1")"
-sudo chown "$(whoami)" "$editable_file"
+editable_file="$dir/$(basename "$target")"
+if [[ -e "$target" ]]; then
+    sudo cp "$target" "$editable_file"
+    sudo chown "$(whoami)" "$editable_file"
+fi
 "$VISUAL" "$editable_file"
 
-atomic_move_without_permissions "$1" "$editable_file"
+target_sha1="$(sudo cat "$target" 2>/dev/null | sha1sum)"
+editable_file_sha1="$(sudo cat "$editable_file" 2>/dev/null | sha1sum)"
 
-echo "written"
+if [[ "$target_sha1" == "$editable_file_sha1" ]]; then
+    echo "files don't differ, skipping"
+    exit 0
+fi
+
+sudo_atomic_update "$target" "$editable_file"

@@ -1,0 +1,22 @@
+#!/bin/bash
+
+set -eu
+
+if [[ ! "${1-}" ]]; then
+    echo "provide filename" >&2
+    exit 1
+fi
+
+if [[ ! -e "$1" ]]; then
+    echo "filename does not exist" >&2
+    exit 1
+fi
+
+if [[ -d "$1" ]]; then
+    cd "$1"
+    pwd
+    exit 0
+fi
+
+cd "$(dirname "$1")"
+echo "$(pwd)/$(basename "$1")"
