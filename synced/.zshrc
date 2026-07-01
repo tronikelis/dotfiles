@@ -45,6 +45,7 @@ export EDITOR=nvim
 export VISUAL="$EDITOR"
 export COREPACK_ENABLE_AUTO_PIN=0
 export PAGER="less"
+export LESS="--mouse -i"
 
 if command_exists vivid; then
     export LS_COLORS="$(vivid generate catppuccin-mocha)"
