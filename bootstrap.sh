@@ -109,7 +109,7 @@ Description=Xremap
 
 [Service]
 Type=simple
-ExecStart=/usr/bin/xremap /etc/xremap.yml
+ExecStart=/usr/bin/xremap --watch /etc/xremap.yml
 Restart=always
 IPAddressDeny=any
 
