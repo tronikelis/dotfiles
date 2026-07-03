@@ -1,4 +1,0 @@
-modmap:
-  - name: Global
-    remap:
-      CapsLock: Ctrl_L

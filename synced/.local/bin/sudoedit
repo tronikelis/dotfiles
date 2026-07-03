@@ -55,3 +55,4 @@ if [[ "$target_sha1" == "$editable_file_sha1" ]]; then
 fi
 
 sudo_atomic_update "$target" "$editable_file"
+echo "written"

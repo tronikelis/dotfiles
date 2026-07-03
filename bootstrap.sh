@@ -53,7 +53,7 @@ function setup_packages {
 		"tmux"
 		"stow"
 		"kitty"
-		"aur/xremap-kde-bin"
+		# "aur/xremap-kde-bin", install this manually
 		"zsh"
 		"eza"
 		"tree-sitter-cli"
@@ -109,8 +109,9 @@ Description=Xremap
 
 [Service]
 Type=simple
-ExecStart=$(which xremap) --watch $HOME/.config/xremap/config.yml
+ExecStart=/usr/bin/xremap /etc/xremap.yml
 Restart=always
+IPAddressDeny=any
 
 [Install]
 WantedBy=multi-user.target
