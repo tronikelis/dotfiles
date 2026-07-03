@@ -117,6 +117,13 @@ IPAddressDeny=any
 WantedBy=multi-user.target
 EOF
 
+sudo tee /etc/xremap.yml << EOF
+modmap:
+  - name: Global
+    remap:
+      CapsLock: Ctrl_L
+EOF
+
 	sudo systemctl start xremap
 	sudo systemctl enable xremap
 }
