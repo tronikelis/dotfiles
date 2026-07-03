@@ -154,11 +154,13 @@ function setup_ratemirrors {
 sudo tee /etc/systemd/system/ratemirrors.service << EOF
 [Unit]
 Description=rate-mirrors
+After=network-online.target
+Wants=network-online.target
 
 [Service]
 User=ratemirrors
 Type=oneshot
-ExecStart=$(which bash) -c 'set -euo pipefail; sleep 600; tmp="\$(rate-mirrors --protocol https arch)"; tee /etc/pacman.d/mirrorlist <<<"\$tmp"'
+ExecStart=$(which bash) -c 'set -euo pipefail; tmp="\$(rate-mirrors --protocol https arch)"; tee /etc/pacman.d/mirrorlist <<<"\$tmp"'
 
 [Install]
 WantedBy=multi-user.target
