@@ -1,0 +1,16 @@
+#!/bin/bash
+
+set -eu
+
+cd ~/dotfiles
+
+git pull
+bin/sync
+
+if [[ -z "$(git status --porcelain)" ]]; then
+    echo "OK: synced fully, git status clean"
+    exit 0
+else
+    echo "ERR: out of sync, git status dirty, this may be expected"
+    exit 1
+fi
