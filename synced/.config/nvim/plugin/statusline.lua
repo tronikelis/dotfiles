@@ -300,7 +300,7 @@ vim.api.nvim_create_autocmd("LspProgress", {
         lsp_status = vim.lsp.status()
     end,
 })
-vim.api.nvim_create_autocmd({ "LspProgress", "Progress" }, {
+vim.api.nvim_create_autocmd("LspProgress", {
     group = augroup,
     command = "redrawstatus!",
 })
