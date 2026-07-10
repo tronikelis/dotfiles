@@ -10,7 +10,7 @@ function sudo_atomic_update {
     fi
 
     local from="$(mktemp)"
-    sudo cp --preserve=all "$dst" "$from" # "from" now has correct permissions
+    sudo cp -p "$dst" "$from" # "from" now has correct permissions
 
     cat "$src" | sudo tee "$from" >/dev/null
     sudo mv "$from" "$dst"
