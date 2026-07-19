@@ -302,7 +302,9 @@ vim.api.nvim_create_autocmd("LspProgress", {
 })
 vim.api.nvim_create_autocmd("LspProgress", {
     group = augroup,
-    command = "redrawstatus!",
+    callback = vim.schedule_wrap(function()
+        vim.cmd("redrawstatus!")
+    end),
 })
 
 function cmp.progress()

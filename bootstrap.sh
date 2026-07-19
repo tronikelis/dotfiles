@@ -197,13 +197,26 @@ EOF
 	fi
 }
 
+function setup_networkmanager_configs {
+sudo tee /etc/NetworkManager/conf.d/privacy.conf << EOF
+[connection]
+ipv4.dhcp-send-hostname=no
+ipv6.dhcp-send-hostname=no
+ethernet.cloned-mac-address=random
+wifi.cloned-mac-address=random
+ipv6.ip6-privacy=2
+ipv6.addr-gen-mode=stable-privacy
+
+[device]
+wifi.scan-rand-mac-address=yes
+EOF
+}
+
 setup_pacman_configs
 setup_locale
 setup_yay
 setup_gitconfig
-
 setup_packages
-
 setup_tmux
 setup_paccache
 setup_firewall
@@ -212,3 +225,4 @@ setup_shell
 setup_xremap
 setup_ratemirrors
 setup_fonts
+setup_networkmanager_configs
