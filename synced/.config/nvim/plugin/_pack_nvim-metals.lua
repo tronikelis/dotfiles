@@ -9,6 +9,7 @@ vim.api.nvim_create_autocmd("FileType", {
             local config = _G.__nvim_metals_config
 
             config.init_options.statusBarProvider = "off"
+            config.capabilities = require("blink.cmp").get_lsp_capabilities()
         end
         require("metals").initialize_or_attach(_G.__nvim_metals_config)
     end,
