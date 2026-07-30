@@ -37,10 +37,13 @@ local format_cmds = {
 }
 
 vim.api.nvim_create_user_command("Format", function(args)
-    local cmd = format_cmds[args.fargs[1]]
-    if cmd then
-        cmd(args)
-        return
+    if args.fargs[1] then
+        local cmd = format_cmds[args.fargs[1]]
+        if cmd then
+            cmd(args)
+            return
+        end
+        error("unknown command")
     end
 
     format_async(args)

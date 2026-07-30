@@ -10,6 +10,8 @@ require("gitsigns").setup({
     on_attach = function(bufnr)
         local opts = { buffer = bufnr }
 
+        vim.keymap.set("n", "<leader>hb", "<cmd>Gitsigns blame_line<cr>", opts)
+        vim.keymap.set("n", "<leader>hB", "<cmd>Gitsigns blame_line full=true<cr>", opts)
         vim.keymap.set("n", "<leader>hp", "<cmd>Gitsigns preview_hunk<cr>", opts)
         vim.keymap.set("n", "<leader>hr", "<cmd>Gitsigns reset_hunk<cr>", opts)
         vim.keymap.set("n", "[h", "<cmd>Gitsigns nav_hunk prev<cr>", opts)
