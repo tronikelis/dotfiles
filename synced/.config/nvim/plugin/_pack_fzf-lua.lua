@@ -81,7 +81,7 @@ require("fzf-lua").setup({
     actions = {
         files = {
             true,
-            ["ctrl-i"] = action_motion_edit,
+            ["ctrl-space"] = action_motion_edit,
         },
     },
 

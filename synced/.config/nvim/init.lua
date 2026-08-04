@@ -134,8 +134,7 @@ vim.opt.termguicolors = true
 vim.opt.splitbelow = true
 vim.opt.splitright = true
 
--- enabled lsps
-for _, v in ipairs({
+vim.lsp.enable({
     "biome",
     "clangd",
     "dartls",
@@ -158,9 +157,7 @@ for _, v in ipairs({
     "vespa_ls",
     "yamlls",
     "zls",
-}) do
-    vim.lsp.enable(v)
-end
+})
 
 vim.opt.diffopt:append("algorithm:histogram")
 vim.opt.exrc = true
