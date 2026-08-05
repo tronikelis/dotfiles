@@ -2,15 +2,6 @@ diff --git a/synced/.config/git/scripts/git-prompt.sh b/synced/.config/git/scrip
 index 4dcf4df..a8efc93 100644
 --- a/synced/.config/git/scripts/git-prompt.sh
 +++ b/synced/.config/git/scripts/git-prompt.sh
-@@ -590,7 +590,7 @@ __git_ps1 ()
- 
- 	local conflict="" # state indicator for unresolved conflicts
- 	if [ "${GIT_PS1_SHOWCONFLICTSTATE-}" = "yes" ] &&
--	   [ "$(git ls-files --unmerged 2>/dev/null)" ]; then
-+	   [ "$(git diff --name-only --diff-filter=U --relative 2>/dev/null)" ]; then
- 		conflict="|CONFLICT"
- 	fi
- 
 @@ -627,7 +627,7 @@ __git_ps1 ()
  
  		if [ -n "${GIT_PS1_SHOWUNTRACKEDFILES-}" ] &&
