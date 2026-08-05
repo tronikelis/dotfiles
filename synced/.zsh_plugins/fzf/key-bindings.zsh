@@ -110,8 +110,14 @@ fzf-cd-widget() {
     zle redisplay
     return 0
   fi
+  # Use subshell expansion to get the absolute PWD of the target dir.
+  # This allows the recorded shell history to be reused even from a different
+  # working directory.
+  # If failed, fallback to the unexpanded path to surface the error to the user.
+  # NOTE: Don't use the `:a` modifier as it resolves symlinks like `pwd -P`.
+  dir=$(builtin cd -q >/dev/null -- "${dir}" && echo "${PWD}" || echo "${dir}")
   zle push-line # Clear buffer. Auto-restored on next prompt.
-  BUFFER="builtin cd -- ${(q)dir:a}"
+  BUFFER="builtin cd -- ${(q)dir}"
   zle accept-line
   local ret=$?
   unset dir # ensure this doesn't end up appearing in prompt expansion
@@ -134,11 +140,11 @@ fzf-history-widget() {
   # as the associative 'history' array, which maps event numbers to full history
   # lines, are set. Also, make sure Perl is installed for multi-line output.
   if zmodload -F zsh/parameter p:{commands,history} 2>/dev/null && (( ${+commands[perl]} )); then
+    extracted_with_perl=1
     selected="$(printf '%s\t%s\000' "${(kv)history[@]}" |
       perl -0 -ne 'if (!$seen{(/^\s*[0-9]+\**\t(.*)/s, $1)}++) { s/\n/\n\t/g; print; }' |
       FZF_DEFAULT_OPTS=$(__fzf_defaults "" "-n2..,.. --scheme=history --bind=ctrl-r:toggle-sort,alt-r:toggle-raw --wrap-sign '\t↳ ' --highlight-line --multi ${FZF_CTRL_R_OPTS-} --query=${(qqq)LBUFFER} --read0") \
       FZF_DEFAULT_OPTS_FILE='' $(__fzfcmd))"
-      extracted_with_perl=1
   else
     selected="$(fc -rl 1 | __fzf_exec_awk '{ cmd=$0; sub(/^[ \t]*[0-9]+\**[ \t]+/, "", cmd); if (!seen[cmd]++) print $0 }' |
       FZF_DEFAULT_OPTS=$(__fzf_defaults "" "-n2..,.. --scheme=history --bind=ctrl-r:toggle-sort,alt-r:toggle-raw --wrap-sign '\t↳ ' --highlight-line --multi ${FZF_CTRL_R_OPTS-} --query=${(qqq)LBUFFER}") \

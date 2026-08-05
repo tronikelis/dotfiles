@@ -590,7 +590,7 @@ __git_ps1 ()
 
 	local conflict="" # state indicator for unresolved conflicts
 	if [ "${GIT_PS1_SHOWCONFLICTSTATE-}" = "yes" ] &&
-	   [ "$(git ls-files --unmerged 2>/dev/null)" ]; then
+	   [ "$(git diff --name-only --diff-filter=U --relative 2>/dev/null)" ]; then
 		conflict="|CONFLICT"
 	fi
 
@@ -627,7 +627,7 @@ __git_ps1 ()
 
 		if [ -n "${GIT_PS1_SHOWUNTRACKEDFILES-}" ] &&
 		   [ "$(git config --bool bash.showUntrackedFiles)" != "false" ] &&
-		   git ls-files --others --exclude-standard --directory --no-empty-directory --error-unmatch -- ':/*' >/dev/null 2>/dev/null
+		   [ "$(git status --porcelain 2>/dev/null | grep '^??' | head -n 1)" ]
 		then
 			u="%${ZSH_VERSION+%}"
 		fi
