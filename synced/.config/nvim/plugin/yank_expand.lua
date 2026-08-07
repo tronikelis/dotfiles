@@ -6,8 +6,10 @@ vim.api.nvim_create_user_command("YankExpand", function(ev)
 
     local flag = ev.fargs[1] or "%"
     if flag:sub(1, 1) == "%" then
-        if ev.bang then
+        if not ev.bang then
             flag = string.format("%%:~:.%s", flag:sub(2))
+        else
+            flag = string.format("%%:p%s", flag:sub(2))
         end
     end
 
