@@ -198,7 +198,7 @@ EOF
 }
 
 function setup_networkmanager_configs {
-sudo tee /etc/NetworkManager/conf.d/privacy.conf << EOF
+sudo tee /etc/NetworkManager/conf.d/10-privacy.conf << EOF
 [connection]
 ipv4.dhcp-send-hostname=no
 ipv6.dhcp-send-hostname=no
