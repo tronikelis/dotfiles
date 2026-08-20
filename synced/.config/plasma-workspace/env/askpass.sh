@@ -4,5 +4,6 @@ function command_exists {
 
 if command_exists "ksshaskpass"; then
     export SSH_ASKPASS="ksshaskpass"
+    export SUDO_ASKPASS="$(command -v ksshaskpass)"
 fi
 
