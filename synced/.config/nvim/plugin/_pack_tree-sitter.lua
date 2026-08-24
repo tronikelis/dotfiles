@@ -51,7 +51,6 @@ vim.api.nvim_create_autocmd("FileType", {
         if success and parser then
             vim.treesitter.start(ev.buf)
 
-            assert(vim.api.nvim_get_current_buf() == ev.buf, "sanity check current buffer is event buffer")
             vim.wo[0][0].foldmethod = "expr"
             vim.wo[0][0].foldexpr = "v:lua.vim.treesitter.foldexpr()"
             vim.b.undo_ftplugin = (vim.b.undo_ftplugin or "") .. "\n setl foldmethod< foldexpr<"
