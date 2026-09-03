@@ -29,17 +29,15 @@ function strip_home_from_path {
     echo "$1"
 }
 
-add_to_path "$HOME/.local/bin"
+# third party tools have least priority
 add_to_path "/opt/homebrew/bin"
-add_to_path "$HOME/.bun/bin"
-
 if command_exists "go"; then
 	add_to_path "$(go env GOPATH)/bin"
 fi
 if [[ -e "$HOME/.cargo/env" ]]; then
 	source "$HOME/.cargo/env"
 fi
-
+add_to_path "$HOME/.local/bin"
 
 export EDITOR=nvim
 export VISUAL="$EDITOR"
