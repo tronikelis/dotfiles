@@ -1,25 +1,30 @@
 local augroup = vim.api.nvim_create_augroup("plugin/guess_indent.lua", {})
 
----@param print boolean?
-local function set_tabs(print)
-    vim.bo.expandtab = false
+---@param buf integer
+---@param print boolean
+local function set_tabs(buf, print)
+    vim.bo[buf].expandtab = false
     if print then
         vim.notify("Set tabs")
     end
 end
 
----@param print boolean?
+---@param buf integer
+---@param print boolean
 ---@param spaces integer
-local function set_spaces(print, spaces)
-    vim.bo.expandtab = true
-    vim.bo.shiftwidth = spaces
+local function set_spaces(buf, print, spaces)
+    vim.bo[buf].expandtab = true
+    vim.bo[buf].shiftwidth = spaces
     if print then
-        vim.notify(string.format("Set %d spaces", vim.bo.shiftwidth))
+        vim.notify(string.format("Set %d spaces", vim.bo[buf].shiftwidth))
     end
 end
 
+---@param buf integer
 ---@param print boolean?
-local function guess_indent(print)
+local function guess_indent(buf, print)
+    print = print or false
+
     local LINES_SIZE = 500
     local MAX_ITER = 100
 
@@ -33,7 +38,7 @@ local function guess_indent(print)
         end
         i = i + 1
 
-        local lines = vim.api.nvim_buf_get_lines(0, i * LINES_SIZE, (i + 1) * LINES_SIZE, false)
+        local lines = vim.api.nvim_buf_get_lines(buf, i * LINES_SIZE, (i + 1) * LINES_SIZE, false)
         if #lines == 0 then
             break
         end
@@ -79,15 +84,15 @@ local function guess_indent(print)
     end
 
     if spaces_count == 0 then
-        set_tabs(print)
+        set_tabs(buf, print)
         return
     end
 
     if spaces_count > tabs_stat then
-        set_spaces(print, picked_spaces)
+        set_spaces(buf, print, picked_spaces)
         return
     elseif tabs_stat > spaces_count then
-        set_tabs(print)
+        set_tabs(buf, print)
         return
     end
 
@@ -97,12 +102,15 @@ local function guess_indent(print)
 end
 
 vim.api.nvim_create_user_command("GuessIndent", function()
-    guess_indent(true)
+    guess_indent(0, true)
 end, {})
 
 vim.api.nvim_create_autocmd("BufReadPost", {
     group = augroup,
-    callback = function()
-        guess_indent()
+    callback = function(ev)
+        if vim.bo[ev.buf].buftype ~= "" then
+            return
+        end
+        guess_indent(ev.buf)
     end,
 })
