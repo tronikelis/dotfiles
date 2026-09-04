@@ -24,26 +24,61 @@ local function guess_indent(print)
         return
     end
 
-    local lines = vim.api.nvim_buf_get_lines(0, 0, 400, false)
+    local LINES_SIZE = 500
+    local MAX_ITER = 100
 
     local tabs_stat = 0
     local spaces_stat = {}
-    for _, line in ipairs(lines) do
-        local spaces = line:match("^([ ]+)%S")
-        local tabs = line:match("^([\t]+)%S")
-        if spaces ~= nil then
-            spaces_stat[#spaces] = (spaces_stat[#spaces] or 0) + 1
-        elseif tabs ~= nil then
-            tabs_stat = (tabs_stat or 0) + 1
+    local i = -1
+
+    while tabs_stat == 0 and #vim.tbl_keys(spaces_stat) == 0 do
+        if i == MAX_ITER then
+            break
+        end
+        i = i + 1
+
+        local lines = vim.api.nvim_buf_get_lines(0, i * LINES_SIZE, (i + 1) * LINES_SIZE, false)
+        if #lines == 0 then
+            break
+        end
+
+        for _, line in ipairs(lines) do
+            local spaces = line:match("^([ ]+)%S")
+            local tabs = line:match("^([\t]+)%S")
+            if spaces ~= nil then
+                spaces_stat[#spaces] = (spaces_stat[#spaces] or 0) + 1
+            elseif tabs ~= nil then
+                tabs_stat = (tabs_stat or 0) + 1
+            end
         end
     end
 
-    local smallest_spaces = 1073741824
+    if tabs_stat == 0 and #vim.tbl_keys(spaces_stat) == 0 then
+        if print then
+            vim.notify("Buffer does not have indentation")
+        end
+        return
+    end
+
+    local spaces_priority = {}
+    for spacesi, counti in pairs(spaces_stat) do
+        local priority = counti
+
+        for spacesj, countj in pairs(spaces_stat) do
+            if spacesj ~= spacesi and spacesj % spacesi == 0 then
+                priority = priority + countj
+            end
+        end
+
+        spaces_priority[spacesi] = priority
+    end
+
     local spaces_count = 0
-    for spaces, count in pairs(spaces_stat) do
-        if spaces < smallest_spaces then
-            smallest_spaces = spaces
+    local picked_spaces = 0
+    for spaces, count in pairs(spaces_priority) do
+        if count > spaces_count then
             spaces_count = count
+            picked_spaces = spaces
         end
     end
 
@@ -53,7 +88,7 @@ local function guess_indent(print)
     end
 
     if spaces_count > tabs_stat then
-        set_spaces(print, smallest_spaces)
+        set_spaces(print, picked_spaces)
         return
     elseif tabs_stat > spaces_count then
         set_tabs(print)
