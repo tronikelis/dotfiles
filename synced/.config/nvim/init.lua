@@ -34,7 +34,6 @@ require("pack").set_hooks({
 })
 
 vim.pack.add({
-    "https://github.com/NMAC427/guess-indent.nvim",
     "https://github.com/folke/lazydev.nvim",
     "https://github.com/folke/ts-comments.nvim",
     "https://github.com/ibhagwan/fzf-lua",

@@ -38,10 +38,6 @@
       "rev": "5be654f2232c10ddcad19c1607a67b6b4b78fc29",
       "src": "https://github.com/lewis6991/gitsigns.nvim"
     },
-    "guess-indent.nvim": {
-      "rev": "84a4987ff36798c2fc1169cbaff67960aed9776f",
-      "src": "https://github.com/NMAC427/guess-indent.nvim"
-    },
     "indent-textobject.nvim": {
       "rev": "355fc317c7bf4cb66fc251b2cbeb2e817bda5e0e",
       "src": "https://github.com/tronikelis/indent-textobject.nvim"
