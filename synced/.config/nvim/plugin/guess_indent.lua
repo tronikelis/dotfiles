@@ -20,10 +20,6 @@ end
 
 ---@param print boolean?
 local function guess_indent(print)
-    if vim.bo.buftype ~= "" then
-        return
-    end
-
     local LINES_SIZE = 500
     local MAX_ITER = 100
 
