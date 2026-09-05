@@ -26,7 +26,7 @@ local function guess_indent(buf, print)
     print = print or false
 
     local LINES_SIZE = 500
-    local MAX_ITER = 100
+    local MAX_ITER = 5
 
     local tabs_stat = 0
     local spaces_stat = {}
