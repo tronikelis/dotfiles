@@ -42,10 +42,6 @@
       "rev": "355fc317c7bf4cb66fc251b2cbeb2e817bda5e0e",
       "src": "https://github.com/tronikelis/indent-textobject.nvim"
     },
-    "lazydev.nvim": {
-      "rev": "ff2cbcba459b637ec3fd165a2be59b7bbaeedf0d",
-      "src": "https://github.com/folke/lazydev.nvim"
-    },
     "nvim-jdtls": {
       "rev": "6e9d953f0b82bccdb834cfde0e893f3119c22592",
       "src": "https://github.com/mfussenegger/nvim-jdtls"
@@ -82,10 +78,6 @@
     "ts-autotag.nvim": {
       "rev": "6178353d9003e91eb053d69cf9a4d72e28137daa",
       "src": "https://github.com/tronikelis/ts-autotag.nvim"
-    },
-    "ts-comments.nvim": {
-      "rev": "a59d6092213447450191122c9346f309161504cb",
-      "src": "https://github.com/folke/ts-comments.nvim"
     },
     "xylene.nvim": {
       "rev": "cc1bca34c7b4cb7b8bd9d5e596db7b669f1882b9",

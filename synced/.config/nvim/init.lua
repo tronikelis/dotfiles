@@ -34,8 +34,6 @@ require("pack").set_hooks({
 })
 
 vim.pack.add({
-    "https://github.com/folke/lazydev.nvim",
-    "https://github.com/folke/ts-comments.nvim",
     "https://github.com/ibhagwan/fzf-lua",
     "https://github.com/kylechui/nvim-surround",
     "https://github.com/lewis6991/gitsigns.nvim",
