@@ -169,6 +169,10 @@ vim.keymap.set("n", "<leader>ht", function()
     require("fzf-lua").helptags()
 end)
 
+vim.keymap.set("n", "<leader>ct", function()
+    require("fzf-lua").tags()
+end)
+
 vim.keymap.set("n", "<leader>qf", function()
     require("fzf-lua").quickfix()
 end)
