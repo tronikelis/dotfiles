@@ -1,0 +1,4 @@
+#!/bin/bash
+
+exec perl -MSocket -le 'print inet_ntoa inet_aton shift' "$1" 2>/dev/null
+
