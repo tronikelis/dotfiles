@@ -290,9 +290,22 @@ function cmp.tabpage_nr_non_empty()
 end
 
 local lsp_status = ""
+
+local function lsp_status_reset_timer()
+    local timer = _G.__lsp_status_reset_timer or assert(vim.uv.new_timer())
+    _G.__lsp_status_reset_timer = timer
+    return timer
+end
+local lsp_status_reset_ms = 1000 * 60 * 5
+lsp_status_reset_timer():start(lsp_status_reset_ms, lsp_status_reset_ms, function()
+    lsp_status = ""
+end)
+
 vim.api.nvim_create_autocmd("LspProgress", {
     group = augroup,
     callback = function(ev)
+        lsp_status_reset_timer():again()
+
         if vim.tbl_contains({ "end" }, ev.data.params.value.kind) then
             lsp_status = ""
             return
@@ -300,11 +313,26 @@ vim.api.nvim_create_autocmd("LspProgress", {
         lsp_status = vim.lsp.status()
     end,
 })
+
+local function lsp_progress_throttle_timer()
+    local timer = _G.__lsp_progress_throttle_timer or assert(vim.uv.new_timer())
+    _G.__lsp_progress_throttle_timer = timer
+    return timer
+end
+
 vim.api.nvim_create_autocmd("LspProgress", {
     group = augroup,
-    callback = vim.schedule_wrap(function()
-        vim.cmd("redrawstatus!")
-    end),
+    callback = function()
+        if not lsp_progress_throttle_timer():is_active() then
+            lsp_progress_throttle_timer():start(
+                100,
+                0,
+                vim.schedule_wrap(function()
+                    vim.cmd("redrawstatus!")
+                end)
+            )
+        end
+    end,
 })
 
 function cmp.progress()
