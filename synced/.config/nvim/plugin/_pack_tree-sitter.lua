@@ -3,7 +3,7 @@ local augroup = vim.api.nvim_create_augroup("plugin/_pack_tree-sitter.lua", {})
 require("treesitter-context").setup({
     enable = true,
     max_lines = 5,
-    multiline_threshold = 2,
+    multiline_threshold = 1,
     min_window_height = 25,
 })
 
