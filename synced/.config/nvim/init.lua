@@ -131,31 +131,6 @@ vim.opt.termguicolors = true
 vim.opt.splitbelow = true
 vim.opt.splitright = true
 
-vim.lsp.enable({
-    "biome",
-    "clangd",
-    "dartls",
-    "eslint",
-    "gdscript",
-    "gopls",
-    "html",
-    "jdtls",
-    "jsonls",
-    "lua_ls",
-    "marksman",
-    "pyright",
-    "rubocop",
-    "ruby_lsp",
-    "rust_analyzer",
-    "tailwindcss",
-    "taplo",
-    "templ",
-    "ts_ls",
-    "vespa_ls",
-    "yamlls",
-    "zls",
-})
-
 vim.opt.diffopt:append("algorithm:histogram")
 vim.opt.exrc = true
 
