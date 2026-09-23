@@ -71,7 +71,6 @@ function setup_packages {
 	sudo systemctl start docker
 	sudo systemctl enable docker
 	sudo groupadd docker &>/dev/null || true
-	sudo usermod -aG docker "$USER"
 }
 
 function setup_paccache {
