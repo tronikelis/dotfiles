@@ -1,11 +1,22 @@
 ---@param path string
 ---@return boolean
 local function check_is_neovim_project(path)
-    local result = vim.system(
-        { "grep", "-IRq", "-e", "vim\\.fn", "-e", "vim\\.api", "-e", "vim\\.cmd" },
-        { text = true, cwd = path }
-    ):wait(1000)
-    return result.code == 0
+    local patterns = {
+        "-e",
+        "vim\\.fn",
+        "-e",
+        "vim\\.api",
+        "-e",
+        "vim\\.cmd",
+    }
+
+    local cmd = { "grep", "-IRq" }
+    if vim.fn.executable("rg") == 1 then
+        cmd = { "rg", "-uq" }
+    end
+    cmd = require("utils").flatten({ cmd, patterns })
+
+    return vim.system(cmd, { text = true, cwd = path }):wait(1000).code == 0
 end
 
 ---@param client vim.lsp.Client

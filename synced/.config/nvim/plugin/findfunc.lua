@@ -1,16 +1,26 @@
-local has_fd = vim.fn.executable("fd") == 1
-require("utils").assert_notify(has_fd, "fd not found, FindFunc will not be used", vim.log.levels.INFO)
-
 function FindFunc(arg)
-    local out = vim.system(
-        { "fd", "--type", "f", "--hidden", "--full-path", "--max-results", "100", arg },
-        { text = true }
-    )
-        :wait()
-    require("utils").assert_notify(out.code == 0, "fd command failed")
+    local cmd = { "find", ".", "-type", "f", "-regextype", "egrep", "-regex", string.format(".*%s.*", arg) }
+    if vim.fn.has("macunix") then
+        cmd = { "find", "-E", ".", "-type", "f", "-regex", string.format(".*%s.*", arg) }
+    end
+    local find_escaped = vim.iter(cmd)
+        :map(function(v)
+            return vim.fn.shellescape(v)
+        end)
+        :join(" ")
+    cmd = {
+        "bash",
+        "-c",
+        string.format("%s | head -n 100", find_escaped),
+    }
+
+    if vim.fn.executable("fd") == 1 then
+        cmd = { "fd", "--type", "f", "--hidden", "--full-path", "--max-results", "100", arg }
+    end
+
+    local out = vim.system(cmd, { text = true }):wait()
+    require("utils").assert_notify(out.code == 0, "findfunc command failed")
     return vim.split(out.stdout or "", "\n", { trimempty = true })
 end
 
-if has_fd then
-    vim.opt.findfunc = "v:lua.FindFunc"
-end
+vim.opt.findfunc = "v:lua.FindFunc"
