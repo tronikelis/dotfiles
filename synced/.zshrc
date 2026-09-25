@@ -89,6 +89,9 @@ if [[ -e ~/.config/git/scripts/git-prompt.sh ]]; then
 fi
 
 function precmd_set_git {
+    if [[ "$(git config --bool bash.promptEnable)" == "false" ]]; then
+        return
+    fi
     GIT_PS1_SHOWDIRTYSTATE=1
     GIT_PS1_SHOWSTASHSTATE=1
     GIT_PS1_SHOWUNTRACKEDFILES=1
