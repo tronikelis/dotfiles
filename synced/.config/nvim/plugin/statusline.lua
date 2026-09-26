@@ -1,4 +1,322 @@
-local augroup = vim.api.nvim_create_augroup("plugin/statusline.lua", {})
+---@param buf integer
+---@return boolean
+local function is_buf_valid_for_statusline(buf)
+    return vim.bo[buf].buftype == ""
+end
+
+---@param events string[]|string
+---@param augroup integer
+---@param callback fun(ev: vim.api.keyset.create_autocmd.callback_args)
+local function cmp_autocmd(events, augroup, callback)
+    vim.api.nvim_create_autocmd(events, {
+        group = augroup,
+        callback = function(ev)
+            if not is_buf_valid_for_statusline(ev.buf) then
+                return
+            end
+            callback(ev)
+        end,
+    })
+end
+
+---@param instance table
+local function cmp_redraw_all(instance)
+    for _, v in ipairs(vim.api.nvim_list_wins()) do
+        instance:compute(v, vim.api.nvim_win_get_buf(v))
+    end
+end
+
+---@param events string[]
+---@param augroup integer
+---@param instance table
+local function cmp_autocmd_redraw_all(events, augroup, instance)
+    cmp_autocmd(events, augroup, function()
+        cmp_redraw_all(instance)
+    end)
+end
+
+vim.api.nvim_create_user_command("StatuslineRefresh", function()
+    vim.api.nvim_exec_autocmds("User", {
+        pattern = "StatuslineRefresh",
+    })
+end, {})
+
+---@param instance table
+local function cmp_autocmd_init(instance)
+    assert(instance.compute, "cmp instance compute function exists")
+    assert(instance.augroup, "cmp instance augroup exists")
+    vim.api.nvim_create_autocmd("User", {
+        group = instance.augroup,
+        pattern = "StatuslineRefresh",
+        callback = function()
+            cmp_redraw_all(instance)
+            vim.cmd("redrawstatus!")
+        end,
+    })
+end
+
+---@class Statusline.LspStatusCmp
+---@field augroup integer
+---@field output string
+---@field throttle_timer uv.uv_timer_t
+---@field reset_timer uv.uv_timer_t
+local LspStatusCmp = {}
+
+function LspStatusCmp:new()
+    ---@type Statusline.LspStatusCmp
+    local instance = setmetatable({
+        augroup = vim.api.nvim_create_augroup("lsp/statusline.lua/LspStatusCmp", {}),
+        output = "",
+        throttle_timer = assert(vim.uv.new_timer()),
+        reset_timer = assert(vim.uv.new_timer()),
+    }, { __index = self })
+
+    cmp_autocmd_init(instance)
+
+    cmp_autocmd("LspProgress", instance.augroup, function(ev)
+        if vim.tbl_contains({ "end" }, ev.data.params.value.kind) then
+            instance:set("")
+            return
+        end
+        instance:set(vim.lsp.status())
+    end)
+
+    local reset_ms = 1000 * 60 * 5
+    instance.reset_timer:start(reset_ms, reset_ms, function()
+        instance:set("")
+    end)
+
+    return instance
+end
+
+---@param value string
+function LspStatusCmp:set(value)
+    self.output = value
+    if not self.throttle_timer:is_active() then
+        self.throttle_timer:start(100, 0, function()
+            vim.schedule(function()
+                vim.cmd("redrawstatus")
+            end)
+        end)
+    end
+end
+
+function LspStatusCmp:compute() end
+
+function LspStatusCmp:get()
+    return self.output or ""
+end
+
+---@class Statusline.FormattersCmp
+---@field augroup integer
+---@field outputs table<integer, string?>
+local FormattersCmp = {}
+
+function FormattersCmp:new()
+    ---@type Statusline.FormattersCmp
+    local instance = setmetatable({
+        outputs = {},
+        augroup = vim.api.nvim_create_augroup("plugin/statusline.lua/FormattersCmp", {}),
+    }, { __index = self })
+
+    cmp_autocmd_init(instance)
+
+    cmp_autocmd({ "BufEnter", "WinEnter" }, instance.augroup, function(ev)
+        instance:compute(vim.api.nvim_get_current_win(), ev.buf)
+    end)
+
+    cmp_autocmd({ "WinClosed" }, instance.augroup, function(ev)
+        instance:set(assert(tonumber(ev.match), "winid number expected"), nil, nil)
+    end)
+
+    cmp_autocmd_redraw_all({ "FocusGained", "LspAttach", "LspDetach" }, instance.augroup, instance)
+
+    return instance
+end
+
+---@param buf integer
+function FormattersCmp.is_format_enabled(buf)
+    return not (vim.g.disable_autoformat or vim.b[buf].disable_autoformat)
+end
+
+---@param win integer
+---@param buf integer
+function FormattersCmp:compute(win, buf)
+    self:set(win, buf, "")
+
+    local conform = require("conform")
+
+    local ok = "󰏫"
+    local not_ok = "󰏯"
+
+    local formatters, lsp = conform.list_formatters_to_run(buf)
+
+    if not lsp and #formatters == 0 then
+        return
+    end
+
+    if not FormattersCmp.is_format_enabled(buf) then
+        ok = not_ok
+    end
+
+    local fmts = vim.iter(formatters)
+        :map(function(x)
+            return x.name
+        end)
+        :totable()
+
+    ---@type string[]
+    local str = require("utils").flatten({ ok, fmts })
+
+    if lsp then
+        table.insert(str, "[LSP]")
+    end
+
+    self:set(win, buf, table.concat(str, " "))
+end
+
+---@param win integer
+---@param buf? integer
+---@param value? string
+function FormattersCmp:set(win, buf, value)
+    self.outputs[win] = value
+    if buf then
+        vim.b[buf].__last_rendered_format_enabled = FormattersCmp.is_format_enabled(buf)
+    end
+    vim.schedule(function()
+        vim.cmd("redrawstatus")
+    end)
+end
+
+function FormattersCmp:get()
+    local win = vim.api.nvim_get_current_win()
+    local buf = vim.api.nvim_get_current_buf()
+    if vim.b[buf].__last_rendered_format_enabled ~= FormattersCmp.is_format_enabled(buf) then
+        self:compute(win, buf)
+    end
+    return self.outputs[win] or ""
+end
+
+---@class Statusline.GitStatusCmp
+---@field root_handles table<string, vim.SystemObj?>
+---@field augroup integer
+---@field root_outputs table<string, string?>
+---@field timer uv.uv_timer_t
+local GitStatusCmp = {}
+
+function GitStatusCmp:new()
+    ---@type Statusline.GitStatusCmp
+    local instance = setmetatable({
+        augroup = vim.api.nvim_create_augroup("plugin/statusline.lua/GitStatusCmp", {}),
+        root_handles = {},
+        root_outputs = {},
+        timer = assert(vim.uv.new_timer()),
+    }, { __index = self })
+
+    cmp_autocmd_init(instance)
+
+    cmp_autocmd({ "BufEnter", "WinEnter", "BufWritePost" }, instance.augroup, function(ev)
+        instance:compute(vim.api.nvim_get_current_win(), ev.buf)
+    end)
+
+    cmp_autocmd_redraw_all({ "FocusGained" }, instance.augroup, instance)
+
+    local timer_ms = 1000 * 5
+    instance.timer:start(timer_ms, timer_ms, function()
+        vim.schedule(function()
+            instance:compute(vim.api.nvim_get_current_win(), vim.api.nvim_get_current_buf())
+        end)
+    end)
+
+    return instance
+end
+
+---@param buf integer
+---@return string?
+function GitStatusCmp.git_root(buf)
+    local cached_root = vim.b[buf].git_root
+    if cached_root == "" then
+        return
+    end
+    if cached_root then
+        return cached_root
+    end
+
+    if
+        not is_buf_valid_for_statusline(buf)
+        or vim.api.nvim_buf_call(buf, function()
+            return vim.fn.expand("%:p"):sub(1, 1) ~= "/"
+        end)
+    then
+        return
+    end
+
+    local root = cached_root or vim.fs.root(buf, ".git")
+    if not root then
+        vim.b[buf].git_root = ""
+        return
+    end
+    vim.b[buf].git_root = root
+
+    return root
+end
+
+---@param win integer
+---@param buf integer
+---@diagnostic disable-next-line: unused-local
+function GitStatusCmp:compute(win, buf)
+    local git_root = GitStatusCmp.git_root(buf)
+    if not git_root then
+        return
+    end
+
+    if self.root_handles[git_root] then
+        return
+    end
+    self.root_handles[git_root] = vim.system({
+        "bash",
+        "-c",
+        [[
+            if [ -e ~/.config/git/scripts/git-prompt.sh ]; then
+                source ~/.config/git/scripts/git-prompt.sh
+                GIT_PS1_SHOWDIRTYSTATE=1
+                GIT_PS1_SHOWSTASHSTATE=1
+                GIT_PS1_SHOWUNTRACKEDFILES=1
+                GIT_PS1_SHOWUPSTREAM="auto"
+                GIT_PS1_SHOWCONFLICTSTATE=yes
+                export GIT_OPTIONAL_LOCKS=0
+                echo "[$(__git_ps1 '%s' 2>/dev/null | awk '{print $2}')]"
+            else
+                echo "n/a"
+            fi
+        ]],
+    }, { cwd = git_root, text = true }, function(out)
+        local stdout = vim.trim(out.stdout or "")
+        self:set(git_root, stdout)
+        self.root_handles[git_root] = nil
+    end)
+end
+
+---@param git_root string
+---@param value string
+function GitStatusCmp:set(git_root, value)
+    self.root_outputs[git_root] = value
+    vim.schedule(function()
+        vim.cmd("redrawstatus")
+    end)
+end
+
+function GitStatusCmp:get()
+    local git_root = GitStatusCmp.git_root(vim.api.nvim_get_current_buf())
+    if not git_root then
+        return ""
+    end
+    return self.root_outputs[git_root] or ""
+end
+
+local git_status_cmp = GitStatusCmp:new()
+local formatters_cmp = FormattersCmp:new()
+local lsp_status_cmp = LspStatusCmp:new()
 
 local cmp = {}
 
@@ -33,120 +351,16 @@ local function escape(v)
     return res
 end
 
-local function refresh_timer()
-    local timer = _G.__statusline_timer or assert(vim.uv.new_timer())
-    _G.__statusline_timer = timer
-    return timer
-end
-local function start_refresh_timer()
-    refresh_timer():start(
-        0,
-        3000,
-        vim.schedule_wrap(function()
-            vim.cmd("redrawstatus!")
-        end)
-    )
-end
-local function stop_refresh_timer()
-    refresh_timer():stop()
-end
-start_refresh_timer()
-vim.api.nvim_create_autocmd("FocusGained", {
-    group = augroup,
-    callback = start_refresh_timer,
-})
-vim.api.nvim_create_autocmd("FocusLost", {
-    group = augroup,
-    callback = stop_refresh_timer,
-})
-
-_G.__statusline_root_to_git_status = _G.__statusline_root_to_git_status or {}
----@type table<string, string?>
-local root_to_git_status = _G.__statusline_root_to_git_status
-
-_G.__statusline_root_to_git_status_system = _G.__statusline_root_to_git_status_system or {}
----@type table<string, vim.SystemObj?>
-local root_to_git_status_system = _G.__statusline_root_to_git_status_system
-
-local function get_buffer_git_root()
-    local cached_root = vim.b.git_root
-    if cached_root == "" then
-        return
-    end
-
-    local root = cached_root or vim.fs.root(0, ".git")
-    if not root then
-        vim.b.git_root = ""
-        return
-    end
-    vim.b.git_root = root
-
-    return root
-end
-
-local function run_git_status()
-    if vim.bo.buftype ~= "" or vim.fn.expand("%:p"):sub(1, 1) ~= "/" then
-        return
-    end
-
-    local root = get_buffer_git_root()
-    if not root then
-        return
-    end
-
-    local obj = root_to_git_status_system[root]
-    if obj then
-        return
-    end
-
-    root_to_git_status_system[root] = vim.system({
-        "bash",
-        "-c",
-        [[
-            sleep 3 # sleep here to not spam
-            if [ -e ~/.config/git/scripts/git-prompt.sh ]; then
-                source ~/.config/git/scripts/git-prompt.sh
-                GIT_PS1_SHOWDIRTYSTATE=1
-                GIT_PS1_SHOWSTASHSTATE=1
-                GIT_PS1_SHOWUNTRACKEDFILES=1
-                GIT_PS1_SHOWUPSTREAM="auto"
-                GIT_PS1_SHOWCONFLICTSTATE=yes
-                export GIT_OPTIONAL_LOCKS=0
-                echo "[$(__git_ps1 '%s' 2>/dev/null | awk '{print $2}')]"
-            else
-                echo "n/a"
-            fi
-        ]],
-    }, { cwd = root, text = true }, function(out)
-        local stdout = vim.trim(out.stdout or "")
-        root_to_git_status_system[root] = nil
-        root_to_git_status[root] = stdout
-    end)
-end
-
-local function get_git_status()
-    if vim.bo.buftype ~= "" or vim.fn.expand("%:p"):sub(1, 1) ~= "/" then
-        return
-    end
-
-    local root = get_buffer_git_root()
-    if not root then
-        return
-    end
-    return root_to_git_status[root]
-end
-
 function cmp.git()
     if not vim.b.gitsigns_status_dict then
         return ""
     end
-    run_git_status()
 
     local symbol = " "
 
     local prompt = get_hl_pattern(
         "Conditional",
-        symbol .. escape(vim.b.gitsigns_status_dict.head or "") .. escape(get_git_status() or "")
+        symbol .. escape(vim.b.gitsigns_status_dict.head or "") .. escape(git_status_cmp:get())
     )
     return prompt .. " "
 end
@@ -177,10 +391,11 @@ end
 
 function cmp.lines()
     local winnr_expr = "%{winnr()}"
-    if vim.api.nvim_buf_line_count(0) < 1000 then
-        return string.format("%s:%d:%%-3c", winnr_expr, vim.api.nvim_buf_line_count(0))
+    local line_count = vim.api.nvim_buf_line_count(0)
+    if line_count < 1000 then
+        return string.format("%s:%d:%%-3c", winnr_expr, line_count)
     end
-    return string.format("%s:%.1fK:%%-3c", winnr_expr, vim.api.nvim_buf_line_count(0) / 1000)
+    return string.format("%s:%.1fK:%%-3c", winnr_expr, line_count / 1000)
 end
 
 function cmp.full_file()
@@ -216,35 +431,7 @@ function cmp.filetype()
 end
 
 function cmp.formatters()
-    local conform = require("conform")
-
-    local ok = "󰏫"
-    local not_ok = "󰏯"
-
-    local formatters, lsp = conform.list_formatters_to_run()
-
-    if not lsp and #formatters == 0 then
-        return ""
-    end
-
-    if vim.g.disable_autoformat or vim.b.disable_autoformat then
-        ok = not_ok
-    end
-
-    local fmts = vim.iter(formatters)
-        :map(function(x)
-            return escape(x.name)
-        end)
-        :totable()
-
-    ---@type string[]
-    local str = require("utils").flatten({ ok, fmts })
-
-    if lsp then
-        table.insert(str, "[LSP]")
-    end
-
-    return table.concat(str, " ")
+    return escape(formatters_cmp:get())
 end
 
 function cmp.diagnostics()
@@ -289,52 +476,6 @@ function cmp.tabpage_nr_non_empty()
     return " [%{tabpagenr()}/%{tabpagenr('$')}]"
 end
 
-local lsp_status = ""
-
-local function lsp_status_reset_timer()
-    local timer = _G.__lsp_status_reset_timer or assert(vim.uv.new_timer())
-    _G.__lsp_status_reset_timer = timer
-    return timer
-end
-local lsp_status_reset_ms = 1000 * 60 * 5
-lsp_status_reset_timer():start(lsp_status_reset_ms, lsp_status_reset_ms, function()
-    lsp_status = ""
-end)
-
-vim.api.nvim_create_autocmd("LspProgress", {
-    group = augroup,
-    callback = function(ev)
-        lsp_status_reset_timer():again()
-
-        if vim.tbl_contains({ "end" }, ev.data.params.value.kind) then
-            lsp_status = ""
-            return
-        end
-        lsp_status = vim.lsp.status()
-    end,
-})
-
-local function lsp_progress_throttle_timer()
-    local timer = _G.__lsp_progress_throttle_timer or assert(vim.uv.new_timer())
-    _G.__lsp_progress_throttle_timer = timer
-    return timer
-end
-
-vim.api.nvim_create_autocmd("LspProgress", {
-    group = augroup,
-    callback = function()
-        if not lsp_progress_throttle_timer():is_active() then
-            lsp_progress_throttle_timer():start(
-                100,
-                0,
-                vim.schedule_wrap(function()
-                    vim.cmd("redrawstatus!")
-                end)
-            )
-        end
-    end,
-})
-
 function cmp.progress()
     local status = {}
     local function insert(value)
@@ -343,7 +484,7 @@ function cmp.progress()
         end
     end
     insert(vim.ui.progress_status())
-    insert(escape(lsp_status))
+    insert(escape(lsp_status_cmp:get()))
     return get_hl_pattern("Whitespace", table.concat(status, " / "))
 end
 
