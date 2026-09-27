@@ -81,7 +81,7 @@ function LspStatusCmp:new()
         instance:set(vim.lsp.status())
     end)
 
-    local reset_ms = 1000 * 60 * 5
+    local reset_ms = 1000 * 30
     instance.reset_timer:start(reset_ms, reset_ms, function()
         instance:set("")
     end)
