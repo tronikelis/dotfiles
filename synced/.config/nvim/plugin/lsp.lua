@@ -1,5 +1,8 @@
 local augroup = vim.api.nvim_create_augroup("plugin/lsp.lua", {})
 
+-- set to more verbose when debugging
+vim.lsp.log.set_level(vim.log.levels.ERROR)
+
 vim.diagnostic.config({
     underline = true,
     severity_sort = true,

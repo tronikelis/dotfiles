@@ -95,7 +95,7 @@ function LspStatusCmp:set(value)
     if not self.throttle_timer:is_active() then
         self.throttle_timer:start(100, 0, function()
             vim.schedule(function()
-                vim.cmd("redrawstatus")
+                vim.cmd("redrawstatus!")
             end)
         end)
     end
