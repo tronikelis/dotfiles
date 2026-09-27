@@ -126,7 +126,7 @@ function FormattersCmp:new()
     end)
 
     cmp_autocmd({ "WinClosed" }, instance.augroup, function(ev)
-        instance:set(assert(tonumber(ev.match), "winid number expected"), nil, nil)
+        instance:set(assert(tonumber(ev.match), "winid number expected"), nil)
     end)
 
     cmp_autocmd_redraw_all({ "FocusGained", "LspAttach", "LspDetach" }, instance.augroup, instance)
@@ -142,7 +142,8 @@ end
 ---@param win integer
 ---@param buf integer
 function FormattersCmp:compute(win, buf)
-    self:set(win, buf, "")
+    vim.b[buf].__FormattersCmp_last_seen_is_format_enabled = FormattersCmp.is_format_enabled(buf)
+    self:set(win, "")
 
     local conform = require("conform")
 
@@ -172,17 +173,13 @@ function FormattersCmp:compute(win, buf)
         table.insert(str, "[LSP]")
     end
 
-    self:set(win, buf, table.concat(str, " "))
+    self:set(win, table.concat(str, " "))
 end
 
 ---@param win integer
----@param buf? integer
 ---@param value? string
-function FormattersCmp:set(win, buf, value)
+function FormattersCmp:set(win, value)
     self.outputs[win] = value
-    if buf then
-        vim.b[buf].__last_rendered_format_enabled = FormattersCmp.is_format_enabled(buf)
-    end
     vim.schedule(function()
         vim.cmd("redrawstatus")
     end)
@@ -191,7 +188,7 @@ end
 function FormattersCmp:get()
     local win = vim.api.nvim_get_current_win()
     local buf = vim.api.nvim_get_current_buf()
-    if vim.b[buf].__last_rendered_format_enabled ~= FormattersCmp.is_format_enabled(buf) then
+    if vim.b[buf].__FormattersCmp_last_seen_is_format_enabled ~= FormattersCmp.is_format_enabled(buf) then
         self:compute(win, buf)
     end
     return self.outputs[win] or ""
