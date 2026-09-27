@@ -137,7 +137,7 @@ end
 ---@param win integer
 ---@param buf integer
 function FormattersCmp:compute(win, buf)
-    vim.b[buf].__FormattersCmp_last_is_autoformat_enabled = require("options").is_autoformat_enabled(buf)
+    vim.w[win].__FormattersCmp_last_is_autoformat_enabled = require("options").is_autoformat_enabled(buf)
     self:set(win, "")
 
     local conform = require("conform")
@@ -183,7 +183,7 @@ end
 function FormattersCmp:get()
     local win = vim.api.nvim_get_current_win()
     local buf = vim.api.nvim_get_current_buf()
-    if vim.b[buf].__FormattersCmp_last_is_autoformat_enabled ~= require("options").is_autoformat_enabled(buf) then
+    if vim.w[win].__FormattersCmp_last_is_autoformat_enabled ~= require("options").is_autoformat_enabled(buf) then
         self:compute(win, buf)
     end
     return self.outputs[win] or ""
