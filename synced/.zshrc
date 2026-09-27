@@ -90,6 +90,7 @@ fi
 
 function precmd_set_git {
     if [[ "$(git config --bool bash.promptEnable)" == "false" ]]; then
+        prompt_git=""
         return
     fi
     GIT_PS1_SHOWDIRTYSTATE=1
