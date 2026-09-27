@@ -20,33 +20,39 @@ local function format_async(args)
     end)
 end
 
+---@param global boolean
+---@param value boolean
+local function format_enable(global, value)
+    if global then
+        require("options").set_autoformat_enabled(nil, value)
+    else
+        require("options").set_autoformat_enabled(0, value)
+    end
+end
+
 local format_cmds = {
-    enable = function(args)
-        if args.bang then
-            vim.g.disable_autoformat = false
-        end
-        vim.b.disable_autoformat = false
+    enable = function(ev)
+        format_enable(ev.bang, true)
     end,
-    disable = function(args)
-        if args.bang then
-            vim.g.disable_autoformat = true
+    disable = function(ev)
+        format_enable(ev.bang, false)
+    end,
+    reset = function(ev)
+        if ev.bang then
+            require("options").reset_autoformat_enabled(nil)
         else
-            vim.b.disable_autoformat = true
+            require("options").reset_autoformat_enabled(0)
         end
     end,
 }
 
-vim.api.nvim_create_user_command("Format", function(args)
-    if args.fargs[1] then
-        local cmd = format_cmds[args.fargs[1]]
-        if cmd then
-            cmd(args)
-            return
-        end
-        error("unknown command")
+vim.api.nvim_create_user_command("Format", function(ev)
+    if ev.fargs[1] then
+        format_cmds[ev.fargs[1]](ev)
+        return
     end
 
-    format_async(args)
+    format_async(ev)
 end, {
     bang = true,
     range = true,
@@ -68,8 +74,8 @@ require("conform").setup({
         lsp_format = "fallback",
         stop_after_first = true,
     },
-    format_on_save = function(bufnr)
-        if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
+    format_on_save = function(buf)
+        if not require("options").is_autoformat_enabled(buf) then
             return
         end
 

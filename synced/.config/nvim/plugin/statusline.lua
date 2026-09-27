@@ -134,15 +134,10 @@ function FormattersCmp:new()
     return instance
 end
 
----@param buf integer
-function FormattersCmp.is_format_enabled(buf)
-    return not (vim.g.disable_autoformat or vim.b[buf].disable_autoformat)
-end
-
 ---@param win integer
 ---@param buf integer
 function FormattersCmp:compute(win, buf)
-    vim.b[buf].__FormattersCmp_last_seen_is_format_enabled = FormattersCmp.is_format_enabled(buf)
+    vim.b[buf].__FormattersCmp_last_is_autoformat_enabled = require("options").is_autoformat_enabled(buf)
     self:set(win, "")
 
     local conform = require("conform")
@@ -156,7 +151,7 @@ function FormattersCmp:compute(win, buf)
         return
     end
 
-    if not FormattersCmp.is_format_enabled(buf) then
+    if not require("options").is_autoformat_enabled(buf) then
         ok = not_ok
     end
 
@@ -188,7 +183,7 @@ end
 function FormattersCmp:get()
     local win = vim.api.nvim_get_current_win()
     local buf = vim.api.nvim_get_current_buf()
-    if vim.b[buf].__FormattersCmp_last_seen_is_format_enabled ~= FormattersCmp.is_format_enabled(buf) then
+    if vim.b[buf].__FormattersCmp_last_is_autoformat_enabled ~= require("options").is_autoformat_enabled(buf) then
         self:compute(win, buf)
     end
     return self.outputs[win] or ""
