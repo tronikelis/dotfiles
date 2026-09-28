@@ -70,4 +70,13 @@ function M.assert_notify(bool, msg, level)
     return not not bool
 end
 
+---@param key string
+---@return uv.uv_timer_t
+function M.timer_keyed(key)
+    key = string.format("__timer_keyed%s", key)
+    local timer = _G[key] or assert(vim.uv.new_timer())
+    _G[key] = timer
+    return timer
+end
+
 return M

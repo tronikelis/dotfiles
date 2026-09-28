@@ -67,8 +67,8 @@ function LspStatusCmp:new()
     local instance = setmetatable({
         augroup = vim.api.nvim_create_augroup("lsp/statusline.lua/LspStatusCmp", {}),
         output = "",
-        throttle_timer = assert(vim.uv.new_timer()),
-        reset_timer = assert(vim.uv.new_timer()),
+        throttle_timer = require("utils").timer_keyed("LspStatusCmp.throttle_timer"),
+        reset_timer = require("utils").timer_keyed("LspStatusCmp.reset_timer"),
     }, { __index = self })
 
     cmp_autocmd_init(instance)
@@ -202,7 +202,7 @@ function GitStatusCmp:new()
         augroup = vim.api.nvim_create_augroup("plugin/statusline.lua/GitStatusCmp", {}),
         root_handles = {},
         root_outputs = {},
-        timer = assert(vim.uv.new_timer()),
+        timer = require("utils").timer_keyed("GitStatusCmp.timer"),
     }, { __index = self })
 
     cmp_autocmd_init(instance)

@@ -35,8 +35,7 @@ vim.keymap.set("n", "<leader>td", function()
     local buf = vim.api.nvim_get_current_buf()
     local win = vim.api.nvim_get_current_win()
 
-    local timer = _G.__toggle_diagnostics_timer or assert(vim.uv.new_timer())
-    _G.__toggle_diagnostics_timer = timer
+    local timer = require("utils").timer_keyed("<leader>td")
 
     local function show()
         timer:stop()
