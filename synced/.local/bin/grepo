@@ -1,3 +1,8 @@
 #!/bin/bash
 
+if [[ ! "$1" || ! "$2" ]]; then
+    echo "Usage: grepo <pattern> <print \$1 \$2>" >&2
+    exit 1
+fi
+
 exec perl -lne "print $2 if /$1/"
