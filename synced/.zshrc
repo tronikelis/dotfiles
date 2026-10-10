@@ -12,9 +12,15 @@ add-zsh-hook precmd precmd_cursor_block
 
 
 function add_to_path {
-	if [[ -d "$1" ]]; then
-		export PATH="$1:$PATH"
-	fi
+    if [[ -d "$1" ]]; then
+        export PATH="$1:$PATH"
+    fi
+}
+
+function source_if_exists {
+    if [[ -e "$1" ]]; then
+        source "$1"
+    fi
 }
 
 function command_exists {
@@ -32,14 +38,15 @@ function strip_home_from_path {
 # third party tools have least priority
 add_to_path "/opt/homebrew/bin"
 if command_exists "go"; then
-	add_to_path "$(go env GOPATH)/bin"
+    add_to_path "$(go env GOPATH)/bin"
 fi
-if [[ -e "$HOME/.cargo/env" ]]; then
-	source "$HOME/.cargo/env"
-fi
-add_to_path "$HOME/.local/bin"
+source_if_exists ~/.cargo/env
+add_to_path ~/.local/bin
 
-export EDITOR=nvim
+export EDITOR=vi
+if command_exists "nvim"; then
+    export EDITOR=nvim
+fi
 export VISUAL="$EDITOR"
 export COREPACK_ENABLE_AUTO_PIN=0
 export PAGER="less"
@@ -65,30 +72,32 @@ export FZF_DEFAULT_OPTS=" \
 --bind 'ctrl-k:first'"
 
 # Preview file content using bat (https://github.com/sharkdp/bat)
-export FZF_CTRL_T_OPTS="
-  --walker-skip .git,node_modules,target
-  --preview 'bat -n --color=always {}'
-  --bind 'ctrl-/:change-preview-window(down|hidden|)'"
+export FZF_CTRL_T_OPTS=" \
+--walker-skip .git,node_modules,target \
+--preview 'bat -n --color=always {}' \
+--bind 'ctrl-/:change-preview-window(down|hidden|)'"
 
 # Print tree structure in the preview window
-export FZF_ALT_C_OPTS="
-  --walker-skip .git,node_modules,target
-  --preview 'eza --icons --tree --color=always {}'"
+export FZF_ALT_C_OPTS=" \
+--walker-skip .git,node_modules,target \
+--preview 'eza --icons --tree --color=always {}'"
 
 export FZF_CTRL_R_OPTS="
-  --bind 'ctrl-y:execute-silent(echo -n {2..} | copy)+abort'
-  --color header:italic
-  --header 'Press CTRL-Y to copy command into clipboard'"
+--bind 'ctrl-y:execute-silent(echo -n {2..} | copy)+abort' \
+--color header:italic \
+--header 'Press CTRL-Y to copy command into clipboard'"
 
 export RIPGREP_CONFIG_PATH=~/.config/ripgrep/.ripgreprc
 
 setopt PROMPT_SUBST
 
-if [[ -e ~/.config/git/scripts/git-prompt.sh ]]; then
-    source ~/.config/git/scripts/git-prompt.sh
-fi
+source_if_exists ~/.config/git/scripts/git-prompt.sh
 
 function precmd_set_git {
+    if ! command_exists git || ! command_exists __git_ps1; then
+        return
+    fi
+
     if [[ "$(git config --bool bash.promptEnable)" == "false" ]]; then
         prompt_git=""
         return
@@ -112,11 +121,13 @@ add-zsh-hook precmd precmd_set_git
 function precmd_set_prompt_directory {
     prompt_directory="$(pwd)"
 
-    local git_root="$(git rev-parse --show-toplevel 2>/dev/null)"
-    if [[ "$git_root" ]]; then
-        prompt_directory="$(realpath .)" # git resolves symlinks
-        prompt_directory="$(basename "$git_root")${prompt_directory#"$git_root"}"
-        return 0
+    if command_exists git; then
+        local git_root="$(git rev-parse --show-toplevel 2>/dev/null)"
+        if [[ "$git_root" ]]; then
+            prompt_directory="$(realpath .)" # git resolves symlinks
+            prompt_directory="$(basename "$git_root")${prompt_directory#"$git_root"}"
+            return 0
+        fi
     fi
 
     prompt_directory="$(strip_home_from_path "$prompt_directory")"
@@ -206,22 +217,24 @@ fi
 compinit -C
 
 # fzf-tab needs to be loaded after compinit, but before plugins which will wrap widgets
-source ~/.zsh_plugins/fzf-tab/fzf-tab.plugin.zsh
+source_if_exists ~/.zsh_plugins/fzf-tab/fzf-tab.plugin.zsh
 
-source ~/.zsh_plugins/fzf-git/fzf-git.plugin.zsh
-source ~/.zsh_plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh
-source ~/.zsh_plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh
-source ~/.zsh_plugins/fzf/fzf.plugin.zsh
+source_if_exists ~/.zsh_plugins/fzf-git/fzf-git.plugin.zsh
+source_if_exists ~/.zsh_plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh
+source_if_exists ~/.zsh_plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh
+source_if_exists ~/.zsh_plugins/fzf/fzf.plugin.zsh
 
 
-ssh_env_file=~/.ssh/ssh_agent_env
-if ! pgrep -u "$USER" ssh-agent &>/dev/null; then
-    source <(ssh-agent -t 4h | tee "$ssh_env_file")
-    chmod 600 "$ssh_env_file"
-else
-    { source "$ssh_env_file" } >/dev/null
+if command_exists ssh-agent; then
+    mkdir -p ~/.ssh
+    ssh_env_file=~/.ssh/ssh_agent_env
+    if ! pgrep -u "$USER" ssh-agent &>/dev/null; then
+        source <(ssh-agent -t 4h | tee "$ssh_env_file")
+        chmod 600 "$ssh_env_file"
+    else
+        { source_if_exists "$ssh_env_file" } >/dev/null
+    fi
 fi
-
 
 bindkey "^[[1;5C" vi-forward-word
 bindkey "^[[1;5D" vi-backward-word
@@ -249,7 +262,9 @@ SAVEHIST=1000000
 KEYTIMEOUT=100
 
 
-alias ls="eza --icons -a --group-directories-first"
+if command_exists eza; then
+    alias ls="eza --icons -a --group-directories-first"
+fi
 alias ll="ls --long --all"
 alias ..="cd .."
 alias grep="grep --color=auto"
@@ -357,9 +372,7 @@ function tmpvar {
 
 
 # custom setup
-if [[ -e ~/.zshrc.private ]]; then
-    source ~/.zshrc.private
-fi
+source_if_exists ~/.zshrc.private
 
 # remove duplicates in $PATH
 typeset -aU path
