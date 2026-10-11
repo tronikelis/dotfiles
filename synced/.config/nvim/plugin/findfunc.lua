@@ -1,6 +1,6 @@
 function FindFunc(arg)
     local cmd = { "find", ".", "-type", "f", "-regextype", "egrep", "-regex", string.format(".*%s.*", arg) }
-    if vim.fn.has("macunix") then
+    if vim.fn.has("macunix") == 1 then
         cmd = { "find", "-E", ".", "-type", "f", "-regex", string.format(".*%s.*", arg) }
     end
     local find_escaped = vim.iter(cmd)

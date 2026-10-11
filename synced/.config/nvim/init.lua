@@ -9,6 +9,10 @@ require("pack").set_hooks({
         "blink.cmp",
         { "install", "update" },
         function(path)
+            if vim.fn.executable("cargo") ~= 1 then
+                vim.notify("cargo binary not found, not compiling blink.cmp")
+                return
+            end
             vim.notify("Compiling blink.cmp so")
             vim.system(
                 { "cargo", "build", "--release" },
@@ -27,6 +31,10 @@ require("pack").set_hooks({
         "nvim-treesitter",
         { "install", "update" },
         function()
+            if vim.fn.executable("tree-sitter") ~= 1 then
+                vim.notify("tree-sitter binary not found, skipping TSUpdate")
+                return
+            end
             vim.cmd("TSUpdate")
         end,
         { packadd = true },
