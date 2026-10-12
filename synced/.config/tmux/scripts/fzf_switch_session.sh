@@ -15,4 +15,4 @@ if [[ ! "$session" ]]; then
     exit 0
 fi
 
-tmux switch -t="$session"
+tmux switch-client -t="$session"

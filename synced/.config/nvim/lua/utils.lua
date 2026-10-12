@@ -70,6 +70,40 @@ function M.assert_notify(bool, msg, level)
     return not not bool
 end
 
+---@param regex string
+---@param max_results? integer
+---@param opts vim.SystemOpts
+---@return vim.SystemObj
+function M.system_find(regex, max_results, opts)
+    local cmd = { "find", ".", "-type", "f", "-regextype", "egrep", "-regex", string.format(".*%s.*", regex) }
+    if vim.fn.has("macunix") == 1 then
+        cmd = { "find", "-E", ".", "-type", "f", "-regex", string.format(".*%s.*", regex) }
+    end
+    if max_results then
+        local find_escaped = vim.iter(cmd)
+            :map(function(v)
+                return vim.fn.shellescape(v)
+            end)
+            :join(" ")
+        cmd = {
+            "bash",
+            "-c",
+            string.format("%s | head -n 100", find_escaped),
+        }
+    end
+
+    if vim.fn.executable("fd") == 1 then
+        cmd = { "fd", "--type", "f", "--hidden", "--full-path" }
+        if max_results then
+            table.insert(cmd, "--max-results")
+            table.insert(cmd, max_results)
+        end
+        table.insert(cmd, regex)
+    end
+
+    return vim.system(cmd, vim.tbl_extend("force", { text = true }, opts))
+end
+
 ---@param key string
 ---@return uv.uv_timer_t
 function M.timer_keyed(key)
