@@ -7,41 +7,43 @@ require("treesitter-context").setup({
     min_window_height = 25,
 })
 
-require("nvim-treesitter").install({
-    "rust",
-    "markdown",
-    "typescript",
-    "tsx",
-    "jsx",
-    "javascript",
-    "json",
-    "go",
-    "yaml",
-    "toml",
-    "lua",
-    "zig",
-    "ruby",
-    "c",
-    "cpp",
-    "bash",
-    "zsh",
-    "css",
-    "sql",
-    "scss",
-    "python",
-    "java",
-    "c_sharp",
-    "kotlin",
-    "swift",
-    "php",
-    "dart",
-    "gdscript",
-    "templ",
-    "html",
-}, {
-    -- otherwise github rate limits
-    max_jobs = 2,
-})
+if vim.fn.executable("tree-sitter") == 1 then
+    require("nvim-treesitter").install({
+        "rust",
+        "markdown",
+        "typescript",
+        "tsx",
+        "jsx",
+        "javascript",
+        "json",
+        "go",
+        "yaml",
+        "toml",
+        "lua",
+        "zig",
+        "ruby",
+        "c",
+        "cpp",
+        "bash",
+        "zsh",
+        "css",
+        "sql",
+        "scss",
+        "python",
+        "java",
+        "c_sharp",
+        "kotlin",
+        "swift",
+        "php",
+        "dart",
+        "gdscript",
+        "templ",
+        "html",
+    }, {
+        -- otherwise github rate limits
+        max_jobs = 2,
+    })
+end
 
 vim.api.nvim_create_autocmd("FileType", {
     group = augroup,
