@@ -138,9 +138,13 @@ function setup_fonts {
 	cdmktemp
 	mkdir -p ~/.local/share/fonts
 
-	curl -LO 'https://github.com/ryanoasis/nerd-fonts/releases/download/v3.5.1/JetBrainsMono.zip'
-	unzip 'JetBrainsMono.zip'
+	curl -LO 'https://github.com/ryanoasis/nerd-fonts/releases/download/v3.5.1/NerdFontsSymbolsOnly.zip'
+	unzip 'NerdFontsSymbolsOnly.zip'
 	cp *.ttf ~/.local/share/fonts
+
+	curl -LO 'https://download.jetbrains.com/fonts/JetBrainsMono-2.304.zip'
+	unzip "JetBrainsMono-2.304.zip"
+	cp fonts/ttf/* ~/.local/share/fonts
 
 	fc-cache -r
 }
