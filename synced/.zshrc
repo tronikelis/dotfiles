@@ -114,7 +114,15 @@ function precmd_set_git {
     if [[ "$(git config --bool bash.promptShowDirtyState)" == "false" ]]; then
         unset GIT_PS1_SHOWDIRTYSTATE
     fi
-    prompt_git="$(GIT_OPTIONAL_LOCKS=0 __git_ps1 ' git(%s)' 2>/dev/null)"
+    prompt_git="$(GIT_OPTIONAL_LOCKS=0 __git_ps1 ' git(%s' 2>/dev/null)"
+    if [[ "$prompt_git" ]]; then
+        remote="$(git rev-parse --abbrev-ref @{u} 2>/dev/null | awk -F / '{print $1}')"
+        if [[ "$remote" ]]; then
+            default_branch="$(git rev-parse --abbrev-ref $remote/HEAD)"
+            prompt_git="$prompt_git %F{green}u@${default_branch//[%]/%%}%f"
+        fi
+        prompt_git="$prompt_git)"
+    fi
 }
 add-zsh-hook precmd precmd_set_git
 
