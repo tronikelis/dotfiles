@@ -10,6 +10,7 @@ function precmd_cursor_block {
 }
 add-zsh-hook precmd precmd_cursor_block
 
+alias __git_script="git --no-optional-locks"
 
 function add_to_path {
     if [[ -d "$1" ]]; then
@@ -98,7 +99,7 @@ function precmd_set_git {
         return
     fi
 
-    if [[ "$(git config --bool bash.promptEnable)" == "false" ]]; then
+    if [[ "$(__git_script config --bool bash.promptEnable)" == "false" ]]; then
         prompt_git=""
         return
     fi
@@ -108,17 +109,17 @@ function precmd_set_git {
     GIT_PS1_SHOWUPSTREAM="auto"
     GIT_PS1_SHOWCONFLICTSTATE=yes
     GIT_PS1_SHOWCOLORHINTS=1
-    if [[ "$(git config --bool bash.promptShowUntrackedFiles)" == "false" ]]; then
+    if [[ "$(__git_script config --bool bash.promptShowUntrackedFiles)" == "false" ]]; then
         unset GIT_PS1_SHOWUNTRACKEDFILES
     fi
-    if [[ "$(git config --bool bash.promptShowDirtyState)" == "false" ]]; then
+    if [[ "$(__git_script config --bool bash.promptShowDirtyState)" == "false" ]]; then
         unset GIT_PS1_SHOWDIRTYSTATE
     fi
     prompt_git="$(GIT_OPTIONAL_LOCKS=0 __git_ps1 ' git(%s' 2>/dev/null)"
     if [[ "$prompt_git" ]]; then
-        remote="$(git rev-parse --abbrev-ref @{u} 2>/dev/null | awk -F / '{print $1}')"
+        remote="$(__git_script rev-parse --abbrev-ref @{u} 2>/dev/null | awk -F / '{print $1}')"
         if [[ "$remote" ]]; then
-            default_branch="$(git rev-parse --abbrev-ref $remote/HEAD)"
+            default_branch="$(__git_script rev-parse --abbrev-ref $remote/HEAD)"
             prompt_git="$prompt_git %F{green}u@${default_branch//[%]/%%}%f"
         fi
         prompt_git="$prompt_git)"
@@ -130,7 +131,7 @@ function precmd_set_prompt_directory {
     prompt_directory="$(pwd)"
 
     if command_exists git; then
-        local git_root="$(git rev-parse --show-toplevel 2>/dev/null)"
+        local git_root="$(__git_script rev-parse --show-toplevel 2>/dev/null)"
         if [[ "$git_root" ]]; then
             prompt_directory="$(realpath .)" # git resolves symlinks
             prompt_directory="$(basename "$git_root")${prompt_directory#"$git_root"}"
@@ -352,7 +353,7 @@ function wfiles {
 # https://sumnerevans.com/posts/software-engineering/stop-using-conventional-commits/
 # branch format: <scope>.<word>_<word>
 function _git_commit_message_from_branch {
-    zle -U "$(git branch --show-current | sed 's/\./: /g ; s/_/ /g')"
+    zle -U "$(__git_script branch --show-current | sed 's/\./: /g ; s/_/ /g')"
 }
 zle -N _git_commit_message_from_branch
 bindkey "^gm" _git_commit_message_from_branch
