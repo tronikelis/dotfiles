@@ -31,6 +31,8 @@ vim.diagnostic.config({
     },
 })
 
+vim.lsp.semantic_tokens.enable(false)
+
 vim.keymap.set("n", "<leader>td", function()
     local buf = vim.api.nvim_get_current_buf()
     local win = vim.api.nvim_get_current_win()
