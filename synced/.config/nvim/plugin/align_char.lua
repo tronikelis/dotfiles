@@ -41,7 +41,7 @@ end
 local function preview(ev, ns, buf)
     local pattern, count = get_pattern_n_count(ev.fargs)
     if not pattern then
-        return 1
+        return 0
     end
 
     local matches = get_matches(pattern, ev.line1, ev.line2, count)
