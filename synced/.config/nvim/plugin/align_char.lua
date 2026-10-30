@@ -53,7 +53,7 @@ local function preview(ev, ns, buf)
     return 1
 end
 
-vim.api.nvim_create_user_command("AlignPattern", function(ev)
+vim.api.nvim_create_user_command("AlignChar", function(ev)
     local pattern, count = get_pattern_n_count(ev.fargs)
     if not pattern then
         return
