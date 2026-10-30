@@ -1,5 +1,32 @@
 local M = {}
 
+---@enum config.LSP
+local LSP = {
+    biome = "biome",
+    clangd = "clangd",
+    dartls = "dartls",
+    eslint = "eslint",
+    gdscript = "gdscript",
+    gopls = "gopls",
+    html = "html",
+    jdtls = "jdtls",
+    jsonls = "jsonls",
+    lua_ls = "lua_ls",
+    marksman = "marksman",
+    pyright = "pyright",
+    rubocop = "rubocop",
+    ruby_lsp = "ruby_lsp",
+    rust_analyzer = "rust_analyzer",
+    tailwindcss = "tailwindcss",
+    taplo = "taplo",
+    templ = "templ",
+    ts_ls = "ts_ls",
+    vespa_ls = "vespa_ls",
+    yamlls = "yamlls",
+    zls = "zls",
+    metals = "metals",
+}
+
 local function lsp_enable_metals()
     local augroup = vim.api.nvim_create_augroup("plugin/startup.lsp.metals", {})
     vim.api.nvim_create_autocmd("FileType", {
@@ -20,32 +47,7 @@ end
 
 ---@param name string
 local function lsp_enable(name)
-    local known_lsps = {
-        "biome",
-        "clangd",
-        "dartls",
-        "eslint",
-        "gdscript",
-        "gopls",
-        "html",
-        "jdtls",
-        "jsonls",
-        "lua_ls",
-        "marksman",
-        "pyright",
-        "rubocop",
-        "ruby_lsp",
-        "rust_analyzer",
-        "tailwindcss",
-        "taplo",
-        "templ",
-        "ts_ls",
-        "vespa_ls",
-        "yamlls",
-        "zls",
-        "metals",
-    }
-    if not vim.tbl_contains(known_lsps, name) then
+    if not vim.tbl_contains(vim.tbl_values(LSP), name) then
         vim.notify(string.format("lsp_enable: lsp %s is not known, add it if valid", name), vim.log.levels.WARN)
         return
     end
@@ -59,7 +61,7 @@ local function lsp_enable(name)
 end
 
 -- enable an lsp in a startup script.
----@param name string|string[]
+---@param name config.LSP|config.LSP[]
 function M.lsp_enable(name)
     if type(name) == "string" then
         lsp_enable(name)

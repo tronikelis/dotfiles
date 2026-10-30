@@ -20,12 +20,16 @@ require("conflict-marker").setup({
         local MID = "^=======$"
 
         local next = function()
-            if not pcall(vim.cmd, string.format("/%s", MID)) then
+            if
+                not pcall(vim.cmd--[[@as function]], string.format("/%s", MID))
+            then
                 vim.notify("No conflicts")
             end
         end
         local prev = function()
-            if not pcall(vim.cmd, string.format("?%s", MID)) then
+            if
+                not pcall(vim.cmd--[[@as function]], string.format("?%s", MID))
+            then
                 vim.notify("No conflicts")
             end
         end

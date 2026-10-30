@@ -33,7 +33,7 @@ local function set_neovim_project_options(client, path)
     end
 
     -- credits to https://github.com/neovim/nvim-lspconfig/blob/master/lsp/lua_ls.lua
-    client.config.settings.Lua = vim.tbl_deep_extend("force", client.config.settings.Lua, {
+    client.config.settings.Lua = vim.tbl_deep_extend("force", client.config.settings.Lua--[[@as table]], {
         runtime = {
             version = "LuaJIT",
             -- Tell the language server how to find Lua modules same way as Neovim
