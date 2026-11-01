@@ -249,12 +249,6 @@ do
     })
 end
 
--- tree sitter highlighting has priority over semantic tokens
-if vim.hl.priorities.semantic_tokens > vim.hl.priorities.treesitter then
-    vim.hl.priorities.semantic_tokens, vim.hl.priorities.treesitter =
-        vim.hl.priorities.treesitter, vim.hl.priorities.semantic_tokens
-end
-
 -- per-project shadafile
 vim.opt.shadafile = (function()
     local state = vim.fn.stdpath("state")
