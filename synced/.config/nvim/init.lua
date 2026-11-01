@@ -69,13 +69,8 @@ vim.pack.add({
 vim.cmd("packadd! nvim.undotree")
 vim.cmd("packadd! cfilter")
 
-require("catppuccin").setup({
-    flavour = "mocha",
-    no_italic = true,
-    transparent_background = false,
-})
-
-vim.cmd.colorscheme("catppuccin")
+-- not in plugin/ because it has to be loaded asap
+require("theme")
 
 -- interferes with <C-c> to exit insert mode
 vim.g.omni_sql_no_default_maps = true
