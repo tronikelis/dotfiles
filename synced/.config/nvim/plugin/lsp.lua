@@ -31,7 +31,19 @@ vim.diagnostic.config({
     },
 })
 
-vim.lsp.semantic_tokens.enable(false)
+-- enable lsp semantic tokens where treesitter does not exist
+vim.api.nvim_create_autocmd("FileType", {
+    group = augroup,
+    callback = function(ev)
+        local success, parser = pcall(vim.treesitter.get_parser, ev.buf)
+        local ts_enabled = success and parser
+        vim.lsp.semantic_tokens.enable(not ts_enabled, {
+            bufnr = ev.buf,
+        })
+    end,
+})
+
+vim.lsp.document_color.enable(false)
 
 vim.keymap.set("n", "<leader>td", function()
     local buf = vim.api.nvim_get_current_buf()

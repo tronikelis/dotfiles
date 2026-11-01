@@ -273,7 +273,7 @@ KEYTIMEOUT=100
 if command_exists eza; then
     alias ls="eza --icons -a --group-directories-first"
 fi
-alias ll="ls --long --all"
+alias ll="ls --long --all -h"
 alias ..="cd .."
 alias grep="grep --color=auto"
 
