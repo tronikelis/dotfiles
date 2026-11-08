@@ -60,7 +60,7 @@ vim.keymap.set("n", "<leader>td", function()
         end)
     end
     local function hide()
-        timer:start(1000 * 60 * 5, 0, show)
+        timer:start(1000 * 60 * 30, 0, show)
         vim.schedule(function()
             if vim.api.nvim_buf_is_valid(buf) then
                 vim.diagnostic.enable(false, { bufnr = buf })

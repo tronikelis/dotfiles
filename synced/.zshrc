@@ -119,8 +119,9 @@ function precmd_set_git {
     if [[ "$prompt_git" ]]; then
         remote="$(__git_script rev-parse --abbrev-ref @{u} 2>/dev/null | awk -F / '{print $1}')"
         if [[ "$remote" ]]; then
-            default_branch="$(__git_script rev-parse --abbrev-ref "$remote/HEAD")"
-            prompt_git="$prompt_git(%F{green}u@${default_branch//[%]/%%}%f)"
+            if default_branch="$(__git_script rev-parse --abbrev-ref "$remote/HEAD" 2>/dev/null)"; then
+                prompt_git="$prompt_git(%F{green}u@${default_branch//[%]/%%}%f)"
+            fi
         fi
     fi
 }
