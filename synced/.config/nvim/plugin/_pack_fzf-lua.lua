@@ -86,6 +86,7 @@ require("fzf-lua").setup({
     },
 
     grep = {
+        rg_glob = true,
         rg_opts = "--trim --hidden " .. require("fzf-lua.defaults").defaults.grep.rg_opts,
     },
 
