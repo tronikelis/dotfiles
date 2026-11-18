@@ -25,13 +25,13 @@ local function remove_qf_entry()
         vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<esc>", true, true, true), "n", false)
     end
 
-    local qf = vim.fn.getqflist()
+    local qf = vim.fn.getqflist({ items = 1, title = 1 })
     for _ = 1, count do
-        table.remove(qf, line)
+        table.remove(qf.items, line)
     end
-    vim.fn.setqflist(qf)
+    vim.fn.setqflist({}, " ", qf)
 
-    local new_cursor_line = math.min(cursor[1], #qf)
+    local new_cursor_line = math.min(cursor[1], #qf.items)
     local actual_line = vim.api.nvim_buf_get_lines(0, new_cursor_line - 1, new_cursor_line, true)[1]
     local new_cursor_col = math.min(cursor[2], #actual_line)
     vim.api.nvim_win_set_cursor(0, { new_cursor_line, new_cursor_col })

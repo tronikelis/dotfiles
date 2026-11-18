@@ -157,7 +157,12 @@ function precmd_set_prompt_jobs {
     if [[ ! "$jobstates" ]]; then
         return 0
     fi
-    prompt_jobs="$(echo "$jobstates" | tr ' ' '\n' | wc -l) "
+    prompt_jobs="$#jobstates"
+    if [[ "$prompt_jobs" == "0" ]]; then
+        prompt_jobs=""
+    else
+        prompt_jobs="$prompt_jobs "
+    fi
 }
 add-zsh-hook precmd precmd_set_prompt_jobs
 
