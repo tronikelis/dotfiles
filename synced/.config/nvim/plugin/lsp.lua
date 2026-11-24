@@ -35,6 +35,11 @@ vim.diagnostic.config({
 vim.api.nvim_create_autocmd("FileType", {
     group = augroup,
     callback = function(ev)
+        if vim.b[ev.buf].semantic_tokens_disable then
+            vim.lsp.semantic_tokens.enable(false, { bufnr = ev.buf })
+            return
+        end
+
         local success, parser = pcall(vim.treesitter.get_parser, ev.buf)
         local ts_enabled = success and parser
         vim.lsp.semantic_tokens.enable(not ts_enabled, {
