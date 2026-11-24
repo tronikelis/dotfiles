@@ -12,6 +12,10 @@ if [[ -z "$name" ]]; then
     name="$(basename "$(dirname "$wd")")/$(basename "$wd")"
 fi
 
+if [[ -e "$wd/.tmux_session_name" ]]; then
+    name="$(cat "$wd/.tmux_session_name")"
+fi
+
 zoxide add "$wd"
 
 name="$(printf "$name" | tr . _)"

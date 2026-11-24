@@ -2,3 +2,4 @@
 tags
 .nvim.lua
 .git
+.tmux_session_name
