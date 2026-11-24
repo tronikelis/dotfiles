@@ -49,6 +49,10 @@ vim.api.nvim_create_autocmd("FileType", {
     group = augroup,
     callback = function(ev)
         vim.treesitter.stop(ev.buf)
+        if vim.b[ev.buf].treesitter_disable then
+            return
+        end
+
         local success, parser = pcall(vim.treesitter.get_parser, ev.buf)
         if success and parser then
             vim.treesitter.start(ev.buf)
